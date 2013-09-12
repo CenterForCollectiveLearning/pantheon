@@ -1,28 +1,25 @@
-culture-observatory
+The Observatory of Global Culture
 ===================
 
-Observatory of Global Culture Codebase
+### Using virtualenv
 
-Using virtualenv
--------------------
-Installation:
-sudo easy_install virtualenv
-sudo pip install virtualenv
+Installation
 
-Initialization:
-cd culture-observatory
-virtualenv venv
+        pip install virtualenv
+Initialization
 
-Activate:
-source venv/bin/activate
+        virtualenv venv
+Activate
 
-Deactivate:
-deactivate
+        source venv/bin/activate
+Deactivate
 
-Installing Requirements
--------------------
-pip install -r requirements.txt
+        deactivate
 
-Deploying to new server
--------------------
-virtualenv --no-site-packages --distribute .env && source .env/bin/activate && pip install -r requirements.txt
+### Installing Requirements
+
+        pip install -r requirements.txt
+
+### Deploying to new server
+
+        virtualenv --no-site-packages --distribute .env && source .env/bin/activate && pip install -r requirements.txt
