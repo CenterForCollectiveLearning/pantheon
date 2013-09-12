@@ -1,0 +1,10 @@
+# Common Files
+.DS_Store
+.project
+*#*
+*~*
+*.backup*
+*.pyc
+
+# Project Files
+venv
