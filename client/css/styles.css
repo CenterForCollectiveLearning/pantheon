@@ -782,7 +782,7 @@ rect {
 	/*width:270px;*/
 }
 
-#loading {
+.loading {
 	float:right;
 	margin-right:30px;
 	margin-top:16px;

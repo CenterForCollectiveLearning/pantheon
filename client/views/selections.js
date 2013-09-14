@@ -20,9 +20,10 @@ Template.select_mode.render_template = function() {
 }
 
 Template.select_mode.rendered = function() {
-    $.each(this.findAll("select, input"), function() {
-        $(this).uniform();
-    });
+//    $.each(this.findAll("select, input"), function() {
+//        $(this).uniform();
+            //TODO: fix this part
+//    });
 }
 
 Template.select_exporter.countries = function (){

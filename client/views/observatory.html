@@ -1,54 +1,54 @@
 <template name="observatory">
-  <div class="copy exploretop">
-    <div id="apps">
+    <div class="copy exploretop">
+        <div id="apps">
 
-      {{> accordion}}
+            {{> accordion}}
 
-      <div style="clear:both"></div>
+            <div style="clear:both"></div>
+        </div>
+
+        <div id="ranked_list">
+            <div class="header">RANKING OF PEOPLE</div>
+            <div class="content"></div>
+        </div>
+
+        <div id="viz_container">
+        </div>
+
+        <div id="question">What does the world export?</div>
+        <div id="viz_options">
+
+            {{> select_mode }}
+        </div>
+
+        <div>
+        </div>
     </div>
 
-    <div id="ranked_list">
-      <div class="header">RANKING OF PEOPLE</div>
-      <div class="content"></div>
+    <div id="viz_pane">
+        <div id="viz">
+            <svg width="725" height="580"></svg>
+        </div>
+
+        <div class="color_scale">
+            <svg></svg>
+        </div>
+
+        <div class="legend">
+            <div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
+            <div id="arts" class="pill" style="background-color:#D95B43">Arts</div>
+            <div id="humanities" class="pill" style="background-color:#43c1d9">Humanities</div>
+            <div id="business_and_law" class="pill" style="background-color:#C02942">Business &amp; Law</div>
+            <div id="exploration" class="pill" style="background-color:#546c97">Exploration</div>
+            <div id="public_figure" class="pill" style="background-color:#d278c2">Public Figure</div>
+            <div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
+            <div id="sports" class="pill">Sports</div>
+        </div>
     </div>
 
-    <div id="viz_container">
-    </div>
+    <div id="tooltip"></div>
 
-    <div id="question">What does the world export?</div>
-    <div id="viz_options">
-
-        {{> select_mode }}
-  </div>
-
-  <div>
-  </div>
-</div>
-
-<div id="viz_pane">
-  <div id="viz">
-    <svg width="725" height="580"></svg>
-  </div>
-
-  <div class="color_scale">
-    <svg></svg>
-  </div>
-
-  <div class="legend">
-    <div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
-    <div id="arts" class="pill" style="background-color:#D95B43">Arts</div>
-    <div id="humanities" class="pill" style="background-color:#43c1d9">Humanities</div>
-    <div id="business_and_law" class="pill" style="background-color:#C02942">Business &amp; Law</div>
-    <div id="exploration" class="pill" style="background-color:#546c97">Exploration</div>
-    <div id="public_figure" class="pill" style="background-color:#d278c2">Public Figure</div>
-    <div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
-    <div id="sports" class="pill">Sports</div>
-  </div>
-</div>
-
-<div id="tooltip"></div>
-
-{{afterBody}}
+    {{afterBody}}
 </template>
 
 <template name="accordion">
