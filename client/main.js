@@ -1,11 +1,23 @@
+// Set Defaults
+Meteor.startup(function() {
+    Session.setDefault('page', 'observatory')
+    Session.setDefault('vizType', 'treemap')
+    Session.setDefault('vizMode', 'country_exports')
+    Session.setDefault('ent1', 'all')
+    Session.setDefault('ent2', 'all')
+    Session.setDefault('from', '-1000')
+    Session.setDefault('to', '1950')
+    Session.setDefault('langs', '25')
+    });
 
 if (typeof Handlebars !== 'undefined') {
   Handlebars.registerHelper('afterBody', function(name, options) {
-
-    
-
   });
 }
+
+// Template.nav.selected = function() {
+//     return Session.equals('page', this._id) ? 'selected_section' : '';
+// }
 
 Template.spinner.rendered = function(){
     var opts = {

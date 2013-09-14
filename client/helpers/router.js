@@ -1,21 +1,32 @@
+// TODO: How do you change this?
 
 Router.map(function() {
     this.route('observatory',
-        {path: '/'}  // :vizType/:ent1/:ent2/:from/:to/:langs'}
+        {path: '/observatory',
+        before: [
+            function() {
+                this.redirect('/' + Session.get('vizType') + '/' + 
+                    Session.get('ent1') + '/' +
+                    Session.get('ent2') + '/' +
+                    Session.get('from') + '/' +
+                    Session.get('to') + '/' +
+                    Session.get('langs'));
+            }
+        ]}
     );
-    this.route('observatory', {
-        path: '/:vizType',
-        data: function() { 
-            Session.set('vizType', this.params.vizType); 
-        }}
-    );
-    this.route('observatory', {
-        path: '/:vizType/:ent1/:ent2',
-        data: function() { 
-            Session.set('vizType', this.params.vizType); 
-            Session.set('ent1', this.params.ent1);  
-            Session.set('ent2', this.params.ent2);  
-        }}
+
+    this.route('observatory',
+        {path: '/',
+        before: [
+            function() {
+                this.redirect('/' + Session.get('vizType') + '/' + 
+                    Session.get('ent1') + '/' +
+                    Session.get('ent2') + '/' +
+                    Session.get('from') + '/' +
+                    Session.get('to') + '/' +
+                    Session.get('langs'));
+            }
+        ]}
     );
 
     this.route('observatory', {
@@ -41,7 +52,9 @@ Router.map(function() {
 Router.configure({
   layout: 'defaultLayout',
   renderTemplates:
-    { 'footer':
-        { to: 'footer' }
+    {   'nav':
+            { to: 'nav'},
+        'footer':
+            { to: 'footer' }
     }
 });

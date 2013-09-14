@@ -19,6 +19,60 @@ Template.select_mode.render_template = function() {
     }
 }
 
+// Change selected based on session variables
+// Template.select_exporter.rendered = function() {
+//     $(this.find("select")).val(Session.get("ent1"));
+// }
+
+// Template.select_importer.rendered = function() {
+//     $(this.find("select")).val(Session.get("ent2"));
+// }
+
+// Template.select_domain.rendered = function() {
+//     $(this.find("select")).val(Session.get("ent1"));
+// }
+
+// TODO: Find closest number
+Template.select_from.rendered = function() {
+    $(this.find("select")).val(Session.get("from"));
+}
+
+Template.select_to.rendered = function() {
+    $(this.find("select")).val(Session.get("to"));
+}
+
+Template.select_l.rendered = function() {
+    $(this.find("select")).val(Session.get("langs"));
+}
+
+// TODO: Do this correctly and reduce redundancy
+
+Template.select_from.events = {
+    "change select": function(d) {
+        Session.set("from", d.target.value);
+        var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('ent1') + '/' +
+            Session.get('ent2') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
+    }
+}
+
+Template.select_to.events = {
+    "change select": function(d) {
+        Session.set("to", d.target.value);
+        var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('ent1') + '/' +
+            Session.get('ent2') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
+    }
+}
+
 Template.select_mode.rendered = function() {
 //    $.each(this.findAll("select, input"), function() {
 //        $(this).uniform();

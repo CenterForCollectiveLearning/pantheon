@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>The Observatory of Global Culture</title>
-	<link href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css" />
     <link href='http://fonts.googleapis.com/css?family=Lato:400,300,100,700' rel='stylesheet' type='text/css'>
@@ -28,17 +28,7 @@
             </div>
         </a>
 
-        <nav>
-            <div id="sections_nav">
-                <div class="main_nav"><a href="/">Observatory</a></div>
-                <div class="main_nav"><a href="/vision">Vision</a></div>
-                <div class="main_nav"><a href="/ranking">Ranking</a></div>
-                <div class="main_nav"><a href="/people">People</a></div>
-                <div class="main_nav"><a href="/data">Data</a></div>
-                <div class="main_nav"><a href="/faq">FAQ</a></div>
-                <div class="main_nav"><a href="/about">About</a></div>
-            </div>
-        </nav>
+        {{yield 'nav'}}
 
         <!-- Page Rendering -->
         {{yield}}
@@ -48,6 +38,20 @@
         <!-- render to the footer yield -->
         {{yield 'footer'}}
     </footer>
+</template>
+
+<template name="nav">
+    <nav>
+        <div id="sections_nav">
+            <div class="main_nav {{selected}} "><a href="/observatory">Observatory</a></div>
+            <div class="main_nav {{selected}} "><a href="/vision">Vision</a></div>
+            <div class="main_nav {{selected}} "><a href="/ranking">Ranking</a></div>
+            <div class="main_nav {{selected}} "><a href="/people">People</a></div>
+            <div class="main_nav {{selected}} "><a href="/data">Data</a></div>
+            <div class="main_nav {{selected}} "><a href="/faq">FAQ</a></div>
+            <div class="main_nav {{selected}} "><a href="/about">About</a></div>
+        </div>
+    </nav>
 </template>
 
 <template name="footer">
