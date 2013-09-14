@@ -17,7 +17,6 @@ Template.select_mode.render_template = function() {
         case "heatmap_exports":
             return new Handlebars.SafeString(Template.heatmap_exports_mode(this));
     }
-
 }
 
 Template.select_exporter.countries = function (){
