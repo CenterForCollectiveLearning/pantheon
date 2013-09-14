@@ -111,6 +111,18 @@ Template.accordion.events = {
     }
 }
 
+Template.ranked_list.top10 = function() {
+    return PeopleTop10.find();
+}
+
+Template.ranked_list.empty = function(){
+    return PeopleTop10.find().count() === 0;
+}
+
+Template.ranked_person.birthday = function() {
+    var birthday = (this.birthyear < 0) ? (this.birthyear * -1) + " B.C." : this.birthyear;
+    return birthday;
+}
 
 function incrementDate() {
     if(from < 1800) return from+100;
@@ -214,10 +226,6 @@ function assignEventListeners() {
         from = Number($("#from").val());
         to = Number($("#to").val());
 
-        $("#loading").show();
-        /*$("#viz svg").css("border", "0");
-         $("#ranked_list").css("opacity", "0");*/
-
         updateQuestion();
         getIndividuals();
         addTreemapSvg();
@@ -227,33 +235,11 @@ function assignEventListeners() {
         $("#tooltip").fadeOut();
     });
 
-    $("#viz_type").on("change", function () {
-        changeVisualization($(this).val());
-    });
-
     $("h3 a").on("click", function () {
         return false;
     });
 
-    $('.main_nav a').bind('click', function (event) {
-        var anchor = $(this);
 
-        $('html, body').stop().animate({
-            scrollTop: $(anchor.attr('href')).offset().top
-        }, 900, 'easeInOutExpo');
-
-        event.preventDefault();
-    });
-
-    $('.secondary_nav a').bind('click', function (event) {
-        var anchor = $(this);
-
-        $('html, body').stop().animate({
-            scrollTop: $(anchor.attr('href')).offset().top
-        }, 900, 'easeInOutExpo');
-
-        event.preventDefault();
-    });
 
     $('.legend .pill').live('mouseover', function (d) {
         var srcE = d.srcElement ? d.srcElement : d.target;
@@ -276,25 +262,6 @@ function assignEventListeners() {
 
 
 
-function getIndividualsRecursively(key, val, by_what) {
-    var value = val;
-
-    if (value instanceof Object && value['fb_name'] == undefined) {
-        $.each(value, function (key, val) {
-            getIndividualsRecursively(key, val, by_what)
-        });
-    } else if (value instanceof Object && value['fb_name'] != undefined) {
-        //if we have a domain filter, keep that in mind before setting anything
-
-        if (individuals_by_sumfin[eval("value." + by_what)] == undefined) {
-            individuals_by_sumfin[eval("value." + by_what)] = new Array();
-        }
-
-        individuals_by_sumfin[eval("value." + by_what)].push(val);
-    }
-}
-
-
 
 if (!String.prototype.format) {
     String.prototype.format = function () {
@@ -303,40 +270,6 @@ if (!String.prototype.format) {
             return typeof args[number] != 'undefined' ? args[number] : match;
         });
     };
-}
-
-function populateRanking() {
-    var html_to_show = "";
-    setTimeout(function () {
-        $.each(individuals, function (i, d) {
-            var birthday = (d.birthyear < 0) ? (d.birthyear * -1) + " B.C." : d.birthyear;
-
-            var imgURL = "";
-
-            // //Get individual thumbs for people
-            // var imgIdURL = "https://www.googleapis.com/freebase/v1/topic/en/{0}?filter=/common/topic/image&limit=1".format(d.fb_name.replace(/\s+/g, "_").toLowerCase());
-            // var imgid = "";
-            // //By default show a blank avatar
-            // var imgURL = "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTB0GqCosPU1Gr1kOvS8TMlJXNWt0oHcWoP90-EHHCEYx_xOYetlA";
-            // $.getJSON(imgIdURL, function(data) {
-            //     if(data.hasOwnProperty('property') && data.property.hasOwnProperty('/common/topic/image')){
-            //         imgid = data.property['/common/topic/image'].values[0].id;
-            //     }
-            //     if(imgid.length > 0){
-            //         imgURL = "https://usercontent.googleapis.com/freebase/v1/image{0}".format(imgid);
-            //     }
-            // });
-            // //Note that the img src is commented out now, but is still inserted in the html
-
-            html_to_show += "<div style='padding-bottom:5px'>" + (i + 1) + ". <!--img src='{0}'-->".format(imgURL) + d.fb_name + "<br /><span style='font-size:70%'>" + d.occupation + ", born " + birthday + " (" + d.numlangs + ")</span></div>";
-
-            if (i == 9) return false;
-        });
-
-        if (individuals.length == 0) html_to_show = "<i>none for the selected criteria.</i>";
-
-        $("#ranked_list .content").html(html_to_show);
-    }, 100);
 }
 
 function cell(div) {
@@ -524,7 +457,6 @@ function updateQuestion() {
 }
 
 function getIndividuals() {
-    $("#ranked_list .content").empty();
 
     //what are we grouping individuals by
     var by_what = "";
@@ -548,12 +480,6 @@ function getIndividuals() {
     var url = "http://culture.media.mit.edu:8080/?query=people&country=" + selected_country + gimme_the_domain + lang_bit + "&b=" + from + "&e=" + to + "&L=" + l;
     console.log("getIndividuals", url);
 
-    //for ranked list
-    d3.json(url+"&limit=10", function (json_data) {
-        individuals = json_data.data;
-        populateRanking();
-    });
-
     //for treemap cells
     d3.json(url, function (json_data) {
         individuals_by_sumfin = new Object();
@@ -564,10 +490,25 @@ function getIndividuals() {
             });
         }
 
-        //console.log(individuals_by_sumfin);
-
-        $("#loading").fadeOut();
     });
+}
+
+function getIndividualsRecursively(key, val, by_what) {
+    var value = val;
+
+    if (value instanceof Object && value['fb_name'] == undefined) {
+        $.each(value, function (key, val) {
+            getIndividualsRecursively(key, val, by_what)
+        });
+    } else if (value instanceof Object && value['fb_name'] != undefined) {
+        //if we have a domain filter, keep that in mind before setting anything
+
+        if (individuals_by_sumfin[value[by_what]] == undefined) {
+            individuals_by_sumfin[value[by_what]] = new Array();
+        }
+
+        individuals_by_sumfin[value[by_what]].push(val);
+    }
 }
 
 function addTreemapSvg() {

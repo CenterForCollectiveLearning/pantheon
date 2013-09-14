@@ -7,10 +7,7 @@
             <div style="clear:both"></div>
         </div>
 
-        <div id="ranked_list">
-            <div class="header">RANKING OF PEOPLE</div>
-            <div class="content"></div>
-        </div>
+        {{> ranked_list }}
 
         <div id="viz_container">
         </div>
@@ -85,4 +82,32 @@
             </ul>
         </div>
     </div>
+</template>
+
+<template name="ranked_list">
+    <div id="ranked_list">
+        <div class="header">RANKING OF PEOPLE</div>
+        <div class="content">
+            {{#if empty}}
+                <i>none for the selected criteria.</i>
+            {{else}}
+                <ol>
+                    {{#each top10}}
+                    {{> ranked_person}}
+                    {{/each}}
+                </ol>
+            {{/if}}
+        </div>
+    </div>
+</template>
+
+<template name="ranked_person">
+    <li style="padding-bottom:5px">
+        {{! insert thumbnail here}}
+        {{name}}
+        <br>
+        <span style="font-size:70%">
+            {{occupation}}, born {{birthday}} ({{numlangs}})
+        </span>
+    </li>
 </template>

@@ -58,6 +58,7 @@ Router.configure({
     {   'nav':
             { to: 'nav'},
         'footer':
-            { to: 'footer' }
-    }
+        {   to: 'footer' }
+    },
+  loadingTemplate: 'spinner'
 });

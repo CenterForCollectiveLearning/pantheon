@@ -10,9 +10,17 @@ Meteor.startup(function() {
     Session.setDefault('langs', '25')
     });
 
-if (typeof Handlebars !== 'undefined') {
-  Handlebars.registerHelper('afterBody', function(name, options) {
-  });
+Template.nav.events = {
+    // TODO is this really necessary?
+    "click .main_nav a": function (event) {
+        var anchor = $(this);
+
+        $('html, body').stop().animate({
+            scrollTop: $(anchor.attr('href')).offset().top
+        }, 900, 'easeInOutExpo');
+
+        event.preventDefault();
+    }
 }
 
 // Template.nav.selected = function() {
