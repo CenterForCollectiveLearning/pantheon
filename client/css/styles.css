@@ -11,16 +11,16 @@ body {
 	margin: 0;
 	padding: 0;
 	background-repeat:repeat-x;
-	/*background-image:url(../images/bg.jpg);
+	/*background-image:url(/images/bg.jpg);
 	background-position:0 -25px;
 	background-color:#fdfdfd;*/
-	background-image:url(../images/bg_ello.png);
+	background-image:url(/images/bg_ello.png);
 	background-position:10px 30px;
 	background-color:#f3eedd;
 	overflow-x: hidden;
 
 	/* royalty free background from http://bashcorpo.deviantart.com/art/Grungy-paper-texture-v-5-22966998?q=boost%3Apopular%20paper%20texture&qo=1 */
-	background: url(../../paper_bg.jpg) no-repeat center center fixed;
+	background: url(/paper_bg.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -65,7 +65,7 @@ h3 {
 }
 
 #probe_container {
-	background-image:url(../images/probe.png);
+	background-image:url(/images/probe.png);
 	background-repeat:no-repeat;
 	background-position:-500px 0px;
 	position:absolute;
@@ -299,7 +299,7 @@ img.label {
 }
 
 #page {
-	/*background-image:url(../images/alpha.png);
+	/*background-image:url(/images/alpha.png);
 	background-repeat:repeat;*/
 	width:1000px;
 	margin-left:auto;
@@ -474,7 +474,7 @@ tr {
 	padding-left:16px;
 	position:absolute;
 	z-index:-1;
-	background-image:url(../images/leo.jpg);
+	background-image:url(/images/leo.jpg);
 	background-repeat:repeat-x;
 	background-width:100%;
 	background-height:100%;
@@ -542,7 +542,7 @@ tr {
 	position:absolute;
 	margin-left:940px;
 	line-height:20px;
-	/*background-image:url(../images/gradient_side.jpg);
+	/*background-image:url(/images/gradient_side.jpg);
 	background-repeat:repeat-y;
 	background-position:top right;*/
 }
@@ -595,19 +595,19 @@ select option {
 }
 
 #step1 {
-	background-image:url(../images/step1.png);
+	background-image:url(/images/step1.png);
 	background-repeat:no-repeat;
 	background-position:-25px -16px;
 }
 
 #step2 {
-	background-image:url(../images/step2.png);
+	background-image:url(/images/step2.png);
 	background-repeat:no-repeat;
 	background-position:-20px -16px;
 }
 
 #step3 {
-	background-image:url(../images/step3.png);
+	background-image:url(/images/step3.png);
 	background-repeat:no-repeat;
 	background-position:-20px -16px;
 }
@@ -834,16 +834,17 @@ rect {
 	border-radius:15px;
 	padding:2px;
 	border:1px solid #cccccc;
-	background-image:url('../images/explore-play.jpg');
+	background-image:url('/images/explore-play.jpg');
 	background-repeat:no-repeat;
 	background-position:-10px;
 }
 
-#accordion {
+.accordion {
 	opacity: 1.0;
+    height: 100%
 }
 
-#accordion h3.app {
+.accordion h3.app {
 	font-family:'Open Sans', Helvetica, Arial;
 	background-color:#2b2b2b;
 	border-radius:0px;
@@ -855,18 +856,18 @@ rect {
 	letter-spacing:1px;
 }
 
-#accordion div {
+.accordion div {
 	margin-left:0;
 	padding-left:12px;
 }
 
-#accordion div ul {
+.accordion div ul {
 	margin-left:0;
 	padding-left:0;
 	margin-top:2px;
 }
 
-#accordion div ul li {
+.accordion div ul li {
 	margin-left:20px;
 	padding-left:0;
 }
@@ -876,7 +877,7 @@ ul {
 }
 
 ul {
-	list-style-image:url('../images/li.png');
+	list-style-image:url('/images/li.png');
 	margin-left:10px;
 	padding-left:0;
 }

@@ -1,3 +1,4 @@
+
 # Common Files
 .DS_Store
 .project
@@ -5,6 +6,9 @@
 *~*
 *.backup*
 *.pyc
+
+# IDE files
+.idea
 
 # Project Files
 venv
