@@ -32,7 +32,7 @@ Template.select_mode.render_template = function() {
 //     $(this.find("select")).val(Session.get("ent1"));
 // }
 
-// TODO: Find closest number
+// TODO: Find closest round number
 Template.select_from.rendered = function() {
     $(this.find("select")).val(Session.get("from"));
 }
@@ -51,6 +51,7 @@ Template.select_from.events = {
     "change select": function(d) {
         Session.set("from", d.target.value);
         var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('vizMode') + '/' +
             Session.get('ent1') + '/' +
             Session.get('ent2') + '/' +
             Session.get('from') + '/' +
@@ -64,6 +65,7 @@ Template.select_to.events = {
     "change select": function(d) {
         Session.set("to", d.target.value);
         var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('vizMode') + '/' +
             Session.get('ent1') + '/' +
             Session.get('ent2') + '/' +
             Session.get('from') + '/' +

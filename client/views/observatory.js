@@ -71,13 +71,20 @@ Template.accordion.rendered = function() {
 Template.accordion.events = {
     "click li a": function (d) {
 
-        $("#loading").show();
-
         resetControls();
 
         var srcE = d.srcElement ? d.srcElement : d.target;
         var option = $(srcE).attr("id")
-        Session.set("vizMode", option);
+
+        // Resetting the set by doing a new route navigation
+        var url = '/' + Session.get('vizType') + '/' + 
+            option + '/' +
+            Session.get('ent1') + '/' +
+            Session.get('ent2') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
 
         $(".top_nav_control").show();
         $(".selected").attr("class", "not_selected");

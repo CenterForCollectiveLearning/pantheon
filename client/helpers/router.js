@@ -6,8 +6,9 @@ Router.map(function() {
         before: [
             function() {
                 this.redirect('/' + Session.get('vizType') + '/' + 
+                    Session.get('vizMode') + '/' +
                     Session.get('ent1') + '/' +
-                    Session.get('ent2') + '/' +
+                    Session.get('ent2') + '/' +                    
                     Session.get('from') + '/' +
                     Session.get('to') + '/' +
                     Session.get('langs'));
@@ -20,6 +21,7 @@ Router.map(function() {
         before: [
             function() {
                 this.redirect('/' + Session.get('vizType') + '/' + 
+                    Session.get('vizMode') + '/' +
                     Session.get('ent1') + '/' +
                     Session.get('ent2') + '/' +
                     Session.get('from') + '/' +
@@ -30,9 +32,10 @@ Router.map(function() {
     );
 
     this.route('observatory', {
-        path: '/:vizType/:ent1/:ent2/:from/:to/:langs',
+        path: '/:vizType/:vizMode/:ent1/:ent2/:from/:to/:langs',
         data: function() { 
             Session.set('vizType', this.params.vizType); 
+            Session.set('vizMode', this.params.vizMode); 
             Session.set('ent1', this.params.ent1);  
             Session.set('ent2', this.params.ent2);  
             Session.set('from', this.params.from); 
