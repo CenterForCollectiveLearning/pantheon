@@ -8,7 +8,7 @@
 *.pyc
 
 # IDE files
-.idea
+.idea/*
 
 # Project Files
 venv
