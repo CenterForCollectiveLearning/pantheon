@@ -7,7 +7,6 @@ standard-app-packages
 insecure
 preserve-inputs
 d3
-router
 jquery
 meteor
-jquery-ui
+iron-router
