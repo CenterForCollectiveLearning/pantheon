@@ -1,0 +1,35 @@
+.rect-background {
+    fill: #202020;
+}
+
+.column-title,
+.row-title {
+    fill: #f1e7d0;
+    font-weight: 100;
+}
+
+.column-title.active,
+.row-title.active {
+    fill: red;
+}
+
+#viz_pane svg {
+    /*border:2px solid #fff;*/
+    margin-left:3px;
+    margin-bottom:0;
+    float: left;
+}
+
+.cell {
+    stroke: none;
+}
+
+.color_scale svg rect {
+    fill: url(#gradient);
+    stroke: none;
+}
+
+.color_scale text {
+    fill: #202020;
+    font-weight: 500;
+}

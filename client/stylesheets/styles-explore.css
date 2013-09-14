@@ -1,0 +1,16 @@
+#page {
+	width:1200px;
+}
+
+#sections_nav {
+	width:450px;
+	z-index:99999999;
+	position:absolute;
+	margin-left:740px;
+}
+
+@media all and (device-width: 768px) and (device-height: 1024px) {
+	#footer {
+		width:1320px;
+	}
+}

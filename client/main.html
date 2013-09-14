@@ -1,0 +1,51 @@
+<head>
+	<title>The Observatory of Global Culture</title>
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,300,100,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<!-- Header -->
+	<div id="header">
+	</div>
+
+	<!-- Body -->
+	<div id="page">  
+    <div id="header_strip_bg" style="height:100px"></div>
+
+    <a href="{{observatoryPath}}">
+      <div id="title" class="shadow">
+        <img src="images/logo.png" />
+      </div>
+    </a>
+
+    <div id="sections_nav">
+      <div class="main_nav"><a href="{{observatoryPath}}">Observatory</a></div>
+      <div class="main_nav"><a href="{{visionPath}}">Vision</a></div>
+      <div class="main_nav"><a href="{{rankingPath}}">Ranking</a></div>
+      <div class="main_nav"><a href="{{peoplePath}}">People</a></div>
+      <div class="main_nav"><a href="{{dataPath}}">Data</a></div>
+      <div class="main_nav"><a href="{{faqPath}}">FAQ</a></div> 
+      <div class="main_nav"><a href="{{aboutPath}}">About</a></div>
+    </div> 
+    
+    <!-- Page Rendering -->
+    {{renderPage}}
+
+  </div>
+	
+	<!-- Footer -->
+	<div id="footer">
+   	<div class="row">
+   	  <div class="footer-logo">
+        <a href="http://macroconnections.media.mit.edu"><img src="images/macroconnections_logo_dark.png" alt="Macro Connections"></a>
+          </div>
+          <div class="footer-license">
+   	        <p>&copy; 2013 Macro Connections, MIT Media Lab, Massachusetts Institute of Technology. This work is being shared under a Creative Commons By-NC-SA license.</p>
+     	    </div>
+    	</div>
+    </div>
+  </div>
+</body>
