@@ -19,6 +19,12 @@ Template.select_mode.render_template = function() {
     }
 }
 
+Template.select_mode.rendered = function() {
+    $.each(this.findAll("select, input"), function() {
+        $(this).uniform();
+    });
+}
+
 Template.select_exporter.countries = function (){
     return Countries.find( {},
         { sort: { "countryName": 1 } }

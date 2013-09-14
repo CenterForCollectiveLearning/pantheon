@@ -1,5 +1,5 @@
-var url_x = "http://culture.media.mit.edu:8080/?query=domain&lang=" + selected_region_x + "&country=" + selected_country_x + "&b=" + from + "&e=" + to + "&L=" + l;
-var url_y = "http://culture.media.mit.edu:8080/?query=domain&lang=" + selected_region_y + "&country=" + selected_country_y  + "&b=" + from + "&e=" + to + "&L=" + l;
+//var url_x = "http://culture.media.mit.edu:8080/?query=domain&lang=" + selected_region_x + "&country=" + selected_country_x + "&b=" + from + "&e=" + to + "&L=" + l;
+//var url_y = "http://culture.media.mit.edu:8080/?query=domain&lang=" + selected_region_y + "&country=" + selected_country_y  + "&b=" + from + "&e=" + to + "&L=" + l;
 
 function generate_scatterplot() {
     var width = 940,
@@ -134,4 +134,4 @@ function generate_scatterplot() {
 
         });
 });
-}ar
+}

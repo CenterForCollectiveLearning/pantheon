@@ -55,9 +55,6 @@ $(document).ready(function () {
     //default view
     // enableDisableControlsFor("switch_to_exports");
 
-    //other initializations
-    // ("select, input").uniform();
-
     //get culture data
     $("#loading").show();
 
