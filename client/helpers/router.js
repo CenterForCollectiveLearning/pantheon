@@ -1,5 +1,3 @@
-// TODO: Include conditional logic in router
-
 Router.map(function() {
     this.route('observatory',
         {path: '/observatory',
@@ -19,6 +17,7 @@ Router.map(function() {
     this.route('observatory', {
         path: '/:vizType/:vizMode/:ent1/:ent2/:from/:to/:langs',
         data: function() { 
+            Session.set('page', this.template);
             Session.set('vizType', this.params.vizType); 
             Session.set('vizMode', this.params.vizMode); 
             Session.set('country', this.params.ent1);  
@@ -28,13 +27,38 @@ Router.map(function() {
             Session.set('langs', this.params.langs);  
         }}
     );
-    // this.route('observatory'); // TODO: there is probaby a way to make two paths point to the same template
-    this.route('vision');
-    this.route('ranking');
-    this.route('data');
-    this.route('faq');
-    this.route('people');
-    this.route('about');
+
+    this.route('vision', {
+        data: function() {
+            Session.set('page', this.template);
+        }
+    });
+    this.route('ranking', {
+        data: function() {
+            Session.set('page', this.template);
+        }
+    });
+    this.route('data', {
+        data: function() {
+            Session.set('page', this.template);
+        }
+    });
+    this.route('faq', {
+        data: function() {
+            Session.set('page', this.template);
+        }
+    });
+    this.route('people', {
+        data: function() {
+            Session.set('page', this.template);
+        }
+    });
+    this.route('about', {
+        data: function() {
+            Session.set('page', this.template);
+        }
+    });
+
 });
 
 Router.configure({
@@ -43,7 +67,7 @@ Router.configure({
     {   'nav':
             { to: 'nav'},
         'footer':
-        {   to: 'footer' }
+            { to: 'footer' }
     },
   loadingTemplate: 'spinner'
 });

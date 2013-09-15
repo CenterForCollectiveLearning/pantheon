@@ -33,6 +33,7 @@ Template.accordion.events = {
             "domain_exports_to": "treemap",
             "domain_imports_from": "treemap",
             "bilateral_exporters_of": "treemap",
+            "bilateral_importers_of": "treemap",
             "country_exports": "treemap",
             "matrix_exports": "matrix",
             "country_vs_country": "scatterplot",
@@ -63,115 +64,6 @@ Template.ranked_list.empty = function(){
 Template.ranked_person.birthday = function() {
     var birthday = (this.birthyear < 0) ? (this.birthyear * -1) + " B.C." : this.birthyear;
     return birthday;
-}
-
-function assignEventListeners() {
-    $("#play-explore.paused").live("mouseover", function(e) {
-        $('#play-explore').attr('src', 'images/cycle-over.png');
-    });
-
-    $("#play-explore.paused").live("mouseout", function(e) {
-        $('#play-explore').attr('src', 'images/cycle.png');
-    });
-
-    $("#play-explore.playing").live("mouseover", function(e) {
-        $('#play-explore').attr('src', 'images/cyclepause-over.png');
-    });
-
-    $("#play-explore.playing").live("mouseout", function(e) {
-        $('#play-explore').attr('src', 'images/cyclepause.png');
-    });
-
-
-    $("#play-explore").toggle(function(e) {
-        $('#play-explore').attr('src', 'images/cyclepause-over.png');
-        $('#play-explore').attr('class', 'playing');
-
-        //first time
-        if(from == to) {
-            $('#play-explore').attr('src', 'images/cycle-over.png');
-            $('#play-explore').attr('class', 'paused');
-
-            return false;
-        }
-
-        playing = true;
-
-        from = incrementDate();
-        console.log(from);
-
-        $("#from").val(from);
-        $.uniform.update();
-
-        updateQuestion();
-        getIndividuals();
-
-        if(from == to) {
-            $('#play-explore').attr('src', 'images/cycle-over.png');
-            $('#play-explore').attr('class', 'paused');
-
-            return false;
-        }
-        //end first time
-
-        inter = self.setInterval(function() {
-            if(from >= to) {
-                //after we're done
-                playing = false;
-                $('#play-explore').attr('src', 'images/cycle-over.png');
-                $('#play-explore').attr('class', 'paused');
-
-                clearInterval(inter);
-            }
-
-            from = incrementDate();
-            console.log(from);
-
-            if(from > to) from = to;
-
-            $("#from").val(from);
-            $.uniform.update();
-
-            updateQuestion();
-            getIndividuals();
-        }, play_button_delay);
-
-        return false;
-    }, function(e) {
-        console.log("toggle pause");
-
-        clearInterval(inter);
-        playing = false;
-
-        $('#play-explore').attr('src', 'images/cycle-over.png');
-        $('#play-explore').attr('class', 'paused');
-    });
-
-    $("#viz_pane svg").on("mouseleave", function () {
-        $("#tooltip").fadeOut();
-    });
-
-    $("h3 a").on("click", function () {
-        return false;
-    });
-
-    $('.legend .pill').live('mouseover', function (d) {
-        var srcE = d.srcElement ? d.srcElement : d.target;
-        var id = srcE.id;
-
-        var color = $(".cell_" + id + " rect").css("fill");
-        $(".cell_" + id + " rect").css("fill", d3.hsl(color).brighter(0.7).toString());
-        $(this).css("border-bottom", "3px solid #f1f1f1");
-    });
-
-    $('.legend .pill').live('mouseout', function (d) {
-        var srcE = d.srcElement ? d.srcElement : d.target;
-        var id = srcE.id;
-
-        var color = $(".cell_" + id + " rect").css("fill");
-        $(".cell_" + id + " rect").css("fill", d3.hsl(color).darker(0.7).toString());
-        $(this).css("border-bottom", "0");
-    });
 }
 
 // Generate question given viz type

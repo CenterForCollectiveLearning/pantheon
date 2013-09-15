@@ -728,6 +728,7 @@ rect {
 	font-family:'Signika';
 	font-weight:300;
 	color:#fc0046;	
+	text-transform: capitalize;
 }
 
 #sections_nav div.main_nav {
@@ -930,7 +931,7 @@ button {
 }
 
 .legend {
-	width:740px;
+	width:750px;
 	overflow:hidden;
 	height:35px;
 	z-index:99;

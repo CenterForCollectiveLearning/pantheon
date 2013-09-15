@@ -20,7 +20,4 @@ Deps.autorun(function(){
     }
 });
 
-
-
 // TODO subscribe to people
-

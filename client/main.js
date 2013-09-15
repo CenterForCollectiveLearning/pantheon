@@ -11,29 +11,53 @@ Meteor.startup(function() {
     Session.setDefault('langs', '25')
     });
 
-Template.nav.events = {
-    // TODO is this really necessary?
-    "click .main_nav a": function (event) {
-        var anchor = $(this);
-
-        $('html, body').stop().animate({
-            scrollTop: $(anchor.attr('href')).offset().top
-        }, 900, 'easeInOutExpo');
-
-        event.preventDefault();
-    }
-}
-
-// Global Helper
-if (typeof Handlebars !== 'undefined') {
-  Handlebars.registerHelper('afterBody', function(name, options) {
-  });
-}
-
 // Select sections based on template
-// Template.nav.selected = function() {
-//     return Session.equals('page', this._id) ? 'selected_section' : '';
-// }
+Template.nav.selected = function() {
+    console.log(this.id);
+    return Session.equals('page', this._id) ? 'selected_section' : '';
+}
+
+// Section Navigation
+var sections = [
+    {
+        section: "observatory",
+        url: "/observatory"
+    },
+    {
+        section: "vision",
+        url: "/vision"
+    },
+    {
+        section: "ranking",
+        url: "/ranking"
+    },
+    {
+        section: "people",
+        url: "/people"
+    },
+    {
+        section: "data",
+        url: "/data"
+    },
+    {
+        section: "faq",
+        url: "/faq"
+    },
+    {
+        section: "about",
+        url: "/about"
+    }
+]
+
+Template.nav.helpers({
+    sections: sections
+})
+
+Template.section.helpers({
+    selected: function() {
+        return Session.equals('page', this.section) ? 'selected_section' : '';
+    }
+})
 
 // Spinner
 Template.spinner.rendered = function(){
