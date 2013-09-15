@@ -10,6 +10,7 @@ Meteor.startup(function() {
     Session.setDefault('langs', '25')
     });
 
+<<<<<<< Updated upstream
 Template.nav.events = {
     // TODO is this really necessary?
     "click .main_nav a": function (event) {
@@ -21,12 +22,21 @@ Template.nav.events = {
 
         event.preventDefault();
     }
+
+=======
+>>>>>>> Stashed changes
+// Global Helper
+if (typeof Handlebars !== 'undefined') {
+  Handlebars.registerHelper('afterBody', function(name, options) {
+  });
 }
 
+// Select sections based on template
 // Template.nav.selected = function() {
 //     return Session.equals('page', this._id) ? 'selected_section' : '';
 // }
 
+// Spinner
 Template.spinner.rendered = function(){
     var opts = {
         lines: 12, // The number of lines to draw

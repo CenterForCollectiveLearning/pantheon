@@ -27,7 +27,6 @@ var color_domain_countries = d3.scale.ordinal()
     .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2"]);
 
 Template.observatory.rendered = function() {
-
     var query = gimmeQuery();
     var url = "http://culture.media.mit.edu:8080/?query=" + query + "&country=" + selected_country + "&lang=" + selected_region + "&b=" + from + "&e=" + to + "&L=" + l;
     d3.json(url, function (json) {
@@ -56,10 +55,17 @@ Template.observatory.rendered = function() {
 }
 
 Template.accordion.rendered = function() {
-    accordion = $(this.find(".accordion"))
+    var mapping = {
+        "treemap": 0,
+        "matrix": 1,
+        "scatterplot": 2
+    }
+
+    var accordion = $(".accordion");
+
 
     accordion.accordion({
-            active: 0,
+            active: mapping[Session.get("vizType")],
             collapsible: true,
             heightStyle: "content",
             fillSpace: true
@@ -74,10 +80,24 @@ Template.accordion.events = {
         resetControls();
 
         var srcE = d.srcElement ? d.srcElement : d.target;
-        var option = $(srcE).attr("id")
+
+        var option = $(srcE).attr("id");
+
+        var mapping = {
+            "country_exports": "treemap",
+            "country_imports": "treemap",
+            "domain_exports_to": "treemap",
+            "domain_imports_from": "treemap",
+            "bilateral_exporters_of": "treemap",
+            "country_exports": "treemap",
+            "matrix_exports": "matrix",
+            "country_vs_country": "scatterplot",
+            "lang_vs_lang": "scatterplot"
+        }
 
         // Resetting the set by doing a new route navigation
-        var url = '/' + Session.get('vizType') + '/' + 
+        var url = '/' + 
+            mapping[option] + '/' + 
             option + '/' +
             Session.get('ent1') + '/' +
             Session.get('ent2') + '/' +

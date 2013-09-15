@@ -14,8 +14,8 @@ Template.select_mode.render_template = function() {
             return new Handlebars.SafeString(Template.bilateral_exporters_mode(this));
         case "bilateral_importers_of":
             return new Handlebars.SafeString(Template.bilateral_importers_mode(this));
-        case "heatmap_exports":
-            return new Handlebars.SafeString(Template.heatmap_exports_mode(this));
+        case "matrix_exports":
+            return new Handlebars.SafeString(Template.matrix_exports_mode(this));
     }
 }
 
@@ -64,6 +64,20 @@ Template.select_from.events = {
 Template.select_to.events = {
     "change select": function(d) {
         Session.set("to", d.target.value);
+        var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('vizMode') + '/' +
+            Session.get('ent1') + '/' +
+            Session.get('ent2') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
+    }
+}
+
+Template.select_l.events = {
+    "change select": function(d) {
+        Session.set("langs", d.target.value);
         var url = '/' + Session.get('vizType') + '/' + 
             Session.get('vizMode') + '/' +
             Session.get('ent1') + '/' +
