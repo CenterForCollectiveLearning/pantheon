@@ -555,12 +555,26 @@ tr {
 	background-position:top right;*/
 }
 
+.ranked_list li {
+	padding-bottom: 5px;
+}
+
+.ranked_list li span {
+	font-size: 70%;
+}
+
 .ranked_list .header {
-	padding-top:12px;
+	padding-top:8px;
 	padding-bottom:16px;
 	letter-spacing:1px;
 	font-size:22px;
 	font-weight:400;
+}
+
+.ranked_list ol {
+	margin: 0;
+	padding-left: 0;
+	list-style-position: inside;
 }
 
 #viz_options .step {
@@ -775,7 +789,7 @@ rect {
 }
 
 .hightop {
-	margin-top:60px;
+	margin-top:90px;
 }
 
 .highertop {

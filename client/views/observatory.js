@@ -144,7 +144,8 @@ Template.question.helpers({
             s_domains = "in the area of " + s_domains.substring(1);
         }
 
-        switch (Session.get("vizMode")) {
+        var mode = Session.get("vizMode");
+        switch (mode) {
             case "country_exports":
                 return "What does " + s_countries + " export?";
             case "country_imports":
