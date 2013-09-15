@@ -1,5 +1,18 @@
 // Helper methods for observatory page
 
+// Render SVGs and ranked list based on current vizMode
+Template.visualization.render_template = function() {
+    var type = Session.get("vizType");
+    switch (type) {
+        case "treemap":
+            return new Handlebars.SafeString(Template.treemap(this));
+        case "matrix":
+            return new Handlebars.SafeString(Template.matrix(this));
+        case "scatterplot":
+            return new Handlebars.SafeString(Template.scatterplot(this));
+    }
+}
+
 Template.accordion.rendered = function() {
 
     // TODO Make such mappings global...or do something about it
@@ -21,6 +34,7 @@ Template.accordion.rendered = function() {
     accordion.accordion( "resize" );
 }
 
+// TODO: ORGANIZE THIS!!! 
 Template.accordion.events = {
     "click li a": function (d) {
 
@@ -34,18 +48,60 @@ Template.accordion.events = {
             "domain_imports_from": "treemap",
             "bilateral_exporters_of": "treemap",
             "bilateral_importers_of": "treemap",
-            "country_exports": "treemap",
             "matrix_exports": "matrix",
             "country_vs_country": "scatterplot",
             "lang_vs_lang": "scatterplot"
+        }
+
+        // Parameters depend on vizMode (e.g countries -> languages for exports)
+
+        var param1, param2; 
+        var mode = Session.get("vizMode");
+        switch (mode) {
+            case "country_exports":
+                param1 = "country";
+                param2 = "language";
+                break;
+            case "country_imports":
+                param1 = "country";
+                param2 = "language";
+                break;
+            case "domain_exports_to":
+                param1 = "domain";
+                param2 = "country"; // Not really
+                break;
+            case "domain_imports_from":
+                param1 = "domain";
+                param2 = "country"; // Not really
+                break;
+            case "bilateral_exporters_of":
+                param1 = "country";
+                param2 = "language";
+                break;
+            case "bilateral_importers_of":
+                param1 = "country";
+                param2 = "domain";
+                break;
+            case "matrix_exports":
+                param1 = "country";
+                param2 = "country";
+                break;
+            case "country_vs_country":
+                param1 = "country";
+                param2 = "country";
+                break;
+            case "lang_vs_lang":
+                param1 = "language";
+                param2 = "language";
+                break;
         }
 
         // Resetting the set by doing a new route navigation
         var url = '/' + 
             mapping[option] + '/' + 
             option + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
+            Session.get(param1) + '/' +
+            Session.get(param2) + '/' +
             Session.get('from') + '/' +
             Session.get('to') + '/' +
             Session.get('langs');
@@ -101,6 +157,12 @@ Template.question.helpers({
                 return "What does " + s_countries + " export to " + s_regions + speakers_or_no_speakers + "?";
             case "bilateral_importers_of":
                 return "Where does " + s_countries + " export " + s_domains + " to?";
+            case "matrix_exports":
+                return "What does " + s_countries + " export?";
+            case "country_vs_country":
+                return "What does " + s_countries + " export?";
+            case "lang_vs_lang":
+                return "What does " + s_countries + " export?";
         }
 
     }        

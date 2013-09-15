@@ -1,4 +1,6 @@
 // Set Defaults
+// TODO Where do you put these global functions?
+
 Meteor.startup(function() {
     Session.setDefault('page', 'observatory')
     Session.setDefault('vizType', 'treemap')
@@ -18,33 +20,41 @@ Template.nav.selected = function() {
 }
 
 // Section Navigation
+// TODO Is this repetitiveness necessary for correct formatting?
 var sections = [
     {
-        section: "observatory",
+        section: "Observatory",
+        template: "observatory",
         url: "/observatory"
     },
     {
-        section: "vision",
+        section: "Vision",
+        template: "vision",
         url: "/vision"
     },
     {
-        section: "ranking",
+        section: "Ranking",
+        template: "ranking",
         url: "/ranking"
     },
     {
-        section: "people",
+        section: "People",
+        template: "people",
         url: "/people"
     },
     {
-        section: "data",
+        section: "Data",
+        template: "data",
         url: "/data"
     },
     {
-        section: "faq",
+        section: "FAQ",
+        template: "faq",
         url: "/faq"
     },
     {
-        section: "about",
+        section: "About",
+        template: "about",
         url: "/about"
     }
 ]
@@ -55,7 +65,7 @@ Template.nav.helpers({
 
 Template.section.helpers({
     selected: function() {
-        return Session.equals('page', this.section) ? 'selected_section' : '';
+        return Session.equals('page', this.template) ? 'selected_section' : '';
     }
 })
 

@@ -29,11 +29,22 @@
     {{> select_language}}
 </template>
 
-<template name="exports_mode">
+<template name="matrix_exports_mode">
     {{> select_country_order}}
     {{> select_industry_order}}
     {{> select_gender}}
 </template>
+
+<template name="country_vs_country_mode">
+    {{> select_country}}
+    {{> select_country}}
+</template>
+
+<template name="language_vs_langauge_mode">
+    {{> select_language}}
+    {{> select_language}}
+</template>
+
 
 <template name="select_country">
     <label id="countries_label">Exporter</label>

@@ -4,42 +4,27 @@
         <div id="apps">
             {{> accordion}}
         </div>
-        <!-- TODO: Move this out -->
-        {{> ranked_list }}
-        
+
         <div id="viz_container">
         </div>
         
         {{> question}}
 
+        <!-- Mode-dependent Dropdowns -->
         <div id="viz_options">
             {{> select_mode }}
         </div>
     </div>
 
+    <!-- Visualization and Ranked List Container -->
     <div id="viz_pane">
-        <div id="viz">
-            <svg width="725" height="580"></svg>
-        </div>
-
-        <div class="color_scale">
-            <svg></svg>
-        </div>
-
-        <!-- TODO: Move this out -->
-        <div class="legend">
-            <div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
-            <div id="arts" class="pill" style="background-color:#D95B43">Arts</div>
-            <div id="humanities" class="pill" style="background-color:#43c1d9">Humanities</div>
-            <div id="business_and_law" class="pill" style="background-color:#C02942">Business &amp; Law</div>
-            <div id="exploration" class="pill" style="background-color:#546c97">Exploration</div>
-            <div id="public_figure" class="pill" style="background-color:#d278c2">Public Figure</div>
-            <div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
-            <div id="sports" class="pill">Sports</div>
-        </div>
+        {{> visualization}}
+        <div id="tooltip"></div>
     </div>
+</template>
 
-    <div id="tooltip"></div>
+<template name="visualization">
+    {{ render_template }}
 </template>
 
 <!-- Accordion Selector -->
@@ -76,6 +61,12 @@
                 <li><span><a href="#" id="lang_vs_lang">Language vs. Language</a></span></li>
             </ul>
         </div>
+        <h3 class="app">WORLD MAPS</h3>
+        <div>
+            <ul>
+                <li><span><a href="#" id="country_exports">Exports</a></span></li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -87,7 +78,7 @@
 
 <!-- Ranked List for Treemap -->
 <template name="ranked_list">
-    <div id="ranked_list">
+    <div class="ranked_list">
         <div class="header">RANKING OF PEOPLE</div>
         <div class="content">
             {{#if empty}}

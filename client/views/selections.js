@@ -50,6 +50,7 @@ Template.select_l.rendered = function() {
 }
 
 // TODO: Do this correctly and reduce redundancy
+// TODO: How do you get this tracking correctly?
 Template.select_country.events = {
     "change select": function(d) {
         Session.set("country", d.target.value);
@@ -78,6 +79,19 @@ Template.select_language.events = {
     }
 }
 
+Template.select_domain.events = {
+    "change select": function(d) {
+        Session.set("domain", d.target.value);
+        var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('vizMode') + '/' +
+            Session.get('country') + '/' +
+            Session.get('language') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
+    }
+}
 
 Template.select_from.events = {
     "change select": function(d) {

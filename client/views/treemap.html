@@ -1,12 +1,22 @@
 <template name="treemap">
-	TREEMAP HERE
-  <div class="treemap">
-    {{#constant}}
-      <svg width="500" height="500">
-        <circle class="callout" cx=-100 cy=-100></circle>
-        <g class="circles"></g>
-        <g class="labels"></g>
-      </svg>
-    {{/constant}}
-  </div>
+
+	{{#constant}}
+	<div id="viz">
+		<svg width="725" height="560"></svg>
+	</div>
+	{{/constant}}
+
+	{{> ranked_list }}
+
+	<!-- TODO: Move this out -->
+	<div class="legend">
+		<div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
+		<div id="arts" class="pill" style="background-color:#D95B43">Arts</div>
+		<div id="humanities" class="pill" style="background-color:#43c1d9">Humanities</div>
+		<div id="business_and_law" class="pill" style="background-color:#C02942">Business &amp; Law</div>
+		<div id="exploration" class="pill" style="background-color:#546c97">Exploration</div>
+		<div id="public_figure" class="pill" style="background-color:#d278c2">Public Figure</div>
+		<div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
+		<div id="sports" class="pill">Sports</div>
+	</div>
 </template>
