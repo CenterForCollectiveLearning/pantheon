@@ -1,23 +1,19 @@
+<!-- Non-visualization specific Observatory elements (e.g. accordion, menu) -->
 <template name="observatory">
     <div class="copy exploretop">
         <div id="apps">
-
             {{> accordion}}
-
-            <div style="clear:both"></div>
         </div>
-
+        <!-- TODO: Move this out -->
         {{> ranked_list }}
-
+        
         <div id="viz_container">
         </div>
+        
+        {{> question}}
 
-        <div id="question">What does the world export?</div>
         <div id="viz_options">
             {{> select_mode }}
-        </div>
-
-        <div>
         </div>
     </div>
 
@@ -30,6 +26,7 @@
             <svg></svg>
         </div>
 
+        <!-- TODO: Move this out -->
         <div class="legend">
             <div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
             <div id="arts" class="pill" style="background-color:#D95B43">Arts</div>
@@ -43,46 +40,52 @@
     </div>
 
     <div id="tooltip"></div>
-
-    {{afterBody}}
 </template>
 
+<!-- Accordion Selector -->
 <template name="accordion">
     <div class="accordion">
         <h3 class="app">TREEMAPS</h3>
         <div>
             <span class="app_subtitle">Country</span>
             <ul>
-                <li><span class="treemap selected"><a href="#" id="country_exports">Exports</a></span></li>
-                <li><span><a href="#" class="treemap" id="country_imports">Imports</a></span></li>
+                <li><span><a href="#" id="country_exports">Exports</a></span></li>
+                <li><span><a href="#" id="country_imports">Imports</a></span></li>
             </ul>
             <span class="app_subtitle">Domain</span>
             <ul>
-                <li><span><a href="#" class="treemap" id="domain_exports_to">Exporters</a></span></li>
-                <li><span><a href="#" class="treemap" id="domain_imports_from">Importers from</a></span></li>
+                <li><span><a href="#" id="domain_exports_to">Exporters</a></span></li>
+                <li><span><a href="#" id="domain_imports_from">Importers from</a></span></li>
             </ul>
             <span class="app_subtitle">Bilateral</span>
             <ul>
-                <li><span><a href="#" class="treemap" id="bilateral_exporters_of">Exports to</a></span></li>
-                <li><span><a href="#" class="treemap" id="bilateral_importers_of">Exporters of</a></span></li>
+                <li><span><a href="#" id="bilateral_exporters_of">Exports to</a></span></li>
+                <li><span><a href="#" id="bilateral_importers_of">Exporters of</a></span></li>
             </ul>
         </div>
         <h3 class="app">MATRICES</h3>
         <div>
             <ul>
-                <li><span><a href="#" class="matrix" id="matrix_exports">World Exports</a></span></li>
+                <li><span><a href="#" id="matrix_exports">World Exports</a></span></li>
             </ul>
         </div>
         <h3 class="app">SCATTERPLOTS</h3>
         <div>
             <ul>
-                <li><span><a href="#" class="scatterplots" id="country_vs_country">Country vs. Country</a></span></li>
-                <li><span><a href="#" class="scatterplots" id="lang_vs_lang">Language vs. Language</a></span></li>
+                <li><span><a href="#" id="country_vs_country">Country vs. Country</a></span></li>
+                <li><span><a href="#" id="lang_vs_lang">Language vs. Language</a></span></li>
             </ul>
         </div>
     </div>
 </template>
 
+<!-- Visualization and Viz-Mode specific Question -->
+<template name="question">
+    <div id="question">{{question}}</div>
+    <!-- <div id="question">What does the world export?</div> -->
+</template>
+
+<!-- Ranked List for Treemap -->
 <template name="ranked_list">
     <div id="ranked_list">
         <div class="header">RANKING OF PEOPLE</div>
@@ -100,6 +103,7 @@
     </div>
 </template>
 
+<!-- Person in Ranked List -->
 <template name="ranked_person">
     <li style="padding-bottom:5px">
         {{! insert thumbnail here}}

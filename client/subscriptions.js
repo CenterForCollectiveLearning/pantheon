@@ -5,7 +5,7 @@ PeopleTop10 = new Meteor.Collection("top10people");
 var top10sub = null;
 
 Deps.autorun(function(){
-    var country = Session.get('ent1');
+    var country = Session.get('country');
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = Session.get('langs');

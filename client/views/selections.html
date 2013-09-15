@@ -1,3 +1,4 @@
+<!-- Dropdown Menu Container-->
 <template name="select_mode">
     {{ render_template }}
     {{> select_from}}
@@ -5,12 +6,14 @@
     {{> select_l}}
 </template>
 
+
+<!-- Dropdown Menus -->
 <template name="country_exporters_mode">
-    {{> select_exporter}}
+    {{> select_country}}
 </template>
 
 <template name="country_importers_mode">
-    {{> select_importer}}
+    {{> select_language}}
 </template>
 
 <template name="domain_mode">
@@ -18,22 +21,22 @@
 </template>
 
 <template name="bilateral_exporters_mode">
-    {{> select_exporter}}
-    {{> select_importer}}
+    {{> select_country}}
+    {{> select_language}}
 </template>
 
 <template name="bilateral_importers_mode">
-    {{> select_exporter}}
-    {{> select_domain}}1
+    {{> select_country}}
+    {{> select_language}}
 </template>
 
-<template name="matrix_exports_mode">
+<template name="exports_mode">
     {{> select_country_order}}
     {{> select_industry_order}}
     {{> select_gender}}
 </template>
 
-<template name="select_exporter">
+<template name="select_country">
     <label id="countries_label">Exporter</label>
     <select id="countries" class="top_nav_control">
         <option value="all" selected="selected">All</option>
@@ -43,7 +46,7 @@
     </select>
 </template>
 
-<template name="select_importer">
+<template name="select_language">
     <label id="languages_label">Importer</label>
     <select id="languages" class="top_nav_control">
         <option value="all">All</option>
