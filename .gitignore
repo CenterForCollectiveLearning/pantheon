@@ -1,11 +1,15 @@
 
 # Common Files
 .DS_Store
-.project
+.projectw
 *#*
 *~*
 *.backup*
 *.pyc
+
+# Premature design files
+*.ai
+*.pdf
 
 # IDE files
 .idea/*
