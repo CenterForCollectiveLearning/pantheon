@@ -1,10 +1,13 @@
 <template name="matrix">
     {{#constant}}
-      <div id="viz">
-      	<svg width="980" height="155"></svg>
+      <div id="viz" class="matrix">
+      	<svg class="header" width="980" height="155"></svg>
       	<div class="scroll-container">
-      		<svg width="980" height="2000"></svg>
+      		<svg class="matrix" width="980" height="2000"></svg>
       	</div>
+      </div>
+      <div class="color-scale">
+      	<svg></svg>
       </div>
     {{/constant}}
 </template>

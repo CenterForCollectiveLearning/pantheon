@@ -2,15 +2,18 @@
 // TODO Where do you put these global functions?
 
 Meteor.startup(function() {
-    Session.setDefault('page', 'observatory')
-    Session.setDefault('vizType', 'treemap')
-    Session.setDefault('vizMode', 'country_exports')
-    Session.setDefault('country', 'all')
-    Session.setDefault('language', 'all')
-    Session.setDefault('domain', 'all')
-    Session.setDefault('from', '-1000')
-    Session.setDefault('to', '1950')
-    Session.setDefault('langs', '25')
+    Session.setDefault('page', 'observatory');
+    Session.setDefault('vizType', 'treemap');
+    Session.setDefault('vizMode', 'country_exports');
+    Session.setDefault('country', 'all');
+    Session.setDefault('language', 'all');
+    Session.setDefault('domain', 'all');
+    Session.setDefault('from', '-1000');
+    Session.setDefault('to', '1950');
+    Session.setDefault('langs', '25');
+    Session.setDefault('gender', 'both');
+    Session.setDefault('countryOrder', 'count');
+    Session.setDefault('industryOrder', 'count');
     });
 
 // Select sections based on template

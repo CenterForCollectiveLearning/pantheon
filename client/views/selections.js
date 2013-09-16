@@ -49,6 +49,18 @@ Template.select_l.rendered = function() {
     $(this.find("select")).val(Session.get("langs"));
 }
 
+Template.select_gender.rendered = function() {
+    $(this.find("select")).val(Session.get("gender"));
+}
+
+Template.select_country_order.rendered = function() {
+    $(this.find("select")).val(Session.get("countryOrder"));
+}
+
+Template.select_industry_order.rendered = function() {
+    $(this.find("select")).val(Session.get("industryOrder"));
+}
+
 // TODO: Do this correctly and reduce redundancy
 // TODO: How do you get this tracking correctly?
 Template.select_country.events = {
@@ -124,6 +136,48 @@ Template.select_to.events = {
 Template.select_l.events = {
     "change select": function(d) {
         Session.set("langs", d.target.value);
+        var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('vizMode') + '/' +
+            Session.get('country') + '/' +
+            Session.get('language') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
+    }
+}
+
+Template.select_gender.events = {
+    "change select": function(d) {
+        Session.set("gender", d.target.value);
+        var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('vizMode') + '/' +
+            Session.get('country') + '/' +
+            Session.get('language') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
+    }
+}
+
+Template.select_country_order.events = {
+    "change select": function(d) {
+        Session.set("countryOrder", d.target.value);
+        var url = '/' + Session.get('vizType') + '/' + 
+            Session.get('vizMode') + '/' +
+            Session.get('country') + '/' +
+            Session.get('language') + '/' +
+            Session.get('from') + '/' +
+            Session.get('to') + '/' +
+            Session.get('langs');
+        Router.go(url);
+    }
+}
+
+Template.select_industry_order.events = {
+    "change select": function(d) {
+        Session.set("industryOrder", d.target.value);
         var url = '/' + Session.get('vizType') + '/' + 
             Session.get('vizMode') + '/' +
             Session.get('country') + '/' +

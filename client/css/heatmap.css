@@ -2,6 +2,16 @@
     fill: #202020;
 }
 
+#viz svg.header {
+    background-color: #202020;
+    border-width: 1px 1px 0px 1px;
+}
+
+#viz svg.matrix {
+    background-color: #202020;
+    border-width: 0px 1px 1px 1px;
+}
+
 .column-title,
 .row-title {
     fill: #f1e7d0;
@@ -24,12 +34,12 @@
     stroke: none;
 }
 
-.color_scale svg rect {
+.color-scale svg rect {
     fill: url(#gradient);
     stroke: none;
 }
 
-.color_scale text {
+.color-scale text {
     fill: #202020;
     font-weight: 500;
 }
