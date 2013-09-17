@@ -24,45 +24,60 @@ Template.select_mode.render_template = function() {
 }
 
 // Change selected based on session variables
+/* The below code also sets uniform on each element individually
+ Setting them at a parent template will cause the errors we saw before
+ This is equivalent to $(item).val(blah)
+                       $(item).uniform()
+*/
+
+
 Template.select_country.rendered = function() {
-    $(this.find("select")).val(Session.get("country"));
+    $(this.find("select")).val(Session.get("country")).uniform();
 }
 
 Template.select_language.rendered = function() {
-    $(this.find("select")).val(Session.get("language"));
+    $(this.find("select")).val(Session.get("language")).uniform();
 }
 
 Template.select_domain.rendered = function() {
-    $(this.find("select")).val(Session.get("domain"));
+    $(this.find("select")).val(Session.get("domain")).uniform();
 }
 
 // TODO: Find closest round number
 Template.select_from.rendered = function() {
-    $(this.find("select")).val(Session.get("from"));
+    $(this.find("select")).val(Session.get("from")).uniform();
 }
 
 Template.select_to.rendered = function() {
-    $(this.find("select")).val(Session.get("to"));
+    $(this.find("select")).val(Session.get("to")).uniform();
 }
 
 Template.select_l.rendered = function() {
-    $(this.find("select")).val(Session.get("langs"));
+    $(this.find("select")).val(Session.get("langs")).uniform();
 }
 
 Template.select_gender.rendered = function() {
-    $(this.find("select")).val(Session.get("gender"));
+    $(this.find("select")).val(Session.get("gender")).uniform();
 }
 
 Template.select_country_order.rendered = function() {
-    $(this.find("select")).val(Session.get("countryOrder"));
+    $(this.find("select")).val(Session.get("countryOrder")).uniform();
 }
 
 Template.select_industry_order.rendered = function() {
-    $(this.find("select")).val(Session.get("industryOrder"));
+    $(this.find("select")).val(Session.get("industryOrder")).uniform();
 }
 
 // TODO: Do this correctly and reduce redundancy
 // TODO: How do you get this tracking correctly?
+
+/* My idea:
+   If you're going to do it this way, don't copy the same code 9 times :)
+    However, the way I would do it is to cut the current value out of the right part of the route (as an integer index)
+     and then just update the router to the new route. This will set session variables as a side effect.
+
+    Your current approach is going to be setting session variables twice.
+ */
 Template.select_country.events = {
     "change select": function(d) {
         Session.set("country", d.target.value);

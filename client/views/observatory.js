@@ -123,49 +123,47 @@ Template.ranked_person.birthday = function() {
 }
 
 // Generate question given viz type
-Template.question.helpers({
-    question: function() {
-        var s_countries = (Session.get("country") == "all") ? "the world" : country[Session.get("country")];
-        var s_domains = (Session.get("domain") == "all") ? "all domains" : decodeURIComponent(Session.get("domain"));
-        var s_regions = (Session.get("language") == "all") ? "the world" : region[Session.get("language")];
-        var does_or_do = (Session.get("country") == "all") ? "do" : "does";
-        var s_or_no_s_c = (Session.get("country") == "all") ? "'" : "'s";
-        var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
-        var speakers_or_no_speakers = (Session.get("language") == "all") ? "" : " speakers";
+Template.question.question = function() {
 
-        if(s_domains.charAt(0) == "-") {
-            console.log(s_domains.charAt(s_domains.length-1));
-            if(s_domains.charAt(s_domains.length-1) == "y")
-                s_domains = s_domains.substring(1, s_domains.length-1) + "ies";
-            else
-                s_domains = s_domains.substring(1) + "s";
-        }
-        else if(s_domains.charAt(0) == "+") {
-            s_domains = "in the area of " + s_domains.substring(1);
-        }
+    var s_countries = (Session.get("country") == "all") ? "the world" : country[Session.get("country")];
+    var s_domains = (Session.get("domain") == "all") ? "all domains" : decodeURIComponent(Session.get("domain"));
+    var s_regions = (Session.get("language") == "all") ? "the world" : region[Session.get("language")];
+    var does_or_do = (Session.get("country") == "all") ? "do" : "does";
+    var s_or_no_s_c = (Session.get("country") == "all") ? "'" : "'s";
+    var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
+    var speakers_or_no_speakers = (Session.get("language") == "all") ? "" : " speakers";
 
-        var mode = Session.get("vizMode");
-        switch (mode) {
-            case "country_exports":
-                return "What does " + s_countries + " export?";
-            case "country_imports":
-                return (Session.get("language") == "all") ? "What does the world import?" : "What do " + s_regions + " speakers import?";
-            case "domain_exports_to":
-                return "Who exports " + s_domains + "?";
-            case "domain_imports_from":
-                return "Who imports " + s_domains + "?";
-            case "bilateral_exporters_of":
-                return "What does " + s_countries + " export to " + s_regions + speakers_or_no_speakers + "?";
-            case "bilateral_importers_of":
-                return "Where does " + s_countries + " export " + s_domains + " to?";
-            case "matrix_exports":
-                return "What does " + s_countries + " export?";
-            case "country_vs_country":
-                return "What does " + s_countries + " export?";
-            case "lang_vs_lang":
-                return "What does " + s_countries + " export?";
-        }
+    if(s_domains.charAt(0) == "-") {
+        console.log(s_domains.charAt(s_domains.length-1));
+        if(s_domains.charAt(s_domains.length-1) == "y")
+            s_domains = s_domains.substring(1, s_domains.length-1) + "ies";
+        else
+            s_domains = s_domains.substring(1) + "s";
+    }
+    else if(s_domains.charAt(0) == "+") {
+        s_domains = "in the area of " + s_domains.substring(1);
+    }
 
-    }        
-  
-})
+    var mode = Session.get("vizMode");
+    switch (mode) {
+        case "country_exports":
+            return "What does " + s_countries + " export?";
+        case "country_imports":
+            return (Session.get("language") == "all") ? "What does the world import?" : "What do " + s_regions + " speakers import?";
+        case "domain_exports_to":
+            return "Who exports " + s_domains + "?";
+        case "domain_imports_from":
+            return "Who imports " + s_domains + "?";
+        case "bilateral_exporters_of":
+            return "What does " + s_countries + " export to " + s_regions + speakers_or_no_speakers + "?";
+        case "bilateral_importers_of":
+            return "Where does " + s_countries + " export " + s_domains + " to?";
+        case "matrix_exports":
+            return "What does " + s_countries + " export?";
+        case "country_vs_country":
+            return "What does " + s_countries + " export?";
+        case "lang_vs_lang":
+            return "What does " + s_countries + " export?";
+    }
+
+};
