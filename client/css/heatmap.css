@@ -3,13 +3,13 @@
 }
 
 #viz svg.header {
-    background-color: #202020;
-    border-width: 1px 1px 0px 1px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-width: 0;
 }
 
 #viz svg.matrix {
-    background-color: #202020;
-    border-width: 0px 1px 1px 1px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-width: 0;
 }
 
 .column-title,

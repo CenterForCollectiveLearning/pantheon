@@ -1,7 +1,18 @@
 <!-- Non-visualization specific Observatory elements (e.g. accordion, menu) -->
 <template name="observatory">
     <div class="copy exploretop">
+
+        <div id="viz_options">
+            <div id="parameters" class="section_header">
+                Parameters
+            </div>
+            {{> select_mode }}
+        </div>
+
         <div id="apps">
+            <div class="section_header">
+                Visualizations
+            </div>
             {{> accordion}}
         </div>
 
@@ -9,11 +20,7 @@
         </div>
         
         {{> question}}
-
-        <!-- Mode-dependent Dropdowns -->
-        <div id="viz_options">
-            {{> select_mode }}
-        </div>
+        
     </div>
 
     <!-- Visualization and Ranked List Container -->
@@ -98,7 +105,7 @@
 <template name="ranked_person">
     <li>
         {{! insert thumbnail here}}
-        {{name}}
+        {{fb_name}}
         <br>
         <span>
             {{occupation}}, born {{birthday}} ({{numlangs}})

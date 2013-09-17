@@ -6,22 +6,23 @@
 
 Template.matrix.rendered = function() {
 	var self = this;
-	self.node = self.find("svg.matrix");
+	self.matrix = self.find("svg.matrix");
 	self.header = self.find("svg.header");
 
 	if (!self.handle) {
 		self.handle = Deps.autorun(function() {
+
 			/*
 			 * Global Parameters
 			 */
-		    var from = Session.get('from');
-		    var to = Session.get('to');
-		    var l = Session.get('langs');
-		    var gender = Session.get('gender');
-		    var countryOrder = Session.get('countryOrder');
-		    var industryOrder = Session.get('industryOrder');
+           var from = Session.get('from');
+           var to = Session.get('to');
+           var l = Session.get('langs');
+           var gender = Session.get('gender');
+           var countryOrder = Session.get('countryOrder');
+           var industryOrder = Session.get('industryOrder');
 
-	        // TODO: Declare these globally?
+	        // TODO: Remove redundancy??
 	        var width = 940;
 	        var height = 2000;
 	        var headerHeight = 155;
@@ -35,16 +36,16 @@ Template.matrix.rendered = function() {
 	        /*
 	         * Utility Functions
 	         */
-	        var aggregate = function (obj, values, context) {
-	        	if (!values.length)
-	        		return obj;
-	        	var byFirst = _.groupBy(obj, values[0], context),
-	        	rest = values.slice(1);
-	        	for (var prop in byFirst) {
-	        		byFirst[prop] = aggregate(byFirst[prop], rest, context);
-	        	}
-	        	return byFirst;
-	        };
+            var aggregate = function (obj, values, context) {
+              if (!values.length)
+                 return obj;
+             var byFirst = _.groupBy(obj, values[0], context),
+             rest = values.slice(1);
+             for (var prop in byFirst) {
+                 byFirst[prop] = aggregate(byFirst[prop], rest, context);
+             }
+             return byFirst;
+         };
 
 	        // Aggregate to bottom level, then sum
 	        var aggregate_counts = function (obj, values, context) {
@@ -69,25 +70,27 @@ Template.matrix.rendered = function() {
 
             var url = "http://culture.media.mit.edu:8080/?query=people&dom=all&country=all&lang=en&b=" + from + "&e=" + to + "&L=" + l;
 
-            var svg = d3.select(self.node)
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-                .attr("transform", "translate(" + margin.left + "," + 0 + ")");
+            var svg = d3.select(self.matrix)
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + 0 + ")");
 
             // Append SVG to hold column titles
-            header_svg = d3.select(self.header)
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", headerHeight)
-              .append("g")
-                .attr("transform", "translate(" + margin.left + "," + headerHeight + ")");
+            var header_svg = d3.select(self.header)
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", headerHeight)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + headerHeight + ")");
 
             var x = d3.scale.ordinal().rangeBands([0, height]);
             var y = d3.scale.ordinal().rangeBands([0, width]);
-            var z = d3.scale.linear().domain([0, 4]).clamp(true);
+            var z = d3.scale.linear().domain([0, 1]).clamp(true);
             var c = d3.scale.category10().domain(d3.range(10));
 
-    d3.json(url, function(j) {
+
+            var data = People.find().fetch();
+
         var matrix = [];  // matrix mapping countries to industries
         var inv_matrix = [];  // matrix mapping industries to countries
         var industries = []; // entities on x-axis (list of industries)
@@ -98,9 +101,9 @@ Template.matrix.rendered = function() {
         var fills = {};  // keyed by country
         var country_counts = {};
         var industry_counts = {};
-        var input = aggregate_counts(j.data, ['countryCode', 'industry', 'gender']);
+        var input = aggregate_counts(data, ['countryCode', 'industry', 'gender']);
 
-        var grouped_individuals = aggregate(j.data, ['countryCode', 'industry']);
+        var grouped_individuals = aggregate(data, ['countryCode', 'industry']);
 
         for (var countryCode in input) {
             for (var industry in input[countryCode]) {
@@ -113,33 +116,33 @@ Template.matrix.rendered = function() {
                     'ratio': ((f_res / m_res) == Number.POSITIVE_INFINITY) ? 1 : f_res / m_res
                 };
 
-                    var value = results[gender];
+                var value = results[gender];
 
-                    links.push({
-                        "country": countryCode,
-                        "industry": industry,
-                        "value": value
-                    });
+                links.push({
+                    "country": countryCode,
+                    "industry": industry,
+                    "value": value
+                });
 
-                    if (industries.indexOf(industry) == -1)
-                        industries.push(industry);
+                if (industries.indexOf(industry) == -1)
+                    industries.push(industry);
 
-                    if (countries.indexOf(countryCode) == -1) {
-                        countries.push(countryCode);
-                        min_values[countryCode] = Number.MAX_VALUE;
-                        max_values[countryCode] = Number.MIN_VALUE;
-                    }
-
-                    if (value < min_values[countryCode])
-                        min_values[countryCode] = value;
-                    if (value > max_values[countryCode])
-                        max_values[countryCode] = value;
-
+                if (countries.indexOf(countryCode) == -1) {
+                    countries.push(countryCode);
+                    min_values[countryCode] = Number.MAX_VALUE;
+                    max_values[countryCode] = Number.MIN_VALUE;
                 }
-            }
 
-            var country_count = countries.length;
-            var industry_count = industries.length;
+                if (value < min_values[countryCode])
+                    min_values[countryCode] = value;
+                else if (value > max_values[countryCode])
+                    max_values[countryCode] = value;
+
+            }
+        }
+
+        var country_count = countries.length;
+        var industry_count = industries.length;
 
             // Populate matrix
             countries.forEach(function(country, i) {
@@ -186,23 +189,29 @@ Template.matrix.rendered = function() {
     x.domain(country_orders[countryOrder]);
     y.domain(industry_orders[industryOrder]);
 
-    svg.append("rect")
-        .attr("class", "rect-background")
-        .attr("width", width)
-        .attr("height", height);
+    // svg.append("rect")
+    //     .attr("class", "rect-background")
+    //     .attr("width", width)
+    //     .attr("height", height);
+
 
     // Rows
-    var row = svg.selectAll(".row")
-        .data(matrix)
-        .enter()
-      .append("g")
+    function updateRows(matrix) {
+        // DATA JOIN
+        var row = svg.selectAll(".row")
+        .data(matrix, function(d, i) { return countries[i]; });
+
+        // ENTER
+        // Create new row elements as needed
+        row.enter()
+        .append("g")
         .attr("class", "row")
         .attr("transform", function(d, i) { return "translate(0," + x(i) + ")"; });
-
-    row.append("line")
+        
+        row.append("line")
         .attr("x2", width);
-
-    row.append("text")
+        
+        row.append("text")
         .attr("class", "row-title")
         .attr("x", -6)
         .attr("y", x.rangeBand() / 2)
@@ -211,34 +220,38 @@ Template.matrix.rendered = function() {
         .attr("font-size", "9pt")
         .text(function(d, i) { return countries[i]; });
 
+        // ENTER + UPDATE
+
+        // EXIT
+        row.exit().remove();
+    }
+    
+    updateRows(matrix);   
+
     // Columns
     var column = svg.selectAll(".column")
-        .data(inv_matrix)
-        .enter().append("g")
-        .attr("class", "column")
-        .attr("transform", function(d, i) { return "translate(" + y(i) + ")rotate(-90)"; })
-        .each(column);
-
-    column.append("line")
-        .attr("x1", -width);
+    .data(inv_matrix)
+    .enter().append("g")
+    .attr("class", "column")
+    .attr("transform", function(d, i) { return "translate(" + y(i) + ")rotate(-90)"; })
+    .each(column);
 
     var columnTitles = header_svg.selectAll(".column-title")
-        .data(inv_matrix)
-        .enter()
-        .append("text")
-        .attr("class", "column-title")
-        .attr("transform", function(d, i) { return "translate(" + y(i) + ")rotate(-90)"; })
-        .attr("x", 6)
-        .attr("y", y.rangeBand()/ 2)
-        .attr("dy", ".32em")
-        .attr("text-anchor", "start")
-        .text(function(d, i) { return industries[i].capitalize(); });
+    .data(inv_matrix)
 
-    columnTitles.exit().remove();
+    columnTitles.enter()
+    .append("text")
+    .attr("class", "column-title")
+    .attr("transform", function(d, i) { return "translate(" + y(i) + ")rotate(-90)"; })
+    .attr("x", 6)
+    .attr("y", y.rangeBand()/ 2)
+    .attr("dy", ".32em")
+    .attr("text-anchor", "start")
+    .text(function(d, i) { return industries[i].capitalize(); });
 
-    // Cells
-    function column(column) {
-        var cell = d3.select(this).selectAll(".cell")
+        // Cells
+        function column(column) {
+            var cell = d3.select(this).selectAll(".cell")
             .data(column.filter(function(d) { return d.z; }))
             .enter().append("rect")
             .attr("class", "cell")
@@ -249,29 +262,31 @@ Template.matrix.rendered = function() {
             .style("fill", function(d) { return fill(d.z); })
             .on("mousemove", mouseover)
             .on("mouseout", mouseout);
-    }
+        }
 
-    /* Note that p returns an object with x, y (relevant indices), and z as attributes */
-    function mouseover(p) {
-        var country_code = countries[p.y];
-        var industry = industries[p.x];
-        var individuals = grouped_individuals[country_code][industry];
 
-        d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
-        d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
 
-        if(individuals !== undefined) {
-            var suffix = (individuals.length > 1) ? "individuals" : "individual";
-            var html_to_show = "<span style='font-weight:700;font-size:110%;letter-spacing:2px'>" + country[country_code] + ": " + industry + "</span><br />" + individuals.length + " " + suffix + "<div style='width:100%;border-top:1px solid #cccccc;height:5px;margin-top:6px;'></div>";
+        /* Note that p returns an object with x, y (relevant indices), and z as attributes */
+        function mouseover(p) {
+            var country_code = countries[p.y];
+            var industry = industries[p.x];
+            var individuals = grouped_individuals[country_code][industry];
 
-            var tooltip_individual_threshold = (individuals.length < 5) ? individuals.length : 5;
-            for (var i = 0; i < tooltip_individual_threshold; i++) {
-                html_to_show += individuals[i].fb_name + "<span style='font-size:70%'>, " + individuals[i].location + "</span><br />";
-            }
+            d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
+            d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
 
-            if (individuals.length > tooltip_individual_threshold) {
-                html_to_show += "<br /><span style='font-size:80%'>(" + (individuals.length - tooltip_individual_threshold) + " more)</span>";
-            }
+            if(individuals !== undefined) {
+                var suffix = (individuals.length > 1) ? "individuals" : "individual";
+                var html_to_show = "<span style='font-weight:700;font-size:110%;letter-spacing:2px'>" + country[country_code] + ": " + industry + "</span><br />" + individuals.length + " " + suffix + "<div style='width:100%;border-top:1px solid #cccccc;height:5px;margin-top:6px;'></div>";
+
+                var tooltip_individual_threshold = (individuals.length < 5) ? individuals.length : 5;
+                for (var i = 0; i < tooltip_individual_threshold; i++) {
+                    html_to_show += individuals[i].fb_name + "<span style='font-size:70%'>, " + individuals[i].location + "</span><br />";
+                }
+
+                if (individuals.length > tooltip_individual_threshold) {
+                    html_to_show += "<br /><span style='font-size:80%'>(" + (individuals.length - tooltip_individual_threshold) + " more)</span>";
+                }
 
             // Flip tooltip to left if it overflows window
             $("#tooltip").html(html_to_show)
@@ -338,37 +353,36 @@ Template.matrix.rendered = function() {
      */ 
     // TODO: Add in more gradations
     var gradient = d3.select(".color-scale svg").append("svg:linearGradient")
-        .attr("id", "gradient")
-        .attr("x1", "0%")
-        .attr("y1", "0%")
-        .attr("x2", "100%")
-        .attr("y2", "0%")
-        .attr("spreadMethod", "pad");
+    .attr("id", "gradient")
+    .attr("x1", "0%")
+    .attr("y1", "0%")
+    .attr("x2", "100%")
+    .attr("y2", "0%")
+    .attr("spreadMethod", "pad");
 
     gradient.append("svg:stop")
-        .attr("offset", "0%")
-        .attr("stop-color", "#f1e7d0")
-        .attr("stop-opacity", 1);
+    .attr("offset", "0%")
+    .attr("stop-color", "#f1e7d0")
+    .attr("stop-opacity", 1);
 
     gradient.append("svg:stop")
-        .attr("offset", "100%")
-        .attr("stop-color", "red")
-        .attr("stop-opacity", 1);
+    .attr("offset", "100%")
+    .attr("stop-color", "red")
+    .attr("stop-opacity", 1);
 
     d3.select(".color-scale svg").append("rect")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", "30px");
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", "30px");
 
     d3.select(".color-scale svg").append("text")
-        .attr("x", 5)
-        .attr("y", "21px")
-        .text("0%");
+    .attr("x", 5)
+    .attr("y", "21px")
+    .text("0%");
 
     d3.select(".color-scale svg").append("text")
-        .attr("x", width - 5)
-        .attr("y", "21px")
-        .text("100%");
-            });
-		});
-	}
+    .attr("x", width - 5)
+    .attr("y", "21px")
+    .text("100%");
+});
+}
 }

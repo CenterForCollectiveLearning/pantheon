@@ -14,6 +14,7 @@ Meteor.startup(function() {
     Session.setDefault('gender', 'both');
     Session.setDefault('countryOrder', 'count');
     Session.setDefault('industryOrder', 'count');
+    Session.setDefault('occ', 'all');
     });
 
 // Select sections based on template
