@@ -108,8 +108,8 @@ Template.treemap_svg.rendered = function() {
         })
         .each(wordWrap);
 
-    d3.selectAll(".leaf").on("mouseover", function (d) {
-        // TODO, you'll ahve to generalize this for other treemaps later
+    d3.selectAll(".leaf rect").on("mouseover", function (d) {
+        // TODO generalize this for other treemaps later
 
         Session.set("tooltipIndustry", d._id);
 
