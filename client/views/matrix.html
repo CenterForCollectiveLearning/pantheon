@@ -1,13 +1,19 @@
 <template name="matrix">
-    {{#constant}}
-      <div id="viz" class="matrix">
-      	<svg class="header" width="980" height="155"></svg>
-      	<div class="scroll-container">
-      		<svg class="matrix" width="980" height="2000"></svg>
-      	</div>
-      </div>
-      <div class="color-scale">
+    <div id="viz" class="matrix">
+        {{#if dataReady}}
+            {{> matrix_svg}}
+        {{else}}
+            {{> spinner}}
+        {{/if}}
+    <div class="color-scale">
       	<svg></svg>
-      </div>
-    {{/constant}}
+    </div>
+</template>
+
+<template name="matrix_svg">
+    <svg class="header" width="{{properties.width}}" height="{{properties.headerHeight}}"></svg>
+    <div class="scroll-container">
+        <svg class="matrix" width="{{properties.width}}" height="{{properties.height}}"></svg>
+    </div>
+  </div>
 </template>

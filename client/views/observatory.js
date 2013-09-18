@@ -179,7 +179,7 @@ Template.popup_list.suffix = function(){
 }
 
 Template.popup_list.top5 = function() {
-    return Tooltips.find()
+    return Tooltips.find();
 }
 
 Template.popup_list.more = function() {
