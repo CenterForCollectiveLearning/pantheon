@@ -109,6 +109,12 @@ Template.accordion.events = {
     }
 }
 
+// Create a global helper
+// Use this from multiple templates
+Handlebars.registerHelper("person_lookup" ,function(){
+    return People.findOne(this._id);
+});
+
 Template.ranked_list.top10 = function() {
     return PeopleTop10.find();
 }
@@ -167,3 +173,19 @@ Template.question.question = function() {
     }
 
 };
+
+Template.popup_list.suffix = function(){
+    return (this.count > 1) ? "individuals" : "individual";
+}
+
+Template.popup_list.top5 = function() {
+    return Tooltips.find()
+}
+
+Template.popup_list.more = function() {
+    return this.count > 5;
+}
+
+Template.popup_list.extras = function () {
+    return this.count - 5;
+}

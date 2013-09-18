@@ -26,7 +26,8 @@
     <!-- Visualization and Ranked List Container -->
     <div id="viz_pane">
         {{> visualization}}
-        <div id="tooltip"></div>
+
+        {{> tooltip}}
     </div>
 </template>
 
@@ -93,7 +94,7 @@
             {{else}}
                 <ol>
                     {{#each top10}}
-                    {{> ranked_person}}
+                    {{> ranked_person person_lookup}}
                     {{/each}}
                 </ol>
             {{/if}}
@@ -105,10 +106,29 @@
 <template name="ranked_person">
     <li>
         {{! insert thumbnail here}}
-        {{fb_name}}
+        {{name}}
         <br>
         <span>
             {{occupation}}, born {{birthday}} ({{numlangs}})
         </span>
     </li>
+</template>
+
+<!-- Ranked list for treemap tooltip -->
+<template name="popup_list">
+    <span style='font-weight:700;font-size:110%;letter-spacing:2px'>{{industry}}</span>
+    <br />{{count}} {{suffix}}<div style='width:100%;border-top:1px solid #cccccc;height:5px;margin-top:6px;'></div>
+
+    {{#each top5}}
+        {{> tt_person person_lookup}}
+    {{/each}}
+
+    {{#if more}}
+        <br /><span style='font-size:80%'>({{extras}} more)</span>
+    {{/if}}
+</template>
+
+<!-- Person in tooltip list-->
+<template name = "tt_person">
+    {{name}}<span style='font-size:70%'>, {{birthcity}}, {{countryName}}</span><br />
 </template>
