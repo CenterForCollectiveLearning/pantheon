@@ -419,8 +419,10 @@ tr {
 	opacity:0.9;
 	background-color:#3b3b3b;
 	color:white;
-	padding:5px;
+	padding:15px;
+	/*
 	display:none;
+	*/
 	z-index:999999;
 	cursor:default;
 }

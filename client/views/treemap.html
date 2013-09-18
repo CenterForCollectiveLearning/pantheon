@@ -1,10 +1,13 @@
 <template name="treemap">
 
-	{{#constant}}
+    {{! TODO this may not work on slow connections. handle subscription handle correctly}}
 	<div id="viz" class="treemap">
-		<svg width="725" height="560"></svg>
+        {{#if dataReady}}
+            {{> treemap_svg}}
+        {{else}}
+            {{> spinner}}
+        {{/if}}
 	</div>
-	{{/constant}}
 
 	{{> ranked_list }}
 
@@ -19,4 +22,16 @@
 		<div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
 		<div id="sports" class="pill">Sports</div>
 	</div>
+</template>
+
+<template name="treemap_svg">
+    <svg width="{{properties.width}}" height="{{properties.height}}"></svg>
+</template>
+
+<template name="tooltip">
+    {{#if tooltip }}
+        <div id="tooltip">
+        {{> popup_list tooltip_data}}
+        </div>
+    {{/if}}
 </template>

@@ -14,3 +14,10 @@
 		width:1320px;
 	}
 }
+
+/* Title-case the text in the treemap
+    instead of doing it programaticallly
+ */
+svg text > tspan {
+    text-transform: capitalize;
+}

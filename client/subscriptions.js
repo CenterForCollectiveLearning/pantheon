@@ -1,34 +1,67 @@
+
 Meteor.subscribe("countries");
+
+// These subscriptions are explicitly global variables
+this.allpeopleSub = Meteor.subscribe("allpeople");
 
 PeopleTop10 = new Meteor.Collection("top10people");
 
-var top10sub = null;
-var peoplesub = null;
+this.top10Sub = null;
+this.treemapSub = null;
+
+Tooltips = new Meteor.Collection("mouseoverCollection");
+
+this.tooltipSub = null;
 
 Deps.autorun(function(){
+    // TODO this only works for exports right now
+    // maybe look at how the routes are being updated ...
+
     var country = Session.get('country');
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
-    var langs = Session.get('langs');
+    var langs = parseInt(Session.get('langs'));
     var occ = Session.get('occ');
 
+    // TODO this is causing a double subscription, fixme
+
     if( !country || !begin || !end || !langs ) {
-        if( top10sub != null ) {
+        if( top10sub !== null ) {
             top10sub.stop();
+            top10sub = null;
+        }
+        if( treemapSub !== null ){
+            treemapSub.stop();
+            treemapSub = null;
         }
     }
     else {
         top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country);
+        treemapSub = Meteor.subscribe("domain", begin, end, langs, country);
     }
+    
+});
 
-    if( !country || !begin || !end || !langs ) {
-        if( peoplesub != null ) {
-            peoplesub.stop();
+Deps.autorun(function() {
+    var industry = Session.get("tooltipIndustry");
+
+    var country = Session.get('country');
+    var begin = parseInt(Session.get('from'));
+    var end = parseInt(Session.get('to'));
+    var langs = parseInt(Session.get('langs'));
+
+    // TODO fix this hack
+    if( window.Domains === undefined ) return;
+
+    if( !country || !begin || !end || !langs || !industry ) {
+        if( tooltipSub !== null ){
+            tooltipSub.stop();
+            tooltipSub = null;
         }
     }
     else {
         people = Meteor.subscribe("allpeople", begin, end, langs, country, occ);
     }
     
-
-});
+    tooltipSub = Meteor.subscribe("top5occupation", begin, end, langs, country, Domains.findOne(industry).industry);
+})
