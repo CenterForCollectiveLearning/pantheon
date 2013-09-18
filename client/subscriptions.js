@@ -1,4 +1,3 @@
-
 Meteor.subscribe("countries");
 
 // These subscriptions are explicitly global variables
@@ -26,9 +25,9 @@ Deps.autorun(function(){
     // TODO this is causing a double subscription, fixme
 
     if( !country || !begin || !end || !langs ) {
-        if( top10sub !== null ) {
-            top10sub.stop();
-            top10sub = null;
+        if( top10Sub !== null ) {
+            top10Sub.stop();
+            top10Sub = null;
         }
         if( treemapSub !== null ){
             treemapSub.stop();
@@ -50,6 +49,8 @@ Deps.autorun(function() {
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
 
+    var occ = Session.get('occ');
+
     // TODO fix this hack
     if( window.Domains === undefined ) return;
 
@@ -58,9 +59,6 @@ Deps.autorun(function() {
             tooltipSub.stop();
             tooltipSub = null;
         }
-    }
-    else {
-        people = Meteor.subscribe("allpeople", begin, end, langs, country, occ);
     }
     
     tooltipSub = Meteor.subscribe("top5occupation", begin, end, langs, country, Domains.findOne(industry).industry);
