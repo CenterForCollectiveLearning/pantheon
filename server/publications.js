@@ -33,6 +33,8 @@ Meteor.publish("peopletop10", function(begin, end, L, country) {
 });
 
 function getCountryExportArgs(begin, end, L, country, occ) {
+
+Meteor.publish("people", function(begin, end, L, country, occ){
     var args = {
         birthyear : {$gt:begin, $lte:end}
     };
