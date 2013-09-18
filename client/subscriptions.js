@@ -27,7 +27,7 @@ Deps.autorun(function(){
         }
     }
     else {
-        people = Meteor.subscribe("people", begin, end, langs, country, occ);
+        people = Meteor.subscribe("allpeople", begin, end, langs, country, occ);
     }
     
 

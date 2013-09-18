@@ -11,6 +11,7 @@ Template.matrix.rendered = function() {
 
 	if (!self.handle) {
 		self.handle = Deps.autorun(function() {
+            _.defer()
 
 			/*
 			 * Global Parameters
@@ -89,7 +90,9 @@ Template.matrix.rendered = function() {
             var c = d3.scale.category10().domain(d3.range(10));
 
 
-            var data = People.find().fetch();
+        /* Reactive data! */
+        var data = People.find().fetch();
+        console.log(data.length);
 
         var matrix = [];  // matrix mapping countries to industries
         var inv_matrix = [];  // matrix mapping industries to countries

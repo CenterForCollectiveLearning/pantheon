@@ -33,6 +33,10 @@ Meteor.publish("peopletop10", function(begin, end, L, country) {
 });
 
 function getCountryExportArgs(begin, end, L, country, occ) {
+// TODO: Publish smarter
+// Meteor.publish("people", function() {
+//     return People.find();
+// });
 
 Meteor.publish("people", function(begin, end, L, country, occ){
     var args = {
@@ -64,6 +68,7 @@ Meteor.publish("allpeople", function() {
     // No stop needed here
 });
 
+<<<<<<< Updated upstream
 /*
 Also a static query
 does not send over anything other than the people ids,
