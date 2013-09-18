@@ -22,7 +22,7 @@ Deps.autorun(function(){
     var langs = parseInt(Session.get('langs'));
     var occ = Session.get('occ');
 
-    // TODO this is causing a double subscription, fixme
+    // TODO this is causing a double subscription, fix me
 
     if( !country || !begin || !end || !langs ) {
         if( top10Sub !== null ) {

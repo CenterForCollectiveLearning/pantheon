@@ -11,8 +11,6 @@ Template.matrix.rendered = function() {
 
 	if (!self.handle) {
 		self.handle = Deps.autorun(function() {
-            _.defer()
-
 			/*
 			 * Global Parameters
 			 */
@@ -92,7 +90,6 @@ Template.matrix.rendered = function() {
 
         /* Reactive data! */
         var data = People.find().fetch();
-        console.log(data.length);
 
         var matrix = [];  // matrix mapping countries to industries
         var inv_matrix = [];  // matrix mapping industries to countries
@@ -284,7 +281,7 @@ Template.matrix.rendered = function() {
 
                 var tooltip_individual_threshold = (individuals.length < 5) ? individuals.length : 5;
                 for (var i = 0; i < tooltip_individual_threshold; i++) {
-                    html_to_show += individuals[i].fb_name + "<span style='font-size:70%'>, " + individuals[i].location + "</span><br />";
+                    html_to_show += individuals[i].name + "<span style='font-size:70%'>, " + individuals[i].birthcity + ", " + individuals[i].countryName + "</span><br />";
                 }
 
                 if (individuals.length > tooltip_individual_threshold) {
@@ -356,36 +353,36 @@ Template.matrix.rendered = function() {
      */ 
     // TODO: Add in more gradations
     var gradient = d3.select(".color-scale svg").append("svg:linearGradient")
-    .attr("id", "gradient")
-    .attr("x1", "0%")
-    .attr("y1", "0%")
-    .attr("x2", "100%")
-    .attr("y2", "0%")
-    .attr("spreadMethod", "pad");
-
-    gradient.append("svg:stop")
-    .attr("offset", "0%")
-    .attr("stop-color", "#f1e7d0")
-    .attr("stop-opacity", 1);
-
-    gradient.append("svg:stop")
-    .attr("offset", "100%")
-    .attr("stop-color", "red")
-    .attr("stop-opacity", 1);
-
-    d3.select(".color-scale svg").append("rect")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", "30px");
-
-    d3.select(".color-scale svg").append("text")
-    .attr("x", 5)
-    .attr("y", "21px")
-    .text("0%");
-
-    d3.select(".color-scale svg").append("text")
-    .attr("x", width - 5)
-    .attr("y", "21px")
-    .text("100%");
+        .attr("id", "gradient")
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%")
+        .attr("spreadMethod", "pad");
+        
+        gradient.append("svg:stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#f1e7d0")
+        .attr("stop-opacity", 1);
+        
+        gradient.append("svg:stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "red")
+        .attr("stop-opacity", 1);
+        
+        d3.select(".color-scale svg").append("rect")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", "30px");
+        
+        d3.select(".color-scale svg").append("text")
+        .attr("x", 5)
+        .attr("y", "21px")
+        .text("0%");
+        
+        d3.select(".color-scale svg").append("text")
+        .attr("x", width - 5)
+        .attr("y", "21px")
+        .text("100%");
 });
 }
 }
