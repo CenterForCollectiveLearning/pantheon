@@ -1,6 +1,22 @@
+<<<<<<< Updated upstream
 /*
     Publish all countries to populate dropdowns
  */
+=======
+function getCountryExportArgs(begin, end, L, country, occ) {
+    var args = {
+        birthyear : {$gt:begin, $lte:end}
+    };
+    if (country !== 'all' ) {
+        args.countryCode = country;
+    }
+    if (occ !== undefined && occ !== 'all') {
+        args.occupation = occ;
+    }
+    return args;
+}
+
+>>>>>>> Stashed changes
 Meteor.publish("countries", function() {
     return Countries.find();
 });
@@ -21,17 +37,12 @@ Meteor.publish("peopletop10", function(begin, end, L, country) {
     var sub = this;
     var collectionName = "top10people";
 
-    var args = {
-        birthyear : {$gt:begin, $lte:end}
-    };
-    if (country !== 'all' ) {
-        args.countryCode = country;
-    }
+    var args = getCountryExportArgs(begin, end, L, country);
 
     People.find(args, {
-        sort: {numlangs: -1},
         fields: {_id: 1}, //only get the ids of the people - look up the people in the client (from allpeople)
-        limit: 10
+        limit: 10,
+        sort: {numlangs: -1}
     }).forEach(function(person){
         sub.added(collectionName, person._id, person);
     });
@@ -40,19 +51,6 @@ Meteor.publish("peopletop10", function(begin, end, L, country) {
 
     return; //TODO: add sort by numlangs
 });
-
-function getCountryExportArgs(begin, end, L, country, occ) {
-    var args = {
-        birthyear : {$gt:begin, $lte:end}
-    };
-    if (country !== 'all' ) {
-        args.countryCode = country;
-    }
-    if (occ !== undefined && occ !== 'all') {
-        args.occupation = occ;
-    }
-    return args;
-}
 
 /*
 This is also a static query
