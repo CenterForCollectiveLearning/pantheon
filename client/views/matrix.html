@@ -5,15 +5,15 @@
         {{else}}
             {{> spinner}}
         {{/if}}
-    <div class="color-scale">
-      	<svg></svg>
+    <div>
+      	<svg class="color-scale"></svg>
     </div>
 </template>
 
 <template name="matrix_svg">
-    <svg class="header" width="{{properties.width}}" height="{{properties.headerHeight}}"></svg>
+    <svg class="header" width="{{properties.fullWidth}}" height="{{properties.headerHeight}}"></svg>
     <div class="scroll-container">
-        <svg class="matrix" width="{{properties.width}}" height="{{properties.height}}"></svg>
+        <svg class="matrix" width="{{properties.fullWidth}}" height="{{properties.fullHeight}}"></svg>
     </div>
   </div>
 </template>

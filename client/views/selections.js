@@ -80,127 +80,67 @@ Template.select_industry_order.rendered = function() {
  */
 Template.select_country.events = {
     "change select": function(d) {
-        Session.set("country", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
+        var path = window.location.pathname.split('/');
+        path[3] = d.target.value;
+        Router.go(path.join('/'));
     }
 }
 
 Template.select_language.events = {
     "change select": function(d) {
-        Session.set("language", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
+        var path = window.location.pathname.split('/');
+        path[4] = d.target.value;
+        Router.go(path.join('/'));
     }
 }
 
 Template.select_domain.events = {
     "change select": function(d) {
-        Session.set("domain", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
+        var path = window.location.pathname.split('/');
+        path[3] = d.target.value;
+        Router.go(path.join('/'));
     }
 }
 
 Template.select_from.events = {
     "change select": function(d) {
-        Session.set("from", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
+        var path = window.location.pathname.split('/');
+        path[5] = d.target.value;
+        Router.go(path.join('/'));
     }
 }
 
 Template.select_to.events = {
     "change select": function(d) {
-        Session.set("to", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
+        var path = window.location.pathname.split('/');
+        path[6] = d.target.value;
+        Router.go(path.join('/'));
     }
 }
 
 Template.select_l.events = {
     "change select": function(d) {
-        Session.set("langs", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
+        var path = window.location.pathname.split('/');
+        path[7] = d.target.value;
+        Router.go(path.join('/'));
     }
 }
 
 Template.select_gender.events = {
     "change select": function(d) {
         Session.set("gender", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
     }
 }
 
 Template.select_country_order.events = {
     "change select": function(d) {
         Session.set("countryOrder", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
     }
 }
 
 Template.select_industry_order.events = {
     "change select": function(d) {
         Session.set("industryOrder", d.target.value);
-        var url = '/' + Session.get('vizType') + '/' + 
-            Session.get('vizMode') + '/' +
-            Session.get('country') + '/' +
-            Session.get('language') + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
     }
 }
 

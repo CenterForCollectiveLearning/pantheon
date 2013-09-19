@@ -1,3 +1,6 @@
+/*
+    Publish all countries to populate dropdowns
+ */
 Meteor.publish("countries", function() {
     return Countries.find();
 });

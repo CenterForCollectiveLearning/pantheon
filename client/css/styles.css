@@ -529,7 +529,7 @@ tr {
 	padding-left:4px;
 }
 
-#viz svg {
+#viz svg.treemap {
 	border:2px solid #fff;
 	margin-left:3px;
 }

@@ -1,6 +1,6 @@
 Template.ranking.rendered = function() {
     //initializations
-    $("select, input, a.button, button").uniform();
+    // $("select, input, a.button, button").uniform();
 
     $('#ranking').dataTable({
         "iDisplayLength": 200,
@@ -22,5 +22,5 @@ Template.ranking.rendered = function() {
         "aaSorting": [[ 6, 'desc' ]]
     });
 
-    $.uniform.update();
+    // $.uniform.update();
 }

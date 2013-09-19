@@ -6,6 +6,8 @@ Meteor.startup(function() {
     Session.setDefault('vizType', 'treemap');
     Session.setDefault('vizMode', 'country_exports');
     Session.setDefault('country', 'all');
+    Session.setDefault('countryX', 'US');
+    Session.setDefault('countryY', 'RU');
     Session.setDefault('language', 'all');
     Session.setDefault('domain', 'all');
     Session.setDefault('from', '-1000');
@@ -19,7 +21,6 @@ Meteor.startup(function() {
 
 // Select sections based on template
 Template.nav.selected = function() {
-    console.log(this.id);
     return Session.equals('page', this._id) ? 'selected_section' : '';
 }
 

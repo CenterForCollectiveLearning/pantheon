@@ -26,7 +26,7 @@ Template.accordion.rendered = function() {
 
     accordion.accordion({
             active: mapping[Session.get("vizType")],
-            collapsible: true,
+            collapsible: false,
             heightStyle: "content",
             fillSpace: false
         });

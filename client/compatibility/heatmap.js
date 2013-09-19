@@ -83,7 +83,6 @@ function generate_heatmap(gender) {
         var input = aggregate_counts(j.data, ['countryCode', 'industry', 'gender']);
 
         var grouped_individuals = aggregate(j.data, ['countryCode', 'industry']);
-        console.log(grouped_individuals);
 
         for (var countryCode in input) {
             for (var industry in input[countryCode]) {

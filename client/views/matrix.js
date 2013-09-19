@@ -31,7 +31,11 @@ var matrixScales = {
     , c: d3.scale.category10().domain(d3.range(10)) 
 }
 
-Template.matrix_svg.properties = matrixProps;
+Template.matrix_svg.properties = {
+    headerHeight: matrixProps.headerHeight
+    , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
+    , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
+}
 
 // Utility Functions
 var aggregate = function (obj, values, context) {
@@ -45,13 +49,13 @@ var aggregate = function (obj, values, context) {
     return byFirst;
 };
 // Aggregate to bottom level, then sum
-var aggregate_counts = function (obj, values, context) {
+var aggregateCounts = function (obj, values, context) {
     if (!values.length)
         return obj.length;
     var byFirst = _.groupBy(obj, values[0], context),
     rest = values.slice(1);
     for (var prop in byFirst) {
-        byFirst[prop] = aggregate_counts(byFirst[prop], rest, context);
+        byFirst[prop] = aggregateCounts(byFirst[prop], rest, context);
     }
     return byFirst;
 };
@@ -65,15 +69,12 @@ Template.matrix.rendered = function() {
 
     /* Reactive data! */
     var data = People.find().fetch();
-    console.log(data);
+    console.log(data.length);
 
-    /* Session variables */
-    var from = Session.get('from');
-    var to = Session.get('to');
-    var l = Session.get('langs');
+    /* Session variables changing view to same data*/
     var gender = Session.get('gender');
-    var countryOrder = Session.get('countryOrder');
-    var industryOrder = Session.get('industryOrder');
+    var countryOrder_var = Session.get('countryOrder');
+    var industryOrder_var = Session.get('industryOrder');
 
     /* SVG Handles */
     var svg = d3.select(this.find("svg.matrix"))
@@ -96,7 +97,7 @@ Template.matrix.rendered = function() {
     var country_counts = {};
     var industry_counts = {};
 
-    var input = aggregate_counts(data, ['countryCode', 'industry', 'gender']);
+    var input = aggregateCounts(data, ['countryCode', 'industry', 'gender']);
     var grouped_individuals = aggregate(data, ['countryCode', 'industry']);
 
 
@@ -171,19 +172,19 @@ Template.matrix.rendered = function() {
     });
 
     // Precompute ordering
-    var country_orders = {
+    var countryOrders = {
         name: d3.range(country_count).sort(function(a, b) { return d3.ascending(countries[a], countries[b]); }),
         count: d3.range(country_count).sort(function(a, b) { return d3.ascending(country_counts[b], country_counts[a]); })
     };
 
-    var industry_orders = {
+    var industryOrders = {
         name: d3.range(industry_count).sort(function(a, b) { return d3.ascending(industries[a], industries[b]); }),
         count: d3.range(industry_count).sort(function(a, b) { return d3.descending(industry_counts[a], industry_counts[b]); })
     };
 
     // Default sort orders
-    matrixScales.x.domain(country_orders[countryOrder]);
-    matrixScales.y.domain(industry_orders[industryOrder]);
+    matrixScales.x.domain(countryOrders[countryOrder_var]);
+    matrixScales.y.domain(industryOrders[industryOrder_var]);
 
     // Rows
     function updateRows(matrix) {
@@ -218,26 +219,27 @@ Template.matrix.rendered = function() {
     
     updateRows(matrix);   
 
-    // Columns
-    var column = svg.selectAll(".column")
-    .data(inv_matrix)
-    .enter().append("g")
-    .attr("class", "column")
-    .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
-    .each(column);
+    function updateColumns(inv_matrix){
+        // Columns
+        var column = svg.selectAll(".column")
+        .data(inv_matrix)
+        .enter().append("g")
+        .attr("class", "column")
+        .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
+        .each(column);
 
-    var columnTitles = header_svg.selectAll(".column-title")
-    .data(inv_matrix)
+        var columnTitles = header_svg.selectAll(".column-title")
+        .data(inv_matrix)
 
-    columnTitles.enter()
-    .append("text")
-    .attr("class", "column-title")
-    .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
-    .attr("x", 6)
-    .attr("y", matrixScales.y.rangeBand()/ 2)
-    .attr("dy", ".32em")
-    .attr("text-anchor", "start")
-    .text(function(d, i) { return industries[i].capitalize(); });
+        columnTitles.enter()
+        .append("text")
+        .attr("class", "column-title")
+        .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
+        .attr("x", 6)
+        .attr("y", matrixScales.y.rangeBand()/ 2)
+        .attr("dy", ".32em")
+        .attr("text-anchor", "start")
+        .text(function(d, i) { return industries[i].capitalize(); });
 
         // Cells
         function column(column) {
@@ -248,13 +250,14 @@ Template.matrix.rendered = function() {
             .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); })
             .attr("width", (Math.round(matrixScales.x.rangeBand()*10)/10) - 0.1)
             .attr("height", (Math.round(matrixScales.y.rangeBand()*10)/10) - 0.5)
-            // .style("opacity", function(d) { return 0.1 + 0.9 * (d.z); })
             .style("fill", function(d) { return fill(d.z); })
             .on("mousemove", mouseover)
             .on("mouseout", mouseout);
         }
+    }
 
-
+    updateColumns(inv_matrix);
+    
 
         /* Note that p returns an object with x, y (relevant indices), and z as attributes */
         function mouseover(p) {
@@ -266,7 +269,6 @@ Template.matrix.rendered = function() {
             d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
 
             $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
-
             
             if(individuals !== undefined) {
                 var suffix = (individuals.length > 1) ? "individuals" : "individual";
@@ -307,45 +309,49 @@ Template.matrix.rendered = function() {
         $("#tooltip").empty().css("padding", 0);
     }
 
-    function country_order(value) {
-        x.domain(country_orders[value]);
+    function countryOrder(value) {
+        matrixScales.x.domain(country_orders[value]);
 
-        var t = self.node.transition().duration(500);
+        var t = svg.transition().duration(500);
 
         t.selectAll(".row")
-        .delay(function(d, i) { return x(i) * 1; })
-        .attr("transform", function(d, i) { return "translate(0," + x(i) + ")"; });
+        .delay(function(d, i) { return matrixScales.x(i) * 1; })
+        .attr("transform", function(d, i) { return "translate(0," + matrixScales.x(i) + ")"; });
 
         t.selectAll(".column")
-        .delay(function(d, i) { return x(i) * 1; })
-        .attr("transform", function(d, i) { return "translate(" + y(i) + ")rotate(-90)"; })
+        .delay(function(d, i) { return matrixScales.x(i) * 1; })
+        .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
         .selectAll(".cell")
-        .delay(function(d) { return x(d.x) ; })
-        .attr("x", function(d) { return -x(d.y) - x.rangeBand(); });
+        .delay(function(d) { return matrixScales.x(d.x) ; })
+        .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); });
     }
 
-    function industry_order(value) {
-        y.domain(industry_orders[value]);
+    function industryOrder(value) {
+        matrixScales.y.domain(industry_orders[value]);
 
-        var t = self.node.transition().duration(500);
+        var t = svg.transition().duration(500);
 
         t.selectAll(".row")
-        .delay(function(d, i) { return x(i) * 1; })
-        .attr("transform", function(d, i) { return "translate(0," + x(i) + ")"; });
+        .delay(function(d, i) { return matrixScales.x(i) * 1; })
+        .attr("transform", function(d, i) { return "translate(0," + matrixScales.x(i) + ")"; });
 
         t.selectAll(".column")
-        .delay(function(d, i) { return x(i) * 1; })
-        .attr("transform", function(d, i) { return "translate(" + y(i) + ")rotate(-90)"; })
+        .delay(function(d, i) { return matrixScales.x(i) * 1; })
+        .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
         .selectAll(".cell")
-        .delay(function(d) { return x(d.x) ; })
-        .attr("x", function(d) { return -x(d.y) - x.rangeBand(); });
+        .delay(function(d) { return matrixScales.x(d.x) ; })
+        .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); });
     }
 
     /* 
      * Legend
      */ 
+
+    var colorScale = d3.select(this.find("svg.color-scale"))
+        .attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right)
+        .attr("height", "30px");
     // TODO: Add in more gradations
-    var gradient = d3.select(".color-scale svg").append("svg:linearGradient")
+    var gradient = colorScale.append("svg:linearGradient")
     .attr("id", "gradient")
     .attr("x1", "0%")
     .attr("y1", "0%")
@@ -363,16 +369,16 @@ Template.matrix.rendered = function() {
     .attr("stop-color", "red")
     .attr("stop-opacity", 1);
 
-    d3.select(".color-scale svg").append("rect")
+    colorScale.append("rect")
     .attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right)
     .attr("height", "30px");
 
-    d3.select(".color-scale svg").append("text")
+    colorScale.append("text")
     .attr("x", 5)
     .attr("y", "21px")
     .text("0%");
 
-    d3.select(".color-scale svg").append("text")
+    colorScale.append("text")
     .attr("x", matrixProps.width - 5)
     .attr("y", "21px")
     .text("100%");
