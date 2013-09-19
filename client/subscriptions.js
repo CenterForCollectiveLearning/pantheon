@@ -1,4 +1,5 @@
 Meteor.subscribe("countries");
+Meteor.subscribe("languages");
 
 // These subscriptions are explicitly global variables
 this.allpeopleSub = Meteor.subscribe("allpeople");

@@ -19,7 +19,7 @@ Template.select_mode.render_template = function() {
         case "country_vs_country":
             return new Handlebars.SafeString(Template.country_vs_country_mode(this));
         case "lang_vs_lang":
-            return new Handlebars.SafeString(Template.lang_vs_lang_mode(this));
+            return new Handlebars.SafeString(Template.language_vs_language_mode(this));
     }
 }
 
@@ -30,13 +30,28 @@ Template.select_mode.render_template = function() {
                        $(item).uniform()
 */
 
-
 Template.select_country.rendered = function() {
     $(this.find("select")).val(Session.get("country")).uniform();
 }
 
+Template.select_countryX.rendered = function() {
+    $(this.find("select")).val(Session.get("countryX")).uniform();
+}
+
+Template.select_countryY.rendered = function() {
+    $(this.find("select")).val(Session.get("countryY")).uniform();
+}
+
 Template.select_language.rendered = function() {
     $(this.find("select")).val(Session.get("language")).uniform();
+}
+
+Template.select_languageX.rendered = function() {
+    $(this.find("select")).val(Session.get("languageX")).uniform();
+}
+
+Template.select_languageY.rendered = function() {
+    $(this.find("select")).val(Session.get("languageY")).uniform();
 }
 
 Template.select_domain.rendered = function() {
@@ -81,12 +96,54 @@ Template.select_industry_order.rendered = function() {
 Template.select_country.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
+        if (IOMapping[Session.get("vizMode")]["in"].indexOf("country") == 0)
+            path[3] = d.target.value;
+        else
+            path[4] = d.target.value; 
+
         path[3] = d.target.value;
         Router.go(path.join('/'));
     }
 }
 
+Template.select_countryX.events = {
+    "change select": function(d) {
+        var path = window.location.pathname.split('/');
+
+        path[3] = d.target.value;
+        Router.go(path.join('/'));
+    }
+}
+
+Template.select_countryY.events = {
+    "change select": function(d) {
+        var path = window.location.pathname.split('/');
+
+        path[4] = d.target.value;
+        Router.go(path.join('/'));
+    }
+}
+
 Template.select_language.events = {
+    "change select": function(d) {
+        var path = window.location.pathname.split('/');
+        if (IOMapping[Session.get("vizMode")]["in"].indexOf("language") == 0)
+            path[3] = d.target.value;
+        else
+            path[4] = d.target.value;    
+        Router.go(path.join('/'));
+    }
+}
+
+Template.select_languageX.events = {
+    "change select": function(d) {
+        var path = window.location.pathname.split('/');
+        path[3] = d.target.value;
+        Router.go(path.join('/'));
+    }
+}
+
+Template.select_languageY.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
         path[4] = d.target.value;
@@ -97,7 +154,12 @@ Template.select_language.events = {
 Template.select_domain.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
-        path[3] = d.target.value;
+
+        if (IOMapping[Session.get("vizMode")]["in"].indexOf("domain") == 0)
+            path[3] = d.target.value;
+        else
+            path[4] = d.target.value;        
+        
         Router.go(path.join('/'));
     }
 }
@@ -144,8 +206,14 @@ Template.select_industry_order.events = {
     }
 }
 
-Template.select_country.countries = function (){
+Template.country_dropdown.countries = function (){
     return Countries.find( {},
         { sort: { "countryName": 1 } }
+    );
+};
+
+Template.language_dropdown.languages = function (){
+    return Languages.find( {},
+        { sort: { "languageName": 1 } }
     );
 };

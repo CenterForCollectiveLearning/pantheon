@@ -34,14 +34,13 @@ Template.accordion.rendered = function() {
     accordion.accordion( "resize" );
 }
 
-// TODO: ORGANIZE THIS!!! 
 Template.accordion.events = {
     "click li a": function (d) {
 
         var srcE = d.srcElement ? d.srcElement : d.target;
         var option = $(srcE).attr("id");
 
-        var mapping = {
+        var modeToType = {
             "country_exports": "treemap",
             "country_imports": "treemap",
             "domain_exports_to": "treemap",
@@ -54,58 +53,20 @@ Template.accordion.events = {
         }
 
         // Parameters depend on vizMode (e.g countries -> languages for exports)
-
-        var param1, param2; 
         var mode = Session.get("vizMode");
-        switch (mode) {
-            case "country_exports":
-                param1 = "country";
-                param2 = "language";
-                break;
-            case "country_imports":
-                param1 = "country";
-                param2 = "language";
-                break;
-            case "domain_exports_to":
-                param1 = "domain";
-                param2 = "country"; // Not really
-                break;
-            case "domain_imports_from":
-                param1 = "domain";
-                param2 = "country"; // Not really
-                break;
-            case "bilateral_exporters_of":
-                param1 = "country";
-                param2 = "language";
-                break;
-            case "bilateral_importers_of":
-                param1 = "country";
-                param2 = "domain";
-                break;
-            case "matrix_exports":
-                param1 = "country";
-                param2 = "country";
-                break;
-            case "country_vs_country":
-                param1 = "country";
-                param2 = "country";
-                break;
-            case "lang_vs_lang":
-                param1 = "language";
-                param2 = "language";
-                break;
-        }
+        var param1 = IOMapping[mode]["in"][0];
+        var param2 = IOMapping[mode]["in"][1];
 
-        // Resetting the set by doing a new route navigation
-        var url = '/' + 
-            mapping[option] + '/' + 
+        // Reset parameters for a viz type change
+        var path = '/' +
+            modeToType[option] + '/' +
             option + '/' +
-            Session.get(param1) + '/' +
-            Session.get(param2) + '/' +
-            Session.get('from') + '/' +
-            Session.get('to') + '/' +
-            Session.get('langs');
-        Router.go(url);
+            defaults.country + '/' +  // First input (e.g. exporter country)
+            defaults.language + '/' +  // Second input (e.g. importer lang)
+            defaults.from + '/' +  // From
+            defaults.to + '/' +  // To
+            defaults.langs + '/';  // Langs
+        Router.go(path);
     }
 }
 

@@ -6,6 +6,13 @@ Meteor.publish("countries", function() {
 });
 
 /*
+    Publish all languages to populate dropdowns
+ */
+Meteor.publish("languages", function() {
+    return Languages.find();
+});
+
+/*
     Publish the top 10 people for the current query
     This is a static query since the query doesn't ever change for some given parameters
     Push the ids here as well since people will be in the client side

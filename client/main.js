@@ -1,18 +1,41 @@
 // Set Defaults
 // TODO Where do you put these global functions?
 
+this.defaults = {
+    country: 'all'
+    , language: 'all'
+    , domain: 'all'
+    , from: '-1000'
+    , to: '1950'
+    , langs: '25'
+}
+
+this.IOMapping = {
+    "country_exports": { "in": ["country", "language"], "out": "domain" }
+    , "country_imports": { "in": ["language", "country"], "out": "domain" }
+    , "domain_exports_to": { "in": ["domain", "language"], "out": "country" }
+    , "domain_imports_from": { "in": ["domain", "country"], "out": "language" }
+    , "bilateral_exporters_of": { "in": ["country", "language"], "out": "domain"}
+    , "bilateral_importers_of": { "in": ["country", "domain"], "out": "language"}
+    , "matrix_exports": { "in": ["country", "domain"], "out": "language"}
+    , "country_vs_country": { "in": ["countryX", "countryY"], "out": "domain"}
+    , "lang_vs_lang": { "in": ["languageX", "languageY"], "out": "domain"}
+}
+
 Meteor.startup(function() {
     Session.setDefault('page', 'observatory');
     Session.setDefault('vizType', 'treemap');
     Session.setDefault('vizMode', 'country_exports');
-    Session.setDefault('country', 'all');
+    Session.setDefault('country', defaults.country);
     Session.setDefault('countryX', 'US');
     Session.setDefault('countryY', 'RU');
-    Session.setDefault('language', 'all');
-    Session.setDefault('domain', 'all');
-    Session.setDefault('from', '-1000');
-    Session.setDefault('to', '1950');
-    Session.setDefault('langs', '25');
+    Session.setDefault('language', defaults.language);
+    Session.setDefault('languageX', 'en');
+    Session.setDefault('languageY', 'fr');
+    Session.setDefault('domain', defaults.domain);
+    Session.setDefault('from', defaults.from);
+    Session.setDefault('to', defaults.to);
+    Session.setDefault('langs', defaults.langs);
     Session.setDefault('gender', 'both');
     Session.setDefault('countryOrder', 'count');
     Session.setDefault('industryOrder', 'count');

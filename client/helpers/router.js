@@ -6,7 +6,8 @@ Router.map(function() {
         {path: '/',
         before: [
             function() {
-                this.redirect('/' + Session.get('vizType') + '/' + 
+                this.redirect('/' + 
+                    Session.get('vizType') + '/' + 
                     Session.get('vizMode') + '/' +
                     Session.get('country') + '/' +
                     Session.get('language') + '/' +                    
@@ -17,11 +18,12 @@ Router.map(function() {
         ]}
     );
 
-    this.route('observatory',
-        {path: '/observatory',
+    this.route('observatory', {
+        path: '/observatory',
         before: [
             function() {
-                this.redirect('/' + Session.get('vizType') + '/' + 
+                this.redirect('/' + 
+                    Session.get('vizType') + '/' + 
                     Session.get('vizMode') + '/' +
                     Session.get('country') + '/' +
                     Session.get('language') + '/' +                    
@@ -35,11 +37,12 @@ Router.map(function() {
     this.route('observatory', {
         path: '/:vizType/:vizMode/:param1/:param2/:from/:to/:langs',
         data: function() { 
+            var vizMode = this.params.vizMode;
             Session.set('page', this.template);
             Session.set('vizType', this.params.vizType); 
             Session.set('vizMode', this.params.vizMode); 
-            Session.set('country', this.params.param1);  
-            Session.set('language', this.params.param2);  
+            Session.set(IOMapping[vizMode]["in"][0], this.params.param1);  
+            Session.set(IOMapping[vizMode]["in"][1], this.params.param2);  
             Session.set('from', this.params.from); 
             Session.set('to', this.params.to);  
             Session.set('langs', this.params.langs);  

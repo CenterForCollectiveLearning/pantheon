@@ -617,6 +617,11 @@ tr {
 	height: 30px;
 }
 
+div.selector {
+	position: absolute;
+	right: 0;
+}
+
 select {
 	width:120px;
 	float: right;
@@ -879,6 +884,10 @@ rect {
 	/*border-radius:15px;*/
 	padding:2px;
 	/*border:1px solid #cccccc;*/
+}
+
+#apps div.ui-accordion-content {
+	padding-left: 12px;
 }
 
 #explore-misc-pane {
