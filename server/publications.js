@@ -1,8 +1,7 @@
-<<<<<<< Updated upstream
+
 /*
     Publish all countries to populate dropdowns
  */
-=======
 function getCountryExportArgs(begin, end, L, country, occ) {
     var args = {
         birthyear : {$gt:begin, $lte:end}
@@ -16,7 +15,6 @@ function getCountryExportArgs(begin, end, L, country, occ) {
     return args;
 }
 
->>>>>>> Stashed changes
 Meteor.publish("countries", function() {
     return Countries.find();
 });
