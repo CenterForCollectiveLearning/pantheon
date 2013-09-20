@@ -20,11 +20,6 @@ path.link {
   top: 0;
 }
 
-rect {
-  fill: none;
-  pointer-events: all;
-}
-
 pre {
   font-size: 18px;
 }

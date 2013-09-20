@@ -21,7 +21,7 @@ body {
 
 	/* royalty free background from http://bashcorpo.deviantart.com/art/Grungy-paper-texture-v-5-22966998?q=boost%3Apopular%20paper%20texture&qo=1 */
 	/* background: url(/paper_bg.jpg) no-repeat center center fixed; */
-    background:url(/machu-picchu-wider-view.jpg) no-repeat center center fixed;
+    background:url(/KievGraphicPen.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -532,6 +532,7 @@ tr {
 #viz svg.treemap {
 	border:2px solid #fff;
 	margin-left:3px;
+    position: relative;
 }
 
 .scroll-container {
@@ -700,11 +701,6 @@ iframe {
 .team_member div span {
 	font-weight:700;
 	font-size:20px;
-}
-
-rect {
-  fill: none;
-  stroke: #fff;
 }
 
 #viz {

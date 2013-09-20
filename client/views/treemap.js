@@ -1,3 +1,4 @@
+/*
 Template.treemap.dataReady = function() {
     return treemapSub.ready()
 }
@@ -174,3 +175,5 @@ function wordWrap(d) {
 
     this.firstChild.data = '';
 }
+
+*/
