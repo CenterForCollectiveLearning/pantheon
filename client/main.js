@@ -3,7 +3,11 @@
 
 this.defaults = {
     country: 'all'
+    , countryX: 'US'
+    , countryY: 'RU'
     , language: 'all'
+    , languageX: 'en'
+    , languageY: 'fr'
     , domain: 'all'
     , from: '-1000'
     , to: '1950'
@@ -27,11 +31,11 @@ Meteor.startup(function() {
     Session.setDefault('vizType', 'treemap');
     Session.setDefault('vizMode', 'country_exports');
     Session.setDefault('country', defaults.country);
-    Session.setDefault('countryX', 'US');
-    Session.setDefault('countryY', 'RU');
+    Session.setDefault('countryX', defaults.countryX);
+    Session.setDefault('countryY', defaults.countryY);
     Session.setDefault('language', defaults.language);
-    Session.setDefault('languageX', 'en');
-    Session.setDefault('languageY', 'fr');
+    Session.setDefault('languageX', defaults.languageX);
+    Session.setDefault('languageY', defaults.languageY);
     Session.setDefault('domain', defaults.domain);
     Session.setDefault('from', defaults.from);
     Session.setDefault('to', defaults.to);

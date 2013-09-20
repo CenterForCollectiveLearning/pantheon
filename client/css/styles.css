@@ -21,7 +21,8 @@ body {
 
 	/* royalty free background from http://bashcorpo.deviantart.com/art/Grungy-paper-texture-v-5-22966998?q=boost%3Apopular%20paper%20texture&qo=1 */
 	/* background: url(/paper_bg.jpg) no-repeat center center fixed; */
-    background:url(/KievGraphicPen.jpg) no-repeat center center fixed;
+/*    background:url(/KievGraphicPen.jpg) no-repeat center center fixed;*/
+    background:url(/SelcukGraphicPenSepia.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

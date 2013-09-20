@@ -109,7 +109,6 @@ Template.select_country.events = {
 Template.select_countryX.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
-
         path[3] = d.target.value;
         Router.go(path.join('/'));
     }
@@ -118,7 +117,6 @@ Template.select_countryX.events = {
 Template.select_countryY.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
-
         path[4] = d.target.value;
         Router.go(path.join('/'));
     }
