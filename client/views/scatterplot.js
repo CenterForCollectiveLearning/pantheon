@@ -1,3 +1,7 @@
+Template.scatterplot.dataReady = function() {
+    return allpeopleSub.ready()
+}
+
 Template.scatterplot.rendered = function() {
 	var viz = vizwhiz.viz();
 
@@ -14,147 +18,148 @@ Template.scatterplot.rendered = function() {
 	};
 
     // Aggregate to bottom level, then sum
-    var aggregate_counts = function (obj, values, context) {
+    var aggregateCounts = function (obj, values) {
     	if (!values.length)
     		return obj.length;
-    	var byFirst = _.groupBy(obj, values[0], context),
+    	var byFirst = _.groupBy(obj, values[0]),
     	rest = values.slice(1);
     	for (var prop in byFirst) {
-    		byFirst[prop] = aggregate_counts(byFirst[prop], rest, context);
+    		byFirst[prop] = aggregateCounts(byFirst[prop], rest);
     	}
     	return byFirst;
     };
 
-	Deps.autorun(function() {
-		var occs = {};
+	var occCounts = {};
+	var data = [];
+	var attrs = {};
+	/*
+	    Get values for all occupations in two countries
+	 */
+	var countryX = Session.get('countryX');
+	var countryY = Session.get('countryY');
+	var people = People.find().fetch();
+	var industryCounts = aggregateCounts(people, ['countryCode', 'occupation']);
+	var countryXCounts = industryCounts[countryX];
+	var countryYCounts = industryCounts[countryY];
 
-		/*
-	        Get values for all occupations in two countries
-		 */
-		var countryX = Session.get('countryX');
-		var countryY = Session.get('countryY');
-		var data = People.find().fetch();
-		var industryCounts = aggregate_counts(data, ['countryCode', 'industry']);
-		var countryXCounts = industryCounts[countryX];
-		var countryYCounts = industryCounts[countryY];
-
-		for (occ in countryXCounts) {
-			var valX = countryXCounts[occ];
-			var valY = 0;
-			// If occ in Y, add in Y value
-			if (countryYCounts.hasOwnProperty(occ)) {
-				valY = countryYCounts[occ];
-			}
-			// Otherwise Y value is 0
-			occs[occ] = {
+	/*
+	    Flat data
+	*/
+	for (occ in countryXCounts) {
+		var valX = countryXCounts[occ];
+		var valY = 0;
+		// If occ in Y, add in Y value
+		if (countryYCounts.hasOwnProperty(occ)) {
+			valY = countryYCounts[occ];
+		}
+		// Otherwise Y value is 0
+		occCounts[occ] = {
+			x: valX
+			, y: valY
+		}
+	}
+	for (occ in countryYCounts) {
+		var valY = countryYCounts[occ];
+		var valX = 0;
+		// If occ not in X, add it in
+		if (countryXCounts.hasOwnProperty(occ)) {
+			occCounts[occ] = {
 				x: valX
 				, y: valY
 			}
 		}
+	}
 
-		for (occ in countryYCounts) {
-			var valY = countryYCounts[occ];
-			var valX = 0;
-			// If occ not in X, add it in
-			if (countryXCounts.hasOwnProperty(occ)) {
-				occs[occ] = {
-					x: valX
-					, y: valY
-				}
-			}
+	for (var occ in occCounts) {
+		data.push({
+			id: occ
+			, active1: true
+			, active2: true
+			, valX: occCounts[occ].x
+			, valY: occCounts[occ].y
+			, year: 2002
+		});                    
+	}
+
+	/*
+	    Attributes
+	*/
+	for (var i = people.length - 1; i >= 0; i--) {
+		var dom = people[i]['domain'];
+		var ind = people[i]['industry'];
+		var occ = people[i]['occupation'];
+		var domDict = {
+			id: dom
+			, name: dom
+		};
+		var indDict = {
+			id: ind
+			, name: ind
+		};
+		var occDict = {
+			id: occ
+			, name: occ
+		};
+		attrs[dom] = {
+			id: dom
+			, name: dom
+			, color: "#FFE999"
+			, text_color: "#4C4C4C"
+			, nesting_dom: domDict
 		}
-
-		/*
-		    Flat and attributes data
-		*/
-		var occArray = [];
-		var attrs = {};
-		for (var occ in occs) {
-			occArray.push({
-				"id": occ
-				, "active1": true
-				, "active2": true
-				, "valX": occs[occ].x
-				, "valY": occs[occ].y
-			});
-			attrs[occ] = {
-				"active1": true
-				, "id": occ
-				, "name": occ
-				, "color": "FFE999"
-				, "text_color": "#4C4C4C"
-				, "nesting_occ": {
-					"id": occ
-					, "name": occ
-				}
-			}
+		attrs[ind] = {
+			id: ind
+			, name: ind
+			, color: "#FFE999"
+			, text_color: "#4C4C4C"
+			, nesting_dom: domDict
+			, nesting_ind: indDict
 		}
-
-		console.log(JSON.stringify(occArray));
-		console.log(JSON.stringify(attrs));
-
-		text_formatting = function(d) {
-			return d.charAt(0).toUpperCase() + d.substr(1);
+		attrs[occ] = {
+			id: occ
+			, name: occ
+			, color: "#FFE999"
+			, text_color: "#4C4C4C"
+			, nesting_dom: domDict
+			, nesting_ind: indDict
+			, nesting_occ: occDict
 		}
+	};
 
-		d3.json("data/mg_test_data.json", function(flat_data){
-			d3.json("data/attr_hs.json", function(attrs){
-    
-				depths = [2]
+	text_formatting = function(d) {
+		return d.charAt(0).toUpperCase() + d.substr(1);
+	}
+	inner_html = function(obj) {
+		return "This is some test HTML";
+	}
 
-				for (id in attrs) {
-					obj = attrs[id]
-					depths.forEach(function(d){
-						if (d <= obj.id.length) {
-							obj["nesting_"+d] = {"name": attrs[obj.id.slice(0, d)].name, "id": obj.id.slice(0, d)}
-						}
-					})
-				}
+	console.log(data);
+	console.log(attrs);
 
-				inner_html = function(obj) {
-					return "This is some test HTML"
-				}
-
-				var data = []
-				flat_data.data.forEach(function(d, i){
-					if (d.hs_id.length == 6) {
-						var obj = d
-                        obj.id = obj.hs_id  // ID is necessary to generate plot
-                        obj.active1 = obj.rca >= 1 ? true : false  // Needed to show pie chart
-                        // obj.active2 = obj.rca < 1 ? true : false
-                        // obj.distance = null
-                        data.push(obj)
-                      }
-                    })
-    
-				text_formatting = function(d) {
-					return d.charAt(0).toUpperCase() + d.substr(1);
-				}
-
-				console.log(data);
-				console.log(attrs);
-    
-				viz
-				.type("pie_scatter")
-				.text_var("name")
-				.id_var("id")
-				.attrs(attrs)
-				.xaxis_var("distance")
-				.yaxis_var("complexity")
-				.value_var("distance")
-                // .tooltip_info(["distance", "complexity", "val_usd", "rca"])
-                // .total_bar({"prefix": "Export Value: $", "suffix": " USD", "format": ",f"})
-                .nesting(["nesting_2"]) //,"nesting_4","nesting_6"])
-	            .nesting_aggs({"complexity":"mean","distance":"mean","rca":"mean"})
-                //.depth("nesting_2")
-                .text_format(text_formatting)
-                .spotlight(false)
-                // .year(2000)
-                .active_var("active1")
-                .click_function(inner_html)
-                // .solo("11")
-                // .static_axis(false)
-                .mirror_axis(true)
+	viz
+	  .width(940)
+	  .height(600)
+	  .type("pie_scatter")
+	  .dev(true)
+	  .text_var("name")
+	  .id_var("id")
+	  .attrs(attrs)
+	  .xaxis_var("valX")
+	  .yaxis_var("valY")
+	  .value_var("valX")
+      .tooltip_info(["valX", "valY"])
+      // .total_bar({"prefix": "Export Value: $", "suffix": " USD", "format": ",f"})
+      .nesting(["nesting_dom", "nesting_ind", "nesting_occ"])
+      // .nesting_aggs({"complexity":"mean","distance":"mean","rca":"mean"})
+      .depth("nesting_ind")
+      .text_format(text_formatting)
+      .spotlight(false)
+      // .year(2000)
+      .active_var("active1")
+      .click_function(inner_html)
+      // .solo("11")
+      // .static_axis(false)
+      .mirror_axis(true)
 
     d3.select("#viz")
       .datum(data)

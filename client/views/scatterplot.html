@@ -1,6 +1,12 @@
 <template name="scatterplot">
-    {{#constant}}
-      <div id="viz">
-      </div>
-    {{/constant}}
+      	{{#if dataReady}}
+            {{> scatterplot_svg}}
+        {{else}}
+            {{> spinner}}
+        {{/if}}
+</template>
+
+<template name="scatterplot_svg">
+    <div id="viz" class="scatterplot">
+    </div>
 </template>
