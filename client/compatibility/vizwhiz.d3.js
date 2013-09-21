@@ -1009,8 +1009,6 @@ vizwhiz.viz = function() {
         data_obj = {}
         vars.keys = {}
         data_obj.raw = data_passed
-
-        console.log(data_passed);
         
         data_passed.forEach(function(d){
           for (k in d) {
@@ -1020,8 +1018,6 @@ vizwhiz.viz = function() {
           }
         })
 
-        console.log(vars.keys);
-        
         var changed = []
         if (filter_change) changed.push("filter")
         if (solo_change) changed.push("solo")
@@ -1029,8 +1025,9 @@ vizwhiz.viz = function() {
         if (xaxis_change && vars.xaxis_var) changed.push(vars.xaxis_var)
         if (yaxis_change && vars.yaxis_var) changed.push(vars.yaxis_var)
         
+        console.log(data_obj.raw, changed);
         data_obj.filtered = filter_check(data_obj.raw,changed)
-        console.log(filter_check(data_obj, changed));
+        console.log(data_obj);
         vars.parent = d3.select(this)
         
         filter_change = false
@@ -1050,8 +1047,6 @@ vizwhiz.viz = function() {
         }
         
         data_obj.year = {}
-
-        console.log(data_obj.filtered); // TODO Find filtered!
 
         if (vars.years.length) {
           vars.years.forEach(function(y){
@@ -1185,7 +1180,7 @@ vizwhiz.viz = function() {
           vars.data = data_obj[data_type[vars.type]][vars.depth][vars.spotlight][vars.year]
         }
         else {
-          vars.data = data_obj[data_type[vars.type]][vars.depth][vars.year]
+          varsf.data = data_obj[data_type[vars.type]][vars.depth][vars.year]
         }
         
       }
@@ -1196,8 +1191,6 @@ vizwhiz.viz = function() {
       if (vars.data && (vars.type == "tree_map" && !vars.data.children.length) || (vars.data && vars.data.length == 0)) {
         vars.data = null
       }
-
-      console.log(vars);
 
       vizwhiz.tooltip.remove(vars.type);
       
@@ -1510,9 +1503,9 @@ vizwhiz.viz = function() {
     
     if (vars.dev) console.log("[viz-whiz] Filtering Data")
 
-    console.log(check_data);
-    
-    return check_data.filter(function(d){
+    console.log("In filter_check", check_data, keys);
+
+    var x = check_data.filter(function(d){
       
       var ret = true
       keys.forEach(function(key){
@@ -1520,15 +1513,19 @@ vizwhiz.viz = function() {
           if (key == "filter" || key == "solo") {
             ret = true_filter(d)
           }
-          else if (key != vars.value_var || vars.type != "rings") {
+          else if (key != vars.value_var || vars.type != "rings") {            
             var value = find_variable(d,key)
-            if (!value) ret = false
+            console.log(value, !value);
+            // if (!value) ret = false
           }
         }
       })
       return ret
       
     })
+
+    console.log(x);
+    return x;
       
   }
   

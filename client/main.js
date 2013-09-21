@@ -2,7 +2,9 @@
 // TODO Where do you put these global functions?
 
 this.defaults = {
-    country: 'all'
+    vizType: 'treemap'
+    , vizMode: 'country_exports'
+    , country: 'all'
     , countryX: 'US'
     , countryY: 'RU'
     , language: 'all'
@@ -28,8 +30,8 @@ this.IOMapping = {
 
 Meteor.startup(function() {
     Session.setDefault('page', 'observatory');
-    Session.setDefault('vizType', 'treemap');
-    Session.setDefault('vizMode', 'country_exports');
+    Session.setDefault('vizType', defaults.vizType);
+    Session.setDefault('vizMode', defaults.vizMode);
     Session.setDefault('country', defaults.country);
     Session.setDefault('countryX', defaults.countryX);
     Session.setDefault('countryY', defaults.countryY);

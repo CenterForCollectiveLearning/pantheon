@@ -7,13 +7,13 @@ Router.map(function() {
         before: [
             function() {
                 this.redirect('/' + 
-                    Session.get('vizType') + '/' + 
-                    Session.get('vizMode') + '/' +
-                    Session.get('country') + '/' +
-                    Session.get('language') + '/' +                    
-                    Session.get('from') + '/' +
-                    Session.get('to') + '/' +
-                    Session.get('langs'));
+                    defaults.vizType + '/' + 
+                    defaults.vizMode + '/' +
+                    defaults.country + '/' +
+                    defaults.language + '/' +                    
+                    defaults.from + '/' +
+                    defaults.to + '/' +
+                    defaults.langs);
             }
         ]}
     );
@@ -23,13 +23,13 @@ Router.map(function() {
         before: [
             function() {
                 this.redirect('/' + 
-                    Session.get('vizType') + '/' + 
-                    Session.get('vizMode') + '/' +
-                    Session.get('country') + '/' +
-                    Session.get('language') + '/' +                    
-                    Session.get('from') + '/' +
-                    Session.get('to') + '/' +
-                    Session.get('langs'));
+                    defaults.vizType + '/' + 
+                    defaults.vizMode + '/' +
+                    defaults.country + '/' +
+                    defaults.language + '/' +                    
+                    defaults.from + '/' +
+                    defaults.to + '/' +
+                    defaults.langs);
             }
         ]}
     );
