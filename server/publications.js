@@ -15,14 +15,18 @@ function getCountryExportArgs(begin, end, L, country, occ) {
     return args;
 }
 
-Meteor.publish("countries", function() {
+Meteor.publish("countries_pub", function() {
     return Countries.find();
 });
+
+Meteor.publish("domains_pub", function(){
+    return Domains.find();
+})
 
 /*
     Publish all languages to populate dropdowns
  */
-Meteor.publish("languages", function() {
+Meteor.publish("languages_pub", function() {
     return Languages.find();
 });
 
@@ -47,7 +51,7 @@ Meteor.publish("peopletop10", function(begin, end, L, country) {
 
     sub.ready();
 
-    return; //TODO: add sort by numlangs
+    return;
 });
 
 /*
@@ -97,7 +101,7 @@ People._ensureIndex({ countryCode: 1, occupation: 1, birthyear: 1} )
  * Static query that pushes the treemap structure
  * This needs to run a native mongo query due to aggregates being not supported directly yet
  */
-Meteor.publish("domain", function(begin, end, L, country) {
+Meteor.publish("treemap_pub", function(begin, end, L, country) {
     var sub = this;
     var driver = MongoInternals.defaultRemoteCollectionDriver();
 
@@ -116,7 +120,7 @@ Meteor.publish("domain", function(begin, end, L, country) {
     var pipeline = [
         {$match: matchArgs },
         {$group: {
-            _id: {domain: "$domain", industry: "$industry"},
+            _id: {domain: "$domain", industry: "$industry", occupation: "$occupation"},
             count: {$sum: 1 }
         }}
     ];
@@ -129,9 +133,10 @@ Meteor.publish("domain", function(begin, end, L, country) {
 
                 _.each(result, function(e) {
                     // Generate a random disposable id for each aggregate
-                    sub.added("domains", Random.id(), {
+                    sub.added("treemap", Random.id(), {
                         domain: e._id.domain,
                         industry: e._id.industry,
+                        occupation: e._id.occupation,
                         count: e.count
                     });
                 });

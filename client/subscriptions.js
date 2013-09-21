@@ -1,10 +1,17 @@
-Meteor.subscribe("countries");
-Meteor.subscribe("languages");
+// These are static data that never change
+Meteor.subscribe("countries_pub");
+Meteor.subscribe("languages_pub");
+Meteor.subscribe("domains_pub")
+
 
 // These subscriptions are explicitly global variables
 this.allpeopleSub = Meteor.subscribe("allpeople");
 
+
+// These are client only collections
 PeopleTop10 = new Meteor.Collection("top10people");
+Treemap = new Meteor.Collection("treemap");
+
 
 this.top10Sub = null;
 this.treemapSub = null;
@@ -37,7 +44,8 @@ Deps.autorun(function(){
     }
     else {
         top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country);
-        treemapSub = Meteor.subscribe("domain", begin, end, langs, country);
+        // Give a handle to this subscription so we can check if it's ready
+        treemapSub = Meteor.subscribe("treemap_pub", begin, end, langs, country);
     }
     
 });
