@@ -69,7 +69,6 @@ Template.matrix.rendered = function() {
 
     /* Reactive data! */
     var data = People.find().fetch();
-    console.log(data.length);
 
     /* Session variables changing view to same data*/
     var gender = Session.get('gender');

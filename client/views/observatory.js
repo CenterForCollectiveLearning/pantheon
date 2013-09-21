@@ -53,16 +53,15 @@ Template.accordion.events = {
         }
 
         // Parameters depend on vizMode (e.g countries -> languages for exports)
-        var mode = Session.get("vizMode");
-        var param1 = IOMapping[mode]["in"][0];
-        var param2 = IOMapping[mode]["in"][1];
+        var param1 = IOMapping[option]["in"][0];
+        var param2 = IOMapping[option]["in"][1];
 
         // Reset parameters for a viz type change
         var path = '/' +
             modeToType[option] + '/' +
             option + '/' +
-            defaults.country + '/' +  // First input (e.g. exporter country)
-            defaults.language + '/' +  // Second input (e.g. importer lang)
+            defaults[param1] + '/' +  // First input (e.g. exporter country)
+            defaults[param2] + '/' +  // Second input (e.g. importer lang)
             defaults.from + '/' +  // From
             defaults.to + '/' +  // To
             defaults.langs + '/';  // Langs
@@ -93,8 +92,12 @@ Template.ranked_person.birthday = function() {
 Template.question.question = function() {
 
     var s_countries = (Session.get("country") == "all") ? "the world" : country[Session.get("country")];
+    var s_countryX = country[Session.get("countryX")];
+    var s_countryY = country[Session.get("countryY")];
     var s_domains = (Session.get("domain") == "all") ? "all domains" : decodeURIComponent(Session.get("domain"));
     var s_regions = (Session.get("language") == "all") ? "the world" : region[Session.get("language")];
+    var s_languageX = region[Session.get("languageX")];
+    var s_languageY = region[Session.get("languageY")];
     var does_or_do = (Session.get("country") == "all") ? "do" : "does";
     var s_or_no_s_c = (Session.get("country") == "all") ? "'" : "'s";
     var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
@@ -128,9 +131,9 @@ Template.question.question = function() {
         case "matrix_exports":
             return "What does " + s_countries + " export?";
         case "country_vs_country":
-            return "What does " + s_countries + " export?";
+            return "What does " + s_countryX + " export compared to " + s_countryY + "?";
         case "lang_vs_lang":
-            return "What does " + s_countries + " export?";
+            return "What do " + s_languageX + " speakers export compared to " + s_languageY + " speakers?";
     }
 
 };
