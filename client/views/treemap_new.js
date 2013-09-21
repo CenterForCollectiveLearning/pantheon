@@ -41,18 +41,48 @@ Template.treemap_svg.rendered = function() {
     var attrs = {};
 
     attr.forEach(function(a){
-        var occupation = {};
-        occupation["id"] = a.occupation;
-        occupation["nesting_1"] = {"name": a.domain, "id": a.domain};
-        occupation["nesting_3"] = {"name": a.industry, "id": a.industry};
-        occupation["nesting_5"] = {"name": a.occupation, "id": a.occupation};
-        occupation["color"] = color_domains(a.domain.toUpperCase());
-        attrs[a.occupation] = occupation;
+        var dom = a.domain;
+        var ind = a.industry;
+        var occ = a.occupation;
+        var dom_color = color_domains(dom.toUpperCase());
+        var domDict = {
+            id: dom
+            , name: dom
+        };
+        var indDict = {
+            id: ind
+            , name: ind
+        };
+        var occDict = {
+            id: occ
+            , name: occ
+        };
+        attrs[dom] = {
+            id: dom
+            , name: dom
+            , color: dom_color
+            , nesting_1: domDict
+        };
+        attrs[ind] = {
+            id: ind
+            , name: ind
+            , color: dom_color
+            , nesting_1: domDict
+            , nesting_3: indDict
+        };
+        attrs[occ] = {
+            id: occ
+            , name: occ
+            , color: dom_color
+            , nesting_1: domDict
+            , nesting_3: indDict
+            , nesting_5: occDict
+        };
     });
 
     var flat = [];
     data.forEach(function(d){
-       flat.push({"id": d.occupation, "name": d.occupation, "num_ppl": d.count});
+       flat.push({"id": d.occupation, "name": d.occupation, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
     });
 
     console.log("ATTRS:");
@@ -61,9 +91,9 @@ Template.treemap_svg.rendered = function() {
     console.log(flat);
 
 
-
     viz
         .type("tree_map")
+//        .dev(true)
         .width(725)
         .height(560)
         .id_var("id")
@@ -73,7 +103,7 @@ Template.treemap_svg.rendered = function() {
         .tooltip_info({})
         .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
         .nesting(["nesting_1","nesting_3","nesting_5"])
-        .depth("nesting_1")
+        .depth("nesting_3")
         .font("PT Sans")
         .font_weight("lighter")
         .color_var("color");

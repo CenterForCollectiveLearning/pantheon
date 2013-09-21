@@ -169,4 +169,5 @@ Template.scatterplot.rendered = function() {
     d3.select("#viz")
       .datum(data)
       .call(viz)
+
 }

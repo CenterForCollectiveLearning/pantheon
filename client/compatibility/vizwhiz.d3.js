@@ -1024,10 +1024,10 @@ vizwhiz.viz = function() {
         if (value_change && vars.value_var) changed.push(vars.value_var)
         if (xaxis_change && vars.xaxis_var) changed.push(vars.xaxis_var)
         if (yaxis_change && vars.yaxis_var) changed.push(vars.yaxis_var)
-        
-        console.log(data_obj.raw, changed);
+
+        if (vars.dev) console.log(data_obj.raw, changed);
         data_obj.filtered = filter_check(data_obj.raw,changed)
-        console.log(data_obj);
+        if (vars.dev) console.log(data_obj);
         vars.parent = d3.select(this)
         
         filter_change = false
@@ -1180,7 +1180,7 @@ vizwhiz.viz = function() {
           vars.data = data_obj[data_type[vars.type]][vars.depth][vars.spotlight][vars.year]
         }
         else {
-          varsf.data = data_obj[data_type[vars.type]][vars.depth][vars.year]
+          vars.data = data_obj[data_type[vars.type]][vars.depth][vars.year]
         }
         
       }
@@ -1503,7 +1503,7 @@ vizwhiz.viz = function() {
     
     if (vars.dev) console.log("[viz-whiz] Filtering Data")
 
-    console.log("In filter_check", check_data, keys);
+    if (vars.dev) console.log("In filter_check", check_data, keys);
 
     var x = check_data.filter(function(d){
       
@@ -1514,8 +1514,8 @@ vizwhiz.viz = function() {
             ret = true_filter(d)
           }
           else if (key != vars.value_var || vars.type != "rings") {            
-            var value = find_variable(d,key)
-            console.log(value, !value);
+            var value = find_variable(d,key);
+            if (vars.dev) console.log(value, !value);
             // if (!value) ret = false
           }
         }
@@ -1524,7 +1524,7 @@ vizwhiz.viz = function() {
       
     })
 
-    console.log(x);
+      if (vars.dev)console.log(x);
     return x;
       
   }
@@ -1568,7 +1568,9 @@ vizwhiz.viz = function() {
     levels.forEach(function(nest_key, i){
     
       nested_data
-        .key(function(d){ return vars.attrs[d[vars.id_var]][nest_key][vars.id_var] })
+        .key(function(d){
+              return vars.attrs[d[vars.id_var]][nest_key][vars.id_var];
+        });
       
       if (i == levels.length-1) {
         nested_data.rollup(function(leaves){
