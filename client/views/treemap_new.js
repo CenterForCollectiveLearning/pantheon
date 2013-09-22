@@ -90,7 +90,6 @@ Template.treemap_svg.rendered = function() {
     console.log("DATA:")
     console.log(flat);
 
-
     viz
         .type("tree_map")
 //        .dev(true)

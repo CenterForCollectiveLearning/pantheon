@@ -119,7 +119,6 @@ Meteor.publish("treemap_pub", function(begin, end, L, country) {
     ];
 
     driver.mongo.db.collection("people").aggregate(
-        // TODO: need to update this to count distinct name/en_curid
         pipeline,
         Meteor.bindEnvironment(
             function(err, result) {
