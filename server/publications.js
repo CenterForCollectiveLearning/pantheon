@@ -1,7 +1,3 @@
-
-/*
-    Publish all countries to populate dropdowns
- */
 function getCountryExportArgs(begin, end, L, country, occ) {
     var args = {
         birthyear : {$gt:begin, $lte:end}
@@ -23,9 +19,6 @@ Meteor.publish("domains_pub", function(){
     return Domains.find();
 })
 
-/*
-    Publish all languages to populate dropdowns
- */
 Meteor.publish("languages_pub", function() {
     return Languages.find();
 });
