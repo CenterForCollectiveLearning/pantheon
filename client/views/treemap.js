@@ -1,5 +1,5 @@
 Template.treemap.dataReady = function() {
-    return treemapSub.ready();
+    return Session.get("treemapReady");
 }
 //
 //Template.tooltip.tooltip = function() {
@@ -99,7 +99,7 @@ Template.treemap_svg.rendered = function() {
         .attrs(attrs)
         .text_var("name")
         .value_var("num_ppl")
-        .tooltip_info({})
+        .tooltip_info({}) //embed top5 individuals into the tooltip
         .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
         .nesting(["nesting_1","nesting_3","nesting_5"])
         .depth("nesting_3")
@@ -111,13 +111,13 @@ Template.treemap_svg.rendered = function() {
         .datum(flat)
         .call(viz);
 
-   /*
-    d3.selectAll(".leaf rect").on("mouseover", function (d) {
-        // TODO generalize this for other treemaps later
 
-        Session.set("tooltipIndustry", d._id);
+//    d3.selectAll(".leaf rect").on("mouseover", function (d) {
+//        // TODO generalize this for other treemaps later
+//
+//        Session.set("tooltipIndustry", d._id);
+//
+//        $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
+//    });
 
-        $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
-    });
-    */
 }

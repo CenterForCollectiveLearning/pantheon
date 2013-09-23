@@ -46,9 +46,20 @@ Deps.autorun(function(){
         top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country);
         // Give a handle to this subscription so we can check if it's ready
         treemapSub = Meteor.subscribe("treemap_pub", begin, end, langs, country);
+
+        Session.set("treemapReady", false);
+
+        // Make a throwaway autorun function that listens for the handle being ready
+        Deps.autorun(function(c) {
+            if (!treemapSub.ready()) return;
+            Session.set("treemapReady", true);
+            c.stop(); // Need to do this or will get infinite number of autorun functions
+        });
     }
     
 });
+
+
 
 Deps.autorun(function() {
     var industry = Session.get("tooltipIndustry");
