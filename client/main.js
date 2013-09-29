@@ -26,6 +26,7 @@ this.IOMapping = {
     , "matrix_exports": { "in": ["country", "domain"], "out": "language"}
     , "country_vs_country": { "in": ["countryX", "countryY"], "out": "domain"}
     , "lang_vs_lang": { "in": ["languageX", "languageY"], "out": "domain"}
+    , "map": { "in": ["domain", "language"], "out": "country" }
 }
 
 Meteor.startup(function() {
@@ -90,6 +91,11 @@ var sections = [
         section: "About",
         template: "about",
         url: "/about"
+    },
+    {
+        section: "Map",
+        template: "map",
+        url: "/map"
     }
 ]
 

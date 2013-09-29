@@ -32,6 +32,7 @@ Template.select_mode.render_template = function() {
 
 Template.select_country.rendered = function() {
     $(this.find("select")).val(Session.get("country")).uniform();
+    // $(this.find("select")).val(Session.get("country")).chosen({width: "60%"});
 }
 
 Template.select_countryX.rendered = function() {
@@ -95,6 +96,7 @@ Template.select_industry_order.rendered = function() {
  */
 Template.select_country.events = {
     "change select": function(d) {
+        console.log(d)
         var path = window.location.pathname.split('/');
         if (IOMapping[Session.get("vizMode")]["in"].indexOf("country") == 0)
             path[3] = d.target.value;

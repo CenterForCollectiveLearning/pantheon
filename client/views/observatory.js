@@ -10,7 +10,9 @@ Template.visualization.render_template = function() {
             return new Handlebars.SafeString(Template.matrix(this));
         case "scatterplot":
             return new Handlebars.SafeString(Template.scatterplot(this));
-    }
+        case "map":
+            return new Handlebars.SafeString(Template.map(this));
+        }
 }
 
 Template.accordion.rendered = function() {
@@ -19,9 +21,10 @@ Template.accordion.rendered = function() {
     var mapping = {
         "treemap": 0,
         "matrix": 1,
-        "scatterplot": 2
+        "scatterplot": 2,
+        "map": 3
     }
-
+22
     var accordion = $(".accordion");
 
     accordion.accordion({
@@ -31,7 +34,7 @@ Template.accordion.rendered = function() {
             fillSpace: false
         });
 
-    accordion.accordion( "resize" );
+    accordion.accordion("resize");
 }
 
 Template.accordion.events = {
@@ -41,15 +44,17 @@ Template.accordion.events = {
         var option = $(srcE).attr("id");
 
         var modeToType = {
-            "country_exports": "treemap",
-            "country_imports": "treemap",
-            "domain_exports_to": "treemap",
-            "domain_imports_from": "treemap",
-            "bilateral_exporters_of": "treemap",
-            "bilateral_importers_of": "treemap",
-            "matrix_exports": "matrix",
-            "country_vs_country": "scatterplot",
-            "lang_vs_lang": "scatterplot"
+            "country_exports": "treemap"
+            , "country_imports": "treemap"
+            , "domain_exports_to": "treemap"
+            , "domain_imports_from": "treemap"
+            , "bilateral_exporters_of": "treemap"
+            , "bilateral_importers_of": "treemap"
+            , "matrix_exports": "matrix"
+            , "country_vs_country": "scatterplot"
+            , "lang_vs_lang": "scatterplot"
+            , "lang_vs_lang": "scatterplot"
+            , "map": "map"
         }
 
         // Parameters depend on vizMode (e.g countries -> languages for exports)
