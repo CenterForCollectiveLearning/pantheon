@@ -23,12 +23,6 @@
     fill: red;
 }
 
-#viz svg {
-    margin-left: 3px;
-    margin-bottom: 0;
-    float: left;
-}
-
 .cell {
     stroke: none;
 }

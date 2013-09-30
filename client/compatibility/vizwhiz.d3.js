@@ -1,3 +1,4 @@
+
 (function(){
 var vizwhiz = window.vizwhiz || {};
 
@@ -866,7 +867,7 @@ vizwhiz.viz = function() {
     "click_function": null,
     "color_var": "color",
     "color_domain": [],
-    "color_range": ["#ff0000","#888888","#00ff00"],
+    "color_range": ["#468966", "#8e2800", "#864926", "#ffb038", "#fff0a5", "#bc4d96", "#1be6ef", "#ff5800"],
     "color_scale": d3.scale.sqrt().interpolate(d3.interpolateRgb),
     "connections": null,
     "coords": null,

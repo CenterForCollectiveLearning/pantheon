@@ -10,16 +10,23 @@ Template.treemap.dataReady = function() {
 //    return Domains.findOne({ _id: Session.get("tooltipIndustry") })
 //}
 
-var treeProps = {
-    width: 725,
-    height: 560
-};
-
-Template.treemap_svg.properties = treeProps;
+// Green, red, brown, yellow, beige, pink, blue, orange
 
 var color_domains = d3.scale.ordinal()
     .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS"])
-    .range(["#ECD078", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#53a9f1", "#79BD9A"]);
+    .range(["#468966", "#8e2800", "#864926", "#ffb038", "#fff0a5", "#bc4d96", "#1be6ef", "#ff5800"]);
+
+var treeProps = {
+    width: 725,
+    height: 520
+};
+
+    Template.treemap_svg.properties = treeProps;
+
+
+// var color_domains = d3.scale.ordinal()
+//     .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS"])
+//     .range(["#ECD078", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#53a9f1", "#79BD9A"]);
 
 var color_languages = d3.scale.ordinal()
     .domain(["Afro-Asiatic", "Altaic", "Austro-Asiatic", "Austronesian", "Basque", "Caucasian", "Creoles and pidgins", "Dravidian", "Eskimo-Aleut", "Indo-European", "Niger-Kordofanian", "North American Indian", "Sino-Tibetan", "South American Indian", "Tai", "Uralic"])
@@ -30,6 +37,7 @@ var color_countries = d3.scale.ordinal()
     .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2"]);
 
 Template.treemap_svg.rendered = function() {
+
 // Don't re-render with the same parameters...?
     var context = this;
     if( this.rendered ) return;
@@ -93,18 +101,18 @@ Template.treemap_svg.rendered = function() {
     viz
         .type("tree_map")
 //        .dev(true)
-        .width(725)
-        .height(560)
+        .width($('.page-middle').width())
+        .height($('.page-middle').height())
         .id_var("id")
         .attrs(attrs)
         .text_var("name")
         .value_var("num_ppl")
         .tooltip_info({}) //embed top5 individuals into the tooltip
-        .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
+//        .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
         .nesting(["nesting_1","nesting_3","nesting_5"])
         .depth("nesting_3")
-        .font("PT Sans")
-        .font_weight("lighter")
+        .font("Open Sans")
+        .font_weight("300")
         .color_var("color");
 
     d3.select(context.find("svg"))

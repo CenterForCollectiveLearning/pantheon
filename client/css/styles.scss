@@ -13,7 +13,16 @@ $max_height: 100%;
 $color_gold: #d8c568;
 $color_grey: #cccccc;
 $color_fairly_black: #2C2C2C;
+$color_almost_black: #010101;
 $color_black_1: rgba(0, 0, 0, 1.0);
+
+@mixin opacity($trans) {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$trans * 100})";
+  filter: alpha(opacity=#{$trans * 100});
+  -moz-opacity: $trans;
+  -khtml-opacity: $trans;
+  opacity: $trans;
+}
 
 body {
 	max-width: $max_width;
@@ -63,7 +72,6 @@ header {
 	position: fixed;
 	width: $total_width;
 	max-width: $max_width;
-	max-height: 100%;
 
 	margin: 0 auto;
 
@@ -75,15 +83,15 @@ header {
 	    margin: 0 auto;
 	    padding: 15px;
 
-	    background-color: $color_black_1;
+	    background-color: $color_almost_black;
 
 	    border-bottom-left-radius: 3px;
 	    border-bottom-right-radius: 3px;
 
 	    float: none;
 
-	    -webkit-box-shadow: 0px 3px 7px rgba(0,0,0,0.25);
-	    box-shadow: 0px 3px 7px rgba(0,0,0,0.25);
+	    -webkit-box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
+	    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
 
 	    a {
 	    	margin: 0 auto;
@@ -105,7 +113,7 @@ nav {
 
 	width: $total_width;
 	height: 50px;
-	background-color: $color_black_1;
+	background-color: $color_almost_black;
 
 	font-size: 1.25em;
 	color: $color_grey;
@@ -169,13 +177,11 @@ nav {
 	@include container();
 	@include clearfix();
 
-	height: 48em;
-
 	max-width: $max_width;
-	max-height: 100%;
+	max-height: $max_height;
 
 	.page-top {
-		padding-top: 8.0em;
+		padding-top: 9.0em;
 		.question {
 			font-size: 2em; // 32px / 1px
 			text-align: center;
@@ -184,6 +190,10 @@ nav {
 			margin-bottom: $gutter_width;
 
 			color: #d8c568;
+
+			.bold {
+				font-weight: 500;
+			}
 		}
 	}
 
@@ -192,6 +202,7 @@ nav {
 	}
 
 	.page-left {
+		@include opacity(0.5);
 		@include column(2);
 		position: relative;
 
@@ -257,6 +268,7 @@ nav {
 	}
 
 	.page-right {
+		@include opacity(0.5);
 		@include column(2, 10);
 	}
 }
@@ -274,7 +286,7 @@ nav {
 .section-header {
 	text-align: center;
 	text-transform: uppercase;
-	padding-top: 8px;
+	// padding-top: 8px;
 	padding-bottom: 14px;
 	letter-spacing: 1px;
 	color: #cccccc;
@@ -287,7 +299,7 @@ nav {
 	max-height: 100%;
 
 	li {
-		padding-bottom: 15px;
+		padding-bottom: 0.75em;
 
 		span {
 			padding-left: 1.5em;
@@ -323,8 +335,10 @@ select {
 footer {
 	position: fixed;
 	bottom: 0;
-	background: $color_black_1;
+	background: $color_almost_black;
 	width: 100%;
+
+	opacity: 0.5;
 
 	font-size: 1em;
 	div.footer-license {

@@ -1,33 +1,29 @@
 <!-- Non-visualization specific Observatory elements (e.g. accordion, menu) -->
 <template name="observatory">
-    <div class="copy exploretop">
 
-        <div id="viz_options">
-            <div id="parameters" class="section_header">
-                Parameters
-            </div>
-            {{> select_mode }}
-        </div>
+    <div class="page-top">            
+        {{> question}}
+    </div>
 
-        <div id="apps">
-            <div class="section_header">
+    <div class="page-left">
+        <div class="viz-selector">
+            <div class="section-header">
                 Visualizations
             </div>
             {{> accordion}}
         </div>
-
-        <div id="viz_container">
+        <div class="viz-options">
+            <div id="parameters" class="section-header">
+                Parameters
+            </div>
+            {{> select_mode }}
         </div>
-        
-        {{> question}}
-        
     </div>
-
+        
     <!-- Visualization and Ranked List Container -->
-    <div id="viz_pane">
-        {{> visualization}}
-        {{> tooltip}}
-    </div>
+    {{> visualization}}
+    {{> tooltip}}
+    
 </template>
 
 <template name="visualization">
@@ -79,14 +75,14 @@
 
 <!-- Visualization and Viz-Mode specific Question -->
 <template name="question">
-    <div id="question">{{question}}</div>
+    <div class="question">{{question}}</div>
     <!-- <div id="question">What does the world export?</div> -->
 </template>
 
 <!-- Ranked List for Treemap -->
 <template name="ranked_list">
     <div class="ranked_list">
-        <div class="header">RANKING OF PEOPLE</div>
+        <div class="section-header">RANKINGS</div>
         <div class="content">
             {{#if empty}}
                 <i>none for the selected criteria.</i>

@@ -1,12 +1,14 @@
 <template name="matrix">
-    <div id="viz" class="matrix">
-        {{#if dataReady}}
-            {{> matrix_svg}}
-        {{else}}
-            {{> spinner}}
-        {{/if}}
-    <div>
-      	<svg class="color-scale"></svg>
+    <div class="page-middle">
+        <div id="viz" class="matrix">
+            {{#if dataReady}}
+                {{> matrix_svg}}
+            {{else}}
+                {{> spinner}}
+            {{/if}}
+        <div>
+          	<svg class="color-scale"></svg>
+        </div>
     </div>
 </template>
 

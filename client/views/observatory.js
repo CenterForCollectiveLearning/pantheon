@@ -1,5 +1,14 @@
 // Helper methods for observatory page
 
+Template.observatory.events = {
+    "mouseenter .page-left, mouseenter .page-right": function(d) {
+        $(d.target).fadeTo('opacity', 1.0);
+    },
+    "mouseleave .page-left, mouseleave .page-right": function(d) {
+        $(d.target).css('opacity', 0.6);
+    }
+}
+
 // Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = function() {
     var type = Session.get("vizType");
@@ -24,7 +33,7 @@ Template.accordion.rendered = function() {
         "scatterplot": 2,
         "map": 3
     }
-22
+
     var accordion = $(".accordion");
 
     accordion.accordion({
@@ -93,7 +102,7 @@ Template.ranked_person.birthday = function() {
     return birthday;
 }
 
-// Generate question given viz type
+// Generate question given viz tqype
 Template.question.question = function() {
 
     var s_countries = (Session.get("country") == "all") ? "the world" : country[Session.get("country")];

@@ -1,26 +1,29 @@
 <template name="treemap">
 
-	<div id="viz" class="treemap">
-        {{#if dataReady}}
-            {{> treemap_svg}}
-        {{else}}
-            {{> spinner}}
-        {{/if}}
-	</div>
+    <div class="page-middle">
+	    <div id="viz" class="treemap">
+            {{#if dataReady}}
+                {{> treemap_svg}}
+            {{else}}
+                {{> spinner}}
+            {{/if}}
+	    </div>
+        {{! TODO: Move this out }}
+<!--         <div class="legend">
+            <div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
+            <div id="arts" class="pill" style="background-color:#D95B43">Arts</div>
+            <div id="humanities" class="pill" style="background-color:#43c1d9">Humanities</div>
+            <div id="business_and_law" class="pill" style="background-color:#C02942">Business &amp; Law</div>
+            <div id="exploration" class="pill" style="background-color:#546c97">Exploration</div>
+            <div id="public_figure" class="pill" style="background-color:#d278c2">Public Figure</div>
+            <div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
+            <div id="sports" class="pill" style="background-color:#79BD9A">Sports</div>
+        </div> -->
+    </div>
 
-	{{> ranked_list }}
-
-	{{! TODO: Move this out }}
-	<div class="legend">
-		<div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
-		<div id="arts" class="pill" style="background-color:#D95B43">Arts</div>
-		<div id="humanities" class="pill" style="background-color:#43c1d9">Humanities</div>
-		<div id="business_and_law" class="pill" style="background-color:#C02942">Business &amp; Law</div>
-		<div id="exploration" class="pill" style="background-color:#546c97">Exploration</div>
-		<div id="public_figure" class="pill" style="background-color:#d278c2">Public Figure</div>
-		<div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
-		<div id="sports" class="pill">Sports</div>
-	</div>
+    <div class="page-right">
+    	{{> ranked_list }}
+    </div>
 </template>
 
 <template name="treemap_svg">

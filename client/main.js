@@ -63,11 +63,6 @@ var sections = [
         url: "/observatory"
     },
     {
-        section: "Vision",
-        template: "vision",
-        url: "/vision"
-    },
-    {
         section: "Ranking",
         template: "ranking",
         url: "/ranking"
@@ -78,9 +73,9 @@ var sections = [
         url: "/people"
     },
     {
-        section: "Data",
-        template: "data",
-        url: "/data"
+        section: "Vision",
+        template: "vision",
+        url: "/vision"
     },
     {
         section: "FAQ",
@@ -91,11 +86,6 @@ var sections = [
         section: "About",
         template: "about",
         url: "/about"
-    },
-    {
-        section: "Map",
-        template: "map",
-        url: "/map"
     }
 ]
 
@@ -108,6 +98,16 @@ Template.section.helpers({
         return Session.equals('page', this.template) ? 'selected_section' : '';
     }
 })
+
+Template.nav.events = {
+    "mouseenter .main_nav a": function(d) {
+        $(d.target).css('color', 'white');
+    },
+
+    "mouseleave .main_nav a": function(d) {
+        $(d.target).css('color', '#cccccc');
+    },
+}
 
 // Spinner
 Template.spinner.rendered = function(){
@@ -125,7 +125,7 @@ Template.spinner.rendered = function(){
         shadow: false, // Whether to render a shadow
         hwaccel: false, // Whether to use hardware acceleration
         className: 'spinner', // The CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        zIndex: 2e9, // The z-index (defaults to 2000000000),
         top: 'auto', // Top position relative to parent in px
         left: 'auto' // Left position relative to parent in px
     };
