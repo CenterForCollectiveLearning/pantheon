@@ -25,11 +25,12 @@ Deps.autorun(function(){
     // maybe look at how the routes are being updated ...
 
     var country = Session.get('country');
+    var language = Session.get('language');
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
     var occ = Session.get('occ');
-    var query = Session.get('vizMode');
+    var vizMode = Session.get('vizMode');
 
     // TODO this is causing a double subscription, fix me
 
@@ -46,7 +47,7 @@ Deps.autorun(function(){
     else {
         top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country);
         // Give a handle to this subscription so we can check if it's ready
-        treemapSub = Meteor.subscribe("treemap_pub", begin, end, langs, country);
+        treemapSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language);
 
         Session.set("treemapReady", false);
 
