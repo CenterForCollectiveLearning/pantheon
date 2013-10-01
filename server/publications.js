@@ -113,35 +113,69 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
         matchArgs.lang = language;
     };
 
-    var pipeline = [
-        {$match: matchArgs },
-        {$group: {
-            _id: {domain: "$domain", industry: "$industry", occupation: "$occupation"},
-            count: {$sum: 1 }
-        }}
-    ];
+    var pipeline = [];
 
-    driver.mongo.db.collection("imports").aggregate(
-        pipeline,
-        Meteor.bindEnvironment(
-            function(err, result) {
+    if(vizMode === 'country_exports' || vizMode === 'country_imports' || vizMode === 'bilateral_exporters_of'){
+        pipeline = [
+            {$match: matchArgs },
+            {$group: {
+                _id: {domain: "$domain", industry: "$industry", occupation: "$occupation"},
+                count: {$sum: 1 }
+            }}
+        ];
+        driver.mongo.db.collection("imports").aggregate(
+            pipeline,
+            Meteor.bindEnvironment(
+                function(err, result) {
 
-                _.each(result, function(e) {
-                    // Generate a random disposable id for each aggregate
-                    sub.added("treemap", Random.id(), {
-                        domain: e._id.domain,
-                        industry: e._id.industry,
-                        occupation: e._id.occupation,
-                        count: e.count
+                    _.each(result, function(e) {
+                        // Generate a random disposable id for each aggregate
+                        sub.added("treemap", Random.id(), {
+                            domain: e._id.domain,
+                            industry: e._id.industry,
+                            occupation: e._id.occupation,
+                            count: e.count
+                        });
                     });
-                });
 
-                sub.ready();
-            },
-            function(error) {
-                Meteor._debug( "Error doing aggregation: " + error);
-            }
-        )
-    );
+                    sub.ready();
+                },
+                function(error) {
+                    Meteor._debug( "Error doing aggregation: " + error);
+                }
+            )
+        );
+    }
+    else if(vizMode === 'domain_exports_to'){
+        pipeline = [
+            {$match: matchArgs },
+            {$group: {
+                _id: {continent: "$continentName", countryCode: "$countryCode", countryName: "$countryName"},
+                count: {$sum: 1 }
+            }}
+        ];
+        driver.mongo.db.collection("imports").aggregate(
+            pipeline,
+            Meteor.bindEnvironment(
+                function(err, result) {
+
+                    _.each(result, function(e) {
+                        // Generate a random disposable id for each aggregate
+                        sub.added("treemap", Random.id(), {
+                            continent: e._id.continent,
+                            countryCode: e._id.countryCode,
+                            countryName: e._id.countryName,
+                            count: e.count
+                        });
+                    });
+
+                    sub.ready();
+                },
+                function(error) {
+                    Meteor._debug( "Error doing aggregation: " + error);
+                }
+            )
+        );
+    };
 
 });
