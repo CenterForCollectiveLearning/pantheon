@@ -29,6 +29,7 @@ Deps.autorun(function(){
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
     var occ = Session.get('occ');
+    var query = Session.get('vizMode');
 
     // TODO this is causing a double subscription, fix me
 

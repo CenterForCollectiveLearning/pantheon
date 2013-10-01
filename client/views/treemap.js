@@ -21,12 +21,7 @@ var treeProps = {
     height: 520
 };
 
-    Template.treemap_svg.properties = treeProps;
-
-
-// var color_domains = d3.scale.ordinal()
-//     .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS"])
-//     .range(["#ECD078", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#53a9f1", "#79BD9A"]);
+Template.treemap_svg.properties = treeProps;
 
 var color_languages = d3.scale.ordinal()
     .domain(["Afro-Asiatic", "Altaic", "Austro-Asiatic", "Austronesian", "Basque", "Caucasian", "Creoles and pidgins", "Dravidian", "Eskimo-Aleut", "Indo-European", "Niger-Kordofanian", "North American Indian", "Sino-Tibetan", "South American Indian", "Tai", "Uralic"])

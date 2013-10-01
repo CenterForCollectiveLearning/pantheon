@@ -123,6 +123,10 @@ header {
   position: fixed;
   width: 100%;
   max-width: 100%;
+<<<<<<< Updated upstream
+=======
+  max-height: 100%;
+>>>>>>> Stashed changes
   margin: 0 auto; }
   header .logo {
     float: left;
@@ -132,12 +136,21 @@ header {
     top: 0;
     margin: 0 auto;
     padding: 15px;
+<<<<<<< Updated upstream
     background-color: #010101;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     float: none;
     -webkit-box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.25); }
+=======
+    background-color: black;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    float: none;
+    -webkit-box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25); }
+>>>>>>> Stashed changes
     header .logo a {
       margin: 0 auto; }
     header .logo img {
@@ -150,7 +163,11 @@ nav {
   position: absolute;
   width: 100%;
   height: 50px;
+<<<<<<< Updated upstream
   background-color: #010101;
+=======
+  background-color: black;
+>>>>>>> Stashed changes
   font-size: 1.25em;
   color: #cccccc;
   -webkit-box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
@@ -209,16 +226,25 @@ nav {
   margin: 0 2%;
   overflow: hidden;
   *zoom: 1;
+<<<<<<< Updated upstream
   max-width: 100%;
   max-height: 100%; }
   #page .page-top {
     padding-top: 9.0em; }
+=======
+  height: 48em;
+  max-width: 100%;
+  max-height: 100%; }
+  #page .page-top {
+    padding-top: 8.0em; }
+>>>>>>> Stashed changes
     #page .page-top .question {
       font-size: 2em;
       text-align: center;
       font-family: 'Lato', 'PT Serif', Times;
       margin-bottom: 2%;
       color: #d8c568; }
+<<<<<<< Updated upstream
       #page .page-top .question .bold {
         font-weight: 500; }
   #page .page-left {
@@ -227,6 +253,9 @@ nav {
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
+=======
+  #page .page-left {
+>>>>>>> Stashed changes
     float: left;
     margin-right: -100%;
     width: 15%;
@@ -278,11 +307,14 @@ nav {
         width: 32%;
         margin-left: 68%; }
   #page .page-right {
+<<<<<<< Updated upstream
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     filter: alpha(opacity=50);
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
+=======
+>>>>>>> Stashed changes
     float: left;
     margin-right: -100%;
     width: 15%;
@@ -299,6 +331,10 @@ nav {
 .section-header {
   text-align: center;
   text-transform: uppercase;
+<<<<<<< Updated upstream
+=======
+  padding-top: 8px;
+>>>>>>> Stashed changes
   padding-bottom: 14px;
   letter-spacing: 1px;
   color: #cccccc; }
@@ -309,7 +345,11 @@ nav {
   line-height: 18px;
   max-height: 100%; }
   .ranked_list li {
+<<<<<<< Updated upstream
     padding-bottom: 0.75em; }
+=======
+    padding-bottom: 15px; }
+>>>>>>> Stashed changes
     .ranked_list li span {
       padding-left: 1.5em;
       font-size: 70%; }
@@ -333,9 +373,14 @@ select {
 footer {
   position: fixed;
   bottom: 0;
+<<<<<<< Updated upstream
   background: #010101;
   width: 100%;
   opacity: 0.5;
+=======
+  background: black;
+  width: 100%;
+>>>>>>> Stashed changes
   font-size: 1em; }
   footer div.footer-license {
     text-align: center;

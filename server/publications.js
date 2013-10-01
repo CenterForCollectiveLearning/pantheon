@@ -99,7 +99,6 @@ Meteor.publish("treemap_pub", function(begin, end, L, country) {
     var driver = MongoInternals.defaultRemoteCollectionDriver();
 
     // TODO modify this query to be more general
-    // and in a format that can be directly passed to d3.nest
 
     var matchArgs = {
         numlangs: {$gt: L},
@@ -118,7 +117,7 @@ Meteor.publish("treemap_pub", function(begin, end, L, country) {
         }}
     ];
 
-    driver.mongo.db.collection("people").aggregate(
+    driver.mongo.db.collection("imports").aggregate(
         pipeline,
         Meteor.bindEnvironment(
             function(err, result) {
