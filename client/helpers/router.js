@@ -54,11 +54,33 @@ Router.map(function() {
             Session.set('page', this.template);
         }
     });
+
     this.route('ranking', {
-        data: function() {
-            Session.set('page', this.template);
-        }
-    });
+            path: '/ranking',
+            before: [
+                function() {
+                    this.redirect('/ranking/' +
+                        defaults.entity + '/' +
+                        defaults.country + '/' +
+                        defaults.from + '/' +
+                        defaults.to + '/' +
+                        defaults.domain);
+                }
+            ]}
+    );
+
+    this.route('ranking', {
+            path: '/ranking/:entity/:country/:from/:to/:domain',
+            data: function() {
+                Session.set('page', this.template);
+                Session.set('entity', this.params.entity);
+                Session.set('country', this.params.country);
+                Session.set('from', this.params.from);
+                Session.set('to', this.params.to);
+                Session.set('langs', this.params.langs);
+            }}
+    );
+
     this.route('data', {
         data: function() {
             Session.set('page', this.template);
