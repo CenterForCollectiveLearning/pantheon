@@ -8,35 +8,6 @@ Template.matrix.dataReady = function() {
     return allpeopleSub.ready()
 }
 
-var matrixProps = {
-    width: 940
-    , height: 2000
-    , headerHeight: 155
-    , margin: {
-        top: 10
-        , right: 10
-        , bottom: 5
-        , left: 30
-    }
-}
-
-var fill = d3.scale.linear()
-    .domain([0, 1])
-    .range(["#f1e7d0", "red"]);
-
-var matrixScales = {
-    x: d3.scale.ordinal().rangeBands([0, matrixProps.height])
-    , y: d3.scale.ordinal().rangeBands([0, matrixProps.width])
-    , z: d3.scale.linear().domain([0, 1]).clamp(true)
-    , c: d3.scale.category10().domain(d3.range(10)) 
-}
-
-Template.matrix_svg.properties = {
-    headerHeight: matrixProps.headerHeight
-    , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
-    , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
-}
-
 // Utility Functions
 var aggregate = function (obj, values, context) {
     if (!values.length)
@@ -66,6 +37,36 @@ String.prototype.capitalize = function() {
 };
 
 Template.matrix.rendered = function() {
+
+    // TODO Pull this out of here
+    var matrixProps = {
+        width: $('.page-middle').width() - 30 - 10
+            , height: 2000
+            , headerHeight: 155
+            , margin: {
+                top: 10
+                , right: 10
+                , bottom: 5
+                , left: 30
+            }
+        }
+
+    var fill = d3.scale.linear()
+        .domain([0, 1])
+        .range(["#f1e7d0", "red"]);
+
+    var matrixScales = {
+        x: d3.scale.ordinal().rangeBands([0, matrixProps.height])
+        , y: d3.scale.ordinal().rangeBands([0, matrixProps.width])
+        , z: d3.scale.linear().domain([0, 1]).clamp(true)
+        , c: d3.scale.category10().domain(d3.range(10)) 
+    }
+
+Template.matrix_svg.properties = {
+    headerHeight: matrixProps.headerHeight
+    , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
+    , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
+}
 
     /* Reactive data! */
     var data = People.find().fetch();
@@ -257,7 +258,6 @@ Template.matrix.rendered = function() {
 
     updateColumns(inv_matrix);
     
-
         /* Note that p returns an object with x, y (relevant indices), and z as attributes */
         function mouseover(p) {
             var country_code = countries[p.y];

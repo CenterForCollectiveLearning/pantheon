@@ -1,8 +1,19 @@
 Template.scatterplot.dataReady = function() {
-    return allpeopleSub.ready()
+    return allpeopleSub.ready();
 }
 
+var scatterplotProps = {
+    width: 725,
+    height: 560
+};
+
+Template.scatterplot_svg.properties = scatterplotProps;
+
 Template.scatterplot.rendered = function() {
+
+	var context = this;
+    if( this.rendered ) return;
+    this.rendered = true;
 	var viz = vizwhiz.viz();
 
 	var color_domain = d3.scale.ordinal()
@@ -141,33 +152,35 @@ Template.scatterplot.rendered = function() {
 		return "This is some test HTML";
 	}
 
-	viz
-	  .width(940)
-	  .height(600)
-	  .type("pie_scatter")
-	  .dev(true)
-	  .text_var("name")
-	  .id_var("id")
-	  .attrs(attrs)
-	  .xaxis_var(countryXName)
-	  .yaxis_var(countryYName)
-	  .value_var("total")
-      .tooltip_info([countryXName, countryYName])
-      // .total_bar({"prefix": "Export Value: $", "suffix": " USD", "format": ",f"})
-      .nesting(["nesting_dom", "nesting_ind", "nesting_occ"])
-      // .nesting_aggs({"complexity":"mean","distance":"mean","rca":"mean"})
-      .depth("nesting_ind")
-      .text_format(text_formatting)
-      .spotlight(false)
-      // .year(2000)
-      .active_var("active1")
-      .click_function(inner_html)
-      // .solo("11")
-      // .static_axis(false)
-      .mirror_axis(true)
+	console.log(data);
 
-    d3.select("#viz")
-      .datum(data)
-      .call(viz)
+	viz
+	    .width($('.page-middle').width())
+	    .height($('.page-middle').height())
+	    .type("pie_scatter")
+	    // .dev(true)
+	    .text_var("name")
+	    .id_var("id")
+	    .attrs(attrs)
+	    .xaxis_var(countryXName)
+	    .yaxis_var(countryYName)
+	    .value_var("total")
+        .tooltip_info([countryXName, countryYName])
+        // .total_bar({"prefix": "Export Value: $", "suffix": " USD", "format": ",f"})
+        .nesting(["nesting_dom", "nesting_ind", "nesting_occ"])
+        // .nesting_aggs({"complexity":"mean","distance":"mean","rca":"mean"})
+        .depth("nesting_ind")
+        .text_format(text_formatting)
+        .spotlight(false)
+        // .year(2000)
+        .active_var("active1")
+        .click_function(inner_html)
+        // .solo("11")
+        // .static_axis(false)
+        .mirror_axis(true)
+
+    d3.select(context.find("svg"))
+        .datum(data)
+        .call(viz)
 
 }

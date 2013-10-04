@@ -1,14 +1,15 @@
 <template name="scatterplot">
-      	{{#if dataReady}}
-            {{> scatterplot_svg}}
-        {{else}}
-            {{> spinner}}
-        {{/if}}
+	 <div class="page-middle">
+	    <div id="viz" class="scatterplot">
+	    	{{#if dataReady}}
+	    	    {{> scatterplot_svg}}
+	    	{{else}}
+	    	    {{> spinner}}
+	    	{{/if}}
+	    </div>
+	</div>
 </template>
 
 <template name="scatterplot_svg">
-	<div class="page-middle">
-		<div id="viz" class="scatterplot">
-		</div>
-	</div>
+	<svg class="scatterplot" width="{{properties.width}}" height="{{properties.height}}"></svg>
 </template>

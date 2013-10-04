@@ -74,6 +74,16 @@ var sections = [
         url: "/people"
     },
     {
+        section: "Papers",
+        template: "papers",
+        url: "/papers"
+    },
+    {
+        section: "Data",
+        template: "data",
+        url: "/data"
+    },
+    {
         section: "Vision",
         template: "vision",
         url: "/vision"
