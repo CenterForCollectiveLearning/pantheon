@@ -74,7 +74,7 @@ body {
 		left: 0px;
 		height: 100%;
 		opacity: 0.5;
-  		filter: alpha(opacity = 50);
+  		// filter: alpha(opacity=50);
 
 		div{
 			@include column(1);
