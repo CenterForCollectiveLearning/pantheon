@@ -42,82 +42,146 @@ Template.treemap_svg.rendered = function() {
     if( this.rendered ) return;
     this.rendered = true;
     var viz = vizwhiz.viz() ;
-    var attr = Domains.find().fetch();
     var data = Treemap.find().fetch();
-
+    console.log("UNFLATTENED DATA:")
+    console.log(data);
     var attrs = {};
+    var vizMode = Session.get('vizMode');
 
-    attr.forEach(function(a){
-        var dom = a.domain;
-        var ind = a.industry;
-        var occ = a.occupation;
-        var dom_color = color_domains(dom.toUpperCase());
-        var domDict = {
-            id: dom
-            , name: dom
-        };
-        var indDict = {
-            id: ind
-            , name: ind
-        };
-        var occDict = {
-            id: occ
-            , name: occ
-        };
-        attrs[dom] = {
-            id: dom
-            , name: dom
-            , color: dom_color
-            , nesting_1: domDict
-        };
-        attrs[ind] = {
-            id: ind
-            , name: ind
-            , color: dom_color
-            , nesting_1: domDict
-            , nesting_3: indDict
-        };
-        attrs[occ] = {
-            id: occ
-            , name: occ
-            , color: dom_color
-            , nesting_1: domDict
-            , nesting_3: indDict
-            , nesting_5: occDict
-        };
-    });
+    if(vizMode === 'country_exports' || vizMode === 'country_imports' || vizMode === 'bilateral_exporters_of'){
+        var attr = Domains.find().fetch();
+        attr.forEach(function(a){
+            var dom = a.domain;
+            var ind = a.industry;
+            var occ = a.occupation;
+            var dom_color = color_domains(dom.toUpperCase());
+            var domDict = {
+                id: dom
+                , name: dom
+            };
+            var indDict = {
+                id: ind
+                , name: ind
+            };
+            var occDict = {
+                id: occ
+                , name: occ
+            };
+            attrs[dom] = {
+                id: dom
+                , name: dom
+                , color: dom_color
+                , nesting_1: domDict
+            };
+            attrs[ind] = {
+                id: ind
+                , name: ind
+                , color: dom_color
+                , nesting_1: domDict
+                , nesting_3: indDict
+            };
+            attrs[occ] = {
+                id: occ
+                , name: occ
+                , color: dom_color
+                , nesting_1: domDict
+                , nesting_3: indDict
+                , nesting_5: occDict
+            };
+        });
 
-    var flat = [];
-    data.forEach(function(d){
-       flat.push({"id": d.occupation, "name": d.occupation, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
-    });
+        var flat = [];
+        data.forEach(function(d){
+            flat.push({"id": d.occupation, "name": d.occupation, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
+        });
 
-    console.log("ATTRS:");
-    console.log(attrs);
-    console.log("DATA:")
-    console.log(flat);
+        console.log("ATTRS:");
+        console.log(attrs);
+        console.log("DATA:")
+        console.log(flat);
 
-    viz
-        .type("tree_map")
-//        .dev(true)
-        .width($('.page-middle').width())
-        .height($('.page-middle').height())
-        .id_var("id")
-        .attrs(attrs)
-        .text_var("name")
-        .value_var("num_ppl")
-        .tooltip_info({}) //embed top5 individuals into the tooltip
-//        .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
-        .nesting(["nesting_1","nesting_3","nesting_5"])
-        .depth("nesting_3")
-        .font("Open Sans")
-        .font_weight("300")
-        .color_var("color");
+        viz
+            .type("tree_map")
+    //        .dev(true)
+            .width($('.page-middle').width())
+            .height($('.page-middle').height())
+            .id_var("id")
+            .attrs(attrs)
+            .text_var("name")
+            .value_var("num_ppl")
+            .tooltip_info({}) //embed top5 individuals into the tooltip
+            .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
+            .nesting(["nesting_1","nesting_3","nesting_5"])
+            .depth("nesting_3")
+            .font("Open Sans")
+            .font_weight("300")
+            .color_var("color");
 
-    d3.select(context.find("svg"))
-        .datum(flat)
-        .call(viz);
+        d3.select(context.find("svg"))
+            .datum(flat)
+            .call(viz);
+    } else if(vizMode === 'domain_exports_to'){
+        console.log("HELLO WORLD! THIS WILL SHOW A COUNTRIES TREEMAP")
+        var attr = Countries.find().fetch();
+        attr.forEach(function(a){
+            var continent = a.continentName;
+            var countryCode = a.countryCode;
+            var countryName = a.countryName;
+            var continent_color = color_countries(continent);
+            var continentDict = {
+                id: continent
+                , name: continent
+            };
+            var countryDict = {
+                id: countryCode
+                , name: countryName
+            };
+            attrs[continent] = {
+                id: continent
+                , name: continent
+                , color: continent_color
+                , nesting_1: continentDict
+            };
+            attrs[countryCode] = {
+                id: countryCode
+                , name: countryName
+                , color: continent_color
+                , nesting_1: continentDict
+                , nesting_3: countryDict
+            };
+        });
 
+        var flat = [];
+        data.forEach(function(d){
+            flat.push({"id": d.countryCode, "name": d.countryName, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
+        });
+
+        console.log("ATTRS:");
+        console.log(attrs);
+        console.log("DATA:")
+        console.log(flat);
+
+        viz
+            .type("tree_map")
+            //        .dev(true)
+            .width($('.page-middle').width())
+            .height($('.page-middle').height())
+            .id_var("id")
+            .attrs(attrs)
+            .text_var("name")
+            .value_var("num_ppl")
+            .tooltip_info({}) //embed top5 individuals into the tooltip
+            .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
+            .nesting(["nesting_1","nesting_3"])
+            .depth("nesting_3")
+            .font("Open Sans")
+            .font_weight("300")
+            .color_var("color");
+
+        d3.select(context.find("svg"))
+            .datum(flat)
+            .call(viz);
+    }
 
 //    d3.selectAll(".leaf rect").on("mouseover", function (d) {
 //        // TODO generalize this for other treemaps later

@@ -94,7 +94,7 @@ People._ensureIndex({ countryCode: 1, occupation: 1, birthyear: 1} )
  * Static query that pushes the treemap structure
  * This needs to run a native mongo query due to aggregates being not supported directly yet
  */
-Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language) {
+Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language, domain) {
     var sub = this;
     var driver = MongoInternals.defaultRemoteCollectionDriver();
 
@@ -113,12 +113,16 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
         matchArgs.lang = language;
     };
 
+//    if (domain !== 'all' ) {
+//        matchArgs.category = domain;     //TODO: remember that we need to change category column to domain in imports collection!
+//    };
+
     var pipeline = [];
 
     if(vizMode === 'country_exports' || vizMode === 'country_imports' || vizMode === 'bilateral_exporters_of'){
         pipeline = [
-            {$match: matchArgs },
-            {$group: {
+            { $match: matchArgs },
+            {$group: { // TODO: This needs to be updated to count the number of unique en_curids per category
                 _id: {domain: "$domain", industry: "$industry", occupation: "$occupation"},
                 count: {$sum: 1 }
             }}

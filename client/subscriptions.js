@@ -29,6 +29,10 @@ Deps.autorun(function(){
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
+    var domain = Session.get('domain');
+    if(domain){
+        domain = domain.toUpperCase();
+    }
     var occ = Session.get('occ');
     var vizMode = Session.get('vizMode');
 
@@ -47,7 +51,7 @@ Deps.autorun(function(){
     else {
         top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country);
         // Give a handle to this subscription so we can check if it's ready
-        treemapSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language);
+        treemapSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain);
 
         Session.set("treemapReady", false);
 
@@ -58,7 +62,7 @@ Deps.autorun(function(){
             c.stop(); // Need to do this or will get infinite number of autorun functions
         });
     }
-    
+
 });
 
 
@@ -82,6 +86,6 @@ Deps.autorun(function() {
             tooltipSub = null;
         }
     }
-    
+
     tooltipSub = Meteor.subscribe("top5occupation", begin, end, langs, country, Domains.findOne(industry).industry);
 })
