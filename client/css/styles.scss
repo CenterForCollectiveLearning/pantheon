@@ -15,6 +15,7 @@ $color_grey: #cccccc;
 $color_fairly_black: #2C2C2C;
 $color_almost_black: #010101;
 $color_black_1: rgba(0, 0, 0, 1.0);
+$color_black_trans: rgba(0, 0, 0, 0.5);
 
 @mixin opacity($trans) {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$trans * 100})";
@@ -28,10 +29,23 @@ $color_black_1: rgba(0, 0, 0, 1.0);
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
  }
 
+.trans-bg {
+	padding: 2em;
+	background-color: rgba(0, 0, 0, 0.6);
+
+	h2 {
+		margin: 0;
+	}
+}
+
+.fixed {
+	position: fixed !important; 
+}
+
 body {
 	max-width: $max_width;
 
-	background:url(/joseon_palace_grey.png) no-repeat center center fixed;
+	background:url(/joseon_palace_dark_no_grain.png) no-repeat center center fixed;
 	// background:url(/LoC_forum_boario_grain.png) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -73,6 +87,7 @@ body {
 }
 
 header {
+	top: 0;
 	position: fixed;
 	width: $total_width;
 	max-width: $max_width;
@@ -87,7 +102,7 @@ header {
 	    margin: 0 auto;
 	    padding: 15px;
 
-	    background-color: $color_almost_black;
+	    background-color: $color_black_trans;
 
 	    border-bottom-left-radius: 3px;
 	    border-bottom-right-radius: 3px;
@@ -103,7 +118,6 @@ header {
 
 	    img {
 		    width: 100%;
-		    // max-width: 225px;
 		    height: auto;
 		    width: auto\9;
 	    }
@@ -112,12 +126,12 @@ header {
 
 nav {
 	position: absolute;
-	// top: 50%;
-	// margin-top: -25px;
+	top: 50%;
+	margin-top: -25px;
 
 	width: $total_width;
 	height: 50px;
-	background-color: $color_almost_black;
+	background-color: $color_black_trans;
 
 	font-size: 1.25em;
 	color: $color_grey;
@@ -134,67 +148,70 @@ nav {
 		border-bottom: 3px solid $color_grey;
 	}
 
-	ul {
-		@include clearfix();
-		@include container();
-
+	div.left_sections_nav {
+		padding-left: $container_margin;
+		display: table-cell;
+		@include column(5);
 		height: 100%;
 		position: relative;
 		line-height: 2.5em;
 		margin-top: 0;
 
-		li {
-			display: inline;
+		div.main_nav {
+			float: left;
+			text-align: center;
+			width: 33%;
 		}
 
-		// TODO: Make this more concise
-		// TODO: Actually make this match the design
-		li:nth-child(1){
-			@include column(0, 0);
-			position: absolute;
-			left: 0px;
+		div.main_nav:first-child {
+			text-align: left;  
+			width: 16%;    
 		}
-
-		li:nth-child(2){
-			@include column(0, 1.25);
-		}
-
-		li:nth-child(3){
-		 	@include column(0, 2.5);
-		}
-
-		li:nth-child(4){
-		 	@include column(2, 3.75);
-		}
-
-		li:nth-child(5){
-		 	@include column(2, 7);
-		}
-
-		li:nth-child(6){
-		 	@include column(2, 8.25);
-		}
-
-		li:nth-child(7){
-			@include column(2, 9.5);
-		}
-
-		li:nth-child(8){
-		 	position: absolute;
-			right: 0px;
+		div.main_nav:last-child {
+			float: right;
+			text-align: right;   
+			width: 16%;
 		}
 	}
-}
+
+	div.right_sections_nav {
+		padding-left: $container_margin;
+		display: table-cell;
+		@include column(5, 7);
+		height: 100%;
+		position: relative;
+		line-height: 2.5em;
+		margin-top: 0;
+
+		div.main_nav {
+			float: left;
+			text-align: center;
+			width: 33%;
+		}
+
+		div.main_nav:first-child {
+			text-align: left;  
+			width: 16%;    
+		}
+		div.main_nav:last-child {
+			float: right;
+			text-align: right;   
+			width: 16%;
+		}
+	}
+
+} // Closes Nav
 
 #page {
 	@include container();
 	@include clearfix();
-
+	// TODO Proper vertical centering and sizing
+	height: 80%;
+	margin-top: 10%;
 	max-width: $max_width;
 	max-height: $max_height;
 
 	.page-top {
-		padding-top: 9.0em;
 		.question {
 			font-size: 2em; // 32px / 1px
 			text-align: center;
@@ -224,6 +241,8 @@ nav {
 
 	.page-middle {
 		@include column(8, 2);  // TODO: Optimize the text portions
+
+		position: relative;
 
 		// Visualization
 		svg {
@@ -332,7 +351,11 @@ nav {
 		padding-left: 0;
 		list-style-position: inside;
 	}
+}
 
+div.scale {
+	position: absolute;
+	bottom: 0;
 }
 
 .parameter-selection {
@@ -442,6 +465,4 @@ svg.color-scale rect {
 }
 
 svg.color-scale text {
-    fill: #202020;
-    font-weight: 500;
 }

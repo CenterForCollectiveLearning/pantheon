@@ -375,10 +375,35 @@ Template.matrix_svg.properties = {
     colorScale.append("text")
     .attr("x", 5)
     .attr("y", "21px")
+    .attr("fill", "#202020")
+    .attr("font-weight", 500)
     .text("0%");
+
+    colorScale.append("text")
+    .attr("x", matrixProps.width/4)
+    .attr("y", "21px")
+    .attr("fill", "#202020")
+    .attr("font-weight", 500)
+    .text("25%");
+
+    colorScale.append("text")
+    .attr("x", matrixProps.width/2)
+    .attr("y", "21px")
+    .attr("fill", "#202020")
+    .attr("font-weight", 500)
+    .text("50%");
+
+    colorScale.append("text")
+    .attr("x", 3*matrixProps.width/4)
+    .attr("y", "21px")
+    .attr("fill", "#202020")
+    .attr("font-weight", 500)
+    .text("75%");
 
     colorScale.append("text")
     .attr("x", matrixProps.width - 5)
     .attr("y", "21px")
+    .attr("fill", "#202020")
+    .attr("font-weight", 500)
     .text("100%");
 }
