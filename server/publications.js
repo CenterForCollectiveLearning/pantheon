@@ -158,7 +158,7 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
                 count: {$sum: 1 }
             }}
         ];
-        driver.mongo.db.collection("imports").aggregate(
+        driver.mongo.db.collection("people").aggregate(  //TODO: or count unique en_curid from imports
             pipeline,
             Meteor.bindEnvironment(
                 function(err, result) {
