@@ -121,7 +121,6 @@ Template.treemap_svg.rendered = function() {
             .datum(flat)
             .call(viz);
     } else if(vizMode === 'domain_exports_to'){
-        console.log("HELLO WORLD! THIS WILL SHOW A COUNTRIES TREEMAP")
         var attr = Countries.find().fetch();
         attr.forEach(function(a){
             var continent = a.continentName;
@@ -181,7 +180,68 @@ Template.treemap_svg.rendered = function() {
         d3.select(context.find("svg"))
             .datum(flat)
             .call(viz);
-    }
+    } else if(vizMode === 'domain_imports_from' || vizMode === 'bilateral_importers_of'){
+        console.log("HELLO THIS WILL BE A TREEMAP OF LANGUAGES")   // TODO: languages needs a lot of cleanup for the language name and family mapping...!
+        var attr = Countries.find().fetch();
+        attr.forEach(function(a){
+            var continent = a.continentName;     // TODO: update these for languages instead of countries....
+            var countryCode = a.countryCode;
+            var countryName = a.countryName;
+            var continent_color = color_countries(continent);
+            var continentDict = {
+                id: continent
+                , name: continent
+            };
+            var countryDict = {
+                id: countryCode
+                , name: countryName
+            };
+            attrs[continent] = {
+                id: continent
+                , name: continent
+                , color: continent_color
+                , nesting_1: continentDict
+            };
+            attrs[countryCode] = {
+                id: countryCode
+                , name: countryName
+                , color: continent_color
+                , nesting_1: continentDict
+                , nesting_3: countryDict
+            };
+        });
+
+        var flat = [];
+        data.forEach(function(d){
+            flat.push({"id": d.countryCode, "name": d.countryName, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
+        });
+
+        console.log("ATTRS:");
+        console.log(attrs);
+        console.log("DATA:")
+        console.log(flat);
+
+        viz
+            .type("tree_map")
+            //        .dev(true)
+            .width($('.page-middle').width())
+            .height($('.page-middle').height())
+            .id_var("id")
+            .attrs(attrs)
+            .text_var("name")
+            .value_var("num_ppl")
+            .tooltip_info({}) //embed top5 individuals into the tooltip
+            .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
+            .nesting(["nesting_1","nesting_3"])
+            .depth("nesting_3")
+            .font("Open Sans")
+            .font_weight("300")
+            .color_var("color");
+
+        d3.select(context.find("svg"))
+            .datum(flat)
+            .call(viz);
+    };
 
 //    d3.selectAll(".leaf rect").on("mouseover", function (d) {
 //        // TODO generalize this for other treemaps later

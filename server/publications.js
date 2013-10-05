@@ -180,6 +180,38 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
                 }
             )
         );
-    };
+    }
+    else if(vizMode === 'domain_imports_from' || vizMode === 'bilateral_importers_of'){
+        pipeline = [
+            {$match: matchArgs },
+            {$group: {
+                _id: {lang_family: "$lang_family", lang: "$lang", lang_name: "$lang_name"},
+                count: {$sum: 1 }
+            }}
+        ];
+        driver.mongo.db.collection("imports").aggregate(  //TODO: or count unique en_curid from imports
+            pipeline,
+            Meteor.bindEnvironment(
+                function(err, result) {
+
+                    _.each(result, function(e) {
+                        // Generate a random disposable id for each aggregate
+                        sub.added("treemap", Random.id(), {
+                            continent: e._id.lang_family,
+                            lang: e._id.lang,
+                            lang_name: e._id.lang_name,
+                            count: e.count
+                        });
+                    });
+
+                    sub.ready();
+                },
+                function(error) {
+                    Meteor._debug( "Error doing aggregation: " + error);
+                }
+            )
+        );
+    }
+    ;
 
 });
