@@ -57,7 +57,7 @@ Template.nav.selected = function() {
 
 // Section Navigation
 // TODO Is this repetitiveness necessary for correct formatting?
-var sections = [
+var left_sections = [
     {
         section: "Observatory",
         template: "observatory",
@@ -72,6 +72,19 @@ var sections = [
         section: "People",
         template: "people",
         url: "/people"
+    },
+    {
+        section: "Papers",
+        template: "papers",
+        url: "/papers"
+    }
+]
+
+var right_sections = [
+    {
+        section: "Data",
+        template: "data",
+        url: "/data"
     },
     {
         section: "Vision",
@@ -91,7 +104,8 @@ var sections = [
 ]
 
 Template.nav.helpers({
-    sections: sections
+    left_sections: left_sections,
+    right_sections: right_sections
 })
 
 Template.section.helpers({

@@ -2,6 +2,7 @@
   "packages": {
     "router": {},
     "jquery-ui": {},
-    "iron-router": {}
+    "iron-router": {},
+    "scss": {}
   }
 }

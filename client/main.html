@@ -42,7 +42,7 @@
         </div>
     </header>
 
-    <!-- <article id="grid"><div class="overlay"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></article> -->
+<!--     <article id="grid"><div class="overlay"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></article> -->
 
     <!-- Body -->
     <div id="page">
@@ -56,19 +56,24 @@
 </template>
 
 <template name="nav">
-    <ul class="sections_nav">
-        {{#each sections}}
+    <div class="left_sections_nav">
+        {{#each left_sections}}
             {{> section}}
         {{/each}}
-    </ul>
+    </div>
+    <div class="right_sections_nav">
+        {{#each right_sections}}
+            {{> section}}
+        {{/each}}
+    </div>
 </template>
 
 <template name="section">
-    <li class="main_nav {{selected}}">
+    <div class="main_nav {{selected}}">
         <a href="{{url}}">
             {{section}}
         </a>
-    </li>
+    </div>
 </template>
 
 <template name="footer">
