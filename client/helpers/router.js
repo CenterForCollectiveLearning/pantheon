@@ -77,7 +77,7 @@ Router.map(function() {
                 Session.set('country', this.params.country);
                 Session.set('from', this.params.from);
                 Session.set('to', this.params.to);
-                Session.set('langs', this.params.langs);
+                Session.set('domain', this.params.domain);
             }}
     );
 
