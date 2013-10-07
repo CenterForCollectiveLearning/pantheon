@@ -149,21 +149,31 @@ Template.question.question = function() {
         case "lang_vs_lang":
             return "What do " + s_languageX + " speakers export compared to " + s_languageY + " speakers?";
     }
-
 };
 
-Template.popup_list.suffix = function(){
-    return (this.count > 1) ? "individuals" : "individual";
+/*
+ * TOOLTIPS
+ */
+Template.tooltip.tooltip = function() {
+    return Session.get("showTooltip");
 }
 
-Template.popup_list.top5 = function() {
-    return Tooltips.find();
+Template.tt_list.count = function() {
+    return this.length;
 }
 
-Template.popup_list.more = function() {
-    return this.count > 5;
+Template.tt_list.suffix = function() {
+    return (this.length > 1) ? "individuals" : "individual";
 }
 
-Template.popup_list.extras = function () {
-    return this.count - 5;
+Template.tt_list.top5 = function() {
+    return this.slice(0, 5);
+}
+
+Template.tt_list.more = function() {
+    return this.length > 5;
+}
+
+Template.tt_list.extras = function () {
+    return this.length - 5;
 }

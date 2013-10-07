@@ -243,10 +243,11 @@ nav {
 		@include column(8, 2);  // TODO: Optimize the text portions
 
 		position: relative;
+		height: 100%;
 
 		// Visualization
 		svg {
-			opacity: 0.85;
+			opacity: 1.0; // 0.85;
 		}
 
 		video {
@@ -297,6 +298,25 @@ nav {
 				@include column(4, 8);
 			}
 		}
+
+		// People page
+
+		.person-header {
+			padding-bottom: 4em;
+			div.name {
+				float: left;
+			}
+
+			div.contribute {
+				float: right;
+			}
+		}
+		.description {
+			clear: both;
+		}
+		.ranking {
+
+		}
 	}
 
 	.page-right {
@@ -329,6 +349,35 @@ nav {
 	padding-bottom: 14px;
 	letter-spacing: 1px;
 	color: #cccccc;
+}
+
+// TOOLTIPS
+#tooltip {
+	display: none;
+	position: absolute;
+	padding: 0.5em;
+	background-color: rgba(0, 0, 0, 0.8);
+	border-radius: 3px;
+
+	span.category {
+		font-weight: 700;
+		font-size: 1.1em;
+		letter-spacing: 2px;
+	}
+	div.list {
+		height: 100%;
+		width: 100%;
+		border-top: 1px solid #cccccc;
+		margin-top:6px;
+	}
+	span.extras {
+		font-size: 80%;
+	}
+	div.list {
+		span.birthplace {
+			font-size:70%;
+		}
+	}
 }
 
 .ranked_list {
@@ -465,4 +514,6 @@ svg.color-scale rect {
 }
 
 svg.color-scale text {
+	fill: #202020;
+	font-weight: 500;
 }

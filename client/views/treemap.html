@@ -28,11 +28,3 @@
 <template name="treemap_svg">
     <svg class="treemap" width="{{properties.width}}" height="{{properties.height}}"></svg>
 </template>
-
-<template name="tooltip">
-    {{#if tooltip }}
-        <div id="tooltip">
-        {{> popup_list tooltip_data}}
-        </div>
-    {{/if}}
-</template>

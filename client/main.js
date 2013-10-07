@@ -48,7 +48,14 @@ Meteor.startup(function() {
     Session.setDefault('countryOrder', 'count');
     Session.setDefault('industryOrder', 'count');
     Session.setDefault('occ', 'all');
+    Session.setDefault('showTooltip', false);
+
+    // http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
+    $(window).resize(function(evt) {
+        Session.set("touch", new Date());
+        console.log(Session.get("touch"));
     });
+});
 
 // Select sections based on template
 Template.nav.selected = function() {

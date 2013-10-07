@@ -1,5 +1,3 @@
-// Function housing the matrix
-
 // Template.matrix.destroyed = function() {
 // 	this.handle && this.handle.stop();
 // }
@@ -38,6 +36,10 @@ String.prototype.capitalize = function() {
 
 Template.matrix.rendered = function() {
 
+    Deps.autorun(function() {
+        var lastWindowResize = Session.get("touch");
+
+    });
     // TODO Pull this out of here
     var matrixProps = {
         width: $('.page-middle').width() - 30 - 10
@@ -62,11 +64,11 @@ Template.matrix.rendered = function() {
         , c: d3.scale.category10().domain(d3.range(10)) 
     }
 
-Template.matrix_svg.properties = {
-    headerHeight: matrixProps.headerHeight
-    , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
-    , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
-}
+    Template.matrix_svg.properties = {
+        headerHeight: matrixProps.headerHeight
+        , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
+        , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
+    }
 
     /* Reactive data! */
     var data = People.find().fetch();
@@ -257,21 +259,48 @@ Template.matrix_svg.properties = {
     }
 
     updateColumns(inv_matrix);
+
+    function mouseover(p) {
+        d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
+        d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
+
+        var country_code = countries[p.y];
+        var industry = industries[p.x];
+        var individuals = grouped_individuals[country_code][industry];
+
+        // TODO Why cant we set tooltip position like this
+        var position = {
+            "left": d3.event.pageX + 40 + "px"
+            , "top": d3.event.pageY - 45 + "px"
+        }
+
+        Session.set("showTooltip", true);
+
+        Template.tooltip.position = position;
+        Template.tooltip.individuals = individuals;
+        Template.tt_list.categoryA = country[country_code];
+        Template.tt_list.categoryB = industry;
+        if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
+            $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
+        } else {
+            $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
+        }        
+        $("#tooltip").show()       
+    }
+
+    function mouseout(p) {
+        Session.set("showTooltip", false);
+        d3.selectAll("text").classed("active", false);
+    }
     
         /* Note that p returns an object with x, y (relevant indices), and z as attributes */
-        function mouseover(p) {
-            var country_code = countries[p.y];
-            var industry = industries[p.x];
-            var individuals = grouped_individuals[country_code][industry];
+        function mouseover1(p) {
 
-            d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
-            d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
 
-            $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
             
             if(individuals !== undefined) {
                 var suffix = (individuals.length > 1) ? "individuals" : "individual";
-                var html_to_show = "<span style='font-weight:700;font-size:110%;letter-spacing:2px'>" + country[country_code] + ": " + industry + "</span><br />" + individuals.length + " " + suffix + "<div style='width:100%;border-top:1px solid #cccccc;height:5px;margin-top:6px;'></div>";
+                var html_to_show = "<span>" + country[country_code] + ": " + industry + "</span><br />" + individuals.length + " " + suffix + "<div style='width:100%;border-top:1px solid #cccccc;height:5px;margin-top:6px;'></div>";
 
                 var tooltip_individual_threshold = (individuals.length < 5) ? individuals.length : 5;
                 for (var i = 0; i < tooltip_individual_threshold; i++) {
@@ -301,11 +330,6 @@ Template.matrix_svg.properties = {
                 $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
             }
         } 
-    }
-
-    function mouseout() {
-        d3.selectAll("text").classed("active", false);
-        $("#tooltip").empty().css("padding", 0);
     }
 
     function countryOrder(value) {
@@ -349,61 +373,51 @@ Template.matrix_svg.properties = {
     var colorScale = d3.select(this.find("svg.color-scale"))
         .attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right)
         .attr("height", "30px");
-    // TODO: Add in more gradations
+
     var gradient = colorScale.append("svg:linearGradient")
-    .attr("id", "gradient")
-    .attr("x1", "0%")
-    .attr("y1", "0%")
-    .attr("x2", "100%")
-    .attr("y2", "0%")
-    .attr("spreadMethod", "pad");
+        .attr("id", "gradient")
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%")
+        .attr("spreadMethod", "pad");
 
     gradient.append("svg:stop")
-    .attr("offset", "0%")
-    .attr("stop-color", "#f1e7d0")
-    .attr("stop-opacity", 1);
+        .attr("offset", "0%")
+        .attr("stop-color", "#f1e7d0")
+        .attr("stop-opacity", 1);
 
     gradient.append("svg:stop")
-    .attr("offset", "100%")
-    .attr("stop-color", "red")
-    .attr("stop-opacity", 1);
+        .attr("offset", "100%")
+        .attr("stop-color", "red")
+        .attr("stop-opacity", 1);
 
     colorScale.append("rect")
-    .attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right)
-    .attr("height", "30px");
+        .attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right)
+        .attr("height", "30px");
 
     colorScale.append("text")
-    .attr("x", 5)
-    .attr("y", "21px")
-    .attr("fill", "#202020")
-    .attr("font-weight", 500)
-    .text("0%");
+        .attr("x", 5)
+        .attr("y", "21px")
+        .text("0%");
 
     colorScale.append("text")
-    .attr("x", matrixProps.width/4)
-    .attr("y", "21px")
-    .attr("fill", "#202020")
-    .attr("font-weight", 500)
-    .text("25%");
+        .attr("x", matrixProps.width/4)
+        .attr("y", "21px")
+        .text("25%");
 
     colorScale.append("text")
-    .attr("x", matrixProps.width/2)
-    .attr("y", "21px")
-    .attr("fill", "#202020")
-    .attr("font-weight", 500)
-    .text("50%");
+        .attr("x", matrixProps.width/2)
+        .attr("y", "21px")
+        .text("50%");
 
     colorScale.append("text")
-    .attr("x", 3*matrixProps.width/4)
-    .attr("y", "21px")
-    .attr("fill", "#202020")
-    .attr("font-weight", 500)
-    .text("75%");
+        .attr("x", 3*matrixProps.width/4)
+        .attr("y", "21px")
+        .text("75%");
 
     colorScale.append("text")
-    .attr("x", matrixProps.width - 5)
-    .attr("y", "21px")
-    .attr("fill", "#202020")
-    .attr("font-weight", 500)
-    .text("100%");
+        .attr("x", matrixProps.width - 5)
+        .attr("y", "21px")
+        .text("100%");
 }

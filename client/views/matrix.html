@@ -3,12 +3,12 @@
         <div id="viz" class="matrix">
             {{#if dataReady}}
                 {{> matrix_svg}}
+                <div class="scale">
+                    <svg class="color-scale"></svg>
+                </div>
             {{else}}
                 {{> spinner}}
-            {{/if}}
-        <div class="scale">
-          	<svg class="color-scale"></svg>
-        </div>
+            {{/if}}        
     </div>
 </template>
 

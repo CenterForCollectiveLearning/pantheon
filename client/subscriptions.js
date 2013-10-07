@@ -86,6 +86,5 @@ Deps.autorun(function() {
             tooltipSub = null;
         }
     }
-
-    tooltipSub = Meteor.subscribe("top5occupation", begin, end, langs, country, Domains.findOne(industry).industry);
-})
+    // tooltipSub = Meteor.subscribe("top5occupation", begin, end, langs, country, Domains.findOne(industry).industry);
+});

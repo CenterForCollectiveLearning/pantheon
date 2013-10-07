@@ -44,6 +44,7 @@ Template.scatterplot.rendered = function() {
     	return byFirst;
     };
 
+    // TODO Optimize client-side processing
 	var occCounts = {};
 	var data = [];
 	var attrs = {};
@@ -60,7 +61,7 @@ Template.scatterplot.rendered = function() {
 	var countryYCounts = industryCounts[countryY];
 
 	/*
-	    Flat data
+	    Flatten data
 	*/
 	for (occ in countryXCounts) {
 		var valX = countryXCounts[occ];
@@ -80,6 +81,8 @@ Template.scatterplot.rendered = function() {
 		var valX = 0;
 		// If occ not in X, add it in
 		if (countryXCounts.hasOwnProperty(occ)) {
+			occCounts[occ]['y'] = valY;
+		} else {
 			occCounts[occ] = {
 				x: valX
 				, y: valY
@@ -152,23 +155,21 @@ Template.scatterplot.rendered = function() {
 		return "This is some test HTML";
 	}
 
-	console.log(data);
-
 	viz
-	    .width($('.page-middle').width())
-	    .height($('.page-middle').height())
 	    .type("pie_scatter")
 	    // .dev(true)
-	    .text_var("name")
+	    .width($('.page-middle').width())
+	    .height($('.page-middle').height())
 	    .id_var("id")
 	    .attrs(attrs)
+	    .text_var("name")
 	    .xaxis_var(countryXName)
 	    .yaxis_var(countryYName)
 	    .value_var("total")
         .tooltip_info([countryXName, countryYName])
         // .total_bar({"prefix": "Export Value: $", "suffix": " USD", "format": ",f"})
         .nesting(["nesting_dom", "nesting_ind", "nesting_occ"])
-        // .nesting_aggs({"complexity":"mean","distance":"mean","rca":"mean"})
+        .nesting_aggs({"nesting_dom": "sum", "nesting_ind": "sum"})  // TODO Aggregate correctly
         .depth("nesting_ind")
         .text_format(text_formatting)
         .spotlight(false)

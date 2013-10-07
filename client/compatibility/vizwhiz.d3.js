@@ -1987,7 +1987,10 @@ vizwhiz.viz = function() {
   
   footer_text = function() {
 
-    var text = vars.click_function || vars.tooltip_info.long ? vars.text_format("Click for More Info") : null
+    // CHANGED
+
+    var text;
+    // var text = vars.click_function || vars.tooltip_info.long ? vars.text_format("Click for More Info") : null
     
     if (!text && vars.type == "geo_map") return vars.text_format("Click to Zoom")
     else return text
@@ -5271,14 +5274,15 @@ vizwhiz.pie_scatter = function(vars) {
         .attr("fill","#4c4c4c")
         .text(ytext)
         
+      // CHANGED
       var tooltip_data = get_tooltip_data(d,"short")
-      if (d.num_children > 1 && !vars.spotlight) {
-        var a = d.num_children_active+"/"+d.num_children
-        tooltip_data.push({
-          "name": vars.text_format(vars.active_var), 
-          "value": a
-        });
-      }
+      // if (d.num_children > 1 && !vars.spotlight) {
+      //   var a = d.num_children_active+"/"+d.num_children
+      //   tooltip_data.push({
+      //     "name": vars.text_format(vars.active_var), 
+      //     "value": a
+      //   });
+      // }
       
       vizwhiz.tooltip.remove(vars.type)
       vizwhiz.tooltip.create({

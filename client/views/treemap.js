@@ -1,14 +1,6 @@
 Template.treemap.dataReady = function() {
     return Session.get("treemapReady");
 }
-//
-//Template.tooltip.tooltip = function() {
-//    return Session.get("tooltipIndustry");
-//}
-//
-//Template.tooltip.tooltip_data = function() {
-//    return Domains.findOne({ _id: Session.get("tooltipIndustry") })
-//}
 
 // Green, red, brown, yellow, beige, pink, blue, orange
 
@@ -37,7 +29,7 @@ var color_countries = d3.scale.ordinal()
 
 Template.treemap_svg.rendered = function() {
 
-// Don't re-render with the same parameters...?
+    // Don't re-render with the same parameters...?
     var context = this;
     if( this.rendered ) return;
     this.rendered = true;

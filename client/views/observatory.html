@@ -109,21 +109,32 @@
     </li>
 </template>
 
-<!-- Ranked list for treemap tooltip -->
-<template name="popup_list">
-    <span style='font-weight:700;font-size:110%;letter-spacing:2px'>{{industry}}</span>
-    <br />{{count}} {{suffix}}<div style='width:100%;border-top:1px solid #cccccc;height:5px;margin-top:6px;'></div>
+<!-- Tooltips -->
+<template name="tooltip">
+    {{#if tooltip}}
+        <div id="tooltip" top="{{position.top}}" left="{{position.left}}">
+            {{>tt_list individuals}}
+        </div>
+    {{/if}}
+</template>
 
-    {{#each top5}}
-        {{> tt_person person_lookup}}
-    {{/each}}
+<template name="tt_list">
+    <span class="category">
+        {{categoryA}}: {{categoryB}}
+    </span><br />
+    {{count}} {{suffix}}
+    <div class="list">
+        {{#each top5}}
+            {{> tt_person}}
+        {{/each}}
+    </div>
 
     {{#if more}}
-        <br /><span style='font-size:80%'>({{extras}} more)</span>
+    <span class="extras">({{extras}} more)</span>
     {{/if}}
 </template>
 
 <!-- Person in tooltip list-->
 <template name = "tt_person">
-    {{name}}<span style='font-size:70%'>, {{birthcity}}, {{countryName}}</span><br />
+    {{name}}<span class="birthplace">, {{birthcity}}, {{countryName}}</span><br />
 </template>

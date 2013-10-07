@@ -92,8 +92,9 @@ Router.map(function() {
         }
     });
     this.route('people', {
-        data: function() {
-            Session.set('page', this.template);
+        path: '/people/:person',
+        data: function() { 
+            Session.set('person', this.params.person);
         }
     });
     this.route('about', {
@@ -105,12 +106,10 @@ Router.map(function() {
 });
 
 Router.configure({
-  layout: 'defaultLayout',
-  renderTemplates:
-    {   'nav':
-            { to: 'nav'},
-        'footer':
-            { to: 'footer' }
+    layout: 'defaultLayout',
+    renderTemplates: {
+        'nav': { to: 'nav'}
+        , 'footer': { to: 'footer' }
     },
-  loadingTemplate: 'spinner'
+    loadingTemplate: 'spinner'
 });
