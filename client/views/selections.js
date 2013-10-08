@@ -214,6 +214,6 @@ Template.country_dropdown.countries = function (){
 
 Template.language_dropdown.languages = function (){
     return Languages.find( {},
-        { sort: { "languageName": 1 } }
+        { sort: { "lang_name": 1 } }
     );
 };

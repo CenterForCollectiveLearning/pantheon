@@ -122,10 +122,9 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     if(vizMode === 'country_exports' || vizMode === 'country_imports' || vizMode === 'bilateral_exporters_of'){
         pipeline = [
             { $match: matchArgs },
-            {$group: { // TODO: This needs to be updated to count the number of unique en_curids per category
-                _id: {domain: "$domain", industry: "$industry", occupation: "$occupation"},
-                count: {$sum: 1 }
-            }}
+            {"$group": { _id: {domain: "$category", industry: "$industry", occupation: "$occupation"},
+                "people": { "$addToSet": '$en_curid'}}},
+            {"$unwind":"$people"},{"$group": { "_id": "$_id", "count": { "$sum":1} }},
         ];
         driver.mongo.db.collection("imports").aggregate(
             pipeline,
@@ -158,7 +157,7 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
                 count: {$sum: 1 }
             }}
         ];
-        driver.mongo.db.collection("people").aggregate(  //TODO: or count unique en_curid from imports
+        driver.mongo.db.collection("people").aggregate(  //TODO: or count unique en_curid from imports, why is there a difference of one person???
             pipeline,
             Meteor.bindEnvironment(
                 function(err, result) {
@@ -184,12 +183,11 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     else if(vizMode === 'domain_imports_from' || vizMode === 'bilateral_importers_of'){
         pipeline = [
             {$match: matchArgs },
-            {$group: {
-                _id: {lang_family: "$lang_family", lang: "$lang", lang_name: "$lang_name"},
-                count: {$sum: 1 }
-            }}
+            {"$group": { _id: {lang_family: "$lang_family", lang: "$lang", lang_name: "$lang_name"},
+                "people": { "$addToSet": '$en_curid'}}},
+            {"$unwind":"$people"},{"$group": { "_id": "$_id", "count": { "$sum":1} }}
         ];
-        driver.mongo.db.collection("imports").aggregate(  //TODO: or count unique en_curid from imports
+        driver.mongo.db.collection("imports").aggregate(
             pipeline,
             Meteor.bindEnvironment(
                 function(err, result) {
