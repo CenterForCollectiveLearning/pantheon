@@ -197,7 +197,7 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
                     _.each(result, function(e) {
                         // Generate a random disposable id for each aggregate
                         sub.added("treemap", Random.id(), {
-                            continent: e._id.lang_family,
+                            lang_family: e._id.lang_family,
                             lang: e._id.lang,
                             lang_name: e._id.lang_name,
                             count: e.count
