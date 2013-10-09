@@ -1,6 +1,21 @@
 // Set Defaults
 // TODO Where do you put these global functions?
 
+
+// Enable caching for getting readrboard script
+jQuery.cachedScript = function( url, options ) {
+  // Allow user to set any option except for dataType, cache, and url
+  options = $.extend( options || {}, {
+    dataType: "script",
+    cache: true,
+    url: url
+  });
+ 
+  // Use $.ajax() since it is more flexible than $.getScript
+  // Return the jqXHR object so we can chain callbacks
+  return jQuery.ajax( options );
+};
+
 this.defaults = {
     vizType: 'treemap'
     , vizMode: 'country_exports'
@@ -81,9 +96,9 @@ var left_sections = [
         url: "/people"
     },
     {
-        section: "Papers",
-        template: "papers",
-        url: "/papers"
+        section: "Publications",
+        template: "publications",
+        url: "/publications"
     }
 ]
 
