@@ -222,7 +222,7 @@ Template.treemap_svg.rendered = function() {
             .attrs(attrs)
             .text_var("name")
             .value_var("num_ppl")
-            .tooltip_info({}) //embed top5 individuals into the tooltip
+            // .tooltip_info({}) //embed top5 individuals into the tooltip
             .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
             .nesting(["nesting_1","nesting_3"])
             .depth("nesting_3")
@@ -235,6 +235,34 @@ Template.treemap_svg.rendered = function() {
             .call(viz);
     };
 
+    // Overriding d3+ tooltips
+
+    d3.selectAll("rect").on("mouseover", mouseover);
+    d3.selectAll("rect").on("mouseout", mouseout);
+
+    function mouseover(p) {
+        var country_code = countries[p.y];
+        var industry = industries[p.x];
+        var individuals = grouped_individuals[country_code][industry];
+
+        Session.set("showTooltip", true);
+
+        Template.tooltip.position = position;
+        Template.tooltip.individuals = individuals;
+        Template.tt_list.categoryA = country[country_code];
+        Template.tt_list.categoryB = industry;
+        if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
+            $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
+        } else {
+            $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
+        }        
+        $("#tooltip").show()       
+    }
+
+    function mouseout(p) {
+        Session.set("showTooltip", false);
+    }
+    
 //    d3.selectAll(".leaf rect").on("mouseover", function (d) {
 //        // TODO generalize this for other treemaps later
 //

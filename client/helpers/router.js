@@ -94,6 +94,7 @@ Router.map(function() {
     this.route('people', {
         path: '/people/:person',
         data: function() { 
+            Session.set('page', this.template);
             Session.set('person', this.params.person);
         }
     });
@@ -102,7 +103,11 @@ Router.map(function() {
             Session.set('page', this.template);
         }
     });
-
+    this.route('publications', {
+        data: function() {
+            Session.set('page', this.template);
+        }
+    });
 });
 
 Router.configure({

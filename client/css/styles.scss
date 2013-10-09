@@ -42,9 +42,50 @@ $color_black_trans: rgba(0, 0, 0, 0.5);
 	position: fixed !important; 
 }
 
+div.side-nav {
+	h4 {
+		margin: 0 0;
+	}
+}
+
+div.publication {
+	margin: 0 auto;
+
+	width: 45em;
+	min-width: 40em;
+	max-width: 50em;
+	max-height: 65%;
+	overflow-y: auto;
+	font-size: 1em;  // 16px
+	line-height: 1.5em; // 24px
+
+	// TODO Incorporate scroll effect
+	// -webkit-box-shadow: inset 0 0 1em rgba(0, 0, 0, 1);
+	// box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+
+	p {
+		margin-bottom: 1em;
+	}
+
+	div.figure {
+		img {
+			width: 70%;
+			margin: 0 auto;
+			display: block;
+		}
+
+		div.label {
+			div.title {
+				text-transform: uppercase;
+			}
+		}
+	}
+}
+
 body {
 	max-width: $max_width;
 
+	// background:url(/joseon_palace_light_blur.png) no-repeat center center fixed;
 	background:url(/joseon_palace_dark_no_grain.png) no-repeat center center fixed;
 	// background:url(/LoC_forum_boario_grain.png) no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -237,6 +278,8 @@ nav {
 		position: relative;
 
 		height: 100%;
+
+		min-width: 15em;
 	}
 
 	.page-middle {
