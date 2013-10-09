@@ -222,7 +222,7 @@ Template.treemap_svg.rendered = function() {
             .text_var("name")
             .value_var("num_ppl")
             .tooltip_info({}) //embed top5 individuals into the tooltip
-            .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
+            .total_bar({"prefix": "Total Exports: ", "suffix": " Wikipedia pages"})
             .nesting(["nesting_1","nesting_3"])
             .depth("nesting_3")
             .font("Open Sans")

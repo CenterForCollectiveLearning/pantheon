@@ -28,11 +28,15 @@ Meteor.publish("languages_pub", function() {
     This is a static query since the query doesn't ever change for some given parameters
     Push the ids here as well since people will be in the client side
  */
-Meteor.publish("peopletop10", function(begin, end, L, country) {
+Meteor.publish("peopletop10", function(begin, end, L, country, domain) {
     var sub = this;
     var collectionName = "top10people";
 
     var args = getCountryExportArgs(begin, end, L, country);
+
+    if (domain.toLowerCase() !== 'all' ) {
+        args.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
+    };
 
     People.find(args, {
         fields: {_id: 1}, //only get the ids of the people - look up the people in the client (from allpeople)
@@ -113,9 +117,9 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
         matchArgs.lang = language;
     };
 
-//    if (domain !== 'all' ) {
-//        matchArgs.category = domain;     //TODO: remember that we need to change category column to domain in imports collection!
-//    };
+    if (domain.toLowerCase() !== 'all' ) {
+        matchArgs.$or = [{category:domain}, {industry:domain}, {occupation:domain}];     //TODO: remember that we need to change category column to domain in imports collection!
+    };
 
     var pipeline = [];
 

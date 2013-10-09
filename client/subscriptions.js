@@ -49,9 +49,16 @@ Deps.autorun(function(){
         }
     }
     else {
-        top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country);
+        top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
         // Give a handle to this subscription so we can check if it's ready
         treemapSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain);
+        console.log("vizMode: "+vizMode);
+        console.log("begin: "+begin);
+        console.log("end: "+end);
+        console.log("L: "+langs);
+        console.log("country: "+country);
+        console.log("language: "+language);
+        console.log("domain: "+domain);
 
         Session.set("treemapReady", false);
 
