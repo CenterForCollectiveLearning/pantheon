@@ -101,7 +101,6 @@ Template.treemap_svg.rendered = function() {
             .attrs(attrs)
             .text_var("name")
             .value_var("num_ppl")
-            .tooltip_info({}) //embed top5 individuals into the tooltip
             .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
             .nesting(["nesting_1","nesting_3","nesting_5"])
             .depth("nesting_3")
@@ -161,7 +160,6 @@ Template.treemap_svg.rendered = function() {
             .attrs(attrs)
             .text_var("name")
             .value_var("num_ppl")
-            .tooltip_info({}) //embed top5 individuals into the tooltip
             .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
             .nesting(["nesting_1","nesting_3"])
             .depth("nesting_3")
@@ -221,7 +219,6 @@ Template.treemap_svg.rendered = function() {
             .attrs(attrs)
             .text_var("name")
             .value_var("num_ppl")
-            // .tooltip_info({}) //embed top5 individuals into the tooltip
             .total_bar({"prefix": "Total Exports: ", "suffix": " Wikipedia Pages"})
             .nesting(["nesting_1","nesting_3"])
             .depth("nesting_3")
