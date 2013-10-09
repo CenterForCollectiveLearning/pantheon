@@ -173,39 +173,38 @@ Template.treemap_svg.rendered = function() {
             .datum(flat)
             .call(viz);
     } else if(vizMode === 'domain_imports_from' || vizMode === 'bilateral_importers_of'){
-        console.log("HELLO THIS WILL BE A TREEMAP OF LANGUAGES")   // TODO: languages needs a lot of cleanup for the language name and family mapping...!
-        var attr = Countries.find().fetch();
+        var attr = Languages.find().fetch();
         attr.forEach(function(a){
-            var continent = a.continentName;     // TODO: update these for languages instead of countries....
-            var countryCode = a.countryCode;
-            var countryName = a.countryName;
-            var continent_color = color_countries(continent);
-            var continentDict = {
-                id: continent
-                , name: continent
+            var family = a.lang_family;     // TODO: update these for languages instead of countries....
+            var langCode = a.lang;
+            var langName = a.lang_name;
+            var family_color = color_languages(family);
+            var familyDict = {
+                id: family
+                , name: family
             };
-            var countryDict = {
-                id: countryCode
-                , name: countryName
+            var langDict = {
+                id: langCode
+                , name: langName
             };
-            attrs[continent] = {
-                id: continent
-                , name: continent
-                , color: continent_color
-                , nesting_1: continentDict
+            attrs[family] = {
+                id: family
+                , name: family
+                , color: family_color
+                , nesting_1: familyDict
             };
-            attrs[countryCode] = {
-                id: countryCode
-                , name: countryName
-                , color: continent_color
-                , nesting_1: continentDict
-                , nesting_3: countryDict
+            attrs[langCode] = {
+                id: langCode
+                , name: langName
+                , color: family_color
+                , nesting_1: familyDict
+                , nesting_3: langDict
             };
         });
 
         var flat = [];
         data.forEach(function(d){
-            flat.push({"id": d.countryCode, "name": d.countryName, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
+            flat.push({"id": d.lang, "name": d.lang_name, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
         });
 
         console.log("ATTRS:");

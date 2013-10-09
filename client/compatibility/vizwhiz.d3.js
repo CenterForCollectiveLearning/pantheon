@@ -1570,6 +1570,7 @@ vizwhiz.viz = function() {
     
       nested_data
         .key(function(d){
+//              console.log(vars.attrs[d[vars.id_var]]);
               return vars.attrs[d[vars.id_var]][nest_key][vars.id_var];
         });
       
