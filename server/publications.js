@@ -35,7 +35,7 @@ Meteor.publish("peopletop10", function(begin, end, L, country, domain) {
     var args = getCountryExportArgs(begin, end, L, country);
 
     if (domain.toLowerCase() !== 'all' ) {
-        args.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
+        args.$or = [{domain:domain.substring(1)}, {industry:domain.substring(1)}, {occupation:domain.substring(1)}];
     };
 
     People.find(args, {
@@ -93,6 +93,12 @@ Meteor.publish("top5occupation", function(begin, end, L, country, industry) {
 // TODO double check this indexing
 People._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} )
 People._ensureIndex({ countryCode: 1, occupation: 1, birthyear: 1} )
+Imports._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} )
+Imports._ensureIndex({ continentName:1, countryCode: 1, occupation: 1, birthyear: 1} )
+Imports._ensureIndex({ lang_family: 1, lang: 1, occupation: 1, birthyear: 1} )
+Imports._ensureIndex({ category: 1, industry: 1, occupation: 1, birthyear: 1} )
+
+
 
 /*
  * Static query that pushes the treemap structure
@@ -118,7 +124,7 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     };
 
     if (domain.toLowerCase() !== 'all' ) {
-        matchArgs.$or = [{category:domain}, {industry:domain}, {occupation:domain}];     //TODO: remember that we need to change category column to domain in imports collection!
+        matchArgs.$or = [{domain :domain.substring(1)}, {industry:domain.substring(1)}, {occupation:domain.substring(1)}];
     };
 
     var pipeline = [];

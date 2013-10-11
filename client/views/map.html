@@ -1,15 +1,18 @@
 <template name="map">
-
-    {{! TODO this may not work on slow connections. handle subscription handle correctly}}
-	<div id="viz" class="map">
-        {{#if dataReady}}
-            {{> treemap_svg}}
-        {{else}}
+    <div class="page-middle">
+        <div id="viz" class="map">
+            {{#if dataReady}}
+            {{> map_svg}}
+            <div class="scale">
+                <svg class="color-scale"></svg>
+            </div>
+            {{else}}
             {{> spinner}}
-        {{/if}}
-	</div>
+            {{/if}}
+        </div>
 </template>
 
 <template name="map_svg">
-    <svg class="map" width="{{properties.width}}" height="{{properties.height}}"></svg>
+    <div id="geomap" width="{{properties.width}}" height="{{properties.height}}"></div>
+    <div id="container" style="position: relative; width: 800px; height: 540px;"></div>
 </template>

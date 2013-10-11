@@ -173,7 +173,7 @@ Template.treemap_svg.rendered = function() {
     } else if(vizMode === 'domain_imports_from' || vizMode === 'bilateral_importers_of'){
         var attr = Languages.find().fetch();
         attr.forEach(function(a){
-            var family = a.lang_family;     // TODO: update these for languages instead of countries....
+            var family = a.lang_family;
             var langCode = a.lang;
             var langName = a.lang_name;
             var family_color = color_languages(family);
@@ -219,7 +219,7 @@ Template.treemap_svg.rendered = function() {
             .attrs(attrs)
             .text_var("name")
             .value_var("num_ppl")
-            .total_bar({"prefix": "Total Exports: ", "suffix": " Wikipedia Pages"})
+            .total_bar({"prefix": "Total: ", "suffix": " Wikipedia Pages"})
             .nesting(["nesting_1","nesting_3"])
             .depth("nesting_3")
             .font("Open Sans")

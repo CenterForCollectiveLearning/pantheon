@@ -12,7 +12,13 @@ Template.map.properties = treeProps;
 Template.map.rendered = function() {
   
     /* Reactive data! */
-    var data = People.find().fetch();  
+    var data = People.find().fetch();
+
+    var map = new Datamap({
+        scope: 'world',
+        element: document.getElementById('container'),
+        projection: 'mercator'
+    });
 
     console.log("Map");
 };
