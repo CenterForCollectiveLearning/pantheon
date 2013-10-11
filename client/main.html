@@ -29,51 +29,46 @@
 <!-- Base Layout -->
 <template name="defaultLayout">
     <!-- Header -->
-    <header>
-        <nav>
+    <header class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
             {{yield 'nav'}}
-        </nav>
+        </div>
         <div class="logo center">
             <a href='/'>
-             
                 <img class="logo-img" src="/images/dark_theme_logo.png" />
-                
             </a>
         </div>
     </header>
 
-    <!--     <article id="grid"><div class="overlay"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></article> -->
-
     <!-- Body -->
-    <div id="page">
-        {{ yield }}
-    </div>
-
+    
+    {{ yield }}
+    
     <!-- render to the footer yield -->
-    <footer>
+    <footer class="navbar navbar-fixed-bottom">
         {{yield 'footer'}}
     </footer>
 </template>
 
 <template name="nav">
-    <div class="left_sections_nav">
+    <ul class="nav pull-left">
         {{#each left_sections}}
             {{> section}}
         {{/each}}
-    </div>
-    <div class="right_sections_nav">
+    </ul>
+    <ul class="nav pull-right">
         {{#each right_sections}}
             {{> section}}
         {{/each}}
-    </div>
+    </ul> 
 </template>
 
 <template name="section">
-    <div class="main_nav {{selected}}">
+    <li class="main_nav {{selected}}">
         <a href="{{url}}">
             {{section}}
         </a>
-    </div>
+    </li>
 </template>
 
 <template name="footer">
@@ -82,7 +77,7 @@
         </div> -->
 
         <div class="footer-license center">
-            &copy; 2013 Macro Connections, MIT Media Lab, Massachusetts Institute of Technology.<br>This work is being shared under a Creative Commons By-NC-SA license.
+            &copy; 2013 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a>, <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>, <a href="http://web.mit.edu/" target="_blank">Massachusetts Institute of Technology</a>.<br>This work is being shared under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons By-NC-SA license</a>.
         </div>
 
         <!--
@@ -96,5 +91,6 @@
 
 <template name="spinner">
     <div class="loading">
+        <img class="spinner" src="/images/gold_circle.gif" />
     </div>
 </template>

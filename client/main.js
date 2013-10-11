@@ -96,22 +96,22 @@ var left_sections = [
         url: "/people"
     },
     {
-        section: "Publications",
-        template: "publications",
-        url: "/publications"
-    }
-]
-
-var right_sections = [
-    {
         section: "Data",
         template: "data",
         url: "/data"
     },
+]
+
+var right_sections = [
     {
         section: "Vision",
         template: "vision",
         url: "/vision"
+    },
+    {
+        section: "Publications",
+        template: "publications",
+        url: "/publications"
     },
     {
         section: "FAQ",
@@ -119,15 +119,20 @@ var right_sections = [
         url: "/faq"
     },
     {
-        section: "About",
+        section: "Team",
         template: "about",
         url: "/about"
     }
 ]
 
+var sections = left_sections.concat(right_sections);
+
+console.log(sections);
+
 Template.nav.helpers({
     left_sections: left_sections,
-    right_sections: right_sections
+    right_sections: right_sections,
+    sections: sections
 })
 
 Template.section.helpers({
@@ -136,36 +141,12 @@ Template.section.helpers({
     }
 })
 
-Template.nav.events = {
-    "mouseenter .main_nav a": function(d) {
-        $(d.target).css('color', 'white');
-    },
+// Template.nav.events = {
+//     "mouseenter .main_nav a": function(d) {
+//         $(d.target).css('color', 'white');
+//     },
 
-    "mouseleave .main_nav a": function(d) {
-        $(d.target).css('color', '#cccccc');
-    },
-}
-
-// Spinner
-Template.spinner.rendered = function(){
-    var opts = {
-        lines: 12, // The number of lines to draw
-        length: 6, // The length of each line
-        width: 3, // The line thickness
-        radius: 6, // The radius of the inner circle
-        corners: 1, // Corner roundness (0..1)
-        rotate: 0, // The rotation offset
-        direction: 1, // 1: clockwise, -1: counterclockwise
-        color: '#fff', // #rgb or #rrggbb
-        speed: 1, // Rounds per second
-        trail: 60, // Afterglow percentage
-        shadow: false, // Whether to render a shadow
-        hwaccel: false, // Whether to use hardware acceleration
-        className: 'spinner', // The CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000),
-        top: 'auto', // Top position relative to parent in px
-        left: 'auto' // Left position relative to parent in px
-    };
-    var target = this.find('.loading');
-    var spinner = new Spinner(opts).spin(target);
-}
+//     "mouseleave .main_nav a": function(d) {
+//         $(d.target).css('color', '#cccccc');
+//     },
+// }
