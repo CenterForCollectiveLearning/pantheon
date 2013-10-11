@@ -1,5 +1,6 @@
 <template name="treemap">
-    <div class="page-middle">
+    <!-- TODO Why is the 12-column layout overflowing? -->
+    <div class="page-middle span8">
 	    <div id="viz" class="treemap">
             {{#if dataReady}}
                 {{> treemap_svg}}
@@ -20,7 +21,7 @@
         </div> -->
     </div>
 
-    <div class="page-right">
+    <div class="page-right span2">
     	{{> ranked_list }}
     </div>
 </template>

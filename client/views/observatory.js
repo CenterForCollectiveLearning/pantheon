@@ -1,13 +1,13 @@
 // Helper methods for observatory page
 
-Template.observatory.events = {
-    "mouseenter .page-left, mouseenter .page-right": function(d) {
-        $(d.target).fadeTo('opacity', 1.0);
-    },
-    "mouseleave .page-left, mouseleave .page-right": function(d) {
-        $(d.target).css('opacity', 0.6);
-    }
-}
+// Template.observatory.events = {
+//     "mouseenter .page-left, mouseenter .page-right": function(d) {
+//         $(d.target).fadeTo('opacity', 1.0);
+//     },
+//     "mouseleave .page-left, mouseleave .page-right": function(d) {
+//         $(d.target).css('opacity', 0.6);
+//     }
+// }
 
 // Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = function() {
@@ -131,23 +131,23 @@ Template.question.question = function() {
     var mode = Session.get("vizMode");
     switch (mode) {
         case "country_exports":
-            return "What does " + s_countries + " export?";
+            return new Handlebars.SafeString("What does " + "<b>" + s_countries + "</b>" + " export?");
         case "country_imports":
-            return (Session.get("language") == "all") ? "What does the world import?" : "What do " + s_regions + " speakers import?";
+            return new Handlebars.SafeString((Session.get("language") == "all") ? "What does the world import?" : "What do " + "<b>" + s_regions + "</b>" + " speakers import?");
         case "domain_exports_to":
-            return "Who exports " + s_domains + "?";
+            return new Handlebars.SafeString("Who exports " + "<b>" + s_domains + "</b>" + "?");
         case "domain_imports_from":
-            return "Who imports " + s_domains + "?";
+            return new Handlebars.SafeString("Who imports " + "<b>" + s_domains + "</b>" + "?");
         case "bilateral_exporters_of":
-            return "What does " + s_countries + " export to " + s_regions + speakers_or_no_speakers + "?";
+            return new Handlebars.SafeString("What does " + "<b>" + s_countries + "</b>" + " export to " + "<b>" + s_regions + speakers_or_no_speakers + "</b>" + "?");
         case "bilateral_importers_of":
-            return "Where does " + s_countries + " export " + s_domains + " to?";
+            return new Handlebars.SafeString("Where does " + "<b>" + s_countries + "</b>" + " export " + "<b>" + s_domains + "</b>" + " to?");
         case "matrix_exports":
-            return "What does " + s_countries + " export?";
+            return new Handlebars.SafeString("What does " + "<b>" + s_countries + "</b>" + " export?");
         case "country_vs_country":
-            return "What does " + s_countryX + " export compared to " + s_countryY + "?";
+            return new Handlebars.SafeString("What does " + "<b>" + s_countryX + "</b>" + " export compared to " + "<b>" + s_countryY + "</b>" + "?");
         case "lang_vs_lang":
-            return "What do " + s_languageX + " speakers export compared to " + s_languageY + " speakers?";
+            return new Handlebars.SafeString("What do " + "<b>" + s_languageX + "</b>" + " speakers export compared to " + "<b>" + s_languageY + "</b>" + " speakers?");
     }
 };
 

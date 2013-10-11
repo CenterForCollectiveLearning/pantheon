@@ -5,25 +5,31 @@
         {{> question}}
     </div>
 
-    <div class="page-left">
-        <div class="viz-selector">
-            <div class="section-header">
-                Visualizations
+    <div id="page">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="page-left span2">
+                    <div class="viz-selector">
+                        <div class="section-header">
+                            Visualizations
+                        </div>
+                        {{> accordion}}
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="viz-options">
+                        <div id="parameters" class="section-header">
+                            Parameters
+                        </div>
+                        {{> select_mode }}
+                    </div>
+                </div>
+                
+                <!-- Visualization and Ranked List Container -->
+                {{> visualization}}
+                {{> tooltip}}
             </div>
-            {{> accordion}}
-        </div>
-        <div class="viz-options">
-            <div id="parameters" class="section-header">
-                Parameters
-            </div>
-            {{> select_mode }}
         </div>
     </div>
-        
-    <!-- Visualization and Ranked List Container -->
-    {{> visualization}}
-    {{> tooltip}}
-    
 </template>
 
 <template name="visualization">
@@ -75,7 +81,7 @@
 
 <!-- Visualization and Viz-Mode specific Question -->
 <template name="question">
-    <div class="question">{{question}}</div>
+    <div class="primary-text">{{question}}</div>
     <!-- <div id="question">What does the world export?</div> -->
 </template>
 

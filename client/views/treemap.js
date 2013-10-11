@@ -9,7 +9,7 @@ var color_domains = d3.scale.ordinal()
     .range(["#468966", "#8e2800", "#864926", "#ffb038", "#fff0a5", "#bc4d96", "#1be6ef", "#ff5800"]);
 
 var treeProps = {
-    width: 725,
+    width: 700,
     height: 560
 };
 
@@ -210,6 +210,8 @@ Template.treemap_svg.rendered = function() {
         console.log("DATA:")
         console.log(flat);
 
+        console.log("WIDTH", $('.page-middle').width());
+        console.log("HEIGHT", $('.page-middle').height());
         viz
             .type("tree_map")
             //        .dev(true)
@@ -233,31 +235,31 @@ Template.treemap_svg.rendered = function() {
 
     // Overriding d3+ tooltips
 
-    d3.selectAll("rect").on("mouseover", mouseover);
-    d3.selectAll("rect").on("mouseout", mouseout);
+    //  d3.selectAll("rect").on("mouseover", mouseover);
+    // d3.selectAll("rect").on("mouseout", mouseout);
 
-    function mouseover(p) {
-        var country_code = countries[p.y];
-        var industry = industries[p.x];
-        var individuals = grouped_individuals[country_code][industry];
+    // function mouseover(p) {
+    //     var country_code = countries[p.y];
+    //     var industry = industries[p.x];
+    //     var individuals = grouped_individuals[country_code][industry];
 
-        Session.set("showTooltip", true);
+    //     Session.set("showTooltip", true);
 
-        Template.tooltip.position = position;
-        Template.tooltip.individuals = individuals;
-        Template.tt_list.categoryA = country[country_code];
-        Template.tt_list.categoryB = industry;
-        if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
-            $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
-        } else {
-            $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
-        }        
-        $("#tooltip").show()       
-    }
+    //     Template.tooltip.position = position;
+    //     Template.tooltip.individuals = individuals;
+    //     Template.tt_list.categoryA = country[country_code];
+    //     Template.tt_list.categoryB = industry;
+    //     if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
+    //         $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
+    //     } else {
+    //         $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
+    //     }        
+    //     $("#tooltip").show()       
+    // }
 
-    function mouseout(p) {
-        Session.set("showTooltip", false);
-    }
+    // function mouseout(p) {
+    //     Session.set("showTooltip", false);
+    // }
     
 //    d3.selectAll(".leaf rect").on("mouseover", function (d) {
 //        // TODO generalize this for other treemaps later
