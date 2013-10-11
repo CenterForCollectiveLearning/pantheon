@@ -10,17 +10,26 @@ var treeProps = {
 Template.map.properties = treeProps;
 
 Template.map.rendered = function() {
-  
     /* Reactive data! */
     var data = People.find().fetch();
 
     var map = new Datamap({
         scope: 'world',
         element: document.getElementById('container'),
-        projection: 'mercator'
+        projection: 'mercator',
+        fills: {
+            defaultFill: '#CCCCCC' //the keys in this object map to the "fillKey" of [data]
+        },
     });
 
-    console.log("Map");
+    //TODO:
+    // Map two letter to three letter country codes
+    // Add selection by domain/industry/occupation
+    // Get country data (by domain/industry/occupation, begin, end, langs)
+    // Set color fill gradient
+    // Add color key
+    //
+
 };
 
 
