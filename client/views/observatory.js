@@ -148,6 +148,8 @@ Template.question.question = function() {
             return "What does " + s_countryX + " export compared to " + s_countryY + "?";
         case "lang_vs_lang":
             return "What do " + s_languageX + " speakers export compared to " + s_languageY + " speakers?";
+        case "map":
+            return "Who exports " + s_domains + "?";
     }
 };
 

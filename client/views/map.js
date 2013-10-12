@@ -28,7 +28,6 @@ Template.map.rendered = function() {
     // Get country data (by domain/industry/occupation, begin, end, langs)
     // Set color fill gradient
     // Add color key
-    //
 
 };
 
