@@ -146,7 +146,9 @@ Template.question.question = function() {
         case "country_vs_country":
             return new Handlebars.SafeString("What does " + "<b>" + s_countryX + "</b>" + " export compared to " + "<b>" + s_countryY + "</b>" + "?");
         case "lang_vs_lang":
-            return new Handlebars.SafeString("What do " + "<b>" + s_languageX + "</b>" + " speakers export compared to " + "<b>" + s_languageY + "</b>" + " speakers?");
+            return "What do " + s_languageX + " speakers export compared to " + s_languageY + " speakers?";
+        case "map":
+            return "Who exports " + s_domains + "?";
     }
 };
 

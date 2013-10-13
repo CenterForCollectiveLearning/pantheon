@@ -20,6 +20,8 @@ Template.select_mode.render_template = function() {
             return new Handlebars.SafeString(Template.country_vs_country_mode(this));
         case "lang_vs_lang":
             return new Handlebars.SafeString(Template.language_vs_language_mode(this));
+        case "map":
+            return new Handlebars.SafeString(Template.map_mode(this));
     }
 }
 
