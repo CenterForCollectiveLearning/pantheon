@@ -98,7 +98,21 @@ Imports._ensureIndex({ continentName:1, countryCode: 1, occupation: 1, birthyear
 Imports._ensureIndex({ lang_family: 1, lang: 1, occupation: 1, birthyear: 1} )
 Imports._ensureIndex({ category: 1, industry: 1, occupation: 1, birthyear: 1} )
 
+Meteor.publish("scatterplot_pub", function(begin, end, L, countryX, countryY) {
+    var sub = this;
 
+    // TODO Combine into a single query
+    // TODO Pre-aggregate as in the treemap publication
+    var argsX = getCountryExportArgs(begin, end, L, countryX);
+    var argsY = getCountryExportArgs(begin, end, L, countryY);
+    People.find(argsX).forEach(function (person) {
+        sub.added("scatterplot", person._id, person);
+    });
+    People.find(argsY).forEach(function (person) {
+        sub.added("scatterplot", person._id, person);
+    });
+    sub.ready();
+});
 
 /*
  * Static query that pushes the treemap structure

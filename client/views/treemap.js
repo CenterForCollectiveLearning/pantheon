@@ -224,8 +224,10 @@ Template.treemap_svg.rendered = function() {
             .total_bar({"prefix": "Total: ", "suffix": " Wikipedia Pages"})
             .nesting(["nesting_1","nesting_3"])
             .depth("nesting_3")
-            .font("Open Sans")
-            .font_weight("300")
+            .font("Lato")
+            .font_weight(400)
+            .font_color("#FFFFFF")
+            .font_size("1.2em")
             .color_var("color");
 
         d3.select(context.find("svg"))
@@ -268,5 +270,4 @@ Template.treemap_svg.rendered = function() {
 //
 //        $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
 //    });
-
 }

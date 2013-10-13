@@ -28,24 +28,26 @@
 
 <!-- Base Layout -->
 <template name="defaultLayout">
-    <!-- Header -->
-    <header class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            {{yield 'nav'}}
-        </div>
-        <div class="logo center">
-            <a href='/'>
-                <img class="logo-img" src="/images/dark_theme_logo.png" />
-            </a>
-        </div>
-    </header>
+    <div class="wrapper">
+        <!-- Header -->
+        <header class="navbar navbar-fixed-top">
+            <nav class="navbar-inner">
+                {{yield 'nav'}}
+            </nav>
+            <div class="logo center">
+                <a href='/'>
+                    <img class="logo-img" src="/images/dark_theme_logo.png" />
+                </a>
+            </div>
+        </header>
 
-    <!-- Body -->
-    
-    {{ yield }}
-    
-    <!-- render to the footer yield -->
-    <footer class="navbar navbar-fixed-bottom">
+        <!-- Body -->
+
+        {{ yield }}
+
+        <!-- render to the footer yield -->
+    </div>
+    <footer>
         {{yield 'footer'}}
     </footer>
 </template>
@@ -60,7 +62,7 @@
         {{#each right_sections}}
             {{> section}}
         {{/each}}
-    </ul> 
+    </ul>
 </template>
 
 <template name="section">
@@ -90,7 +92,7 @@
 </template>
 
 <template name="spinner">
-    <div class="loading">
+<!--     <div class="loading">
         <img class="spinner" src="/images/gold_circle.gif" />
-    </div>
+    </div> -->
 </template>

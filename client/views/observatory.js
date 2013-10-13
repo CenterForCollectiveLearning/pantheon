@@ -104,7 +104,6 @@ Template.ranked_person.birthday = function() {
 
 // Generate question given viz tqype
 Template.question.question = function() {
-
     var s_countries = (Session.get("country") == "all") ? "the world" : country[Session.get("country")];
     var s_countryX = country[Session.get("countryX")];
     var s_countryY = country[Session.get("countryY")];

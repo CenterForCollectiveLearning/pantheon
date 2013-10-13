@@ -11,10 +11,12 @@ this.allpeopleSub = Meteor.subscribe("allpeople");
 // These are client only collections
 PeopleTop10 = new Meteor.Collection("top10people");
 Treemap = new Meteor.Collection("treemap");
+Scatterplot = new Meteor.Collection("scatterplot");
 Tooltips = new Meteor.Collection("mouseoverCollection");
 
 this.top10Sub = null;
 this.treemapSub = null;
+this.scatterplotSub = null;
 this.tooltipSub = null;
 
 Deps.autorun(function(){
@@ -22,6 +24,8 @@ Deps.autorun(function(){
     // maybe look at how the routes are being updated ...
 
     var country = Session.get('country');
+    var countryX = Session.get('countryX');
+    var countryY = Session.get('countryY');
     var language = Session.get('language');
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
@@ -44,25 +48,39 @@ Deps.autorun(function(){
             treemapSub.stop();
             treemapSub = null;
         }
+        if( scatterplotSub !== null ){
+            scatterplot.stop();
+            scatterplot = null;
+        }
     }
     else {
         top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
         // Give a handle to this subscription so we can check if it's ready
         treemapSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain);
+        scatterplotSub = Meteor.subscribe("scatterplot_pub", begin, end, langs, countryX, countryY);
         console.log("vizMode: "+vizMode);
         console.log("begin: "+begin);
         console.log("end: "+end);
         console.log("L: "+langs);
         console.log("country: "+country);
+        console.log("countryX: "+countryX);
+        console.log("countryY: "+countryY);
         console.log("language: "+language);
         console.log("domain: "+domain);
 
         Session.set("treemapReady", false);
+        Session.set("scatterplotReady", false);
 
         // Make a throwaway autorun function that listens for the handle being ready
         Deps.autorun(function(c) {
             if (!treemapSub.ready()) return;
             Session.set("treemapReady", true);
+            c.stop(); // Need to do this or will get infinite number of autorun functions
+        });
+
+        Deps.autorun(function(c) {
+            if (!scatterplotSub.ready()) return;
+            Session.set("scatterplotReady", true);
             c.stop(); // Need to do this or will get infinite number of autorun functions
         });
     }

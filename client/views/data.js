@@ -97,6 +97,7 @@ function renderTree(url){
                 .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
                 .attr("dy", ".35em")
                 .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+                .style("fill", "#FFFFFF")
                 .text(function(d) { return d.name + " (" + d.size.toString() + ")";
                 })
                 .style("fill-opacity", 1e-6);

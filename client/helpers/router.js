@@ -115,6 +115,5 @@ Router.configure({
     renderTemplates: {
         'nav': { to: 'nav'}
         , 'footer': { to: 'footer' }
-    },
-    loadingTemplate: 'spinner'
+    }
 });

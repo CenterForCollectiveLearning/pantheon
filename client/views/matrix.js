@@ -1,9 +1,6 @@
-// Template.matrix.destroyed = function() {
-// 	this.handle && this.handle.stop();
-// }
-
 Template.matrix.dataReady = function() {
-    return allpeopleSub.ready()
+    NProgress.inc();
+    return allpeopleSub.ready();
 }
 
 // Utility Functions
@@ -34,24 +31,35 @@ String.prototype.capitalize = function() {
     return this.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
 
-Template.matrix.rendered = function() {
-
-    Deps.autorun(function() {
-        var lastWindowResize = Session.get("touch");
-
-    });
-    // TODO Pull this out of here
-    var matrixProps = {
-        width: $('.page-middle').width() - 30 - 10
-            , height: 2000
-            , headerHeight: 155
-            , margin: {
-                top: 10
-                , right: 10
-                , bottom: 5
-                , left: 30
-            }
+// TODO Pull this out of here
+var matrixProps = {
+    width: 660
+        , height: 2000
+        , headerHeight: 155
+        , margin: {
+            top: 10
+            , right: 10
+            , bottom: 5
+            , left: 30
         }
+    }
+Template.matrix_svg.properties = {
+    headerHeight: matrixProps.headerHeight
+    , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
+    , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
+}
+
+
+Template.matrix_svg.rendered = function() {
+
+    var context = this;
+    if ( this.rendered ) return;
+    this.rendered = true;
+
+    // Visualization width (NOT SVG width)
+    matrixProps.fullWidth = $('.page-middle').width();
+    matrixProps.width = matrixProps.fullWidth - matrixProps.margin.left - matrixProps.margin.right;
+
 
     var fill = d3.scale.linear()
         .domain([0, 1])
@@ -64,26 +72,22 @@ Template.matrix.rendered = function() {
         , c: d3.scale.category10().domain(d3.range(10)) 
     }
 
-    Template.matrix_svg.properties = {
-        headerHeight: matrixProps.headerHeight
-        , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
-        , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
-    }
-
     /* Reactive data! */
     var data = People.find().fetch();
 
-    /* Session variables changing view to same data*/
+    /* Session variables changing view to same data */
     var gender = Session.get('gender');
     var countryOrder_var = Session.get('countryOrder');
     var industryOrder_var = Session.get('industryOrder');
 
     /* SVG Handles */
     var svg = d3.select(this.find("svg.matrix"))
+        .attr("width", matrixProps.fullWidth)
         .append("g")
         .attr("transform", "translate(" + matrixProps.margin.left + "," + 0 + ")");
 
     var header_svg = d3.select(this.find("svg.header"))
+        .attr("width", matrixProps.fullWidth)
         .append("g")
         .attr("transform", "translate(" + matrixProps.margin.left + "," + matrixProps.headerHeight + ")");
 
@@ -210,7 +214,8 @@ Template.matrix.rendered = function() {
         .attr("y", matrixScales.x.rangeBand() / 2)
         .attr("dy", ".32em")
         .attr("text-anchor", "end")
-        .attr("font-size", "9pt")
+        .attr("font-family", "Lato")
+        .attr("font-size", "0.8em")
         .text(function(d, i) { return countries[i]; });
 
         // ENTER + UPDATE
@@ -241,6 +246,9 @@ Template.matrix.rendered = function() {
         .attr("y", matrixScales.y.rangeBand()/ 2)
         .attr("dy", ".32em")
         .attr("text-anchor", "start")
+        .attr("font-family", "Lato")
+        .attr("font-size", "1.2em")
+        .attr("font-weight", 400)
         .text(function(d, i) { return industries[i].capitalize(); });
 
         // Cells
@@ -291,45 +299,6 @@ Template.matrix.rendered = function() {
     function mouseout(p) {
         Session.set("showTooltip", false);
         d3.selectAll("text").classed("active", false);
-    }
-    
-        /* Note that p returns an object with x, y (relevant indices), and z as attributes */
-        function mouseover1(p) {
-
-
-            
-            if(individuals !== undefined) {
-                var suffix = (individuals.length > 1) ? "individuals" : "individual";
-                var html_to_show = "<span>" + country[country_code] + ": " + industry + "</span><br />" + individuals.length + " " + suffix + "<div style='width:100%;border-top:1px solid #cccccc;height:5px;margin-top:6px;'></div>";
-
-                var tooltip_individual_threshold = (individuals.length < 5) ? individuals.length : 5;
-                for (var i = 0; i < tooltip_individual_threshold; i++) {
-                    html_to_show += individuals[i].name + "<span style='font-size:70%'>, " + individuals[i].birthcity + ", " + individuals[i].countryName + "</span><br />";
-                }
-
-                if (individuals.length > tooltip_individual_threshold) {
-                    html_to_show += "<br /><span style='font-size:80%'>(" + (individuals.length - tooltip_individual_threshold) + " more)</span>";
-                }
-
-            // Flip tooltip to left if it overflows window
-            $("#tooltip").html(html_to_show)
-            if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
-                $("#tooltip").show().css("left", (d3.event.pageX + 150) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
-            } else {
-                $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
-            }
-        }
-        else {
-            var suffix = (p.value > 1) ? "individuals" : "individual";
-            var html_to_show = "<span style='font-weight:700;font-size:110%;letter-spacing:2px'>" + p.name + "</span><br />" + p.value + " " + suffix;
-
-            $("#tooltip").html(html_to_show);
-            if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
-                $("#tooltip").show().css("left", (d3.event.pageX + 150) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
-            } else {
-                $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
-            }
-        } 
     }
 
     function countryOrder(value) {

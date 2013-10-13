@@ -1,4 +1,4 @@
-
+// TODO Break this into components (drop the visualizations that aren't needed)
 (function(){
 var vizwhiz = window.vizwhiz || {};
 
@@ -957,11 +957,11 @@ vizwhiz.viz = function() {
     "xaxis_domain": null,
     "xaxis_var": null,
     "xscale": null,
-    "xscale_type": "linear",
+    "xscale_type": "log",  // "linear",
     "yaxis_domain": null,
     "yaxis_var": null,
     "yscale": null,
-    "yscale_type": "linear",
+    "yscale_type": "log",  // "linear",
     "year": null,
     "years": null,
     "year_var": "year",
@@ -1200,10 +1200,11 @@ vizwhiz.viz = function() {
       vars.svg_enter = vars.svg.enter().append("svg")
         .attr('width',vars.svg_width)
         .attr('height',vars.svg_height)
-        
+
       vars.svg_enter.append("rect")
         .attr("id","svgbg")
-        .attr("fill",vars.background)
+        .attr("fill", "#000000")//vars.background)
+        .attr("fill-opacity", 0.5)
         .attr('width',vars.svg_width)
         .attr('height',vars.svg_height)
     
@@ -1570,8 +1571,14 @@ vizwhiz.viz = function() {
     
       nested_data
         .key(function(d){
-//              console.log(vars.attrs[d[vars.id_var]]);
+            if (typeof vars.attrs[d[vars.id_var]][nest_key] == 'undefined') {
+              console.log("INVALID NESTING");
+              console.log(d, vars.id_var, nest_key);
+              console.log(d[vars.id_var]);
+            }
+            if (typeof vars.attrs[d[vars.id_var]][nest_key] !== 'undefined') {
               return vars.attrs[d[vars.id_var]][nest_key][vars.id_var];
+            }
         });
       
       if (i == levels.length-1) {
@@ -1702,7 +1709,7 @@ vizwhiz.viz = function() {
         .attr("x",function(d) { return d.x; })
         .attr("y",function(d) { return d.y+offset; })
         .attr("font-size",font_size)
-        .attr("fill","#333")
+        .attr("fill","#cccccc")
         .attr("text-anchor", "middle")
         .attr("font-family", vars.font)
         .style("font-weight", vars.font_weight)
@@ -2551,15 +2558,15 @@ vizwhiz.viz = function() {
   }
   
   var axis_style = {
-    "font-size": "12px",
+    "font-size": "14px",
     "font-weight": vars.font_weight,
-    "fill": "#888"
+    "fill": "#FFF"
   }
   
   var label_style = {
-    "font-size": "14px",
+    "font-size": "16px",
     "font-weight": vars.font_weight,
-    "fill": "#333",
+    "fill": "#FFF",
     "text-anchor": "middle"
   }
   
@@ -2689,7 +2696,7 @@ vizwhiz.viz = function() {
       .attr("transform", "translate(" + vars.graph.margin.left + "," + vars.graph.margin.top + ")")
 
     vars.chart_enter.append("rect")
-      .style('fill','#fafafa')
+      .style('fill','rgba(0,0,0,0)')
       .attr("id","background")
       .attr('x',0)
       .attr('y',0)
@@ -5084,11 +5091,14 @@ vizwhiz.pie_scatter = function(vars) {
   // Graph setup
   //-------------------------------------------------------------------
   
+  // TODO Adjust domain
   // Create Axes
   vars.x_scale = d3.scale[vars.xscale_type]()
     .domain(vars.xaxis_domain)
     .range([0, vars.graph.width])
     .nice()
+
+    console.log(vars);
   
   vars.y_scale = d3.scale[vars.yscale_type]()
     .domain(vars.yaxis_domain)

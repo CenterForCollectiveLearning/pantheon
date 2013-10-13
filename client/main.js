@@ -86,8 +86,8 @@ var left_sections = [
         url: "/observatory"
     },
     {
-        section: "Ranking",
-        template: "ranking",
+        section: "Rankings",
+        template: "rankings",
         url: "/ranking"
     },
     {
@@ -125,15 +125,14 @@ var right_sections = [
     }
 ]
 
-var sections = left_sections.concat(right_sections);
-
-console.log(sections);
-
 Template.nav.helpers({
-    left_sections: left_sections,
-    right_sections: right_sections,
-    sections: sections
+    left_sections: left_sections
+    , right_sections: right_sections
 })
+
+// Template.nav.rendered = function() {
+//     $('header').css('border-bottom-width', '0px');
+// }
 
 Template.section.helpers({
     selected: function() {
@@ -141,12 +140,20 @@ Template.section.helpers({
     }
 })
 
-// Template.nav.events = {
-//     "mouseenter .main_nav a": function(d) {
-//         $(d.target).css('color', 'white');
-//     },
+Template.spinner.created = function() {
+    NProgress.configure({
+        minimum: 0.2
+        , trickleRate: 0.15
+        , trickleSpeed: 1200
+    })
+    NProgress.start();
+}
 
-//     "mouseleave .main_nav a": function(d) {
-//         $(d.target).css('color', '#cccccc');
-//     },
-// }
+Template.spinner.rendered = function() {
+    $('header').css('border-bottom-width', '0px');
+}
+
+Template.spinner.destroyed = function() {
+    NProgress.done();
+    $('header').css('border-bottom-width', '3px');
+}
