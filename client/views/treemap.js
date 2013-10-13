@@ -1,4 +1,5 @@
 Template.treemap.dataReady = function() {
+    NProgress.inc();
     return Session.get("treemapReady");
 }
 

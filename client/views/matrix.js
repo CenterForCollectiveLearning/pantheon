@@ -1,5 +1,6 @@
 Template.matrix.dataReady = function() {
     NProgress.inc();
+    console.log(allpeopleSub.ready(), People.find().fetch().length)
     return allpeopleSub.ready();
 }
 
@@ -14,6 +15,7 @@ var aggregate = function (obj, values, context) {
     }
     return byFirst;
 };
+
 // Aggregate to bottom level, then sum
 var aggregateCounts = function (obj, values, context) {
     if (!values.length)
@@ -49,9 +51,7 @@ Template.matrix_svg.properties = {
     , fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
 }
 
-
 Template.matrix_svg.rendered = function() {
-
     var context = this;
     if ( this.rendered ) return;
     this.rendered = true;
@@ -77,8 +77,6 @@ Template.matrix_svg.rendered = function() {
 
     /* Session variables changing view to same data */
     var gender = Session.get('gender');
-    var countryOrder_var = Session.get('countryOrder');
-    var industryOrder_var = Session.get('industryOrder');
 
     /* SVG Handles */
     var svg = d3.select(this.find("svg.matrix"))
@@ -105,7 +103,6 @@ Template.matrix_svg.rendered = function() {
 
     var input = aggregateCounts(data, ['countryCode', 'industry', 'gender']);
     var grouped_individuals = aggregate(data, ['countryCode', 'industry']);
-
 
     for (var countryCode in input) {
         for (var industry in input[countryCode]) {
@@ -189,8 +186,17 @@ Template.matrix_svg.rendered = function() {
     };
 
     // Default sort orders
-    matrixScales.x.domain(countryOrders[countryOrder_var]);
-    matrixScales.y.domain(industryOrders[industryOrder_var]);
+    Deps.autorun(function(){
+        var countryOrder_var = Session.get('countryOrder');
+        var industryOrder_var = Session.get('industryOrder');
+        console.log(countryOrders[countryOrder_var]);
+        // matrixScales.x.domain(countryOrders[countryOrder_var]);
+        // matrixScales.y.domain(industryOrders[industryOrder_var]);
+
+        countryOrder(countryOrder_var);
+        industryOrder(industryOrder_var);
+    });
+    
 
     // Rows
     function updateRows(matrix) {
@@ -302,7 +308,9 @@ Template.matrix_svg.rendered = function() {
     }
 
     function countryOrder(value) {
-        matrixScales.x.domain(country_orders[value]);
+        console.log("In: countryOrder");
+        console.log(countryOrders, value, countryOrders[value]);
+        matrixScales.x.domain(countryOrders[value]);
 
         var t = svg.transition().duration(500);
 
@@ -319,7 +327,7 @@ Template.matrix_svg.rendered = function() {
     }
 
     function industryOrder(value) {
-        matrixScales.y.domain(industry_orders[value]);
+        matrixScales.y.domain(industryOrders[value]);
 
         var t = svg.transition().duration(500);
 
