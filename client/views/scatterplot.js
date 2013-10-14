@@ -12,6 +12,15 @@ var scatterplotProps = {
 	height: 560
 };
 
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+
 var color_domain = d3.scale.ordinal()
 .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS"])
 .range(["#ECD078", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#53a9f1", "#79BD9A"]);
@@ -67,35 +76,45 @@ Template.scatterplot_svg.rendered = function() {
 	/*
 	    Flatten data
 	*/
-	for (occ in countryXCounts) {
-		var valX = countryXCounts[occ];
-		var valY = 0.001;
-		// If occ in Y, add in Y value
-		if (countryYCounts.hasOwnProperty(occ)) {
-			valY = countryYCounts[occ];
-		}
-		// Otherwise Y value is 0
-		occCounts[occ] = {
-			x: valX
-			, y: valY
-		}
-	}
-	for (occ in countryYCounts) {
-		var valY = countryYCounts[occ];
-		var valX = 0.001;
-		if (occ == 'EXPLORER') {
-			occ = 'EXPLORER_OCC';
-		}
-		// If occ not in X, add it in
-		if (countryXCounts.hasOwnProperty(occ)) {
-			occCounts[occ]['y'] = valY;
-		} else {
-			occCounts[occ] = {
-				x: valX
-				, y: valY
-			}
+	console.log(countryXCounts, countryYCounts);
+	if (typeof countryXCounts !== 'undefined' && !isEmpty(countryXCounts)) {
+		for (occ in countryXCounts) {
+			var valX = countryXCounts[occ];
+			var valY = 0.001;
+		    // If Y and occ in Y, add in Y value
+		    if (typeof countryYCounts !== 'undefined' && countryYCounts.hasOwnProperty(occ)) {
+		    	valY = countryYCounts[occ];
+		    }
+		    // Otherwise Y value is 0
+		    occCounts[occ] = {
+		    	x: valX
+		    	, y: valY
+		    }
+		    console.log(occCounts[occ]);
 		}
 	}
+	
+	if (typeof countryYCounts !== 'undefined' && !isEmpty(countryYCounts)) {
+    	for (occ in countryYCounts) {
+    		var valY = countryYCounts[occ];
+    		var valX = 0;
+    		if (occ == 'EXPLORER') {
+    			occ = 'EXPLORER_OCC';
+    		}
+    		// If X and occ in X, add it in
+    		if (typeof countryXCounts !== 'undefined' && countryXCounts.hasOwnProperty(occ)) {
+    			occCounts[occ]['y'] = valY;
+    		} else {
+    			occCounts[occ] = {
+    				x: valX
+    				, y: valY
+    			}
+    		}
+    		console.log(occCounts[occ]);
+    	}
+    }
+
+    console.log(occCounts);
 
 	for (var occ in occCounts) {
 		var d = {
@@ -106,10 +125,12 @@ Template.scatterplot_svg.rendered = function() {
 		if (occ == 'EXPLORER') {
 			occ = 'EXPLORER_OCC';
 		}
-		d[countryXName] = occCounts[occ].x
-		d[countryYName] = occCounts[occ].y
-		d['total'] = occCounts[occ].x + occCounts[occ].y
-		data.push(d);                    
+		try {
+			d[countryXName] = occCounts[occ].x
+			d[countryYName] = occCounts[occ].y
+			d['total'] = occCounts[occ].x + occCounts[occ].y
+			data.push(d);                    
+		} catch(e) {}
 	}
 
 	/*

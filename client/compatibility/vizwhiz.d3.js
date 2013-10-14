@@ -3632,10 +3632,12 @@ vizwhiz.stacked = function(vars) {
   var year_extent = vars.year instanceof Array ? vars.year : d3.extent(vars.years)
   
   vars.x_scale = d3.scale[vars.xscale_type]()
+    .clamp(true)  // CHANGED
     .domain(year_extent)
     .range([0, vars.graph.width]);
   // **WARNING reverse scale from 0 - max converts from height to 0 (inverse)
   vars.y_scale = d3.scale[vars.yscale_type]()
+    .clamp(true)  // CHANGED
     .domain([0, data_max])
     .range([vars.graph.height, 0]);
     

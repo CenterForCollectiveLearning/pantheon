@@ -1,4 +1,5 @@
 Template.matrix.dataReady = function() {
+    // TODO Create a real subscription 
     NProgress.inc();
     console.log(allpeopleSub.ready(), People.find().fetch().length)
     return allpeopleSub.ready();
@@ -72,11 +73,7 @@ Template.matrix_svg.rendered = function() {
         , c: d3.scale.category10().domain(d3.range(10)) 
     }
 
-    /* Reactive data! */
     var data = People.find().fetch();
-
-    /* Session variables changing view to same data */
-    var gender = Session.get('gender');
 
     /* SVG Handles */
     var svg = d3.select(this.find("svg.matrix"))
@@ -104,6 +101,16 @@ Template.matrix_svg.rendered = function() {
     var input = aggregateCounts(data, ['countryCode', 'industry', 'gender']);
     var grouped_individuals = aggregate(data, ['countryCode', 'industry']);
 
+
+    Deps.autorun(function(){
+        var gender = Session.get('gender');
+        var from = Session.get('from');
+        var to = Session.get('to');
+        var langs = Session.get('langs');
+        console.log("GENDER", gender);
+
+        console.log(input);
+    
     for (var countryCode in input) {
         for (var industry in input[countryCode]) {
             var f_res = (!isNaN(input[countryCode][industry]['Female'])) ? input[countryCode][industry]['Female'] : 0;
@@ -155,7 +162,6 @@ Template.matrix_svg.rendered = function() {
        inv_matrix[i] = d3.range(country_count).map(function(j) {return {x: i, y: j, z: 0}; });
     });
 
-
     // Convert links to matrix.
     links.forEach(function(link) {
         var country = link["country"];
@@ -185,95 +191,122 @@ Template.matrix_svg.rendered = function() {
         count: d3.range(industry_count).sort(function(a, b) { return d3.descending(industry_counts[a], industry_counts[b]); })
     };
 
-    // Default sort orders
-    Deps.autorun(function(){
-        var countryOrder_var = Session.get('countryOrder');
-        var industryOrder_var = Session.get('industryOrder');
-        console.log(countryOrders[countryOrder_var]);
-        // matrixScales.x.domain(countryOrders[countryOrder_var]);
-        // matrixScales.y.domain(industryOrders[industryOrder_var]);
-
-        countryOrder(countryOrder_var);
-        industryOrder(industryOrder_var);
-    });
-    
+    var countryOrder_var = Session.get('countryOrder');
+    var industryOrder_var = Session.get('industryOrder');
+    countryOrder(countryOrder_var);
+    industryOrder(industryOrder_var);
 
     // Rows
+    // Recompute mapping from country to element and y position of element
     function updateRows(matrix) {
         // DATA JOIN
         var row = svg.selectAll(".row")
-        .data(matrix, function(d, i) { return countries[i]; });
+            .data(matrix, function(d, i) { return countries[i]; });  // Pass in index, bind country name from sorted countries list
+
+        // UPDATE
+        // row.attr("class", "update");
 
         // ENTER
-        // Create new row elements as needed
-        row.enter()
-        .append("g")
-        .attr("class", "row")
-        .attr("transform", function(d, i) { return "translate(0," + matrixScales.x(i) + ")"; });
+        var g = row.enter()
+            .append("g")
+            .attr("class", "row");
         
         row.append("line")
-        .attr("x2", matrixProps.width);
+           .attr("x2", matrixProps.width);
         
-        row.append("text")
-        .attr("class", "row-title")
-        .attr("x", -6)
-        .attr("y", matrixScales.x.rangeBand() / 2)
-        .attr("dy", ".32em")
-        .attr("text-anchor", "end")
-        .attr("font-family", "Lato")
-        .attr("font-size", "0.8em")
-        .text(function(d, i) { return countries[i]; });
+        var text = row.append("text")
+            .attr("class", "row-title")
+            .attr("x", -6)
+            .attr("y", matrixScales.x.rangeBand() / 2)
+            .attr("dy", ".32em")
+            .attr("text-anchor", "end")
+            .attr("font-family", "Lato")
+            .attr("font-size", "0.8em");
 
-        // ENTER + UPDATE
+        // ENTER + Update
+        g.attr("transform", function(d, i) { return "translate(0," + matrixScales.x(i) + ")"; });
+        text.text(function(d, i) { return countries[i]; });
 
         // EXIT
-        row.exit().remove();
+        row.exit()
+            .attr("class", "exit")
+            .transition()
+            .duration(750)
+            .attr("y", 60)
+            .remove();
     }
     
     updateRows(matrix);   
 
+    // TODO be clear what you want
     function updateColumns(inv_matrix){
-        // Columns
-        var column = svg.selectAll(".column")
-        .data(inv_matrix)
-        .enter().append("g")
-        .attr("class", "column")
-        .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
-        .each(column);
-
+        // DATA JOIN
+        var columns = svg.selectAll(".column")
+            .data(inv_matrix);
         var columnTitles = header_svg.selectAll(".column-title")
-        .data(inv_matrix)
+            .data(inv_matrix);
 
-        columnTitles.enter()
-        .append("text")
-        .attr("class", "column-title")
-        .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
-        .attr("x", 6)
-        .attr("y", matrixScales.y.rangeBand()/ 2)
-        .attr("dy", ".32em")
-        .attr("text-anchor", "start")
-        .attr("font-family", "Lato")
-        .attr("font-size", "1.2em")
-        .attr("font-weight", 400)
-        .text(function(d, i) { return industries[i].capitalize(); });
+        // UPDATE
+        // columns.attr("class", "update");
+
+        // ENTER
+        var g = columns.enter().append("g")
+            .attr("class", "column");
+
+        var text = columnTitles.enter().append("text")
+            .attr("class", "column-title")
+            .attr("dy", ".32em")
+            .attr("text-anchor", "start")
+            .attr("font-family", "Lato")
+            .attr("font-size", "1.2em")
+            .attr("font-weight", 400)
+            .attr("x", 6)
+            .attr("y", matrixScales.y.rangeBand()/2);
+
+        // ENTER + UPDATE
+        g.attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; }).each(column);
+        text.text(function(d, i) { return industries[i].capitalize(); });
+        text.attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; });
+
+        // EXIT
+        console.log("EXIT", columns.exit());
+        columns.exit()
+            .attr("class", "exit");
+            // .transition()
+            // .duration(750)
+            // .attr("y", 60)
+            // .remove();
 
         // Cells
         function column(column) {
+            // ENTER
             var cell = d3.select(this).selectAll(".cell")
-            .data(column.filter(function(d) { return d.z; }))
-            .enter().append("rect")
-            .attr("class", "cell")
-            .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); })
-            .attr("width", (Math.round(matrixScales.x.rangeBand()*10)/10) - 0.1)
-            .attr("height", (Math.round(matrixScales.y.rangeBand()*10)/10) - 0.5)
-            .style("fill", function(d) { return fill(d.z); })
-            .on("mousemove", mouseover)
-            .on("mouseout", mouseout);
+                .data(column.filter(function(d) { return d.z; }))
+                
+            var rect = cell.enter().append("rect")
+                .attr("class", "cell")
+                .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); })
+                .attr("width", (Math.round(matrixScales.x.rangeBand()*10)/10) - 0.1)
+                .attr("height", (Math.round(matrixScales.y.rangeBand()*10)/10) - 0.5)
+                .on("mousemove", mouseover)
+                .on("mouseout", mouseout);
+
+            // ENTER + UPDATE
+            rect.style("fill", function(d) { return fill(d.z); });
+
+            // EXIT
+            cell.exit()
+                .attr("class", "exit")
+                .transition()
+                .duration(750)
+                .attr("y", 60)
+                .remove();
         }
     }
 
     updateColumns(inv_matrix);
 
+    // TODO Sort and add percentage
     function mouseover(p) {
         d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
         d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
@@ -308,22 +341,20 @@ Template.matrix_svg.rendered = function() {
     }
 
     function countryOrder(value) {
-        console.log("In: countryOrder");
-        console.log(countryOrders, value, countryOrders[value]);
         matrixScales.x.domain(countryOrders[value]);
 
         var t = svg.transition().duration(500);
 
         t.selectAll(".row")
-        .delay(function(d, i) { return matrixScales.x(i) * 1; })
-        .attr("transform", function(d, i) { return "translate(0," + matrixScales.x(i) + ")"; });
+          .delay(function(d, i) { return matrixScales.x(i) * 1; })
+          .attr("transform", function(d, i) { return "translate(0," + matrixScales.x(i) + ")"; });
 
         t.selectAll(".column")
-        .delay(function(d, i) { return matrixScales.x(i) * 1; })
-        .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
-        .selectAll(".cell")
-        .delay(function(d) { return matrixScales.x(d.x) ; })
-        .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); });
+          .delay(function(d, i) { return matrixScales.x(i) * 1; })
+          .attr("transform", function(d, i) { return "translate(" + matrixScales.y(i) + ")rotate(-90)"; })
+          .selectAll(".cell")
+          .delay(function(d) { return matrixScales.x(d.x) ; })
+          .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); });
     }
 
     function industryOrder(value) {
@@ -343,10 +374,11 @@ Template.matrix_svg.rendered = function() {
         .attr("x", function(d) { return -matrixScales.x(d.y) - matrixScales.x.rangeBand(); });
     }
 
+  });
+
     /* 
      * Legend
      */ 
-
     var colorScale = d3.select(this.find("svg.color-scale"))
         .attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right)
         .attr("height", "30px");
