@@ -227,10 +227,10 @@ Template.treemap_svg.rendered = function() {
             .depth("nesting_3")
             .font("Lato")
             .font_weight(400)
-            .font_color("#FFFFFF")
             .font_size("1.2em")
             .color_var("color");
 
+        console.log(context);
         d3.select(context.find("svg"))
             .datum(flat)
             .call(viz);

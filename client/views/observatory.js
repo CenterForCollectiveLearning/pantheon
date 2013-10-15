@@ -1,14 +1,5 @@
 // Helper methods for observatory page
 
-// Template.observatory.events = {
-//     "mouseenter .page-left, mouseenter .page-right": function(d) {
-//         $(d.target).fadeTo('opacity', 1.0);
-//     },
-//     "mouseleave .page-left, mouseleave .page-right": function(d) {
-//         $(d.target).css('opacity', 0.6);
-//     }
-// }
-
 // Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = function() {
     var type = Session.get("vizType");
@@ -22,6 +13,47 @@ Template.visualization.render_template = function() {
         case "map":
             return new Handlebars.SafeString(Template.map(this));
         }
+}
+
+Template.slider.rendered = function() {
+    // TODO Make all increments equal (make a mapping dictionary?)
+    var values = [-1000, -900, -800, -700, -600, -500, -400, -300, -200, -100, 1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1850, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000];
+    var slider = $(".slider");
+    $(".from").text(Session.get("from"));
+    $(".to").text(Session.get("to"));
+
+    slider.slider({
+        range: true
+        , min: values[0]
+        , max: values[values.length-1]
+        , step: 10
+        , values: [ Session.get("from"), Session.get("to") ]
+        // TODO Combine these two event listeners
+        , stop: function( event, ui ) {
+            // Change routing
+            var from = ui.values[0];
+            var to = ui.values[1];
+            if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
+                var path = window.location.pathname.split('/');
+                path[5] = from;
+                path[6] = to;
+                Router.go(path.join('/'));
+            } else {
+                return false;
+            }
+        }
+        , slide: function( event, ui ) {
+            // Change showing date range
+            var from = ui.values[0];
+            var to = ui.values[1];
+            if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
+                $(".from").text(from);
+                $(".to").text(to);
+            } else {
+                return false;
+            }
+        }
+    });
 }
 
 Template.accordion.rendered = function() {
@@ -132,7 +164,7 @@ Template.question.question = function() {
         case "country_exports":
             return new Handlebars.SafeString("What does " + "<b>" + s_countries + "</b>" + " export?");
         case "country_imports":
-            return new Handlebars.SafeString((Session.get("language") == "all") ? "What does the world import?" : "What do " + "<b>" + s_regions + "</b>" + " speakers import?");
+            return new Handlebars.SafeString((Session.get("language") == "all") ? "What does <b>the world</b> import?" : "What do " + "<b>" + s_regions + "</b>" + " speakers import?");
         case "domain_exports_to":
             return new Handlebars.SafeString("Who exports " + "<b>" + s_domains + "</b>" + "?");
         case "domain_imports_from":
@@ -146,9 +178,9 @@ Template.question.question = function() {
         case "country_vs_country":
             return new Handlebars.SafeString("What does " + "<b>" + s_countryX + "</b>" + " export compared to " + "<b>" + s_countryY + "</b>" + "?");
         case "lang_vs_lang":
-            return "What do " + s_languageX + " speakers export compared to " + s_languageY + " speakers?";
+            return "What do <b>" + s_languageX + "</b> speakers export compared to <b>" + s_languageY + "</b> speakers?";
         case "map":
-            return "Who exports " + s_domains + "?";
+            return "Who exports <b>" + s_domains + "</b>?";
     }
 };
 

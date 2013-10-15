@@ -23,10 +23,14 @@
                         {{> select_mode }}
                     </div>
                 </div>
-                
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
                 {{> tooltip}}
+            </div>
+            <div class="page-bottom row-fluid slider-row">
+                <div class="span8 offset2">
+                    {{> slider}}
+                </div>
             </div>
         </div>
     </div>
@@ -34,6 +38,10 @@
 
 <template name="visualization">
     {{ render_template }}
+</template>
+
+<template name="slider">
+    <div class="slider"></div>
 </template>
 
 <!-- Accordion Selector -->
@@ -59,8 +67,9 @@
         </div>
         <h3 class="app">MATRICES</h3>
         <div>
+            <span class="app_subtitle">Global</span>
             <ul>
-                <li><span><a href="#" id="matrix_exports">World Exports</a></span></li>
+            <li><span><a href="#" id="matrix_exports">Exports</a></span></li>
             </ul>
         </div>
         <h3 class="app">SCATTERPLOTS</h3>

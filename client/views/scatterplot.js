@@ -76,11 +76,14 @@ Template.scatterplot_svg.rendered = function() {
 	/*
 	    Flatten data
 	*/
-	console.log(countryXCounts, countryYCounts);
 	if (typeof countryXCounts !== 'undefined' && !isEmpty(countryXCounts)) {
 		for (occ in countryXCounts) {
 			var valX = countryXCounts[occ];
-			var valY = 0.001;
+			var valY = 0;
+			if (occ == 'EXPLORER') {
+				console.log(occ);
+    			continue;
+    		}
 		    // If Y and occ in Y, add in Y value
 		    if (typeof countryYCounts !== 'undefined' && countryYCounts.hasOwnProperty(occ)) {
 		    	valY = countryYCounts[occ];
@@ -90,7 +93,6 @@ Template.scatterplot_svg.rendered = function() {
 		    	x: valX
 		    	, y: valY
 		    }
-		    console.log(occCounts[occ]);
 		}
 	}
 	
@@ -99,7 +101,8 @@ Template.scatterplot_svg.rendered = function() {
     		var valY = countryYCounts[occ];
     		var valX = 0;
     		if (occ == 'EXPLORER') {
-    			occ = 'EXPLORER_OCC';
+    			console.log(occ);
+    			continue;
     		}
     		// If X and occ in X, add it in
     		if (typeof countryXCounts !== 'undefined' && countryXCounts.hasOwnProperty(occ)) {
@@ -110,11 +113,8 @@ Template.scatterplot_svg.rendered = function() {
     				, y: valY
     			}
     		}
-    		console.log(occCounts[occ]);
     	}
     }
-
-    console.log(occCounts);
 
 	for (var occ in occCounts) {
 		var d = {
@@ -122,9 +122,6 @@ Template.scatterplot_svg.rendered = function() {
 			, active1: true
 			, active2: true
 			, year: 2002};
-		if (occ == 'EXPLORER') {
-			occ = 'EXPLORER_OCC';
-		}
 		try {
 			d[countryXName] = occCounts[occ].x
 			d[countryYName] = occCounts[occ].y
@@ -188,8 +185,6 @@ Template.scatterplot_svg.rendered = function() {
 	inner_html = function(obj) {
 		return "This is some test HTML";
 	}
-
-	console.log(data);
 
 	viz
 	    .type("pie_scatter")

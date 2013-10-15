@@ -882,8 +882,8 @@ vizwhiz.viz = function() {
     "error": "",
     "filter": [],
     "filtered_data": null,
-    "font": "sans-serif",
-    "font_weight": "lighter",
+    "font": "Lato",
+    "font_weight": "400",
     "graph": {"timing": 0},
     "group_bgs": true,
     "grouping": "name",
@@ -3630,10 +3630,10 @@ vizwhiz.stacked = function(vars) {
 
   // scales for both X and Y values
   var year_extent = vars.year instanceof Array ? vars.year : d3.extent(vars.years)
-  
+
   vars.x_scale = d3.scale[vars.xscale_type]()
     .clamp(true)  // CHANGED
-    .domain(year_extent)
+    .domain([year_extent])
     .range([0, vars.graph.width]);
   // **WARNING reverse scale from 0 - max converts from height to 0 (inverse)
   vars.y_scale = d3.scale[vars.yscale_type]()
@@ -5096,16 +5096,18 @@ vizwhiz.pie_scatter = function(vars) {
   // TODO Adjust domain
   // Create Axes
   vars.x_scale = d3.scale[vars.xscale_type]()
+    .clamp(true)  // CHANGED
     .domain(vars.xaxis_domain)
     .range([0, vars.graph.width])
     .nice()
-
-    console.log(vars);
   
-  vars.y_scale = d3.scale[vars.yscale_type]()
+  vars.y_scale = d3.scale[vars.yscale_type]() // CHANGED
+    .clamp(true)
     .domain(vars.yaxis_domain)
     .range([0, vars.graph.height])
     .nice()
+  console.log(vars.y_scale.domain(), vars.y_scale(0), vars.y_scale(10), vars.y_scale(100));
+
 
   if (vars.xscale_type != "log") set_buffer("x")
   if (vars.yscale_type != "log") set_buffer("y")
@@ -5159,7 +5161,9 @@ vizwhiz.pie_scatter = function(vars) {
   nodes.enter().append("g")
     .attr("opacity", 0)
     .attr("class", "circle")
-    .attr("transform", function(d) { return "translate("+vars.x_scale(d[vars.xaxis_var])+","+vars.y_scale(d[vars.yaxis_var])+")" } )
+    .attr("transform", function(d) { 
+      console.log(vars.y_scale(0), vars.y_scale(10), vars.y_scale(100), d[vars.yaxis_var], vars.y_scale.domain(), vars.y_scale.range()) ;
+      return "translate("+vars.x_scale(d[vars.xaxis_var])+","+vars.y_scale(d[vars.yaxis_var])+")" } )
     .each(function(d){
       
       d3.select(this)
