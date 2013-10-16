@@ -22,6 +22,8 @@ Template.map.rendered = function() {
         },
     });
 
+    map.legend();
+
     //TODO:
     // Map two letter to three letter country codes
     // Add selection by domain/industry/occupation

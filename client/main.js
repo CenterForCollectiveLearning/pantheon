@@ -66,6 +66,7 @@ Meteor.startup(function() {
     Session.setDefault('showTooltip', false);
 
     // http://stackoverflow.com/questions/14185248/rerendering-meteor-js-on-window-resize
+    // TODO you should do this via CSS instead of javascript
     $(window).resize(function(evt) {
         Session.set("touch", new Date());
         console.log(Session.get("touch"));

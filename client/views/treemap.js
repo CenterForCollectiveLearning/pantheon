@@ -1,6 +1,6 @@
 Template.treemap.dataReady = function() {
     NProgress.inc();
-    return Session.get("treemapReady");
+    return Session.get("dataReady");
 }
 
 // Green, red, brown, yellow, beige, pink, blue, orange
@@ -227,7 +227,7 @@ Template.treemap_svg.rendered = function() {
             .depth("nesting_3")
             .font("Lato")
             .font_weight(400)
-            .font_size("1.2em")
+            //.font_size("1.2em")
             .color_var("color");
 
         console.log(context);

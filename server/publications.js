@@ -91,12 +91,19 @@ Meteor.publish("top5occupation", function(begin, end, L, country, industry) {
 });
 
 // TODO double check this indexing
-People._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} )
-People._ensureIndex({ countryCode: 1, occupation: 1, birthyear: 1} )
-Imports._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} )
-Imports._ensureIndex({ continentName:1, countryCode: 1, occupation: 1, birthyear: 1} )
-Imports._ensureIndex({ lang_family: 1, lang: 1, occupation: 1, birthyear: 1} )
-Imports._ensureIndex({ category: 1, industry: 1, occupation: 1, birthyear: 1} )
+People._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} );
+People._ensureIndex({ countryCode: 1, occupation: 1, birthyear: 1} );
+
+/*
+ * Need to have a prefix of all the lookups we are going to do
+  * in at least one of the indices below
+ */
+Imports._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} );
+Imports._ensureIndex({ continentName:1, countryCode: 1, occupation: 1, birthyear: 1} );
+Imports._ensureIndex({ lang_family: 1, lang: 1, occupation: 1, birthyear: 1} );
+Imports._ensureIndex({ category: 1, industry: 1, occupation: 1, birthyear: 1} );
+Imports._ensureIndex({ industry: 1} );
+Imports._ensureIndex({ occupation: 1} );
 
 Meteor.publish("scatterplot_pub", function(begin, end, L, countryX, countryY) {
     var sub = this;
@@ -138,7 +145,9 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     };
 
     if (domain.toLowerCase() !== 'all' ) {
-        matchArgs.$or = [{domain :domain.substring(1)}, {industry:domain.substring(1)}, {occupation:domain.substring(1)}];
+        domain = domain.substring(1);
+        // TODO don't include category in this match for pages that are automatically 'all'
+        matchArgs.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
     };
 
     var pipeline = [];
@@ -181,7 +190,7 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
                 count: {$sum: 1 }
             }}
         ];
-        driver.mongo.db.collection("people").aggregate(  //TODO: or count unique en_curid from imports, why is there a difference of one person???
+        driver.mongo.db.collection("people").aggregate(
             pipeline,
             Meteor.bindEnvironment(
                 function(err, result) {
@@ -233,7 +242,60 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
                 }
             )
         );
-    }
-    ;
+    };
+
+});
+
+Meteor.publish("map_pub", function(begin, end, L, domain) {
+/*
+The query will look something like this:
+ db.people.aggregate([{"$match": {"numlangs": {"$gt": 25}, "birthyear": {"$gte": 0, "$lte":1950}, "domain": 'EXPLORATION'}},
+ {"$group": {"_id": {"countryCode": "$countryCode3", "countryName": "$countryName"}, "count": {"$sum": 1 }}}])
+ */
+    var sub = this;
+    var driver = MongoInternals.defaultRemoteCollectionDriver();
+
+    // TODO modify this query to be more general
+
+    var matchArgs = {
+        numlangs: {$gt: L},
+        birthyear: {$gte: begin, $lte:end}
+    };
+
+    if (domain.toLowerCase() !== 'all' ) {
+        domain = domain.substring(1);
+        matchArgs.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
+    };
+
+    var pipeline = [];
+
+    pipeline = [
+        {$match: matchArgs },
+        {$group: {
+            _id: { countryCode: "$countryCode3", countryName: "$countryName"},
+            count: {$sum: 1 }
+        }}
+    ];
+    driver.mongo.db.collection("people").aggregate(
+        pipeline,
+        Meteor.bindEnvironment(
+            function(err, result) {
+
+                _.each(result, function(e) {
+                    // Generate a random disposable id for each aggregate
+                    sub.added("worldmap", Random.id(), {
+                        countryCode: e._id.countryCode,
+                        countryName: e._id.countryName,
+                        count: e.count
+                    });
+                });
+
+                sub.ready();
+            },
+            function(error) {
+                Meteor._debug( "Error doing aggregation: " + error);
+            }
+        )
+    );
 
 });

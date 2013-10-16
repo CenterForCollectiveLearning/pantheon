@@ -29,6 +29,7 @@ var aggregateCounts = function (obj, values, context) {
     return byFirst;
 };
 
+// TODO put this function somewhere like a library, not randomly in this code.
 String.prototype.capitalize = function() {
     // Match letters at beginning of string or after white space character
     return this.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });

@@ -3,26 +3,24 @@ Meteor.subscribe("countries_pub");
 Meteor.subscribe("languages_pub");
 Meteor.subscribe("domains_pub");
 
-
 // These subscriptions are explicitly global variables
-this.allpeopleSub = Meteor.subscribe("allpeople");
-
+allpeopleSub = Meteor.subscribe("allpeople");
 
 // These are client only collections
 PeopleTop10 = new Meteor.Collection("top10people");
 Treemap = new Meteor.Collection("treemap");
 Scatterplot = new Meteor.Collection("scatterplot");
+WorldMap = new Meteor.Collection("worldmap");
 Tooltips = new Meteor.Collection("mouseoverCollection");
 
-this.top10Sub = null;
-this.treemapSub = null;
-this.scatterplotSub = null;
-this.tooltipSub = null;
+var top10Sub = null;
+var dataSub = null;
+var tooltipSub = null;
 
+/*
+Subscription for the current data that is being visualized
+ */
 Deps.autorun(function(){
-    // TODO this only works for exports right now
-    // maybe look at how the routes are being updated ...
-
     var country = Session.get('country');
     var countryX = Session.get('countryX');
     var countryY = Session.get('countryY');
@@ -37,27 +35,54 @@ Deps.autorun(function(){
     var occ = Session.get('occ');
     var vizMode = Session.get('vizMode');
 
-    // TODO this is causing a double subscription, fix me
-
+    /*
+        TODO this is probably not the right way to check if no data should be loaded.
+        Do something more robust.
+      */
     if( !country || !begin || !end || !langs ) {
-        if( top10Sub !== null ) {
-            top10Sub.stop();
-            top10Sub = null;
-        }
-        if( treemapSub !== null ){
-            treemapSub.stop();
-            treemapSub = null;
-        }
-        if( scatterplotSub !== null ){
-            scatterplot.stop();
-            scatterplot = null;
-        }
+        /*
+         Do nothing:
+
+         It's not necessary to track/stop subscriptions (i.e. those below)
+          that are called inside an autorun computation.
+         See http://docs.meteor.com/#meteor_subscribe
+
+         We verified this by going from map to treemap back to map while checking
+          the PeopleTop10 collection on the client. it goes from 0 -> 10 -> 0.
+         */
     }
     else {
-        top10sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
+        Session.set("dataReady", false);
+        // This gets passed to the subscriptions to indicate when data is ready
+        var onReady = function() {
+            Session.set("dataReady", true);
+        };
+
         // Give a handle to this subscription so we can check if it's ready
-        treemapSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain);
-        scatterplotSub = Meteor.subscribe("scatterplot_pub", begin, end, langs, countryX, countryY);
+        switch(vizMode) {
+            // Treemap modes
+            case "country_imports":
+            case "country_exports":
+            case "bilateral_exporters_of":
+            case "domain_exports_to":
+            case "domain_imports_from":
+            case "bilateral_importers_of":
+                top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
+                dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain, onReady);
+                break;
+            // Scatterplot modes
+            case "country_vs_country":
+            case "lang_vs_lang":
+                dataSub = Meteor.subscribe("scatterplot_pub", begin, end, langs, countryX, countryY, onReady);
+                break;
+            // Map modes
+            case "map":
+                dataSub = Meteor.subscribe("map_pub", begin, end, langs, domain, onReady);
+                break;
+            default:
+                console.log("Unsupported vizMode");
+        }
+
         console.log("vizMode: "+vizMode);
         console.log("begin: "+begin);
         console.log("end: "+end);
@@ -67,28 +92,12 @@ Deps.autorun(function(){
         console.log("countryY: "+countryY);
         console.log("language: "+language);
         console.log("domain: "+domain);
-
-        Session.set("treemapReady", false);
-        Session.set("scatterplotReady", false);
-
-        // Make a throwaway autorun function that listens for the handle being ready
-        Deps.autorun(function(c) {
-            if (!treemapSub.ready()) return;
-            Session.set("treemapReady", true);
-            c.stop(); // Need to do this or will get infinite number of autorun functions
-        });
-
-        Deps.autorun(function(c) {
-            if (!scatterplotSub.ready()) return;
-            Session.set("scatterplotReady", true);
-            c.stop(); // Need to do this or will get infinite number of autorun functions
-        });
     }
-
 });
 
-
-
+/*
+ Subscription for tooltips on hover
+  */
 Deps.autorun(function() {
     var industry = Session.get("tooltipIndustry");
 

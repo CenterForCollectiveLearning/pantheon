@@ -1,8 +1,8 @@
 // TODO Why is scatterplot.rendered running if this is not ready?
 Template.scatterplot.dataReady = function() {
-	console.log(Session.get("scatterplotReady"));
+	console.log(Session.get("dataReady"));
 	console.log(Scatterplot.find().fetch().length);
-    return Session.get("scatterplotReady");
+    return Session.get("dataReady");
 }
 
 // TODO Namespace these
