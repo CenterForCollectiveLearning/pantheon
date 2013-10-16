@@ -1,9 +1,9 @@
-Template.ranking.rendered = function() {
+Template.ranking_table.rendered = function() {
     //initializations
     // $("select, input, a.button, button").uniform();
 
     $('#ranking').dataTable({
-        "iDisplayLength": 200,
+        "iDisplayLength": 25,
         "fnDrawCallback": function ( oSettings ) {
             var that = this;
             // Redo for sorted AND filtered...
@@ -23,4 +23,26 @@ Template.ranking.rendered = function() {
     });
 
     // $.uniform.update();
+}
+
+Template.ranking_accordion.rendered = function() {
+
+    // TODO Make such mappings global...or do something about it
+    var mapping = {
+        "treemap": 0,
+        "matrix": 1,
+        "scatterplot": 2,
+        "map": 3
+    }
+
+    var accordion = $(".accordion");
+
+    accordion.accordion({
+        active: mapping[Session.get("vizType")],
+        collapsible: false,
+        heightStyle: "content",
+        fillSpace: false
+    });
+
+    accordion.accordion("resize");
 }
