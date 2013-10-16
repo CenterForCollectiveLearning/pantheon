@@ -25,7 +25,6 @@ Template.map.rendered = function() {
     map.legend();
 
     //TODO:
-    // Map two letter to three letter country codes
     // Add selection by domain/industry/occupation
     // Get country data (by domain/industry/occupation, begin, end, langs)
     // Set color fill gradient

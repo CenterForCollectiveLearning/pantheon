@@ -96,6 +96,7 @@ Template.treemap_svg.rendered = function() {
         viz
             .type("tree_map")
     //        .dev(true)
+            .tooltip_info({})
             .width($('.page-middle').width())
             .height($('.page-middle').height())
             .id_var("id")
@@ -155,6 +156,7 @@ Template.treemap_svg.rendered = function() {
         viz
             .type("tree_map")
             //        .dev(true)
+            .tooltip_info({})
             .width($('.page-middle').width())
             .height($('.page-middle').height())
             .id_var("id")
@@ -216,6 +218,7 @@ Template.treemap_svg.rendered = function() {
         viz
             .type("tree_map")
             //        .dev(true)
+            .tooltip_info({})
             .width($('.page-middle').width())
             .height($('.page-middle').height())
             .id_var("id")
