@@ -1,7 +1,7 @@
 Template.matrix.dataReady = function() {
     // TODO Create a real subscription 
     NProgress.inc();
-    console.log(allpeopleSub.ready(), People.find().fetch().length)
+    console.log(allpeopleSub.ready(), People.find().fetch().length);
     return allpeopleSub.ready();
 }
 
@@ -47,6 +47,7 @@ var matrixProps = {
             , left: 30
         }
     }
+
 Template.matrix_svg.properties = {
     headerHeight: matrixProps.headerHeight
     , fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
@@ -55,8 +56,14 @@ Template.matrix_svg.properties = {
 
 Template.matrix_svg.rendered = function() {
     var context = this;
-    if ( this.rendered ) return;
-    this.rendered = true;
+    var timing = 600;
+
+    // TODO Don't rerender if already rendered
+    // if ( this.rendered ) {
+    //     console.log("RENDERED", this.rendered);
+    //     return;
+    // }
+    // this.rendered = true;
 
     // Visualization width (NOT SVG width)
     matrixProps.fullWidth = $('.page-middle').width();
@@ -79,13 +86,18 @@ Template.matrix_svg.rendered = function() {
     /* SVG Handles */
     var svg = d3.select(this.find("svg.matrix"))
         .attr("width", matrixProps.fullWidth)
-        .append("g")
+      .append("g")
         .attr("transform", "translate(" + matrixProps.margin.left + "," + 0 + ")");
 
     var header_svg = d3.select(this.find("svg.header"))
         .attr("width", matrixProps.fullWidth)
         .append("g")
         .attr("transform", "translate(" + matrixProps.margin.left + "," + matrixProps.headerHeight + ")");
+
+    svg.transition().duration(timing)
+        .attr("width", matrixProps.fullWidth);
+
+    header_svg.transition().duration(timing);
 
     /* Initializing Data Containers */
     var matrix = [];  // matrix mapping countries to industries
@@ -336,6 +348,18 @@ Template.matrix_svg.rendered = function() {
             Session.set("tooltipPeople", individuals);
             Session.set("showTooltip", true);
         }
+        Session.set("showTooltip", true);
+
+        Template.tooltip.position = position;
+        Template.tooltip.individuals = individuals;
+        Template.tt_list.categoryA = Countries.findOne({countryCode: country_code}).countryName;
+        Template.tt_list.categoryB = industry;
+        if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
+            $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
+        } else {
+            $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
+        }        
+        $("#tooltip").show()       
     }
 
     function mouseout(p) {

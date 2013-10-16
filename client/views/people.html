@@ -1,14 +1,38 @@
 <template name="people">
-	<div class="page-top"></div>
-	<div class="page-middle trans-bg">
-		<section class="person-header">
-			<div class="name"><h2>{{person}}</h2></div>
-			<div class="contribute">Contribute</div>
-		</section>
-		<section class="description">
-			Born {{birthdate}} in {{birthplace}}, {{gender}} was a {{occupation}} featured in {{num_langs}} with {{page_views}}, averaging {{avg_page_views}} in this top 25 languages.
-		</section>
-		<section class="ranking">
-		</section>
+	{{#if dataReady}}
+    	{{#with person}}
+    	    {{> person}}
+    	{{/with}}
+	{{else}}
+	    {{> spinner}}
+	{{/if}}     
+</template>
+
+<template name="person">
+	<div class="page-top">
+		<div class="primary-text name">
+			{{>person_name}}
+		</div>
+	</div>
+	<div id="page" class="container-fluid person-page">
+		<div class="row-fluid">
+			<div class="page-middle trans-bg text span6 offset3">
+				<section class="description">
+					Born {{birthyear}} in {{birthcity}}, {{countryName}} {{gender}} was a {{occupation}} featured in {{numlangs}} language editions.
+				</section>
+				<section class="ranking">
+				</section>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="person_name">
+	{{inputAutocomplete settings id="msg" class="primary-text input-xlarge" placeholder="Chat..."}}
+</template>
+
+<template name="user_pill">
+	<div class="primary-text name">
+	    {{name}}
 	</div>
 </template>

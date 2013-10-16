@@ -25,6 +25,8 @@ Deps.autorun(function(){
     var countryX = Session.get('countryX');
     var countryY = Session.get('countryY');
     var language = Session.get('language');
+    var languageX = Session.get('languageX');
+    var languageY = Session.get('languageY');
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
@@ -73,7 +75,7 @@ Deps.autorun(function(){
             // Scatterplot modes
             case "country_vs_country":
             case "lang_vs_lang":
-                dataSub = Meteor.subscribe("scatterplot_pub", begin, end, langs, countryX, countryY, onReady);
+                dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, occ, onReady);
                 break;
             // Map modes
             case "map":
@@ -90,6 +92,8 @@ Deps.autorun(function(){
         console.log("country: "+country);
         console.log("countryX: "+countryX);
         console.log("countryY: "+countryY);
+        console.log("languageX: "+languageX);
+        console.log("languageY: "+languageY);
         console.log("language: "+language);
         console.log("domain: "+domain);
     }

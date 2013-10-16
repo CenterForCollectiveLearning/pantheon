@@ -92,6 +92,11 @@ Router.map(function() {
         }
     });
     this.route('people', {
+        data: function() { 
+            Session.set('page', this.template);
+        }
+    });
+    this.route('people', {
         path: '/people/:person',
         data: function() { 
             Session.set('page', this.template);

@@ -228,6 +228,10 @@ header {
     		font-weight: 500;
     	}
     }
+
+    .name {
+    	text-transform: capitalize;
+    }
 }
 
 #page {
@@ -312,17 +316,6 @@ header {
 	    	}
 	    }
 
-		// People page
-		.person-header {
-			padding-bottom: 4em;
-			div.name {
-				float: left;
-			}
-
-			div.contribute {
-				float: right;
-			}
-		}
 		.description {
 			clear: both;
 		}
@@ -334,6 +327,17 @@ header {
 		@include no-select;
 		float: right;
 		&:hover { @include opacity(1.0); }
+	}
+}
+
+// People page
+.name {
+	input {
+		background-color: transparent;
+		:focus {
+			outline: 0 none;
+			box-shadow: none;
+		}
 	}
 }
 

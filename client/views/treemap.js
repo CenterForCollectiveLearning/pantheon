@@ -32,8 +32,8 @@ Template.treemap_svg.rendered = function() {
 
     // Don't re-render with the same parameters...?
     var context = this;
-    if( this.rendered ) return;
-    this.rendered = true;
+    // if( this.rendered ) return;
+    // this.rendered = true;
     var viz = vizwhiz.viz() ;
     var data = Treemap.find().fetch();
     console.log("UNFLATTENED DATA:")

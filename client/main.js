@@ -23,8 +23,8 @@ this.defaults = {
     , countryX: 'US'
     , countryY: 'RU'
     , language: 'all'
-    , languageX: 'en'
-    , languageY: 'fr'
+    , languageX: 'all'
+    , languageY: 'all'
     , domain: 'all'
     , from: '-1000'
     , to: '1950'
@@ -71,6 +71,14 @@ Meteor.startup(function() {
         Session.set("touch", new Date());
         console.log(Session.get("touch"));
     });
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44888546-1', 'mit.edu');
+  ga('send', 'pageview');
 });
 
 // Select sections based on template
