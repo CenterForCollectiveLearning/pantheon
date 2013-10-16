@@ -308,7 +308,10 @@ Template.matrix_svg.rendered = function() {
     updateColumns(inv_matrix);
 
     // TODO Sort and add percentage
+    var mouseoverCell = null;
+
     function mouseover(p) {
+        // TODO you shouldn't iterate over the entire matrix just to highlight one cell.
         d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
         d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
 
@@ -316,28 +319,28 @@ Template.matrix_svg.rendered = function() {
         var industry = industries[p.x];
         var individuals = grouped_individuals[country_code][industry];
 
-        // TODO Why cant we set tooltip position like this
         var position = {
-            "left": d3.event.pageX + 40 + "px"
-            , "top": d3.event.pageY - 45 + "px"
+            "left": (d3.event.pageX + 40),
+            "top": (d3.event.pageY - 45)
         }
+        Session.set("tooltipPosition", position);
 
-        Session.set("showTooltip", true);
-
-        Template.tooltip.position = position;
-        Template.tooltip.individuals = individuals;
-        Template.tt_list.categoryA = country[country_code];
-        Template.tt_list.categoryB = industry;
-        if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
-            $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
-        } else {
-            $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
-        }        
-        $("#tooltip").show()       
+        if ( p === mouseoverCell ) {
+            // Don't re-render the rest of the list
+            return;
+        }
+        else {
+            // Draw tooltip
+            mouseoverCell = p;
+            Session.set("tooltipHeading", country[country_code] + ": " + industry);
+            Session.set("tooltipPeople", individuals);
+            Session.set("showTooltip", true);
+        }
     }
 
     function mouseout(p) {
         Session.set("showTooltip", false);
+        mouseoverCell = null;
         d3.selectAll("text").classed("active", false);
     }
 

@@ -187,8 +187,20 @@ Template.question.question = function() {
 /*
  * TOOLTIPS
  */
-Template.tooltip.tooltip = function() {
+Template.tooltip.tooltipShown = function() {
     return Session.get("showTooltip");
+}
+
+Template.tooltip.position = function() {
+    return Session.get("tooltipPosition");
+}
+
+Template.tooltip.individuals = function() {
+    return Session.get("tooltipPeople");
+};
+
+Template.tt_list.heading = function() {
+    return Session.get("tooltipHeading");
 }
 
 Template.tt_list.count = function() {

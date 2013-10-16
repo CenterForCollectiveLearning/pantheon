@@ -3,9 +3,9 @@
         <div id="viz" class="map">
             {{#if dataReady}}
             {{> map_svg}}
-            <div class="scale">
-                <svg class="color-scale"></svg>
-            </div>
+
+            {{! TODO: here render the color scale with meteor }}
+
             {{else}}
             {{> spinner}}
             {{/if}}
@@ -13,6 +13,5 @@
 </template>
 
 <template name="map_svg">
-    <div id="geomap" width="{{properties.width}}" height="{{properties.height}}"></div>
-    <div id="container" style="position: relative; width: 800px; height: 540px;"></div>
+    <svg width="960" height="480"></svg>
 </template>

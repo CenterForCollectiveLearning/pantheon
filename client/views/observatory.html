@@ -126,16 +126,16 @@
 
 <!-- Tooltips -->
 <template name="tooltip">
-    {{#if tooltip}}
-        <div id="tooltip" top="{{position.top}}" left="{{position.left}}">
-            {{>tt_list individuals}}
+    {{#if tooltipShown}}
+        <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
+            {{> tt_list individuals}}
         </div>
     {{/if}}
 </template>
 
 <template name="tt_list">
     <span class="category">
-        {{categoryA}}: {{categoryB}}
+        {{heading}}
     </span><br />
     {{count}} {{suffix}}
     <div class="list">
