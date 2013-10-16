@@ -178,9 +178,9 @@ Template.question.question = function() {
         case "country_vs_country":
             return new Handlebars.SafeString("What does " + "<b>" + s_countryX + "</b>" + " export compared to " + "<b>" + s_countryY + "</b>" + "?");
         case "lang_vs_lang":
-            return "What do <b>" + s_languageX + "</b> speakers export compared to <b>" + s_languageY + "</b> speakers?";
+            return new Handlebars.SafeString("What do <b>" + s_languageX + "</b> speakers export compared to <b>" + s_languageY + "</b> speakers?");
         case "map":
-            return "Who exports <b>" + s_domains + "</b>?";
+            return new Handlebars.SafeString("Who exports <b>" + s_domains + "</b>?");
     }
 };
 

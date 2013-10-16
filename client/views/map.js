@@ -156,9 +156,9 @@ function mouseover(d){
 
         var args = {
             numlangs: {$gt: +Session.get("langs")},
-            // TODO: put proper begin and end shit shit shit shit
+            // TODO: put proper begin and end
             birthyear: {$gte: 0, $lte: 2000},
-            // TODO: get rid of this shit because I have no idea which one has the random fucking space
+            // TODO: countryCode3 has spaces.... 
             countryCode3: doc.countryCode
         };
 
