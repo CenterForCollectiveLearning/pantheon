@@ -158,7 +158,7 @@ function mouseover(d){
             numlangs: {$gt: +Session.get("langs")},
             // TODO: put proper begin and end
             birthyear: {$gte: 0, $lte: 2000},
-            // TODO: countryCode3 has spaces.... 
+            // TODO: countryCode3 has spaces....
             countryCode3: doc.countryCode
         };
 
