@@ -29,10 +29,9 @@ Template.ranking_accordion.rendered = function() {
 
     // TODO Make such mappings global...or do something about it
     var mapping = {
-        "treemap": 0,
-        "matrix": 1,
-        "scatterplot": 2,
-        "map": 3
+        "countries": 0,
+        "people": 1,
+        "domains": 2
     }
 
     var accordion = $(".accordion");
