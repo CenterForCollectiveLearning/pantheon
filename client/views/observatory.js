@@ -20,6 +20,12 @@ Template.sharing_options.rendered = function() {
     }
 }
 
+// Re-render visualization template on window resize
+Template.visualization.resize = function() {
+    console.log(Session.get("resize"));
+    Session.get("resize");
+}
+
 // Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = function() {
     var type = Session.get("vizType");
@@ -214,7 +220,7 @@ Template.question.question = function() {
     var mode = Session.get("vizMode");
     switch (mode) {
         case "country_exports":
-            return new Handlebars.SafeString("What does " + boldify(s_countries) + " export?");
+            return new Handlebars.SafeString("What are the cultural exports of " + boldify(s_countries) + "?");
         case "country_imports":
             return new Handlebars.SafeString((Session.get("language") == "all") ? "What does " + boldify("the world") + " import?" : "What do " + boldify(s_regions) + " speakers import?");
         case "domain_exports_to":

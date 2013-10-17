@@ -27,9 +27,9 @@ Template.publications.rendered = function() {
 	console.log("RENDERING PUBLICATIONS TEMPLATE");
 
 	// TODO How do you get this to re-run?
-    $.cachedScript('http://www.readrboard.com/static/engage.js').done(function() {
-        console.log( "Received Script" );
-    });
+    // $.cachedScript('http://www.readrboard.com/static/engage.js').done(function() {
+    //     console.log( "Received Script" );
+    // });
 
     var scrollToSection = function (section) {
         if (! $(section).length)
