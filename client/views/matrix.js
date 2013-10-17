@@ -1,10 +1,3 @@
-Template.matrix.dataReady = function() {
-    // TODO Create a real subscription 
-    NProgress.inc();
-    console.log(allpeopleSub.ready(), People.find().fetch().length);
-    return allpeopleSub.ready();
-}
-
 // Utility Functions
 var aggregate = function (obj, values, context) {
     if (!values.length)
@@ -81,7 +74,9 @@ Template.matrix_svg.rendered = function() {
         , c: d3.scale.category10().domain(d3.range(10)) 
     }
 
-    var data = People.find().fetch();
+    var data = Matrix.find().fetch();
+
+    console.log(data);
 
     /* SVG Handles */
     var svg = d3.select(this.find("svg.matrix"))
@@ -371,7 +366,7 @@ Template.matrix_svg.rendered = function() {
     function countryOrder(value) {
         matrixScales.x.domain(countryOrders[value]);
 
-        var t = svg.transition().duration(500);
+        var t = svg.transition().duration(300);
 
         t.selectAll(".row")
           .delay(function(d, i) { return matrixScales.x(i) * 1; })
@@ -388,7 +383,7 @@ Template.matrix_svg.rendered = function() {
     function industryOrder(value) {
         matrixScales.y.domain(industryOrders[value]);
 
-        var t = svg.transition().duration(500);
+        var t = svg.transition().duration(300);
 
         t.selectAll(".row")
         .delay(function(d, i) { return matrixScales.x(i) * 1; })

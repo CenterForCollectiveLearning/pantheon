@@ -39,6 +39,7 @@ Template.slider.rendered = function() {
     // TODO Make all increments equal (make a mapping dictionary?)
     var values = [-1000, -900, -800, -700, -600, -500, -400, -300, -200, -100, 1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1850, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000];
     var slider = $(".slider");
+    console.log(Session.get("from"), Session.get("to"));
     $(".from").text(Session.get("from"));
     $(".to").text(Session.get("to"));
 
@@ -177,6 +178,23 @@ Template.question.question = function() {
     var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
     var speakers_or_no_speakers = (Session.get("language") == "all") ? "" : " speakers";
 
+    var gender;
+    var gender_var = Session.get("gender");
+    switch (gender_var) {
+        case "both":
+            gender = 'men and women';
+            break;
+        case "male":
+            gender = 'men';
+            break;
+        case "female":
+            gender = 'women';
+            break;
+        case "ratio":
+            gender = 'ratio of women to men';
+            break;
+    }
+
     if(s_domains.charAt(0) == "-") {
         console.log(s_domains.charAt(s_domains.length-1));
         if(s_domains.charAt(s_domains.length-1) == "y")
@@ -208,7 +226,7 @@ Template.question.question = function() {
         case "bilateral_importers_of":
             return new Handlebars.SafeString("Where does " + boldify(s_countries) + " export " + boldify(s_domains) + " to?");
         case "matrix_exports":
-            return new Handlebars.SafeString("What does " + boldify(s_countries) + " export?");
+            return new Handlebars.SafeString("What " + boldify(gender) + " does " + boldify(s_countries) + " export?");
         case "country_vs_country":
             return new Handlebars.SafeString("What does " + boldify(s_countryX) + " export compared to " + boldify(s_countryY) + "?");
         case "lang_vs_lang":

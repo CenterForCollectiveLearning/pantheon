@@ -83,12 +83,35 @@ Meteor.publish("allpeople", function() {
     // No stop needed here
 });
 
+People._ensureIndex({ numlangs: 1, birthyear: 1, gender: 1});
+
+// Make sure this is indexed
+Meteor.publish("matrix_pub", function(begin, end, L, gender) {
+    var sub = this;
+
+    var args = {
+        numlangs: {$gt: L}
+        , birthyear: {$gte: begin, $lte: end}
+    }
+
+    if (gender === 'male' || gender === 'female') {
+        var query = gender.charAt(0).toUpperCase() + gender.slice(1);
+        args.gender = query;
+    }
+
+    People.find(args).forEach(function(person) {
+        sub.added("matrix", person._id, person)
+    });
+
+    sub.ready();
+});
+
 /*
 Also a static query
 does not send over anything other than the people ids,
 because the whole set of people already exists client side
 */
-Meteor.publish("top5occupation", function(begin, end, L, country, industry) {
+Meteor.publish("top5occupation", function(begin, end, L, country, industry, gender) {
     var sub = this;
     var args = getCountryExportArgs(begin, end, L, country);
     args.industry = industry;
@@ -125,6 +148,9 @@ function aggregateCounts(sub, driver, matchArgs) {
    
 }
 
+Imports._ensureIndex({ countryCode: 1, numlangs: 1, birthyear: 1}, {background: true});
+
+// TODO Reduce redundance
 Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, countryY, languageX, languageY) {
     var sub = this;
     var driver = MongoInternals.defaultRemoteCollectionDriver();
@@ -136,16 +162,17 @@ Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, cou
 
     var pipeline = [];
 
-
     var field;
     if (vizMode === 'country_vs_country') {
         matchArgs.$or = [{countryCode: countryX}, {countryCode: countryY}];
-        pipeline = [
+        pipeline = 
+        [
             { $match: matchArgs },
-            {"$group": { _id: {countryCode:"$countryCode", domain: "$category", industry: "$industry", occupation: "$occupation"},
-            "people": { "$addToSet": '$en_curid'}}},
-            {"$unwind":"$people"},{"$group": { "_id": "$_id", "count": { "$sum":1} }}
-            ];
+            {"$group": { _id: {countryCode: "$countryCode", domain: "$category", industry: "$industry", occupation: "$occupation"},
+                "people": { "$addToSet": '$en_curid'}}},
+            {"$unwind": "$people"},
+            {"$group": { "_id": "$_id", "count": { "$sum": 1} }}
+        ];
         driver.mongo.db.collection("imports").aggregate(
             pipeline,
             Meteor.bindEnvironment(
@@ -201,6 +228,8 @@ Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, cou
        
 });
 
+Imports._ensureIndex({birthyear: 1, numlangs: 1});
+
 /*
  * Static query that pushes the treemap structure
  * This needs to run a native mongo query due to aggregates being not supported directly yet
@@ -233,6 +262,7 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     var pipeline = [];
 
     if(vizMode === 'country_exports' || vizMode === 'country_imports' || vizMode === 'bilateral_exporters_of'){
+        console.log(matchArgs);
         pipeline = [
             { $match: matchArgs },
             {"$group": { _id: {domain: "$category", industry: "$industry", occupation: "$occupation"},

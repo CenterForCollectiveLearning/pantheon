@@ -9,6 +9,7 @@ allpeopleSub = Meteor.subscribe("allpeople");
 // These are client only collections
 PeopleTop10 = new Meteor.Collection("top10people");
 Treemap = new Meteor.Collection("treemap");
+Matrix = new Meteor.Collection("matrix");
 Scatterplot = new Meteor.Collection("scatterplot");
 WorldMap = new Meteor.Collection("worldmap");
 Tooltips = new Meteor.Collection("mouseoverCollection");
@@ -31,6 +32,7 @@ Deps.autorun(function(){
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
     var domain = Session.get('domain');
+    var gender = Session.get('gender');
     if(domain){
         domain = domain.toUpperCase();
     }
@@ -73,6 +75,11 @@ Deps.autorun(function(){
                 top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
                 dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain, onReady);
                 break;
+            // Matrix modes
+            case "matrix_exports":
+            console.log("IN MATRIX EXPORTS")
+                dataSub = Meteor.subscribe("matrix_pub", begin, end, langs, gender, onReady);
+                break
             // Scatterplot modes
             case "country_vs_country":
             case "lang_vs_lang":
@@ -97,6 +104,7 @@ Deps.autorun(function(){
         console.log("languageY: "+languageY);
         console.log("language: "+language);
         console.log("domain: "+domain);
+        console.log("gender: "+gender);
     }
 });
 
