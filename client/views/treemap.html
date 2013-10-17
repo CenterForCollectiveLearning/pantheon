@@ -5,6 +5,7 @@
             {{#if dataReady}}
                 {{> treemap_svg}}
             {{else}}
+                {{! TODO Place this spinner somewhere central}}
                 {{> spinner}}
             {{/if}}
 	    </div>
@@ -22,7 +23,9 @@
     </div>
 
     <div class="page-right span2">
-    	{{> ranked_list }}
+        {{#if initialDataReady}}
+    	    {{> ranked_list }}
+        {{/if}}
     </div>
 </template>
 

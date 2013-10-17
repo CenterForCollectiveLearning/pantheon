@@ -1,7 +1,3 @@
-Template.treemap.dataReady = function() {
-    return Session.get("dataReady");
-}
-
 // Green, red, brown, yellow, beige, pink, blue, orange
 
 var color_domains = d3.scale.ordinal()

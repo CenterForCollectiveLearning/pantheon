@@ -9,26 +9,9 @@
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="page-left span2">
-                    <div class="viz-selector">
-                        <div class="section-header">
-                            Visualizations
-                        </div>
-                        {{> accordion}}
-                    </div>
-                    <div class="spacer"></div>
-                    <div class="viz-options">
-                        <div id="parameters" class="section-header">
-                            Parameters
-                        </div>
-                        {{> select_mode }}
-                    </div>
-                    <div class="spacer"></div>
-                    <div class="Share">
-                        <div id="share" class="section-header">
-                            Share
-                        </div>                      
-                        {{> sharing_options}}
-                    </div>
+                    {{#if initialDataReady}}
+                        {{> observatory_options}}
+                    {{/if}}
                 </div>
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
@@ -36,7 +19,9 @@
             </div>
             <div class="page-bottom row-fluid slider-row">
                 <div class="span8 offset2">
-                    {{> slider}}
+                    {{#if initialDataReady}}
+                        {{> slider}}
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -48,6 +33,29 @@
     <div class="sharing_options">
         <div class="g-plus" data-action="share" data-height="15"></div>
         <a href="https://twitter.com/share" class="twitter-share-button" data-text="The Observatory of Global Culture">Tweet</a>
+    </div>
+</template>
+
+<template name="observatory_options">
+    <div class="viz-selector">
+        <div class="section-header">
+            Visualizations
+        </div>
+        {{> accordion}}
+    </div>
+    <div class="spacer"></div>
+    <div class="viz-options">
+        <div id="parameters" class="section-header">
+            Parameters
+        </div>
+        {{> select_mode }}
+    </div>
+    <div class="spacer"></div>
+    <div class="Share">
+        <div id="share" class="section-header">
+            Share
+        </div>                      
+        {{> sharing_options}}
     </div>
 </template>
 

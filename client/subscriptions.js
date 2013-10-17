@@ -58,6 +58,7 @@ Deps.autorun(function(){
         // This gets passed to the subscriptions to indicate when data is ready
         var onReady = function() {
             Session.set("dataReady", true);
+            Session.set("initialDataReady", true);
         };
 
         // Give a handle to this subscription so we can check if it's ready

@@ -135,6 +135,15 @@ Template.accordion.events = {
     }
 }
 
+// Global helper for data ready
+Handlebars.registerHelper("dataReady" ,function(){
+    return Session.get("dataReady");
+});
+
+Handlebars.registerHelper("initialDataReady" ,function(){
+    return Session.get("initialDataReady");
+});
+
 // Create a global helper
 // Use this from multiple templates
 Handlebars.registerHelper("person_lookup" ,function(){

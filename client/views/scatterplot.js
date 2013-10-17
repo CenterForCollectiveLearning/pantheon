@@ -1,10 +1,3 @@
-// TODO Why is scatterplot.rendered running if this is not ready?
-Template.scatterplot.dataReady = function() {
-	NProgress.inc();
-	console.log("DATAREADY", Session.get("dataReady"));
-    return Session.get("dataReady");
-}
-
 // TODO Namespace these
 
 var scatterplotProps = {
