@@ -59,7 +59,7 @@ h2 {
 	opacity: 1.0 !important;
 	padding: 2em;
 
-	.spacer { height: .33em; }
+	.spacer { height: 4.0em; }
 	
 	a {
 		text-decoration: none;
@@ -243,7 +243,7 @@ header {
 		@include opacity(0.5);
 		position: relative;
 		float: left;
-		.spacer { height: 1em; }
+		.spacer { height: 3.0em; }
 		&:hover { @include opacity(1.0); }
 	}
 	.page-middle {

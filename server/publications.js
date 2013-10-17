@@ -83,7 +83,7 @@ Meteor.publish("allpeople", function() {
     // No stop needed here
 });
 
-People._ensureIndex({ numlangs: 1, birthyear: 1, gender: 1});
+People._ensureIndex({ birthyear: 1, gender: 1, numlangs: 1, });
 
 // Make sure this is indexed
 Meteor.publish("matrix_pub", function(begin, end, L, gender) {
