@@ -105,6 +105,7 @@ Meteor.publish("top5occupation", function(begin, end, L, country, industry) {
     // No stop needed here
 });
 
+// TODO Optimize this
 // TODO double check this indexing
 People._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} );
 People._ensureIndex({ countryCode: 1, occupation: 1, birthyear: 1} );

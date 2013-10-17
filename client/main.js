@@ -147,7 +147,7 @@ Template.spinner.rendered = function() {
     $('header').css('border-bottom-width', '0px');
     NProgress.configure({
         minimum: 0.2
-        , trickleRate: 0.03
+        , trickleRate: 0.1
         , trickleSpeed: 500
     })
     NProgress.start();
