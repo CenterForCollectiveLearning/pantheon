@@ -1573,8 +1573,7 @@ vizwhiz.viz = function() {
         .key(function(d){
             if (typeof vars.attrs[d[vars.id_var]][nest_key] == 'undefined') {
               console.log("INVALID NESTING");
-              console.log(d, vars.id_var, nest_key);
-              console.log(d[vars.id_var]);
+              console.log(d, vars.id_var, d[vars.id_var], vars.attrs[d[vars.id_var]], nest_key);
             }
             if (typeof vars.attrs[d[vars.id_var]][nest_key] !== 'undefined') {
               return vars.attrs[d[vars.id_var]][nest_key][vars.id_var];

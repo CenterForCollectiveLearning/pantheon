@@ -75,7 +75,7 @@ Deps.autorun(function(){
             // Scatterplot modes
             case "country_vs_country":
             case "lang_vs_lang":
-                dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, occ, onReady);
+                dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, onReady);
                 break;
             // Map modes
             case "map":

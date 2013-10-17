@@ -57,32 +57,29 @@ Template.scatterplot_svg.rendered = function() {
     // this.rendered = true;
 	var viz = vizwhiz.viz();
 
-	var occCounts = {};
 	var data = [];
+	var aggByOcc = {};
+	var flatData = [];
 	var attrs = {};
 
 	var vizMode = Session.get('vizMode');
 	if (vizMode === 'country_vs_country') {
+		var field = 'countryCode';
 		var x_code = Session.get('countryX');
 		var y_code = Session.get('countryY');
 		var x_name = Countries.findOne({countryCode: x_code}).countryName;
 		var y_name = Countries.findOne({countryCode: y_code}).countryName;
 
-		var people = Scatterplot.find().fetch();
+		var data = Scatterplot.find().fetch();
 	} else if (vizMode === 'lang_vs_lang') {
+		var field = 'lang';
 		var x_code = Session.get('languageX');
 		var y_code = Session.get('languageY');
 		var x_name = Languages.findOne({lang: x_code}).lang_name;
 		var y_name = Languages.findOne({lang: y_code}).lang_name;
 
-		var people = Scatterplot.find().fetch();
-
-		var industryCounts = aggregateCounts(people, ['countryCode', 'occupation']);
-		var x_counts = industryCounts[x_code];
-		var y_counts = industryCounts[y_code];
+		var data = Scatterplot.find().fetch();
 	}
-
-	console.log(people);
 
 	var attr = Domains.find().fetch();
         attr.forEach(function(a){
@@ -106,130 +103,79 @@ Template.scatterplot_svg.rendered = function() {
                 id: dom
                 , name: dom
                 , color: dom_color
-                , nesting_1: domDict
+                , nesting_dom: domDict
             };
             attrs[ind] = {
                 id: ind
                 , name: ind
                 , color: dom_color
-                , nesting_1: domDict
-                , nesting_3: indDict
+                , nesting_dom: domDict
+                , nesting_ind: indDict
             };
             attrs[occ] = {
                 id: occ
                 , name: occ
                 , color: dom_color
-                , nesting_1: domDict
-                , nesting_3: indDict
-                , nesting_5: occDict
+                , nesting_dom: domDict
+                , nesting_ind: indDict
+                , nesting_occ: occDict
             };
         });
+
 	/*
-	    Flatten data
+	    Flatten data 
+
+	    [{countryCode:'US', 
+	    domain: 'INSTITUTIONS', 
+	    industry: 'MILITARY', 
+	    occupation: 'EXPLORER', 
+	    count: 4}]
+
+	    TO
+	    
+	    {'EXPLORER': {x: 4, y:8}}
 	*/
-	// if (typeof x_counts !== 'undefined' && !isEmpty(x_counts)) {
-	// 	for (occ in x_counts) {
-	// 		var valX = x_counts[occ];
-	// 		var valY = 0;
-	// 		// Skipping EXPORER for now...
-	// 		if (occ == 'EXPLORER') {
-	// 			console.log(occ);
- //    			continue;
- //    		}
-	// 	    // If Y and occ in Y, add in Y value
-	// 	    if (typeof y_counts !== 'undefined' && y_counts.hasOwnProperty(occ)) {
-	// 	    	valY = y_counts[occ];
-	// 	    }
-	// 	    // Otherwise Y value is 0
-	// 	    occCounts[occ] = {
-	// 	    	x: valX
-	// 	    	, y: valY
-	// 	    }
-	// 	}
-	// }
+	for (i in data) {
+		var datum = data[i]
+		var occ = datum.occupation;
+		var count = datum.count;
+		var code = datum[field];
+
+		var axis = code == x_code ? 'x' : 'y';
+		var other_axis = axis == 'x' ? 'y' : 'x';
+
+		if (occ == 'EXPLORER') {
+			continue;
+    	}
+
+    	if (!aggByOcc.hasOwnProperty(occ)) {
+    		aggByOcc[occ] = {};
+    		aggByOcc[occ][axis] = count;
+    		aggByOcc[occ][other_axis] = 0;
+    	} else {
+    		aggByOcc[occ][axis] = count;
+    	}
+	}
 	
-	// if (typeof y_counts !== 'undefined' && !isEmpty(y_counts)) {
- //    	for (occ in y_counts) {
- //    		var valY = y_counts[occ];
- //    		var valX = 0;
- //    		if (occ == 'EXPLORER') {
- //    			console.log(occ);
- //    			continue;
- //    		}
- //    		// If X and occ in X, add it in
- //    		if (typeof x_counts !== 'undefined' && x_counts.hasOwnProperty(occ)) {
- //    			occCounts[occ]['y'] = valY;
- //    		} else {
- //    			occCounts[occ] = {
- //    				x: valX
- //    				, y: valY
- //    			}
- //    		}
- //    	}
- //    }
-
-	// for (var occ in occCounts) {
-	// 	var d = {
-	// 		id: occ
-	// 		, active1: true
-	// 		, active2: true
-	// 		, year: 2002};
-	// 	try {
-	// 		d[countryXName] = occCounts[occ].x
-	// 		d[countryYName] = occCounts[occ].y
-	// 		d['total'] = occCounts[occ].x + occCounts[occ].y
-	// 		data.push(d);                    
-	// 	} catch(e) {}
-	// }
-
-	/*
-	    Attributes
-	*/
-	for (var i = people.length - 1; i >= 0; i--) {
-		var dom = people[i]['domain'];
-		var ind = people[i]['industry'];
-		var occ = people[i]['occupation'];
-		if (occ == 'EXPLORER' || occ == 'EXPLORATION') {
-			occ = 'EXPLORER_OCC';
-		}
-		var dom_color = color_domains(dom);
-		var domDict = {
-			id: dom
-			, name: dom
-		};
-		var indDict = {
-			id: ind
-			, name: ind
-		};
-		var occDict = {
+	for (var occ in aggByOcc) {
+		var datum = aggByOcc[occ];
+		var x = datum.x;
+		var y = datum.y;
+		if (occ == 'EXPLORER') {
+			continue;
+    	}
+    	var d = {
 			id: occ
 			, name: occ
-		};
-		attrs[dom] = {
-			id: dom
-			, name: dom
-			, color: dom_color
-			, text_color: dom_color
-			, nesting_dom: domDict
+			, active1: true
+			, active2: true
+			, year: 2002
 		}
-		attrs[ind] = {
-			id: ind
-			, name: ind
-			, color: dom_color
-			, text_color: dom_color
-			, nesting_dom: domDict
-			, nesting_ind: indDict
-		}
-		attrs[occ] = {
-			id: occ
-			, name: occ
-			, color: dom_color
-			, text_color: dom_color
-			, nesting_dom: domDict
-			, nesting_ind: indDict
-			, nesting_occ: occDict
-		}
-	};
+		d[x_name] = x;
+		d[y_name] = y;
+		d['total'] = x + y;
+		flatData.push(d);          
+	}
 
 	text_formatting = function(d) {
 		return d.charAt(0).toUpperCase() + d.substr(1);
@@ -237,6 +183,10 @@ Template.scatterplot_svg.rendered = function() {
 	inner_html = function(obj) {
 		return "This is some test HTML";
 	}
+
+	console.log("AGGBYOCC", aggByOcc);
+	console.log("FLAT DATA: ", flatData);
+	console.log("ATTRS: ", attrs);
 
 	viz
 	    .type("pie_scatter")
@@ -261,7 +211,7 @@ Template.scatterplot_svg.rendered = function() {
         .mirror_axis(false)
 
     d3.select(context.find("svg"))
-        .datum(data)
+        .datum(flatData)
         .call(viz)
 
 }

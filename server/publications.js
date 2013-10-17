@@ -120,8 +120,11 @@ Imports._ensureIndex({ category: 1, industry: 1, occupation: 1, birthyear: 1} );
 Imports._ensureIndex({ industry: 1} );
 Imports._ensureIndex({ occupation: 1} );
 
-Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, countryY, languageX, languageY, occ) {
-    console.log(arguments);
+function aggregateCounts(sub, driver, matchArgs) {
+   
+}
+
+Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, countryY, languageX, languageY) {
     var sub = this;
     var driver = MongoInternals.defaultRemoteCollectionDriver();
 
@@ -130,89 +133,71 @@ Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, cou
         birthyear: {$gte: begin, $lte:end}
     };
 
-    if (occ.toLowerCase() !== 'all' ) {
-        occ = occ.substring(1);
-        // TODO don't include category in this match for pages that are automatically 'all'
-        matchArgs.$or = [{domain:occ}, {industry:occ}, {occupation:occ}];
-    };
-
     var pipeline = [];
 
-    // mathArgs.$or = [{countryCode: countryX}, {countryCode: countryY}];
 
+    var field;
     if (vizMode === 'country_vs_country') {
-        var countries = [countryX, countryY];
-        for (i in countries) {
-            var country = countries[i];
-            console.log(country);
-            matchArgs.countryCode = country;
-            // requestAggregation(sub, driver, matchArgs);
-            console.log(matchArgs);
-            pipeline = [
-                { $match: matchArgs },
-                {"$group": { _id: {domain: "$category", industry: "$industry", occupation: "$occupation"},
-                    "people": { "$addToSet": '$en_curid'}}},
-                {"$unwind":"$people"},{"$group": { "_id": "$_id", "count": { "$sum":1} }},
+        matchArgs.$or = [{countryCode: countryX}, {countryCode: countryY}];
+        pipeline = [
+            { $match: matchArgs },
+            {"$group": { _id: {countryCode:"$countryCode", domain: "$category", industry: "$industry", occupation: "$occupation"},
+            "people": { "$addToSet": '$en_curid'}}},
+            {"$unwind":"$people"},{"$group": { "_id": "$_id", "count": { "$sum":1} }}
             ];
-            driver.mongo.db.collection("imports").aggregate(
-                pipeline,
-                Meteor.bindEnvironment(
-                    function(err, result) {
-                        _.each(result, function(e) {
-                            console.log(country, e);
-                            // Generate a random disposable id for each aggregate
-                            sub.added("scatterplot", Random.id(), {
-                                country: country,
-                                domain: e._id.domain,
-                                industry: e._id.industry,
-                                occupation: e._id.occupation,
-                                count: e.count
-                            });
+        driver.mongo.db.collection("imports").aggregate(
+            pipeline,
+            Meteor.bindEnvironment(
+                function(err, result) {
+                    _.each(result, function(e) {
+                        // Generate a random disposable id for each aggregate
+                        sub.added("scatterplot", Random.id(), {
+                            countryCode: e._id.countryCode,
+                            domain: e._id.domain,
+                            industry: e._id.industry,
+                            occupation: e._id.occupation,
+                            count: e.count
                         });
-                    },
-                    function(error) {
-                        Meteor._debug( "Error doing aggregation: " + error);
-                    }
-                    )
-                );
-        }   
+                    });
+                    sub.ready(); 
+                },
+                function(error) {
+                    Meteor._debug( "Error doing aggregation: " + error);
+                }
+            )
+        );
+    
     } else if (vizMode === 'lang_vs_lang') {
-        var languages = [languageX, languageY];
-        for (i in languages) {
-            var language = languages[i];
-            console.log("LANGUAGE", language);
-            matchArgs.lang = language;
-            // requestAggregation(sub, driver, matchArgs);
-            pipeline = [
-                { $match: matchArgs },
-                {"$group": { _id: {domain: "$category", industry: "$industry", occupation: "$occupation"},
-                    "people": { "$addToSet": '$en_curid'}}},
-                {"$unwind":"$people"},{"$group": { "_id": "$_id", "count": { "$sum":1} }},
+        matchArgs.$or = [{lang: languageX}, {lang: languageY}];
+        pipeline = [
+            { $match: matchArgs },
+            {"$group": { _id: {lang:"$lang", domain: "$category", industry: "$industry", occupation: "$occupation"},
+            "people": { "$addToSet": '$en_curid'}}},
+            {"$unwind":"$people"},{"$group": { "_id": "$_id", "count": { "$sum":1} }}
             ];
-            driver.mongo.db.collection("imports").aggregate(
-                pipeline,
-                Meteor.bindEnvironment(
-                    function(err, result) {
-                        _.each(result, function(e) {
-                            // Generate a random disposable id for each aggregate
-                            sub.added("scatterplot", Random.id(), {
-                                language: language,
-                                domain: e._id.domain,
-                                industry: e._id.industry,
-                                occupation: e._id.occupation,
-                                count: e.count
-                            });
+        driver.mongo.db.collection("imports").aggregate(
+            pipeline,
+            Meteor.bindEnvironment(
+                function(err, result) {
+                    _.each(result, function(e) {
+                        // Generate a random disposable id for each aggregate
+                        sub.added("scatterplot", Random.id(), {
+                            lang: e._id.lang,
+                            domain: e._id.domain,
+                            industry: e._id.industry,
+                            occupation: e._id.occupation,
+                            count: e.count
                         });
-                    },
-                    function(error) {
-                        Meteor._debug( "Error doing aggregation: " + error);
-                    }
-                    )
-                );
-        }
-    }
-    sub.ready(); 
-    return;
+                    });
+                    sub.ready(); 
+                },
+                function(error) {
+                    Meteor._debug( "Error doing aggregation: " + error);
+                }
+            )
+    );
+}
+       
 });
 
 /*

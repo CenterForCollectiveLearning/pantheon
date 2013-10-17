@@ -176,7 +176,8 @@ Template.question.question = function() {
             s_domains = s_domains.substring(1) + "s";
     }
     else if(s_domains.charAt(0) == "+") {
-        s_domains = "in the area of " + s_domains.substring(1);
+        // s_domains = "in the area of " + s_domains.substring(1);
+        s_domains = s_domains.substring(1);
     }
 
     function boldify(s) {
@@ -202,7 +203,7 @@ Template.question.question = function() {
         case "country_vs_country":
             return new Handlebars.SafeString("What does " + boldify(s_countryX) + " export compared to " + boldify(s_countryY) + "?");
         case "lang_vs_lang":
-            return new Handlebars.SafeString("What do " + boldify(s_languageX) + " speakers export compared to " + boldify(s_languageY) + " speakers?");
+            return new Handlebars.SafeString("What do " + boldify(s_languageX) + " speakers import compared to " + boldify(s_languageY) + " speakers?");
         case "map":
             return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?");
     }

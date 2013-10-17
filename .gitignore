@@ -10,6 +10,9 @@
 *.ai
 *.pdf
 
+# Data Files
+*.csv
+
 # CSS Files
 styles.css
 

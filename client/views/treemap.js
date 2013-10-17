@@ -1,5 +1,4 @@
 Template.treemap.dataReady = function() {
-    NProgress.inc();
     return Session.get("dataReady");
 }
 
@@ -29,7 +28,6 @@ var color_countries = d3.scale.ordinal()
     .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2"]);
 
 Template.treemap_svg.rendered = function() {
-
     // Don't re-render with the same parameters...?
     var context = this;
     // if( this.rendered ) return;

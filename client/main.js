@@ -1,6 +1,4 @@
 // Set Defaults
-// TODO Where do you put these global functions?
-
 
 // Enable caching for getting readrboard script
 jQuery.cachedScript = function( url, options ) {
@@ -23,8 +21,8 @@ this.defaults = {
     , countryX: 'US'
     , countryY: 'RU'
     , language: 'all'
-    , languageX: 'all'
-    , languageY: 'all'
+    , languageX: 'en'
+    , languageY: 'ru'
     , domain: 'all'
     , from: '-1000'
     , to: '1950'
@@ -139,27 +137,20 @@ Template.nav.helpers({
     , right_sections: right_sections
 })
 
-// Template.nav.rendered = function() {
-//     $('header').css('border-bottom-width', '0px');
-// }
-
 Template.section.helpers({
     selected: function() {
         return Session.equals('page', this.template) ? 'selected_section' : '';
     }
 })
 
-Template.spinner.created = function() {
-    NProgress.configure({
-        minimum: 0.2
-        , trickleRate: 0.15
-        , trickleSpeed: 1200
-    })
-    NProgress.start();
-}
-
 Template.spinner.rendered = function() {
     $('header').css('border-bottom-width', '0px');
+    NProgress.configure({
+        minimum: 0.2
+        , trickleRate: 0.03
+        , trickleSpeed: 500
+    })
+    NProgress.start();
 }
 
 Template.spinner.destroyed = function() {
