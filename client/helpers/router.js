@@ -70,22 +70,22 @@ Router.map(function() {
                     this.redirect('/ranking/' +
                         defaults.entity + '/' +
                         defaults.country + '/' +
+                        defaults.domain + '/' +
                         defaults.from + '/' +
-                        defaults.to + '/' +
-                        defaults.domain);
+                        defaults.to);
                 }
             ]}
     );
 
     this.route('ranking', {
-            path: '/ranking/:entity/:country/:from/:to/:domain',
+            path: '/ranking/:entity/:country/:domain/:from/:to',
             data: function() {
                 Session.set('page', this.template);
                 Session.set('entity', this.params.entity);
                 Session.set('country', this.params.country);
+                Session.set('domain', this.params.domain);
                 Session.set('from', this.params.from);
                 Session.set('to', this.params.to);
-                Session.set('domain', this.params.domain);
             }}
     );
 

@@ -44,3 +44,63 @@ Template.ranking_accordion.rendered = function() {
 
     accordion.accordion("resize");
 }
+
+Template.ranking_accordion.events = {
+    "click h3": function (d) {
+        var srcE = d.srcElement ? d.srcElement : d.target;
+        var option = $(srcE).attr("id");
+
+        var modeToEntity = {
+            "country_ranking": "countries"
+            , "people_ranking": "people"
+            , "domains_ranking": "domains"
+        }
+
+        // Reset parameters for a viz type change
+        var path = '/ranking/' +
+            modeToEntity[option] + '/' +
+            defaults.country + '/' +
+            defaults.domain + '/' +
+            defaults.from + '/' +
+            defaults.to
+        Router.go(path);
+    }
+}
+
+Template.ranking_table.render_table = function() {
+    var entity = Session.get("entity");
+    switch (entity) {
+        case "countries":
+            return new Handlebars.SafeString(Template.ranked_countries(this));
+            break;
+        case "people":
+        case "domains":
+            return new Handlebars.SafeString(Template.ranked_people_list(this));
+            break;
+    }
+}
+
+Template.ranking_table.render_cols = function() {
+    var entity = Session.get("entity");
+    switch (entity) {
+        case "countries":
+            return new Handlebars.SafeString(Template.country_cols(this));
+        case "people":
+            return new Handlebars.SafeString(Template.ppl_cols(this));
+        case "domains":
+            return new Handlebars.SafeString(Template.ppl_cols(this));;
+    }
+}
+
+Template.ranked_people_list.people_full_ranking = function() {
+    return PeopleTopN.find();
+}
+
+Template.ranked_people_list.rank = function() {
+    var rank = 1; // the rank gets populated by datatables?
+    return rank;
+}
+
+Template.ranked_ppl.occupation = function() {
+    return this.occupation.capitalize();
+}

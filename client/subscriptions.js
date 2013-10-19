@@ -7,6 +7,7 @@ Meteor.subscribe("domains_pub");
 allpeopleSub = Meteor.subscribe("allpeople");
 
 // These are client only collections
+PeopleTopN = new Meteor.Collection("topNpeople");
 PeopleTop10 = new Meteor.Collection("top10people");
 Treemap = new Meteor.Collection("treemap");
 Matrix = new Meteor.Collection("matrix");
@@ -15,6 +16,7 @@ WorldMap = new Meteor.Collection("worldmap");
 Tooltips = new Meteor.Collection("mouseoverCollection");
 
 var top10Sub = null;
+var topNSub = null;
 var dataSub = null;
 var tooltipSub = null;
 
@@ -69,35 +71,49 @@ Deps.autorun(function(){
         };
 
         // Give a handle to this subscription so we can check if it's ready
-        switch(vizMode) {
-            // Treemap modes
-            case "country_imports":
-            case "country_exports":
-            case "bilateral_exporters_of":
-            case "domain_exports_to":
-            case "domain_imports_from":
-            case "bilateral_importers_of":
-                top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
-                dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain, onReady);
-                break;
-            // Matrix modes
-            case "matrix_exports":
-            console.log("IN MATRIX EXPORTS")
-                dataSub = Meteor.subscribe("matrix_pub", begin, end, langs, gender, onReady);
-                break
-            // Scatterplot modes
-            case "country_vs_country":
-            case "lang_vs_lang":
-            case "domain_vs_domain":
-                dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, domainX, domainY, onReady);
-                break;
-            // Map modes
-            case "map":
-                dataSub = Meteor.subscribe("map_pub", begin, end, langs, domain, onReady);
-                break;
-            default:
-                console.log("Unsupported vizMode");
-        }
+        if(page === "observatory"){
+            switch(vizMode) {
+                // Treemap modes
+                case "country_imports":
+                case "country_exports":
+                case "bilateral_exporters_of":
+                case "domain_exports_to":
+                case "domain_imports_from":
+                case "bilateral_importers_of":
+                    top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
+                    dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain, onReady);
+                    break;
+                // Matrix modes
+                case "matrix_exports":
+                    console.log("IN MATRIX EXPORTS")
+                    dataSub = Meteor.subscribe("matrix_pub", begin, end, langs, gender, onReady);
+                    break
+                // Scatterplot modes
+                case "country_vs_country":
+                case "lang_vs_lang":
+                case "domain_vs_domain":
+                    dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, domainX, domainY, onReady);
+                    break;
+                // Map modes
+                case "map":
+                    dataSub = Meteor.subscribe("map_pub", begin, end, langs, domain, onReady);
+                    break;
+                default:
+                    console.log("Unsupported vizMode");
+            };
+        } else if(page === "ranking"){
+            switch(entity){
+                case "countries":
+                case "people":
+                    topNSub = Meteor.subscribe("peopletopN", begin, end, langs, country, domain, 'all', onReady);
+                    top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain, onReady);
+                case "domains":
+                    break;
+                default:
+                    console.log("Invalid ranking entity!");
+            }
+        };
+
 
         console.log("vizMode: "+vizMode);
         console.log("begin: "+begin);

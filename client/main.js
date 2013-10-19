@@ -30,6 +30,7 @@ this.defaults = {
     , from: '-1000'
     , to: '1950'
     , langs: '25'
+    , entity: 'countries'
 }
 
 this.IOMapping = {
