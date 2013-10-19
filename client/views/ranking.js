@@ -27,7 +27,6 @@ Template.ranking_table.rendered = function() {
 
 Template.ranking_accordion.rendered = function() {
 
-    // TODO Make such mappings global...or do something about it
     var mapping = {
         "countries": 0,
         "people": 1,
@@ -37,7 +36,7 @@ Template.ranking_accordion.rendered = function() {
     var accordion = $(".accordion");
 
     accordion.accordion({
-        active: mapping[Session.get("vizType")],
+        active: mapping[Session.get("entity")],
         collapsible: false,
         heightStyle: "content",
         fillSpace: false

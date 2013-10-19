@@ -35,6 +35,9 @@ Deps.autorun(function(){
     var domainX = Session.get('domainX');
     var domainY = Session.get('domainY');
     var gender = Session.get('gender');
+    var entity = Session.get('entity');
+    var page = Session.get('page');
+
     if(domain){
         domain = domain.toUpperCase();
     }
@@ -108,6 +111,8 @@ Deps.autorun(function(){
         console.log("language: "+language);
         console.log("domain: "+domain);
         console.log("gender: "+gender);
+        console.log("entity: " +entity);
+        console.log("page: " +page);
     }
 });
 
