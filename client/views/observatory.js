@@ -195,7 +195,7 @@ Template.question.question = function() {
         var s_or_no_s_c = (Session.get("country") == "all") ? "'" : "'s";
         var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
         var speakers_or_no_speakers = (Session.get("language") == "all") ? "" : " speakers";
-    } catch(e) {}
+    
     var gender;
     var gender_var = Session.get("gender");
     switch (gender_var) {
@@ -277,6 +277,7 @@ Template.question.question = function() {
         case "map":
             return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?");
     }
+    } catch(e) {}
 };
 
 /*
