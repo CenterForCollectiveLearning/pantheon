@@ -179,22 +179,23 @@ Template.ranked_person.birthday = function() {
     return birthday;
 }
 
-// Generate question given viz tqype
+// Generate question given viz type
 Template.question.question = function() {
-    var s_countries = (Session.get("country") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("country")}).countryName;
-    var s_countryX = Countries.findOne({countryCode: Session.get("countryX")}).countryName;
-    var s_countryY = Countries.findOne({countryCode: Session.get("countryY")}).countryName;
-    var s_domains = (Session.get("domain") == "all") ? "all domains" : decodeURIComponent(Session.get("domain"));
-    var s_domainX = (Session.get("domainX") == "all") ? "all domains" : decodeURIComponent(Session.get("domainX"));
-    var s_domainY = (Session.get("domainY") == "all") ? "all domains" : decodeURIComponent(Session.get("domainY"));
-    var s_regions = (Session.get("language") == "all") ? "the world" : Languages.findOne({lang: Session.get("language")});
-    var s_languageX = Languages.findOne({lang: Session.get("languageX")});
-    var s_languageY = Languages.findOne({lang: Session.get("languageY")});
-    var does_or_do = (Session.get("country") == "all") ? "do" : "does";
-    var s_or_no_s_c = (Session.get("country") == "all") ? "'" : "'s";
-    var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
-    var speakers_or_no_speakers = (Session.get("language") == "all") ? "" : " speakers";
-
+    try {
+        var s_countries = (Session.get("country") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("country")}).countryName;
+        var s_countryX = (Session.get("countryX") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("countryX")}).countryName;
+        var s_countryY = (Session.get("countryY") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("countryY")}).countryName;
+        var s_domains = (Session.get("domain") == "all") ? "all domains" : decodeURIComponent(Session.get("domain"));
+        var s_domainX = (Session.get("domainX") == "all") ? "all domains" : decodeURIComponent(Session.get("domainX"));
+        var s_domainY = (Session.get("domainY") == "all") ? "all domains" : decodeURIComponent(Session.get("domainY"));
+        var s_regions = (Session.get("language") == "all") ? "the world" : Languages.findOne({lang: Session.get("language")});
+        var s_languageX = Languages.findOne({lang: Session.get("languageX")});
+        var s_languageY = Languages.findOne({lang: Session.get("languageY")});
+        var does_or_do = (Session.get("country") == "all") ? "do" : "does";
+        var s_or_no_s_c = (Session.get("country") == "all") ? "'" : "'s";
+        var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
+        var speakers_or_no_speakers = (Session.get("language") == "all") ? "" : " speakers";
+    } catch(e) {}
     var gender;
     var gender_var = Session.get("gender");
     switch (gender_var) {
@@ -212,6 +213,7 @@ Template.question.question = function() {
             break;
     }
 
+    // TODO Make this not suck
     if(s_domains.charAt(0) == "-") {
         console.log(s_domains.charAt(s_domains.length-1));
         if(s_domains.charAt(s_domains.length-1) == "y")

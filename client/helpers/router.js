@@ -1,6 +1,14 @@
 // Almost all session changes happen here!
 // I.e. session is used to record state
 
+// function splashCheck() {
+//     return if Session.get("authorized") ? page else 'splash' 
+// }
+
+// Router.configure({
+//     before: splashCheck
+// })
+
 Router.map(function() {
     this.route('observatory',
         {path: '/',

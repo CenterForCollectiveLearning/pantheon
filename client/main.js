@@ -67,6 +67,7 @@ Meteor.startup(function() {
     Session.setDefault('industryOrder', 'count');
     Session.setDefault('occ', 'all');
     Session.setDefault('showTooltip', false);
+    Session.get("authorized", false);
 
     // Set session variable if window resized (throttled rate)
     var throttledResize = _.throttle(function(){

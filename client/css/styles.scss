@@ -325,9 +325,14 @@ header {
 	    				li {
 	    					// border: 1px solid white;
 	    					// border-radius: 3px;
-	    					padding: 1px 2px;
+	    					padding-left: 4px;
+	    					padding-right: 2px;
 	    					display: inline;
 	    					list-style-type: none;
+	    					border-left: 1px solid #FFF
+	    				}
+	    				li:first-child {
+	    					border-left: none;
 	    				}
 	    			}
 	    		}

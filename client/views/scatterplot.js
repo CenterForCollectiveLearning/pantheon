@@ -19,7 +19,7 @@ Template.scatterplot_svg.rendered = function() {
 	var context = this;
     // if( this.rendered ) return;
     // this.rendered = true;
-	var viz = vizwhiz.viz();
+	var viz = d3plus.viz();
 
 	var aggregated = {};
 	var flatData = [];
@@ -197,13 +197,13 @@ Template.scatterplot_svg.rendered = function() {
 	    .xaxis_var(x_name)
 	    .yaxis_var(y_name)
 	    .value_var("total")
-        .nesting(["nesting_1", "nesting_2", "nesting_3"])
+        .nesting(["nesting_1", "nesting_3", "nesting_5"])
         .depth("nesting_3")
         .text_format(text_formatting)
         .spotlight(false)
         .active_var("active1")
         .click_function(inner_html)
-        .background("rgba(0,0,0,0)")
+        .background("#000000")
         .font("Lato")
         .font_weight(400)
         .mirror_axis(false)

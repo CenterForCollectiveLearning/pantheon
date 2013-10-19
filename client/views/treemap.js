@@ -28,7 +28,7 @@ Template.treemap_svg.rendered = function() {
     var context = this;
     // if( this.rendered ) return;
     // this.rendered = true;
-    var viz = vizwhiz.viz() ;
+    var viz = d3plus.viz() ;
     var data = Treemap.find().fetch();
     console.log("UNFLATTENED DATA:")
     console.log(data);

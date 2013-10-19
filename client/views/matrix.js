@@ -339,7 +339,7 @@ Template.matrix_svg.rendered = function() {
         else {
             // Draw tooltip
             mouseoverCell = p;
-            Session.set("tooltipHeading", country[country_code] + ": " + industry);
+            Session.set("tooltipHeading", Countries.findOne({countryCode: country_code}).countryName + ": " + industry);
             Session.set("tooltipPeople", individuals);
             Session.set("showTooltip", true);
         }
