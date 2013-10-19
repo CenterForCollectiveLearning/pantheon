@@ -279,10 +279,6 @@ header {
 	    	padding: 0;
 	    	li {
 	    		text-align: center;
-	    		span {
-	    			color: $color_gold;
-	    			// text-transform: uppercase;
-	    		}
 
 	    		&:hover {
 	    			img.photo {
@@ -290,6 +286,11 @@ header {
 	    				-moz-filter: #{'grayscale(0%)'};
 	    				filter: #{'grayscale(0%)'};
 	    			}
+	    		}
+
+	    		span {
+	    			color: $color_gold;
+	    			// text-transform: uppercase;
 	    		}
 
 	    		div.photo_container {
@@ -307,12 +308,28 @@ header {
 	    			a {
 	    				text-decoration: none;
 	    				color: white;
+	    				text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
 	    				&:hover { 
 	    					color: $color_gold; 
-	    					text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
 	    				}
 	    			}
 
+	    		}
+
+	    		div.role {
+	    			font-size: 0.8em;
+	    			ul {
+	    				list-style-type: none;
+	    				// opacity: 0.6;
+	    				// &:hover { opacity: 1.0; }
+	    				li {
+	    					// border: 1px solid white;
+	    					// border-radius: 3px;
+	    					padding: 1px 2px;
+	    					display: inline;
+	    					list-style-type: none;
+	    				}
+	    			}
 	    		}
 	    		
 	    		img.photo {

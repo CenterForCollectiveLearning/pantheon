@@ -1,0 +1,56 @@
+<template name="teamMember">
+	<li class="span4 team-member">
+		<span class="name">{{name}}</span>
+		<div class="photo_container">
+			<img class="photo" src={{photo}} />
+			{{#with media}} 
+			<div class="info"> 
+				{{#if personal}}<span class="icon-stack"><a href={{personal}} target="_blank"><i class="icon-large icon-home"></i></a></span>{{/if}}
+				{{#if twitter}}<span class="icon-stack"><a href={{twitter}} target="_blank"><i class="icon-large icon-twitter"></i></a></span>{{/if}}           
+				{{#if linkedin}}<span class="icon-stack"><a href={{linkedin}} target="_blank"><i class="icon-large icon-linkedin"></i></a></span>{{/if}}           
+			    {{#if email}}<span class="icon-stack"><a href={{email}} target="_blank"><i class="icon-large icon-envelope"></i></a></span>{{/if}}           
+			</div>
+			{{/with}}
+		</div>
+		<div class="desc">{{description}}</div>
+		<div class="role">
+			<ul>
+				{{#each role}}
+				   <li>{{this}}</li>
+				{{/each}}
+			</ul>
+		</div>
+	</li>
+</template>
+
+<template name="team">
+	<div class="page-top">
+		<div class="primary-text">
+			About the Culture Team
+		</div>
+	</div>
+	<!-- TODO Pull subparts into a template -->
+	<div id="page" class="container-fluid">
+		<div class="row-fluid">
+			<div class="page-middle trans-bg text span6 offset3">
+				<p>Cultural Exports is being developed by a multidisciplinary team dolor ipsum.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae sapien a ante posuere sodales et id massa. Aenean tempus magna id felis vulputate id ornare elit tristique. Nunc quis odio sit amet tellus egestas mattis at pellentesque elit. Fusce facilisis neque sed urna porta egestas.</p>
+				<div class="row-fluid">
+					<ul>
+						{{#each first_row_teamMembers}}
+						    {{> teamMember}}
+						{{/each}}
+					</ul>
+				</div>
+				<div class="row-fluid">
+					<ul>
+						{{#each second_row_teamMembers}}
+						    {{> teamMember}}
+						{{/each}}
+					</ul>
+				</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
