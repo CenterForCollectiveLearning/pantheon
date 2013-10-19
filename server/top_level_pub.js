@@ -61,10 +61,10 @@ Meteor.publish("peopletopN", function(begin, end, L, country, domain, N) {
     var collectionName = "topNpeople";
 
     var criteria = getCountryExportArgs(begin, end, L, country);
-    var projection = {
-        fields: {_id: 1}, //only get the ids of the people - look up the people in the client (from allpeople)
-        sort: {numlangs: -1}
-    };
+//    var projection = {
+//        fields: {_id: 1}, //only get the ids of the people - look up the people in the client (from allpeople)
+//        sort: {numlangs: -1}
+//    };
 
     if(N !== 'all'){
         projection.limit = N;
@@ -74,7 +74,7 @@ Meteor.publish("peopletopN", function(begin, end, L, country, domain, N) {
         criteria.$or = [{domain:domain.substring(1)}, {industry:domain.substring(1)}, {occupation:domain.substring(1)}];
     };
 
-    People.find(criteria, projection).forEach(function(person){
+    People.find(criteria).forEach(function(person){
             sub.added(collectionName, person._id, person);
         });
 
