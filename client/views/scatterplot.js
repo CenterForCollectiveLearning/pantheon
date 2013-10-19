@@ -11,38 +11,9 @@ var color_domains = d3.scale.ordinal()
 	.domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS"])
 	.range(["#ECD078", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#53a9f1", "#79BD9A"]);
 
-function isEmpty(obj) {
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-            return false;
-    }
-    return true;
-}
-
-// Aggregate without summing bottom level (people at bottom)
-var aggregate = function (obj, values, context) {
-	if (!values.length)
-		return obj;
-	var byFirst = _.groupBy(obj, values[0], context),
-	rest = values.slice(1);
-	for (var prop in byFirst) {
-		byFirst[prop] = aggregate(byFirst[prop], rest, context);
-	}
-	return byFirst;
-};
-
-// Aggregate to bottom level, then sum
-var aggregateCounts = function (obj, values) {
-	if (!values.length)
-		return obj.length;
-	var byFirst = _.groupBy(obj, values[0]),
-	rest = values.slice(1);
-	for (var prop in byFirst) {
-		byFirst[prop] = aggregateCounts(byFirst[prop], rest);
-	}
-	return byFirst;
-};
-
+var color_countries = d3.scale.ordinal()
+    .domain(["Africa", "Asia", "Europe", "North America", "South America", "Oceania"])
+    .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2"]);
 
 Template.scatterplot_svg.rendered = function() {
 	var context = this;
@@ -50,8 +21,7 @@ Template.scatterplot_svg.rendered = function() {
     // this.rendered = true;
 	var viz = vizwhiz.viz();
 
-	var data = [];
-	var aggByOcc = {};
+	var aggregated = {};
 	var flatData = [];
 	var attrs = {};
 
@@ -62,19 +32,24 @@ Template.scatterplot_svg.rendered = function() {
 		var y_code = Session.get('countryY');
 		var x_name = Countries.findOne({countryCode: x_code}).countryName;
 		var y_name = Countries.findOne({countryCode: y_code}).countryName;
-
-		var data = Scatterplot.find().fetch();
 	} else if (vizMode === 'lang_vs_lang') {
 		var field = 'lang';
 		var x_code = Session.get('languageX');
 		var y_code = Session.get('languageY');
 		var x_name = Languages.findOne({lang: x_code}).lang_name;
 		var y_name = Languages.findOne({lang: y_code}).lang_name;
-
-		var data = Scatterplot.find().fetch();
+	} else if (vizMode === 'domain_vs_domain') {
+		var field = 'domain';
+		var x_code = Session.get('domainX');
+		var y_code = Session.get('domainY');
+		var x_name = x_code;
+		var y_name = x_code
 	}
 
-	var attr = Domains.find().fetch();
+	var data = Scatterplot.find().fetch();
+
+	if (vizMode === 'country_vs_country' || vizMode === 'lang_vs_lang') {
+		var attr = Domains.find().fetch();
         attr.forEach(function(a){
             var dom = a.domain;
             var ind = a.industry;
@@ -96,24 +71,54 @@ Template.scatterplot_svg.rendered = function() {
                 id: dom
                 , name: dom
                 , color: dom_color
-                , nesting_dom: domDict
+                , nesting_1: domDict
             };
             attrs[ind] = {
                 id: ind
                 , name: ind
                 , color: dom_color
-                , nesting_dom: domDict
-                , nesting_ind: indDict
+                , nesting_1: domDict
+                , nesting_3: indDict
             };
             attrs[occ] = {
                 id: occ
                 , name: occ
                 , color: dom_color
-                , nesting_dom: domDict
-                , nesting_ind: indDict
-                , nesting_occ: occDict
+                , nesting_1: domDict
+                , nesting_3: indDict
+                , nesting_5: occDict
             };
         });
+	} else if (vizMode === 'domain_vs_domain') {
+		var attr = Countries.find().fetch();
+        attr.forEach(function(a){
+            var continent = a.continentName;
+            var countryCode = a.countryCode;
+            var countryName = a.countryName;
+            var continent_color = color_countries(continent);
+            var continentDict = {
+                id: continent
+                , name: continent
+            };
+            var countryDict = {
+                id: countryCode
+                , name: countryName
+            };
+            attrs[continent] = {
+                id: continent
+                , name: continent
+                , color: continent_color
+                , nesting_1: continentDict
+            };
+            attrs[countryCode] = {
+                id: countryCode
+                , name: countryName
+                , color: continent_color
+                , nesting_1: continentDict
+                , nesting_3: countryDict
+            };
+        });
+	}
 
 	/*
 	    Flatten data 
@@ -141,17 +146,17 @@ Template.scatterplot_svg.rendered = function() {
 			continue;
     	}
 
-    	if (!aggByOcc.hasOwnProperty(occ)) {
-    		aggByOcc[occ] = {};
-    		aggByOcc[occ][axis] = count;
-    		aggByOcc[occ][other_axis] = 0;
+    	if (!aggregated.hasOwnProperty(occ)) {
+    		aggregated[occ] = {};
+    		aggregated[occ][axis] = count;
+    		aggregated[occ][other_axis] = 0;
     	} else {
-    		aggByOcc[occ][axis] = count;
+    		aggregated[occ][axis] = count;
     	}
 	}
 	
-	for (var occ in aggByOcc) {
-		var datum = aggByOcc[occ];
+	for (var occ in aggregated) {
+		var datum = aggregated[occ];
 		var x = datum.x;
 		var y = datum.y;
 		if (occ == 'EXPLORER') {
@@ -177,7 +182,7 @@ Template.scatterplot_svg.rendered = function() {
 		return "This is some test HTML";
 	}
 
-	console.log("AGGBYOCC", aggByOcc);
+	console.log("aggregated", aggregated);
 	console.log("FLAT DATA: ", flatData);
 	console.log("ATTRS: ", attrs);
 
@@ -192,8 +197,8 @@ Template.scatterplot_svg.rendered = function() {
 	    .xaxis_var(x_name)
 	    .yaxis_var(y_name)
 	    .value_var("total")
-        .nesting(["nesting_dom", "nesting_ind", "nesting_occ"])
-        .depth("nesting_ind")
+        .nesting(["nesting_1", "nesting_2", "nesting_3"])
+        .depth("nesting_3")
         .text_format(text_formatting)
         .spotlight(false)
         .active_var("active1")

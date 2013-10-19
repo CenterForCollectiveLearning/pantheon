@@ -103,7 +103,7 @@ Router.map(function() {
             Session.set('person', this.params.person);
         }
     });
-    this.route('about', {
+    this.route('team', {
         data: function() {
             Session.set('page', this.template);
         }

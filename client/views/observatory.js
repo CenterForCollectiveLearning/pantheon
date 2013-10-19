@@ -22,7 +22,6 @@ Template.sharing_options.rendered = function() {
 
 // Re-render visualization template on window resize
 Template.visualization.resize = function() {
-    console.log(Session.get("resize"));
     Session.get("resize");
 }
 
@@ -42,45 +41,55 @@ Template.visualization.render_template = function() {
 }
 
 Template.slider.rendered = function() {
-    // TODO Make all increments equal (make a mapping dictionary?)
-    var values = [-1000, -900, -800, -700, -600, -500, -400, -300, -200, -100, 1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1850, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000];
-    var slider = $(".slider");
-    console.log(Session.get("from"), Session.get("to"));
-    $(".from").text(Session.get("from"));
-    $(".to").text(Session.get("to"));
-
-    slider.slider({
-        range: true
-        , min: values[0]
-        , max: values[values.length-1]
-        , step: 10
-        , values: [ Session.get("from"), Session.get("to") ]
-        // TODO Combine these two event listeners
-        , stop: function( event, ui ) {
-            // Change routing
-            var from = ui.values[0];
-            var to = ui.values[1];
-            if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
-                var path = window.location.pathname.split('/');
-                path[5] = from;
-                path[6] = to;
-                Router.go(path.join('/'));
-            } else {
-                return false;
-            }
-        }
-        , slide: function( event, ui ) {
-            // Change showing date range
-            var from = ui.values[0];
-            var to = ui.values[1];
-            if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
-                $(".from").text(from);
-                $(".to").text(to);
-            } else {
-                return false;
-            }
-        }
+    $('select#from, select#to').selectToUISlider({
+        labels: 15
+        , tooltip: false
     });
+    // TODO Make all increments equal (make a mapping dictionary?)
+    // var values = [-1000, -900, -800, -700, -600, -500, -400, -300, -200, -100, 1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1850, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000];
+    // var slider = $(".slider");
+
+    // slider.slider({
+    //     range: true
+    //     , min: values[0]
+    //     , max: values[values.length-1]
+    //     , step: 10
+    //     , values: [ Session.get("from"), Session.get("to") ]
+    //     // TODO Combine these two event listeners
+    //     , stop: function( event, ui ) {
+    //         // Change routing
+    //         var from = ui.values[0];
+    //         var to = ui.values[1];
+    //         if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
+    //             var path = window.location.pathname.split('/');
+    //             path[5] = from;
+    //             path[6] = to;
+    //             Router.go(path.join('/'));
+    //         } else {
+    //             return false;
+    //         }
+    //     }
+    //     , slide: function( event, ui ) {
+    //         // Change showing date range
+    //         var from = ui.values[0];
+    //         var to = ui.values[1];
+    //         var sliderHandles = $('.ui-slider-handle');
+    //         var fromHandle = sliderHandles[0];
+    //         var toHandle = sliderHandles[1];
+    //         if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
+    //             $(fromHandle).text(from);
+    //             $(toHandle).text(to);
+    //         } else {
+    //             return false;
+    //         }
+    //     }
+    // });
+
+    // var sliderHandles = $('.ui-slider-handle');
+    // var fromHandle = sliderHandles[0];
+    // var toHandle = sliderHandles[1];
+    // $(fromHandle).text(Session.get("from"));
+    // $(toHandle).text(Session.get("to"));
 }
 
 Template.accordion.rendered = function() {
@@ -121,7 +130,7 @@ Template.accordion.events = {
             , "matrix_exports": "matrix"
             , "country_vs_country": "scatterplot"
             , "lang_vs_lang": "scatterplot"
-            , "lang_vs_lang": "scatterplot"
+            , "domain_vs_domain": "scatterplot"
             , "map": "map"
         }
 
@@ -172,13 +181,15 @@ Template.ranked_person.birthday = function() {
 
 // Generate question given viz tqype
 Template.question.question = function() {
-    var s_countries = (Session.get("country") == "all") ? "the world" : country[Session.get("country")];
-    var s_countryX = country[Session.get("countryX")];
-    var s_countryY = country[Session.get("countryY")];
+    var s_countries = (Session.get("country") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("country")}).countryName;
+    var s_countryX = Countries.findOne({countryCode: Session.get("countryX")}).countryName;
+    var s_countryY = Countries.findOne({countryCode: Session.get("countryY")}).countryName;
     var s_domains = (Session.get("domain") == "all") ? "all domains" : decodeURIComponent(Session.get("domain"));
-    var s_regions = (Session.get("language") == "all") ? "the world" : region[Session.get("language")];
-    var s_languageX = region[Session.get("languageX")];
-    var s_languageY = region[Session.get("languageY")];
+    var s_domainX = (Session.get("domainX") == "all") ? "all domains" : decodeURIComponent(Session.get("domainX"));
+    var s_domainY = (Session.get("domainY") == "all") ? "all domains" : decodeURIComponent(Session.get("domainY"));
+    var s_regions = (Session.get("language") == "all") ? "the world" : Languages.findOne({lang: Session.get("language")});
+    var s_languageX = Languages.findOne({lang: Session.get("languageX")});
+    var s_languageY = Languages.findOne({lang: Session.get("languageY")});
     var does_or_do = (Session.get("country") == "all") ? "do" : "does";
     var s_or_no_s_c = (Session.get("country") == "all") ? "'" : "'s";
     var s_or_no_s_r = (Session.get("language") == "all") ? "'" : "'s";
@@ -211,6 +222,28 @@ Template.question.question = function() {
     else if(s_domains.charAt(0) == "+") {
         // s_domains = "in the area of " + s_domains.substring(1);
         s_domains = s_domains.substring(1);
+    } 
+    if(s_domainX.charAt(0) == "-") {
+        console.log(s_domainX.charAt(s_domainX.length-1));
+        if(s_domainX.charAt(s_domainX.length-1) == "y")
+            s_domainX = s_domainX.substring(1, s_domainX.length-1) + "ies";
+        else
+            s_domainX = s_domainX.substring(1) + "s";
+    }
+    if(s_domainY.charAt(0) == "-") {
+        console.log(s_domainY.charAt(s_domainY.length-1));
+        if(s_domainY.charAt(s_domainY.length-1) == "y")
+            s_domainY = s_domainY.substring(1, s_domainY.length-1) + "ies";
+        else
+            s_domainY = s_domainY.substring(1) + "s";
+    }
+    if(s_domainX.charAt(0) == "+") {
+        // s_domain = "in the area of " + s_domain.substring(1);
+        s_domainX = s_domainX.substring(1);
+    }
+    if(s_domainY.charAt(0) == "+") {
+        // s_domain = "in the area of " + s_domain.substring(1);
+        s_domainY = s_domainY.substring(1);
     }
 
     function boldify(s) {
@@ -237,6 +270,8 @@ Template.question.question = function() {
             return new Handlebars.SafeString("What does " + boldify(s_countryX) + " export compared to " + boldify(s_countryY) + "?");
         case "lang_vs_lang":
             return new Handlebars.SafeString("What do " + boldify(s_languageX) + " speakers import compared to " + boldify(s_languageY) + " speakers?");
+        case "domain_vs_domain":
+            return new Handlebars.SafeString("Who exports " + boldify(s_domainX) + " compared to " + boldify(s_domainY) + "?");
         case "map":
             return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?");
     }

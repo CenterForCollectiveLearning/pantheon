@@ -1,11 +1,12 @@
 {
-  "meteor" : {
-  	"tag": "v0.6.6"
+  "meteor": {
+    "tag": "v0.6.6"
   },
   "packages": {
     "jquery-ui": {},
     "iron-router": {},
     "scss": {},
-    "autocomplete": {}
+    "autocomplete": {},
+    "font-awesome": {}
   }
 }

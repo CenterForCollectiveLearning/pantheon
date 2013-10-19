@@ -1,3 +1,4 @@
+
 // Set Defaults
 
 // Enable caching for getting readrboard script
@@ -24,10 +25,11 @@ this.defaults = {
     , languageX: 'en'
     , languageY: 'ru'
     , domain: 'all'
+    , domainX: '+ARTS'
+    , domainY: '+HUMANITIES'
     , from: '-1000'
     , to: '1950'
     , langs: '25'
-    , entity: 'countries'
 }
 
 this.IOMapping = {
@@ -39,6 +41,7 @@ this.IOMapping = {
     , "bilateral_importers_of": { "in": ["country", "domain"], "out": "language"}
     , "matrix_exports": { "in": ["country", "domain"], "out": "language"}
     , "country_vs_country": { "in": ["countryX", "countryY"], "out": "domain"}
+    , "domain_vs_domain": { "in": ["domainX", "domainY"], "out": "country"}
     , "lang_vs_lang": { "in": ["languageX", "languageY"], "out": "domain"}
     , "map": { "in": ["domain", "language"], "out": "country" }
 }
@@ -54,6 +57,8 @@ Meteor.startup(function() {
     Session.setDefault('languageX', defaults.languageX);
     Session.setDefault('languageY', defaults.languageY);
     Session.setDefault('domain', defaults.domain);
+    Session.setDefault('domainX', defaults.domainX);
+    Session.setDefault('domainY', defaults.domainY);
     Session.setDefault('from', defaults.from);
     Session.setDefault('to', defaults.to);
     Session.setDefault('langs', defaults.langs);
@@ -102,17 +107,18 @@ var left_sections = [
         url: "/people"
     },
     {
-        section: "Data",
-        template: "data",
-        url: "/data"
-    },
+        section: "Vision",
+        template: "vision",
+        url: "/vision"
+    }
+
 ]
 
 var right_sections = [
     {
-        section: "Vision",
-        template: "vision",
-        url: "/vision"
+        section: "Data",
+        template: "data",
+        url: "/data"
     },
     {
         section: "Publications",
@@ -126,8 +132,8 @@ var right_sections = [
     },
     {
         section: "Team",
-        template: "about",
-        url: "/about"
+        template: "team",
+        url: "/team"
     }
 ]
 

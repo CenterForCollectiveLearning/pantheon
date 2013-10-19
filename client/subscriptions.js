@@ -32,6 +32,8 @@ Deps.autorun(function(){
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
     var domain = Session.get('domain');
+    var domainX = Session.get('domainX');
+    var domainY = Session.get('domainY');
     var gender = Session.get('gender');
     if(domain){
         domain = domain.toUpperCase();
@@ -83,7 +85,8 @@ Deps.autorun(function(){
             // Scatterplot modes
             case "country_vs_country":
             case "lang_vs_lang":
-                dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, onReady);
+            case "domain_vs_domain":
+                dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, domainX, domainY, onReady);
                 break;
             // Map modes
             case "map":
