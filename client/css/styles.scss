@@ -679,3 +679,70 @@ svg.color-scale text {
 table.display td {
   color: black;
 }
+
+//Data tree
+#classtree .node circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+#classtree .node text {
+  font-size: 11px;
+}
+
+#classtree path.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+#classtree #chart, #header{
+  position: absolute;
+  top: 0;
+}
+
+#classtree rect {
+  fill: none;
+  pointer-events: all;
+}
+
+#classtree pre {
+  font-size: 18px;
+}
+
+#classtree line {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+#classtree .string, .regexp {
+  color: #f39;
+}
+
+#classtree .keyword {
+  color: #00c;
+}
+
+#classtree .comment {
+  color: #777;
+  font-style: oblique;
+}
+
+#classtree .number {
+  color: #369;
+}
+
+#classtree .class, .special {
+  color: #1181B8;
+}
+
+#classtree a:link, a:visited {
+  color: #000;
+  text-decoration: none;
+}
+
+#classtree a:hover {
+  color: #666;
+}
