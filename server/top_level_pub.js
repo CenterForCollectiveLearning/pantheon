@@ -128,7 +128,7 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         birthyear : {$gt:begin, $lte:end}
         , numlangs: {$gt: L}
     };
-    if (vizMode === "country_exports" || vizMode === "matrix_exports") {
+    if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode === "map") {
         if (country !== 'all' ) {
             args.countryCode = country;
         }
@@ -179,7 +179,7 @@ Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, c
         birthyear : {$gt:begin, $lte:end}
         , numlangs: {$gt: L}
     };
-    if (vizMode === "country_exports" || vizMode === "matrix_exports") {
+    if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode === "map") {
         if (country !== 'all' ) {
             args.countryCode = country;
         }
