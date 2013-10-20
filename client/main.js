@@ -63,11 +63,19 @@ Meteor.startup(function() {
     Session.setDefault('from', defaults.from);
     Session.setDefault('to', defaults.to);
     Session.setDefault('langs', defaults.langs);
+    Session.setDefault('occ', 'all');
+
+    // MATRICES
     Session.setDefault('gender', 'both');
     Session.setDefault('countryOrder', 'count');
     Session.setDefault('industryOrder', 'count');
-    Session.setDefault('occ', 'all');
+    
+
+    // TOOLTIPS
     Session.setDefault('showTooltip', false);
+    Session.setDefault('tooltipDomainAggregation', 'industry')
+
+    // SPLASH SCREEN
     Session.get("authorized", false);
 
     // Set session variable if window resized (throttled rate)

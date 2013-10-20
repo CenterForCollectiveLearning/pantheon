@@ -62,7 +62,6 @@ Template.matrix_svg.rendered = function() {
     matrixProps.fullWidth = $('.page-middle').width();
     matrixProps.width = matrixProps.fullWidth - matrixProps.margin.left - matrixProps.margin.right;
 
-
     var fill = d3.scale.linear()
         .domain([0, 1])
         .range(["#f1e7d0", "red"]);
@@ -314,52 +313,52 @@ Template.matrix_svg.rendered = function() {
 
     updateColumns(inv_matrix);
 
-    // TODO Sort and add percentage
-    var mouseoverCell = null;
+    function createTooltip(categoryA, categoryB) {
+        
+    }
 
+    function destroyTooltip(mouseoverElement) {
+        Template.tooltip.top5 = null;
+        Session.set("showTooltip", false);
+        $("#tooltip").empty();
+        // mouseoverElement = null;
+    }
+
+    // TODO: Don't re-render tooltip for already selected cell
     function mouseover(p) {
-        // TODO you shouldn't iterate over the entire matrix just to highlight one cell.
         d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
         d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
 
-        var country_code = countries[p.y];
-        var industry = industries[p.x];
-        var individuals = grouped_individuals[country_code][industry];
-
+        // Positioning
         var position = {
             "left": (d3.event.pageX + 40),
             "top": (d3.event.pageY - 45)
         }
         Session.set("tooltipPosition", position);
+   
+        var countryCode = countries[p.y];
+        var countryName = Countries.findOne({countryCode: countryCode}).countryName;
+        var industry = industries[p.x];
 
-        if ( p === mouseoverCell ) {
-            // Don't re-render the rest of the list
-            return;
-        }
-        else {
-            // Draw tooltip
-            mouseoverCell = p;
-            Session.set("tooltipHeading", Countries.findOne({countryCode: country_code}).countryName + ": " + industry);
-            Session.set("tooltipPeople", individuals);
-            Session.set("showTooltip", true);
-        }
-        Session.set("showTooltip", true);
+        // Subscription Parameters
+        Session.set("tooltipDomain", industry);
+        Session.set("tooltipDomainAggregation", "industry");
+        Session.set("tooltipCountryCode", countryCode);
 
-        Template.tooltip.position = position;
-        Template.tooltip.individuals = individuals;
-        Template.tt_list.categoryA = Countries.findOne({countryCode: country_code}).countryName;
-        Template.tt_list.categoryB = industry;
-        if($(window).width() >= d3.event.pageX + 150 + 30 + $("#tooltip").width()) {
-            $("#tooltip").css("left", (d3.event.pageX + 90) + "px").css("top", (d3.event.pageY - 95) + "px");
-        } else {
-            $("#tooltip").show().css("left", (d3.event.pageX - 150 - $("#tooltip").width()) + "px").css("top", (d3.event.pageY - 65) + "px").css("padding", "15px");
-        }        
-        $("#tooltip").show()       
+        // Retrieve and pass data to template
+        Session.set("tooltipPeople", Tooltips.find().fetch());
+        var totalCount = TooltipsCount.findOne().count;
+        Session.set("tooltipPeopleCount", totalCount);
+        Session.set("tooltipHeading", countryName + ": " + industry);
+
+        Template.tooltip.categoryA = countryName;
+        Template.tooltip.categoryB = industry;
+        
+        Session.set("showTooltip", true);     
     }
 
     function mouseout(p) {
-        Session.set("showTooltip", false);
-        mouseoverCell = null;
+        destroyTooltip(p);
         d3.selectAll("text").classed("active", false);
     }
 

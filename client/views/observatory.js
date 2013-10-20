@@ -140,7 +140,7 @@ Template.accordion.events = {
 
         // Reset parameters for a viz type change
         var path = '/' +
-            modeToType[option] + '/' +
+            modeToType[option] + '/' + 
             option + '/' +
             defaults[param1] + '/' +  // First input (e.g. exporter country)
             defaults[param2] + '/' +  // Second input (e.g. importer lang)
@@ -283,38 +283,13 @@ Template.question.question = function() {
 /*
  * TOOLTIPS
  */
-Template.tooltip.tooltipShown = function() {
-    return Session.get("showTooltip");
-}
-
-Template.tooltip.position = function() {
-    return Session.get("tooltipPosition");
-}
-
-Template.tooltip.individuals = function() {
-    return Session.get("tooltipPeople");
-};
-
-Template.tt_list.heading = function() {
-    return Session.get("tooltipHeading");
-}
-
-Template.tt_list.count = function() {
-    return this.length;
-}
-
-Template.tt_list.suffix = function() {
-    return (this.length > 1) ? "individuals" : "individual";
-}
-
-Template.tt_list.top5 = function() {
-    return this.slice(0, 5);
-}
-
-Template.tt_list.more = function() {
-    return this.length > 5;
-}
-
-Template.tt_list.extras = function () {
-    return this.length - 5;
-}
+Template.tooltip.helpers({
+    tooltipShown: function() { return Session.get("showTooltip") }
+    , position: function() { return Session.get("tooltipPosition") }
+    , heading: function() { return Session.get("tooltipHeading") }
+    , count: function() { return Session.get("tooltipPeopleCount") }
+    , suffix: function() { return (Session.get("tooltipPeopleCount") - 5 > 1) ? "individuals" : "individual" }
+    , top5: function() { console.log(Session.get("tooltipPeople")); return Session.get("tooltipPeople") }
+    , more: function() { return Session.get("tooltipPeopleCount") > 5 }
+    , extras: function() { return Session.get("tooltipPeopleCount") - 5 }
+})

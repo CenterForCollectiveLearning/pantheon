@@ -31,7 +31,7 @@ d3plus.tree_map = function(vars) {
   // cell aka container
   var cell_enter = cell.enter().append("g")
     .attr("id",function(d){
-      return "cell_"+d[vars.id_var]
+      return "cell_"+d[vars.id_var].replace(" ", "_")
     })
     .attr("opacity", 0)
     .attr("transform", function(d) {
@@ -116,6 +116,7 @@ d3plus.tree_map = function(vars) {
   //-------------------------------------------------------------------
   
   small_tooltip = function(d) {
+    console.log("in small_tooltip")
 
     d3plus.tooltip.remove(vars.type)
     var ex = {}
@@ -137,27 +138,68 @@ d3plus.tree_map = function(vars) {
       "footer": footer_text(),
       "data": tooltip_data
     })
-    
   }
   
   cell
     .on(d3plus.evt.over,function(d){
+      console.log("MOUSE OVER");
       
-      var id = find_variable(d,vars.id_var),
+      var id = find_variable(d,vars.id_var).replace(" ", "_"),
           self = d3.select("#cell_"+id).node()
-      
+
       self.parentNode.appendChild(self)
-      
+
       d3.select("#cell_"+id).select("rect")
         .style("cursor","pointer")
         .attr("opacity",1)
 
-      small_tooltip(d);
+      // Get parameters from DOM
+      // Subscription Parameters
+
+      var vizMode = Session.get("vizMode");
+      if (vizMode === "country_exports") {
+        var countryCode = Session.get("country");
+        var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
+        var industry = id.replace("_", " ");
+        var domainAggregation = "occupation";
+      } else if (vizMode === "domain_exports_to") {
+        var countryCode = id.replace("_", " ");
+        var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
+        var industry = Session.get("domain");
+        var domainAggregation = "occupation";
+      }
       
+      // Positioning
+      var position = {
+        "left": (d3.event.clientX + 40),
+        "top": (d3.event.clientY - 45)
+      }
+      Session.set("tooltipPosition", position);
+   
+      // Subscription Parameters
+      Session.set("tooltipDomain", industry);
+      Session.set("tooltipDomainAggregation", domainAggregation);
+      Session.set("tooltipCountryCode", countryCode);
+
+      // Retrieve and pass data to template
+      Session.set("tooltipPeople", Tooltips.find().fetch());
+      var totalCount = TooltipsCount.findOne().count;
+      Session.set("tooltipPeopleCount", totalCount);
+      Session.set("tooltipHeading", countryName + ": " + industry);
+
+      Template.tooltip.categoryA = countryName;
+      Template.tooltip.categoryB = industry;
+
+      Session.set("showTooltip", true);
+      
+      // small_tooltip(d);
     })
     .on(d3plus.evt.out,function(d){
+      Template.tooltip.top5 = null;
+      Session.set("showTooltip", false);
+      $("#tooltip").empty();
       
-      var id = find_variable(d,vars.id_var)
+      var id = find_variable(d,vars.id_var).replace(" ", "_");
       
       d3.select("#cell_"+id).select("rect")
         .attr("opacity",0.85)

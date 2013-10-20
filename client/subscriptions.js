@@ -14,11 +14,13 @@ CountriesRanking = new Meteor.Collection("countries_ranking");
 Matrix = new Meteor.Collection("matrix");
 Scatterplot = new Meteor.Collection("scatterplot");
 WorldMap = new Meteor.Collection("worldmap");
-Tooltips = new Meteor.Collection("mouseoverCollection");
+Tooltips = new Meteor.Collection("tooltipCollection");
+TooltipsCount = new Meteor.Collection("tooltipPeopleCountCollection");
 
 var top10Sub = null;
 var dataSub = null;
 var tooltipSub = null;
+var tooltipCountSub = null;
 
 /*
 Subscription for the current data that is being visualized
@@ -138,23 +140,30 @@ Deps.autorun(function(){
  Subscription for tooltips on hover
   */
 Deps.autorun(function() {
-    var industry = Session.get("tooltipIndustry");
+    var domain = Session.get("tooltipDomain");
+    var domainAggregation = Session.get("tooltipDomainAggregation")
 
-    var country = Session.get('country');
+    var countryCode = Session.get('tooltipCountryCode');
+    var countryX = Session.get('countryX');
+    var countryY = Session.get('countryY');
+    var gender = Session.get('gender');
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
 
-    var occ = Session.get('occ');
+    var vizMode = Session.get('vizMode');
+
 
     // TODO fix this hack
     if( window.Domains === undefined ) return;
 
-    if( !country || !begin || !end || !langs || !industry ) {
+    if( !countryCode || !begin || !end || !langs || !domain ) {
         if( tooltipSub !== null ){
             tooltipSub.stop();
             tooltipSub = null;
         }
     }
-    // tooltipSub = Meteor.subscribe("top5occupation", begin, end, langs, country, Domains.findOne(industry).industry);
+    // TODO Pass in an array or object
+    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation);
+    tooltipCountSub = Meteor.subscribe("tooltipPeopleCount", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation);
 });
