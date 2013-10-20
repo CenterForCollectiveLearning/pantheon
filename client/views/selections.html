@@ -95,10 +95,6 @@
     {{> language_dropdown}}
 </template>
 
-<template name="select_domain">
-    {{> domain_dropdown}}
-</template>
-
 <template name="language_dropdown">
     <div class="parameter-selection">
         <label>Importer</label>
@@ -119,10 +115,14 @@
     <option value="{{lang}}">{{lang_name}}</option>
 </template>
 
+<template name="select_domain">
+    {{> domain_dropdown}}
+</template>
+
 <template name="domain_dropdown">
     <div class="parameter-selection">
         <label>Importer</label>
-        <ul class="dropdown-menu parameter-selection" role="menu">
+        <ul id="domain-menu">
             {{#each domains}}
                 {{> domain_item}}
             {{/each}}
@@ -131,36 +131,32 @@
 </template>
 
 <template name="domain_item">
-    <li class="dropdown-submenu" id="domain" class="top_nav_control">
-        <a tabindex="-1" href="#">{{domain}}</a>
-        <ul class="dropdown-menu parameter-selection" role="menu">
+    <li>
+        <a href="#">{{domain}}</a>
+        <ul>
             {{#each industries_given_domain}}
-                {{> industry_item }}
+                {{>industry_item}}
             {{/each}}
         </ul>
     </li>
 </template>
 
 <template name="industry_item">
-    <li class="dropdown-submenu" id="domain" class="top_nav_control">
-        <ul class="dropdown-menu parameter-selection" role="menu">
-            Test
-            <!-- {{#each industries}}
-                {{> industry_item domain_industries}}
-            {{/each}} -->
+    <li>
+        <a href="#">{{industry}}</a>
+        <ul>
+            {{#each occupations_given_industry}}
+                {{>occupation_item}}
+            {{/each}}
         </ul>
     </li>
 </template>
 
-<!-- <template name="occupation_item">
-    <li class="dropdown-submenu" id="domain" class="top_nav_control">
-        <ul class="dropdown-menu parameter-selection" role="menu">
-            {{#each industries}}
-                {{> industry_item}}
-            {{/each}}
-        </ul>
+<template name="occupation_item">
+    <li>
+        <a href="#">{{occupation}}</a>
     </li>
-</template> -->
+</template>
 <!-- 
             <option value="+arts">Arts</option>
             <option value="+humanities">Humanities</option>

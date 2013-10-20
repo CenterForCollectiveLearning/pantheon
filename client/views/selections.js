@@ -63,7 +63,7 @@ Template.select_languageY.rendered = function() {
 }
 
 Template.select_domain.rendered = function() {
-    $(this.find("select")).val(Session.get("domain")).uniform();
+    // $(this.find("select")).val(Session.get("domain")).uniform();
 }
 
 // TODO: Find closest round number
@@ -225,13 +225,45 @@ Template.language_dropdown.languages = function (){
     );
 };
 
+Template.domain_dropdown.rendered = function() {
+    $("#domain-menu").menu();
+}
+
 Template.domain_dropdown.domains = function (){
-    return Domains.find( {},
-        { sort: { "domain": 1 } }
-    );
+    var uniqueDomains = [];
+    var res = [];
+    _.each(Domains.find().fetch(), function(domain_obj) {
+        var domain = domain_obj.domain;
+        if (uniqueDomains.indexOf(domain) === -1) {
+            uniqueDomains.push(domain);
+            res.push({domain: domain});
+        }
+    });
+    return res;
 };
 
 Template.domain_item.industries_given_domain = function() {
-    console.log(this.domain);
-    return indByDom[this.domain];
+    var uniqueIndustries = [];
+    var res = [];
+    _.each(Domains.find({domain: this.domain}).fetch(), function(domain_obj) {
+        var industry = domain_obj.industry;
+        if (uniqueIndustries.indexOf(industry) == -1) {
+            uniqueIndustries.push(industry)
+            res.push({industry: industry});
+        }
+    });
+    return res;
+}
+
+Template.industry_item.occupations_given_industry = function() {
+    var uniqueOccupations = [];
+    var res = []
+    _.each(Domains.find({industry: this.industry}).fetch(), function(domain_obj) {
+        var occupation = domain_obj.occupation;
+        if (uniqueOccupations.indexOf(occupation) == -1) {
+            uniqueOccupations.push(occupation)
+            res.push({occupation: occupation});
+        }
+    });
+    return res;
 }

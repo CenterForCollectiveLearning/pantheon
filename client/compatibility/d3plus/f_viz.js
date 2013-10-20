@@ -718,7 +718,9 @@ d3plus.viz = function() {
     levels.forEach(function(nest_key, i){
     
       nested_data
-        .key(function(d){ return vars.attrs[d[vars.id_var]][nest_key][vars.id_var] })
+        .key(function(d){ 
+          return vars.attrs[d[vars.id_var]][nest_key][vars.id_var] 
+        })
       
       if (i == levels.length-1) {
         nested_data.rollup(function(leaves){

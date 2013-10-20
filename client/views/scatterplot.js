@@ -142,7 +142,7 @@ Template.scatterplot_svg.rendered = function() {
 		var axis = code == x_code ? 'x' : 'y';
 		var other_axis = axis == 'x' ? 'y' : 'x';
 
-		if (occ == 'EXPLORER') {
+		if (occ == 'EXPLORER' || occ == 'MILITARY OFFICER') {
 			continue;
     	}
 

@@ -1,26 +1,6 @@
 // Set Defaults
 
-// Object containing domain hierarchy for domains dropdown
-this.uniqueDoms = [];
-this.indByDom = {}
-this.occByInd = {}
-_.each(Domains.find().fetch(), function(domain_obj) {
-    var domain = domain_obj.domain
-    var industry = domain_obj.industry;
-    var occupation = domain_obj.occupation;
 
-    if (!indByDom.hasOwnProperty(domain))
-        indByDom[domain] = [industry];
-    else {
-        if (indByDom[domain].indexOf(industry) == -1)
-            indByDom[domain].push(industry);
-    }
-
-    if (!occByInd.hasOwnProperty(industry))
-        occByInd[industry] = [occupation];
-    else
-        occByInd[industry].push(occupation);
-})
 
 // Enable caching for getting readrboard script
 jQuery.cachedScript = function( url, options ) {
@@ -68,7 +48,33 @@ this.IOMapping = {
     , "map": { "in": ["domain", "language"], "out": "country" }
 }
 
+// Object containing domain hierarchy for domains dropdown
+this.uniqueDomains = [];
+this.indByDom = {}
+this.occByInd = {}
+
 Meteor.startup(function() {
+    _.each(Domains.find().fetch(), function(domain_obj) {
+    var domain = domain_obj.domain
+    var industry = domain_obj.industry;
+    var occupation = domain_obj.occupation;
+
+    if (uniqueDomains.indexOf(domain) == -1)
+        uniqueDomains.push(domain);
+
+    if (!indByDom.hasOwnProperty(domain))
+        indByDom[domain] = [industry];
+    else {
+        if (indByDom[domain].indexOf(industry) == -1)
+            indByDom[domain].push(industry);
+    }
+
+    if (!occByInd.hasOwnProperty(industry))
+        occByInd[industry] = [occupation];
+    else
+        occByInd[industry].push(occupation);
+})
+    
     Session.setDefault('page', 'observatory');
     Session.setDefault('vizType', defaults.vizType);
     Session.setDefault('vizMode', defaults.vizMode);

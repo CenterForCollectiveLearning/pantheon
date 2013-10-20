@@ -122,12 +122,26 @@ does not send over anything other than the people ids,
 because the whole set of people already exists client side
 */
 Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
-    console.log("IN TOOLTIP PEOPLE");
     var sub = this;
-    console.log(country);
-    var args = getCountryExportArgs(begin, end, L, country);
 
+    var args = {
+        birthyear : {$gt:begin, $lte:end}
+        , numlangs: {$gt: L}
+    };
     if (vizMode === "country_exports" || vizMode === "matrix_exports") {
+        if (country !== 'all' ) {
+            args.countryCode = country;
+        }
+        if (domain.toLowerCase() !== 'all' ) {
+            // TODO don't include category in this match for pages that are automatically 'all'
+            args[domainAggregation] = domain;
+        };
+    } else if (vizMode === "country_vs_country") {
+        var args = {
+            birthyear : {$gt:begin, $lte:end}
+            , numlangs: {$gt: L}
+        };
+        args.$or = [{countryCode: countryX}, {countryCode: countryY}]
         if (domain.toLowerCase() !== 'all' ) {
             // TODO don't include category in this match for pages that are automatically 'all'
             args[domainAggregation] = domain;
@@ -149,29 +163,36 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
             sub.added("tooltipCollection", person._id, {});
          });
 
-    // People.find(args, projection)
-    //     .hint(occupation_countryCode)
-    //     .limit(limit)
-    //     .sort(sort)  
-    //     .forEach(function(person){
-    //         sub.added("tooltipCollection", person._id, {});
-    // });
-    sub.ready();
+    var count = People.find(args, {
+        fields: projection,
+        hint: occupation_countryCode}).count();
 
-    sub.onStop(function() {
-        console.log("STOPPING SUBSCRIPTION");
-    })
+    sub.added("tooltipCollection", Random.id(), {count: count});
 
-    // No stop needed here
     return;
 });
 
 Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
     var sub = this;
-    console.log(country);
-    var args = getCountryExportArgs(begin, end, L, country);
 
+    var args = {
+        birthyear : {$gt:begin, $lte:end}
+        , numlangs: {$gt: L}
+    };
     if (vizMode === "country_exports" || vizMode === "matrix_exports") {
+        if (country !== 'all' ) {
+            args.countryCode = country;
+        }
+        if (domain.toLowerCase() !== 'all' ) {
+            // TODO don't include category in this match for pages that are automatically 'all'
+            args[domainAggregation] = domain;
+        };
+    } else if (vizMode === "country_vs_country") {
+        var args = {
+            birthyear : {$gt:begin, $lte:end}
+            , numlangs: {$gt: L}
+        };
+        args.$or = [{countryCode: countryX}, {countryCode: countryY}]
         if (domain.toLowerCase() !== 'all' ) {
             // TODO don't include category in this match for pages that are automatically 'all'
             args[domainAggregation] = domain;
@@ -183,15 +204,11 @@ Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, c
     var count = People.find(args, {
         fields: projection,
         hint: occupation_countryCode}).count();
-    // var count = People.find(args, projection)
-    //         .hint(occupation_countryCode)
-    //         .count();
 
-    // TODO Return count also
     console.log("PEOPLE COUNT", count);
     sub.added("tooltipPeopleCountCollection", Random.id(), {count: count})
 
     sub.ready();
 
-    // No stop needed here
+    return;
 });

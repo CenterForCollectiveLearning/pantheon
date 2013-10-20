@@ -142,8 +142,6 @@ d3plus.tree_map = function(vars) {
   
   cell
     .on(d3plus.evt.over,function(d){
-      console.log("MOUSE OVER");
-      
       var id = find_variable(d,vars.id_var).replace(" ", "_"),
           self = d3.select("#cell_"+id).node()
 
@@ -181,13 +179,7 @@ d3plus.tree_map = function(vars) {
       Session.set("tooltipDomainAggregation", domainAggregation);
       Session.set("tooltipCountryCode", countryCode);
 
-      // Retrieve and pass data to template
-      var people = Tooltips.find().fetch();
-      Session.set("tooltipPeople", people);
-      var totalCount = TooltipsCount.findOne().count;
-      Session.set("tooltipPeopleCount", totalCount);
-      Session.set("tooltipHeading", countryName + ": " + industry);
-
+      Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + industry : industry;
       Template.tooltip.categoryA = countryName;
       Template.tooltip.categoryB = industry;
 

@@ -158,15 +158,14 @@ Deps.autorun(function() {
     var domainAggregation = Session.get("tooltipDomainAggregation")
 
     var countryCode = Session.get('tooltipCountryCode');
-    var countryX = Session.get('countryX');
-    var countryY = Session.get('countryY');
+    var countryCodeX = Session.get('tooltipCountryCodeX');
+    var countryCodeY = Session.get('tooltipCountryCodeY');
     var gender = Session.get('gender');
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
 
     var vizMode = Session.get('vizMode');
-
 
     // TODO fix this hack
     // if( window.Domains === undefined ) return;
@@ -178,6 +177,6 @@ Deps.autorun(function() {
     //     }
     // }
     // TODO Pass in an array or object
-    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation, onPeopleReady);
-    tooltipCountSub = Meteor.subscribe("tooltipPeopleCount", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation, onCountReady);
+    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, domain, domainAggregation, onPeopleReady);
+    tooltipCountSub = Meteor.subscribe("tooltipPeopleCount", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, domain, domainAggregation, onCountReady);
 });

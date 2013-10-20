@@ -163,7 +163,6 @@ Handlebars.registerHelper("initialDataReady", function(){
 // Create a global helper
 // Use this from multiple templates
 Handlebars.registerHelper("person_lookup", function(){
-    console.log(this._id);
     return People.findOne(this._id);
 });
 
@@ -287,7 +286,6 @@ Template.question.question = function() {
 Template.tooltip.helpers({
     tooltipShown: function() { return Session.get("showTooltip") }
     , position: function() { return Session.get("tooltipPosition") }
-    , heading: function() { return Session.get("tooltipHeading") }
     , count: function() {
         var doc = TooltipsCount.findOne() 
         return (typeof doc !== "undefined") ? doc.count : 0

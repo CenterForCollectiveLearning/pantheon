@@ -144,7 +144,37 @@ d3plus.pie_scatter = function(vars) {
           y = vars.y_scale(d[vars.yaxis_var]),
           color = d[vars.active_var] || d.num_children_active/d.num_children == 1 ? "#333" : find_color(d[vars.id_var]),
           viz = d3.select("g.chart");
-          
+
+      var industry = d.id;
+      var countryNameX = vars.xaxis_var;
+      var countryNameY = vars.yaxis_var;
+
+      var vizMode = Session.get("vizMode");
+      var countryCodeX = Countries.findOne({countryName: countryNameX}).countryCode;
+      var countryCodeY = Countries.findOne({countryName: countryNameY}).countryCode;
+      var industry = industry;
+      var domainAggregation = "industry";
+
+
+      // Positioning
+      var position = {
+        "left": (d3.event.clientX + 40),
+        "top": (d3.event.clientY - 45)
+      }
+      Session.set("tooltipPosition", position);
+   
+      // Subscription Parameters
+      Session.set("tooltipDomain", industry);
+      Session.set("tooltipDomainAggregation", domainAggregation);
+      Session.set("tooltipCountryCodeX", countryCodeX);
+      Session.set("tooltipCountryCodeY", countryCodeY);
+
+      Template.tooltip.heading = industry;
+      Template.tooltip.categoryA = countryNameX;
+      Template.tooltip.categoryB = industry;
+
+      Session.set("showTooltip", true);
+
       // vertical line to x-axis
       viz.append("line")
         .attr("class", "axis_hover")
@@ -234,21 +264,21 @@ d3plus.pie_scatter = function(vars) {
       }
       var tooltip_data = get_tooltip_data(d,"short",ex)
       
-      d3plus.tooltip.remove(vars.type)
-      d3plus.tooltip.create({
-        "id": vars.type,
-        "color": find_color(d[vars.id_var]),
-        "icon": find_variable(d[vars.id_var],"icon"),
-        "style": vars.icon_style,
-        "data": tooltip_data,
-        "title": find_variable(d[vars.id_var],vars.text_var),
-        "x": x+vars.graph.margin.left+vars.margin.left+vars.parent.node().offsetLeft,
-        "y": y+vars.graph.margin.top+vars.margin.top+vars.parent.node().offsetTop,
-        "offset": radius,
-        "arrow": true,
-        "footer": footer_text(),
-        "mouseevents": false
-      })
+      // d3plus.tooltip.remove(vars.type)
+      // d3plus.tooltip.create({
+      //   "id": vars.type,
+      //   "color": find_color(d[vars.id_var]),
+      //   "icon": find_variable(d[vars.id_var],"icon"),
+      //   "style": vars.icon_style,
+      //   "data": tooltip_data,
+      //   "title": find_variable(d[vars.id_var],vars.text_var),
+      //   "x": x+vars.graph.margin.left+vars.margin.left+vars.parent.node().offsetLeft,
+      //   "y": y+vars.graph.margin.top+vars.margin.top+vars.parent.node().offsetTop,
+      //   "offset": radius,
+      //   "arrow": true,
+      //   "footer": footer_text(),
+      //   "mouseevents": false
+      // })
       
     })
     .on(d3plus.evt.out, function(d){

@@ -148,16 +148,16 @@
 <template name="tooltip">
     {{#if tooltipShown}}
     <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
-
-        <span class="category">{{heading}}</span>
-        <div class="total-count">{{count}} {{suffix}}</div>
-        <div class="list">
-            {{#each top5}} 
-                {{> tt_person person_lookup}} 
-            {{/each}}
+        <div id="tooltip-inner">
+            <span class="category">{{heading}}</span>
+            <div class="total-count">{{count}} {{suffix}}</div>
+            <div class="list">
+                {{#each top5}} 
+                    {{> tt_person person_lookup}} 
+                {{/each}}
+            </div>
+            {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
         </div>
-        {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
-
     </div>
     {{/if}}
 </template>
