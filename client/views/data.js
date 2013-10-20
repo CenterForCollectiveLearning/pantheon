@@ -37,7 +37,7 @@ function renderTree(url){
         calcSize(allData);
 
         var m = [20, 120, 20, 120],
-            w = 800 - m[1] - m[3],
+            w = $('.page-middle').width(),
             h = 400 - m[0] - m[2],
             i = 0,
             root;
