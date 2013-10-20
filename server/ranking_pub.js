@@ -51,7 +51,7 @@ Meteor.publish("countries_ranking_pub", function(begin, end, domain) {
 //        country["Hindex"] = countries[cc][0]['Hindex'];
         country["i50"] = 20; //TODO: THESE ARE DUMMY VALUES FOR NOW - REFRESH THE PEOPLE COLLECTION WITH ADDITIONAL COLS
         country["Hindex"] = 30;
-        country["diversity"] = 25;
+        country["diversity"] = Object.keys(_.groupBy(countries[cc], "occupation")).length;
         country["percentwomen"] = (country["numwomen"]/country["numppl"]*100.0).toFixed(2);
         finaldata.push(country);
     };
@@ -76,7 +76,7 @@ Meteor.publish("domains_ranking_pub", function(begin, end, country, domain) {
     if (country !== 'all' ) {
         criteria.countryCode = country;
     }
-    
+
     if (domain.toLowerCase() !== 'all' ) {
         domain = domain.substring(1);
         // TODO don't include category in this match for pages that are automatically 'all'
