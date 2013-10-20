@@ -47,10 +47,8 @@ Meteor.publish("countries_ranking_pub", function(begin, end, domain) {
             return p.gender === 'Female' ? 'Female': 'Male';
         }).Female;
         country["numwomen"] = females ? females : 0;
-//        country["i50"] = countries[cc][0]['i50'];
-//        country["Hindex"] = countries[cc][0]['Hindex'];
-        country["i50"] = 20; //TODO: THESE ARE DUMMY VALUES FOR NOW - REFRESH THE PEOPLE COLLECTION WITH ADDITIONAL COLS
-        country["Hindex"] = 30;
+        country["i50"] = countries[cc][0]['i50'];
+        country["Hindex"] = countries[cc][0]['Hindex'];
         country["diversity"] = Object.keys(_.groupBy(countries[cc], "occupation")).length;
         country["percentwomen"] = (country["numwomen"]/country["numppl"]*100.0).toFixed(2);
         finaldata.push(country);
