@@ -146,54 +146,6 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
     // No stop needed here
 });
 
-/*
- * Static query that pushes the countries ranking table
- * This needs to run a native mongo query due to aggregates being not supported directly yet
- *
- * this is the equivalent SQL query:
- * SELECT a.*, b.numwomen, (b.numwomen*1.0/numppl)*100.0 as percent_female
- * FROM
-     * (select countryName, countryCode,  count(distinct en_curid) as numppl, count(distinct occupation) numoccs, i50, Hindex
-     * from culture3
-     * where occupation == "ASTRONAUT"
-     * group by countryCode limit 30)
- * AS a
- * left join
- * (select countryCode, count(distinct en_curid) as numwomen
- * from culture3
- * where gender == 'Female' and occupation == "ASTRONAUT"
- * group by countryCode)
- * as b
- * on a.countryCode == b.countryCode;
- *
- */
-Meteor.publish("countries_ranking_pub", function(begin, end, domain) {
-    var sub = this;
-    var collectionName = "countries_ranking";
-
-    var criteria = {
-        birthyear: {$gte: begin, $lte:end}
-    };
-
-    if (domain.toLowerCase() !== 'all' ) {
-        domain = domain.substring(1);
-        // TODO don't include category in this match for pages that are automatically 'all'
-        criteria.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
-    };
-
-    var data = People.find(criteria);
-    var countries =_.countBy([1, 2, 3, 4, 5], function(num) {
-        return num % 2 == 0 ? 'even': 'odd';
-    });
-
-
-    data.forEach(function(person){
-        sub.added(collectionName, Random.id(), person);
-    });
-
-    sub.ready();
-    return;
-});
 
 Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
     var sub = this;

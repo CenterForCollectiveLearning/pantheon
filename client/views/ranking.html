@@ -62,8 +62,8 @@
         <th>Ranking</th>
         <th>Country</th>
         <th>Number of people</th>
-        <th>% of total</th>
-        <th>Domains</th>
+        <th>% Women</th>
+        <th>Diversity</th>
         <th>i50</th>
         <th>H-index</th>
     </tr>
@@ -74,9 +74,9 @@
     <tr class = "{{continentName}}">
         <td>{{rank}}</td>
         <td>{{countryName}}</td>
-        <td>{{count}}</td>
-        <td>{{! percent }}</td>
-        <td>{{numdomains}}</td>
+        <td>{{numppl}}</td>
+        <td>{{percentwomen}}</td>
+        <td>{{diversity}}</td>
         <td>{{i50}}</td>
         <td>{{Hindex}}</td>
     </tr>
@@ -108,6 +108,32 @@
     </tr>
 </template>
 
+<!--Domain header template -->
+<template name="dom_cols">
+    <tr>
+        <th>Ranking</th>
+        <th>Occupation</th>
+        <th>Industry</th>
+        <th>Domain</th>
+        <th>Total Exporters</th>
+        <th>% Women</th>
+        <th>Total People</th>
+    </tr>
+</template>
+
+<!-- Domain in Ranked List -->
+<template name="ranked_domain">
+    <tr class = "{{domain}}">
+        <td>{{rank}}</td>
+        <td>{{occupation}}</td>
+        <td>{{industry}}</td>
+        <td>{{domain}}</td>
+        <td>{{ubiquity}}</td>
+        <td>{{percentwomen}}</td>
+        <td>{{numppl}}</td>
+    </tr>
+</template>
+
 
 <template name="ranking_table">
     {{#constant}}
@@ -131,104 +157,14 @@
     {{/each}}
 </template>
 
-<template name="ranked_countries">
-    <tr class="Asia">
-        <td>1</td>
-        <td>Bangladesh</td>
-        <td>7</td>
-        <td>0.08</td>
-        <td>4</td>
-        <td>1</td>
-        <td>14</td>
-    </tr>
+<template name="ranked_countries_list">
+    {{#each countries_full_ranking}}
+    {{> ranked_country}}
+    {{/each}}
+</template>
 
-    <tr class="Asia">
-        <td>2</td>
-        <td>Belgium</td>
-        <td>65</td>
-        <td>0.78</td>
-        <td>24</td>
-        <td>17</td>
-        <td>37</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>3</td>
-        <td>Burkina Faso</td>
-        <td>1</td>
-        <td>0.01</td>
-        <td>1</td>
-        <td>0</td>
-        <td>10</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>4</td>
-        <td>Bulgaria</td>
-        <td>14</td>
-        <td>0.17</td>
-        <td>9</td>
-        <td>1</td>
-        <td>21</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>5</td>
-        <td>Bosnia and Herzegovina</td>
-        <td>22</td>
-        <td>0.26</td>
-        <td>7</td>
-        <td>4</td>
-        <td>24</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>6</td>
-        <td>Barbados</td>
-        <td>1</td>
-        <td>0.01</td>
-        <td>1</td>
-        <td>1</td>
-        <td>7</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>7</td>
-        <td>Bermuda</td>
-        <td>1</td>
-        <td>0.01</td>
-        <td>1</td>
-        <td>0</td>
-        <td>6</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>8</td>
-        <td>Brunei</td>
-        <td>1</td>
-        <td>0.01</td>
-        <td>1</td>
-        <td>0</td>
-        <td>3</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>9</td>
-        <td>Bolivia</td>
-        <td>3</td>
-        <td>0.04</td>
-        <td>2</td>
-        <td>1</td>
-        <td>12</td>
-    </tr>
-
-    <tr class="Asia">
-        <td>10</td>
-        <td>Bahrain</td>
-        <td>1</td>
-        <td>0.01</td>
-        <td>1</td>
-        <td>0</td>
-        <td>6</td>
-    </tr>
+<template name="ranked_domains_list">
+    {{#each domains_full_ranking}}
+    {{> ranked_domain}}
+    {{/each}}
 </template>

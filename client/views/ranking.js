@@ -69,11 +69,13 @@ Template.ranking_table.render_table = function() {
     var entity = Session.get("entity");
     switch (entity) {
         case "countries":
-            return new Handlebars.SafeString(Template.ranked_countries(this));
+            return new Handlebars.SafeString(Template.ranked_countries_list(this));
             break;
         case "people":
-        case "domains":
             return new Handlebars.SafeString(Template.ranked_people_list(this));
+            break;
+        case "domains":
+            return new Handlebars.SafeString(Template.ranked_domains_list(this));
             break;
     }
 }
@@ -86,7 +88,7 @@ Template.ranking_table.render_cols = function() {
         case "people":
             return new Handlebars.SafeString(Template.ppl_cols(this));
         case "domains":
-            return new Handlebars.SafeString(Template.ppl_cols(this));;
+            return new Handlebars.SafeString(Template.dom_cols(this));;
     }
 }
 
@@ -101,4 +103,34 @@ Template.ranked_people_list.rank = function() {
 
 Template.ranked_ppl.occupation = function() {
     return this.occupation.capitalize();
+}
+
+Template.ranked_countries_list.countries_full_ranking = function(){
+    return CountriesRanking.find();
+}
+
+Template.ranked_countries_list.rank = function(){
+    return 1;
+}
+
+Template.ranked_domains_list.domains_full_ranking = function(){
+    return DomainsRanking.find();
+}
+
+Template.ranked_domains_list.rank = function(){
+    return 1;
+}
+
+// TODO: do this with CSS instead??
+
+Template.ranked_domain.occupation = function() {
+    return this.occupation.capitalize();
+}
+
+Template.ranked_domain.industry = function() {
+    return this.industry.capitalize();
+}
+
+Template.ranked_domain.domain = function() {
+    return this.domain.capitalize();
 }

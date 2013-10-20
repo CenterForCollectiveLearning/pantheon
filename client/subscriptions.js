@@ -11,6 +11,7 @@ PeopleTopN = new Meteor.Collection("topNpeople");
 PeopleTop10 = new Meteor.Collection("top10people");
 Treemap = new Meteor.Collection("treemap");
 CountriesRanking = new Meteor.Collection("countries_ranking");
+DomainsRanking = new Meteor.Collection("domains_ranking");
 Matrix = new Meteor.Collection("matrix");
 Scatterplot = new Meteor.Collection("scatterplot");
 WorldMap = new Meteor.Collection("worldmap");
@@ -112,6 +113,7 @@ Deps.autorun(function(){
                     dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, domain, 'all', onReady);
                     break;
                 case "domains":
+                    dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, domain, onReady);
                     break;
                 default:
                     console.log("Invalid ranking entity!");
