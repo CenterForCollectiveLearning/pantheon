@@ -7,7 +7,7 @@ var teamMembers = [
 		, "media": {
 			"personal": "http://chidalgo.com/"
 			, "twitter": "https://twitter.com/cesifoti"
-			, "linkedin": "www.linkedin.com/pub/cesar-a-hidalgo/5/30a/a61"
+			, "linkedin": "http://www.linkedin.com/pub/cesar-a-hidalgo/5/30a/a61"
 			, "email": "mailto:hidalgo@mit.edu"
 		}
 	},
@@ -19,7 +19,7 @@ var teamMembers = [
 		, "media": {
 			"personal": "http://www.amyyu.net/"
 			, "twitter": "https://twitter.com/mangomochi86"
-			, "linkedin": "www.linkedin.com/in/amyzhaoyu"
+			, "linkedin": "http://www.linkedin.com/in/amyzhaoyu"
 			, "email": "mailto:amy_yu@mit.edu"
 		}
 	},
@@ -43,7 +43,7 @@ var teamMembers = [
 		, "media": {
 			"personal": "http://almossawi.com/"
 			, "twitter": "https://twitter.com/alialmossawi"
-			, "linkedin": "www.linkedin.com/in/almossawi/"
+			, "linkedin": "http://www.linkedin.com/in/almossawi/"
 			, "email": "almossawi@gmail.com"
 		}
 	},
@@ -65,7 +65,7 @@ var teamMembers = [
 		, "description": "Computer Science Undergraduate"
 		, "role": ["Data"]
 		, "media": {
-			"linkedin": "www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
+			"linkedin": "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
 			, "email": "mailto:defne@mit.edu"
 		}
 	}

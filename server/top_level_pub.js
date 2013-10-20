@@ -116,22 +116,57 @@ Meteor.publish("allpeople", function() {
 });
 
 /*
+Pass top five people to populate people
+
 Also a static query
 does not send over anything other than the people ids,
 because the whole set of people already exists client side
 */
-Meteor.publish("top5occupation", function(begin, end, L, country, industry, gender) {
+Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
     var sub = this;
+    console.log(country);
     var args = getCountryExportArgs(begin, end, L, country);
-    args.industry = industry;
 
+    if (vizMode === "country_exports" || vizMode === "matrix_exports") {
+        if (domain.toLowerCase() !== 'all' ) {
+            // TODO don't include category in this match for pages that are automatically 'all'
+            args[domainAggregation] = domain;
+        };
+    }
+
+    // TODO Return count also
     People.find(args, {
         fields: { _id: 1 },
         limit: 5,
         sort: { numlangs: -1 }
     }).forEach(function (person) {
-        sub.added("mouseoverCollection", person._id, {}) // No other fields in this
+        console.log(person);
+        sub.added("tooltipCollection", person._id, {}) // No other fields in this
     });
+    sub.ready();
+
+    // No stop needed here
+});
+
+Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
+    var sub = this;
+    console.log(country);
+    var args = getCountryExportArgs(begin, end, L, country);
+
+    if (vizMode === "country_exports" || vizMode === "matrix_exports") {
+        if (domain.toLowerCase() !== 'all' ) {
+            // TODO don't include category in this match for pages that are automatically 'all'
+            args[domainAggregation] = domain;
+        };
+    }
+
+    console.log(args);
+
+    // TODO Return count also
+    var count = People.find(args).count();
+    console.log("PEOPLE COUNT", count);
+    sub.added("tooltipPeopleCountCollection", Random.id(), {count: count})
+
     sub.ready();
 
     // No stop needed here

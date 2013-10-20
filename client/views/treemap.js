@@ -235,6 +235,17 @@ Template.treemap_svg.rendered = function() {
 
     // Overriding d3+ tooltips
 
+    function mouseover(p) {
+        
+    }
+
+    function mouseout(p) {
+        Session.set("showTooltip", false);
+        $("#tooltip").empty();
+        mouseoverCell = null;
+        d3.selectAll("text").classed("active", false);
+    }
+
     //  d3.selectAll("rect").on("mouseover", mouseover);
     // d3.selectAll("rect").on("mouseout", mouseout);
 

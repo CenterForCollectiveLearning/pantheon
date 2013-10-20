@@ -143,32 +143,24 @@
     </li>
 </template>
 
+<!-- TODO Use with only top 5 and individuals count, so as to not pass all individuals over the wire only to use five of them -->
 <!-- Tooltips -->
 <template name="tooltip">
     {{#if tooltipShown}}
-        <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
-            {{> tt_list individuals}}
+    <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
+        <span class="category">{{heading}}</span>
+        <div class="total-count">{{count}} {{suffix}}</div>
+        <div class="list">
+            {{#each top5}} 
+                {{> tt_person person_lookup}} 
+            {{/each}}
         </div>
-    {{/if}}
-</template>
-
-<template name="tt_list">
-    <span class="category">
-        {{heading}}
-    </span><br />
-    {{count}} {{suffix}}
-    <div class="list">
-        {{#each top5}}
-            {{> tt_person}}
-        {{/each}}
+        {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
     </div>
-
-    {{#if more}}
-    <span class="extras">({{extras}} more)</span>
     {{/if}}
 </template>
 
 <!-- Person in tooltip list-->
 <template name = "tt_person">
-    {{name}}<span class="birthplace">, {{birthcity}}, {{countryName}}</span><br />
+    {{name}}<span class="birthplace">, {{birthcity}}, {{countryName}} ({{numlangs}})</span><br />
 </template>

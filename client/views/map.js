@@ -147,46 +147,71 @@ var mouseoverCell = null;
 function mouseover(d){
     // TODO optional: highlight selected country
 
+    var countryCode3 = d.id;
+    
+    console.log(countryCode3);
+    var countryName = Countries.findOne({countryCode3: countryCode3}).countryName;
+    var countryCode = Countries.findOne({countryCode3: countryCode3}).countryCode;
+    console.log(countryCode);
+    var industry = Session.get("domain");
+    var domainAggregation = "occupation";
+
     var position = {
         "left": (d3.event.pageX + 40),
         "top": (d3.event.pageY - 45)
     }
     Session.set("tooltipPosition", position);
 
-    if ( d === mouseoverCell ) {
-        // Don't re-render the rest of the list
-        return;
-    }
-    else {
-        // Draw tooltip
-        mouseoverCell = d;
-        var doc = WorldMap.findOne({ countryCode: { $regex: d.id } });
-        if (!doc) {
-            // TODO show that this country has no data
-            Session.set("showTooltip", false);
-            return;
-        }
+    // Subscription Parameters
+    Session.set("tooltipDomain", industry);
+    Session.set("tooltipDomainAggregation", "industry");
+    Session.set("tooltipCountryCode", countryCode);
 
-        var args = {
-            numlangs: {$gt: +Session.get("langs")},
-            // TODO: put proper begin and end
-            birthyear: {$gte: 0, $lte: 2000},
-            // TODO: countryCode3 has spaces....
-            countryCode3: doc.countryCode
-        };
+    // Retrieve and pass data to template
+    Session.set("tooltipPeople", Tooltips.find().fetch());
+    var totalCount = TooltipsCount.findOne().count;
+    Session.set("tooltipPeopleCount", totalCount);
+    Session.set("tooltipHeading", countryName + ": " + industry);
 
-        // Todo allow this to match on all categories
-        var domain = Session.get("domain");
-        if ( domain !== 'all' ) {
-            args.occupation = domain.substring(1).toUpperCase();
-        };
+    Template.tooltip.categoryA = countryName;
+    Template.tooltip.categoryB = industry;
+    
+    Session.set("showTooltip", true);     
 
-        Session.set("tooltipHeading", doc.countryName);
-        // This might be slow
-        console.log(args);
-        Session.set("tooltipPeople", People.find(args, {limit: 5}).fetch());
-        Session.set("showTooltip", true);
-    }
+    // if ( d === mouseoverCell ) {
+    //     // Don't re-render the rest of the list
+    //     return;
+    // }
+    // else {
+    //     // Draw tooltip
+    //     mouseoverCell = d;
+    //     var doc = WorldMap.findOne({ countryCode: { $regex: d.id } });
+    //     if (!doc) {
+    //         // TODO show that this country has no data
+    //         Session.set("showTooltip", false);
+    //         return;
+    //     }
+
+    //     var args = {
+    //         numlangs: {$gt: +Session.get("langs")},
+    //         // TODO: put proper begin and end
+    //         birthyear: {$gte: 0, $lte: 2000},
+    //         // TODO: countryCode3 has spaces....
+    //         countryCode3: doc.countryCode
+    //     };
+
+    //     // Todo allow this to match on all categories
+    //     var domain = Session.get("domain");
+    //     if ( domain !== 'all' ) {
+    //         args.occupation = domain.substring(1).toUpperCase();
+    //     };
+
+    //     Session.set("tooltipHeading", doc.countryName);
+    //     // This might be slow
+    //     console.log(args);
+    //     Session.set("tooltipPeople", People.find(args, {limit: 5}).fetch());
+    //     Session.set("showTooltip", true);
+    // }
 }
 
 function mouseout(d){
