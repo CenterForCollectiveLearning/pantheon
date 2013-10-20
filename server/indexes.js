@@ -4,6 +4,9 @@ People._ensureIndex({ birthyear: 1, gender: 1, numlangs: 1, });
 // TODO double check this indexing
 People._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} );
 People._ensureIndex({ countryCode: 1, occupation: 1, birthyear: 1} );
+People._ensureIndex({ industry: 1} );
+People._ensureIndex({ domain: 1} );
+
 
 /*
  * Need to have a prefix of all the lookups we are going to do

@@ -1,6 +1,5 @@
 Template.ranking_table.rendered = function() {
     //initializations
-    // $("select, input, a.button, button").uniform();
 
     $('#ranking').dataTable({
         "iDisplayLength": 25,
@@ -22,7 +21,6 @@ Template.ranking_table.rendered = function() {
         "aaSorting": [[ 6, 'desc' ]]
     });
 
-    // $.uniform.update();
 }
 
 Template.ranking_accordion.rendered = function() {

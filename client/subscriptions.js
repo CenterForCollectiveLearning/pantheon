@@ -10,13 +10,13 @@ allpeopleSub = Meteor.subscribe("allpeople");
 PeopleTopN = new Meteor.Collection("topNpeople");
 PeopleTop10 = new Meteor.Collection("top10people");
 Treemap = new Meteor.Collection("treemap");
+CountriesRanking = new Meteor.Collection("countries_ranking");
 Matrix = new Meteor.Collection("matrix");
 Scatterplot = new Meteor.Collection("scatterplot");
 WorldMap = new Meteor.Collection("worldmap");
 Tooltips = new Meteor.Collection("mouseoverCollection");
 
 var top10Sub = null;
-var topNSub = null;
 var dataSub = null;
 var tooltipSub = null;
 
@@ -104,9 +104,11 @@ Deps.autorun(function(){
         } else if(page === "ranking"){
             switch(entity){
                 case "countries":
+                    dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, domain, onReady);
+                    break;
                 case "people":
-                    topNSub = Meteor.subscribe("peopletopN", begin, end, langs, country, domain, 'all', onReady);
-                    top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain, onReady);
+                    dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, domain, 'all', onReady);
+                    break;
                 case "domains":
                     break;
                 default:

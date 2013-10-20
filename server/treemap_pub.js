@@ -3,7 +3,6 @@
  * This needs to run a native mongo query due to aggregates being not supported directly yet
  */
 Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language, domain) {
-    console.log(domain);
     var sub = this;
     var driver = MongoInternals.defaultRemoteCollectionDriver();
 
