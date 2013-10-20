@@ -19,7 +19,9 @@
                 <!-- Visualization and Ranked List Container -->
                 <div class="page-middle span8">
                     {{#if dataReady}}
-                    {{> ranking_table}}
+                        {{> ranking_table}}
+                    {{else}}
+                        {{> spinner}}
                     {{/if}}
                 </div>
             </div>
