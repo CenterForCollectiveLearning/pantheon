@@ -1,7 +1,6 @@
 Template.select_mode.render_template = function() {
     var page = Session.get("page");
 
-
     // selections for Observatory (visualizations)
     if(page==="observatory"){
         var mode = Session.get("vizMode");
@@ -225,3 +224,14 @@ Template.language_dropdown.languages = function (){
         { sort: { "lang_name": 1 } }
     );
 };
+
+Template.domain_dropdown.domains = function (){
+    return Domains.find( {},
+        { sort: { "domain": 1 } }
+    );
+};
+
+Template.domain_item.industries_given_domain = function() {
+    console.log(this.domain);
+    return indByDom[this.domain];
+}

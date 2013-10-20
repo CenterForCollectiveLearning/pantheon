@@ -95,6 +95,10 @@
     {{> language_dropdown}}
 </template>
 
+<template name="select_domain">
+    {{> domain_dropdown}}
+</template>
+
 <template name="language_dropdown">
     <div class="parameter-selection">
         <label>Importer</label>
@@ -115,13 +119,49 @@
     <option value="{{lang}}">{{lang_name}}</option>
 </template>
 
-<!-- TODO Pull data out of here and use submenus -->
-<template name="select_domain">
+<template name="domain_dropdown">
     <div class="parameter-selection">
-        <label>Domain</label>
-        <select id="domain" class="top_nav_control">
-            <option value="all">All</option>
+        <label>Importer</label>
+        <ul class="dropdown-menu parameter-selection" role="menu">
+            {{#each domains}}
+                {{> domain_item}}
+            {{/each}}
+        </ul>
+    </div>
+</template>
 
+<template name="domain_item">
+    <li class="dropdown-submenu" id="domain" class="top_nav_control">
+        <a tabindex="-1" href="#">{{domain}}</a>
+        <ul class="dropdown-menu parameter-selection" role="menu">
+            {{#each industries_given_domain}}
+                {{> industry_item }}
+            {{/each}}
+        </ul>
+    </li>
+</template>
+
+<template name="industry_item">
+    <li class="dropdown-submenu" id="domain" class="top_nav_control">
+        <ul class="dropdown-menu parameter-selection" role="menu">
+            Test
+            <!-- {{#each industries}}
+                {{> industry_item domain_industries}}
+            {{/each}} -->
+        </ul>
+    </li>
+</template>
+
+<!-- <template name="occupation_item">
+    <li class="dropdown-submenu" id="domain" class="top_nav_control">
+        <ul class="dropdown-menu parameter-selection" role="menu">
+            {{#each industries}}
+                {{> industry_item}}
+            {{/each}}
+        </ul>
+    </li>
+</template> -->
+<!-- 
             <option value="+arts">Arts</option>
             <option value="+humanities">Humanities</option>
             <option value="+business%20&amp;%20law">Business & Law</option>
@@ -266,7 +306,7 @@
             </optgroup>
         </select>
     </div>
-</template>
+</template> -->
 
 <template name="select_domainX">
     <div class="parameter-selection">

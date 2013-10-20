@@ -182,7 +182,8 @@ d3plus.tree_map = function(vars) {
       Session.set("tooltipCountryCode", countryCode);
 
       // Retrieve and pass data to template
-      Session.set("tooltipPeople", Tooltips.find().fetch());
+      var people = Tooltips.find().fetch();
+      Session.set("tooltipPeople", people);
       var totalCount = TooltipsCount.findOne().count;
       Session.set("tooltipPeopleCount", totalCount);
       Session.set("tooltipHeading", countryName + ": " + industry);
@@ -190,9 +191,7 @@ d3plus.tree_map = function(vars) {
       Template.tooltip.categoryA = countryName;
       Template.tooltip.categoryB = industry;
 
-      Session.set("showTooltip", true);
-      
-      // small_tooltip(d);
+      Session.set("showTooltip", true);     
     })
     .on(d3plus.evt.out,function(d){
       Template.tooltip.top5 = null;

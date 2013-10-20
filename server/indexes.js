@@ -8,6 +8,20 @@ People._ensureIndex({ industry: 1} );
 People._ensureIndex({ domain: 1} );
 
 
+/* 
+ * TOOLTIPS
+ */
+// Country Exports (input: country, occupation)
+var domain_countryCode = { _id: 1, birthyear: 1, numlangs: 1, domain: 1, countryCode: 1}
+var industry_countryCode = { _id: 1, birthyear: 1, numlangs: 1, industry: 1, countryCode: 1}
+var occupation_countryCode = { _id: 1, birthyear: 1, numlangs: 1, occupation: 1, countryCode: 1}
+People._ensureIndex(domain_countryCode);
+People._ensureIndex(industry_countryCode);
+People._ensureIndex(occupation_countryCode);
+
+// Domain Exporters (input: country, occupation)
+People._ensureIndex({ occupation: 1, countryCode: 1, birthyear: 1, numlangs: 1});
+
 /*
  * Need to have a prefix of all the lookups we are going to do
   * in at least one of the indices below

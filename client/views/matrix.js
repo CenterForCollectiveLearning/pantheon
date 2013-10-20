@@ -346,9 +346,6 @@ Template.matrix_svg.rendered = function() {
         Session.set("tooltipCountryCode", countryCode);
 
         // Retrieve and pass data to template
-        Session.set("tooltipPeople", Tooltips.find().fetch());
-        var totalCount = TooltipsCount.findOne().count;
-        Session.set("tooltipPeopleCount", totalCount);
         Session.set("tooltipHeading", countryName + ": " + industry);
 
         Template.tooltip.categoryA = countryName;

@@ -152,17 +152,18 @@ Template.accordion.events = {
 }
 
 // Global helper for data ready
-Handlebars.registerHelper("dataReady" ,function(){
+Handlebars.registerHelper("dataReady", function(){
     return Session.get("dataReady");
 });
 
-Handlebars.registerHelper("initialDataReady" ,function(){
+Handlebars.registerHelper("initialDataReady", function(){
     return Session.get("initialDataReady");
 });
 
 // Create a global helper
 // Use this from multiple templates
-Handlebars.registerHelper("person_lookup" ,function(){
+Handlebars.registerHelper("person_lookup", function(){
+    console.log(this._id);
     return People.findOne(this._id);
 });
 
@@ -287,9 +288,21 @@ Template.tooltip.helpers({
     tooltipShown: function() { return Session.get("showTooltip") }
     , position: function() { return Session.get("tooltipPosition") }
     , heading: function() { return Session.get("tooltipHeading") }
-    , count: function() { return Session.get("tooltipPeopleCount") }
-    , suffix: function() { return (Session.get("tooltipPeopleCount") - 5 > 1) ? "individuals" : "individual" }
-    , top5: function() { console.log(Session.get("tooltipPeople")); return Session.get("tooltipPeople") }
-    , more: function() { return Session.get("tooltipPeopleCount") > 5 }
-    , extras: function() { return Session.get("tooltipPeopleCount") - 5 }
+    , count: function() {
+        var doc = TooltipsCount.findOne() 
+        return (typeof doc !== "undefined") ? doc.count : 0
+    }
+    , suffix: function() {
+        var doc = TooltipsCount.findOne() 
+        return (typeof doc !== "undefined" && doc.count > 1) ? "individuals" : "individual"
+    }
+    , top5: function() { return Tooltips.find() }
+    , more: function() { 
+        var doc = TooltipsCount.findOne() 
+        return (typeof doc !== "undefined") ? doc.count > 5 : false
+    }
+    , extras: function() { 
+        var doc = TooltipsCount.findOne() 
+        return (typeof doc !== "undefined") ? doc.count - 5 : 0
+    }
 })

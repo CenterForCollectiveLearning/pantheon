@@ -142,6 +142,18 @@ Deps.autorun(function(){
  Subscription for tooltips on hover
   */
 Deps.autorun(function() {
+    // get rid of people and count ready once tooltip is working
+    // Return both in one publication
+    Session.set("tooltipPeopleReady", false);
+    Session.set("tooltipCountReady", false);
+
+    function onPeopleReady() {
+        Session.set("tooltipPeopleReady", true);
+    }
+    function onCountReady() {
+        Session.set("tooltipCountReady", true);
+    }
+
     var domain = Session.get("tooltipDomain");
     var domainAggregation = Session.get("tooltipDomainAggregation")
 
@@ -157,15 +169,15 @@ Deps.autorun(function() {
 
 
     // TODO fix this hack
-    if( window.Domains === undefined ) return;
+    // if( window.Domains === undefined ) return;
 
-    if( !countryCode || !begin || !end || !langs || !domain ) {
-        if( tooltipSub !== null ){
-            tooltipSub.stop();
-            tooltipSub = null;
-        }
-    }
+    // if( !countryCode || !begin || !end || !langs || !domain ) {
+    //     if( tooltipSub !== null ){
+    //         tooltipSub.stop();
+    //         tooltipSub = null;
+    //     }
+    // }
     // TODO Pass in an array or object
-    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation);
-    tooltipCountSub = Meteor.subscribe("tooltipPeopleCount", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation);
+    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation, onPeopleReady);
+    tooltipCountSub = Meteor.subscribe("tooltipPeopleCount", vizMode, begin, end, langs, countryCode, countryX, countryY, gender, domain, domainAggregation, onCountReady);
 });

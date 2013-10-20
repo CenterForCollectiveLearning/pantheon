@@ -1,6 +1,7 @@
 function getCountryExportArgs(begin, end, L, country, occ) {
     var args = {
         birthyear : {$gt:begin, $lte:end}
+        , numlangs: {$gt: L}
     };
     if (country !== 'all' ) {
         args.countryCode = country;
@@ -121,6 +122,7 @@ does not send over anything other than the people ids,
 because the whole set of people already exists client side
 */
 Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
+    console.log("IN TOOLTIP PEOPLE");
     var sub = this;
     console.log(country);
     var args = getCountryExportArgs(begin, end, L, country);
@@ -132,20 +134,37 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         };
     }
 
-    // TODO Return count also
+    var projection = {_id: 1};
+    var limit = 5;
+    var sort = {numlangs: -1};
+
+    console.log(args);
+
     People.find(args, {
-        fields: { _id: 1 },
-        limit: 5,
-        sort: { numlangs: -1 }
-    }).forEach(function (person) {
+        fields: projection, 
+        limit: limit, 
+        sort: sort,
+        hint: occupation_countryCode}).forEach(function(person){
         console.log(person);
-        sub.added("tooltipCollection", person._id, {}) // No other fields in this
-    });
+            sub.added("tooltipCollection", person._id, {});
+         });
+
+    // People.find(args, projection)
+    //     .hint(occupation_countryCode)
+    //     .limit(limit)
+    //     .sort(sort)  
+    //     .forEach(function(person){
+    //         sub.added("tooltipCollection", person._id, {});
+    // });
     sub.ready();
 
-    // No stop needed here
-});
+    sub.onStop(function() {
+        console.log("STOPPING SUBSCRIPTION");
+    })
 
+    // No stop needed here
+    return;
+});
 
 Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
     var sub = this;
@@ -159,10 +178,16 @@ Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, c
         };
     }
 
-    console.log(args);
+    var projection = {_id: 1};
+
+    var count = People.find(args, {
+        fields: projection,
+        hint: occupation_countryCode}).count();
+    // var count = People.find(args, projection)
+    //         .hint(occupation_countryCode)
+    //         .count();
 
     // TODO Return count also
-    var count = People.find(args).count();
     console.log("PEOPLE COUNT", count);
     sub.added("tooltipPeopleCountCollection", Random.id(), {count: count})
 

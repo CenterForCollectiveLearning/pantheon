@@ -1,5 +1,26 @@
-
 // Set Defaults
+
+// Object containing domain hierarchy for domains dropdown
+this.uniqueDoms = [];
+this.indByDom = {}
+this.occByInd = {}
+_.each(Domains.find().fetch(), function(domain_obj) {
+    var domain = domain_obj.domain
+    var industry = domain_obj.industry;
+    var occupation = domain_obj.occupation;
+
+    if (!indByDom.hasOwnProperty(domain))
+        indByDom[domain] = [industry];
+    else {
+        if (indByDom[domain].indexOf(industry) == -1)
+            indByDom[domain].push(industry);
+    }
+
+    if (!occByInd.hasOwnProperty(industry))
+        occByInd[industry] = [occupation];
+    else
+        occByInd[industry].push(occupation);
+})
 
 // Enable caching for getting readrboard script
 jQuery.cachedScript = function( url, options ) {
@@ -111,11 +132,11 @@ var left_sections = [
         template: "rankings",
         url: "/ranking"
     },
-    {
-        section: "People",
-        template: "people",
-        url: "/people"
-    },
+    // {
+    //     section: "People",
+    //     template: "people",
+    //     url: "/people"
+    // },
     {
         section: "Vision",
         template: "vision",
@@ -130,11 +151,11 @@ var right_sections = [
         template: "data",
         url: "/data"
     },
-    {
-        section: "Publications",
-        template: "publications",
-        url: "/publications"
-    },
+    // {
+    //     section: "Publications",
+    //     template: "publications",
+    //     url: "/publications"
+    // },
     {
         section: "FAQ",
         template: "faq",
