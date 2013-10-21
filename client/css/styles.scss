@@ -446,6 +446,15 @@ header {
 	}	
 }
 
+.invisible{
+  visibility:hidden;
+  display:none;
+}
+
+.visible{
+  display:block;
+}
+
 .ranked_list {
 	color: #cccccc;
 	overflow:hidden;

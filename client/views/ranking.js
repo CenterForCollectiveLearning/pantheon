@@ -21,6 +21,30 @@ Template.ranking_table.rendered = function() {
         "aaSorting": [[ 6, 'desc' ]]
     });
 
+    $("th").on({
+        mousemove: function(e) {
+            console.log("ranking tooltip!!");
+            console.log(window.lastX);
+            console.log(window.lastY);
+            var x = e.pageX;
+            var y = e.pageY;
+            var se = e.srcElement || e.target;
+            var content = e.srcElement.getAttribute("name");
+            document.getElementById('tooltip').innerHTML = content;
+            window.lastX = e.pageX;
+            window.lastY = e.pageY;
+            var ttOffset = 10;
+            var lastX = window.lastX + ttOffset;
+            var lastY = window.lastY + ttOffset;
+            var tt = document.getElementById('tooltip');
+            tt.className = "visible";
+            tt.style.left = lastX + "px";
+            tt.style.top  = lastY + "px";
+            tt.style.fontSize = "10pt";
+            tt.style.zIndex = "100";
+        }
+    });
+
 }
 
 Template.ranking_accordion.rendered = function() {
@@ -133,4 +157,10 @@ Template.ranked_domain.industry = function() {
 
 Template.ranked_domain.domain = function() {
     return this.domain.capitalize();
+}
+
+Template.ranking_table.events = {
+    "mouseleave th": function(d) {
+        document.getElementById('tooltip').className="invisible";
+    }
 }

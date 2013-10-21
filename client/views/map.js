@@ -57,12 +57,6 @@ Template.map_svg.rendered = function() {
     var value_range = get_range_log(data, 5);
     var value_range_big = get_range_log(data, 10);
 
-    //TODO:
-    // Add selection by domain/industry/occupation
-    // Get country data (by domain/industry/occupation, begin, end, langs)
-    // Set color fill gradient
-    // Add color key
-
     // Select the svg element which is the first node of the svg_map partial.
     var svg = d3.select(this.firstNode)
         .attr("width", $('.page-middle').width())
