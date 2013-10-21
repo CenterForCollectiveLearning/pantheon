@@ -75,20 +75,24 @@ Template.ranking_accordion.events = {
             , "people_ranking": "people"
             , "domains_ranking": "domains"
         }
-
+        var category = defaults.category;
         // Reset parameters for a viz type change
+        if(option === "people_ranking"){
+            category = "ASTRONAUT"; //TODO: figure out why all people ranking is SLOW.... default to astronauts now
+        }
         var path = '/ranking/' +
             modeToEntity[option] + '/' +
             defaults.country + '/' +
-            defaults.category + '/' +
+            category + '/' +
             defaults.from + '/' +
             defaults.to
+
+
         Router.go(path);
     }
 }
 
 Template.ranking_table.render_table = function() {
-    console.log("RENDER TABLES");
     var entity = Session.get("entity");
     switch (entity) {
         case "countries":
@@ -104,7 +108,6 @@ Template.ranking_table.render_table = function() {
 }
 
 Template.ranking_table.render_cols = function() {
-    console.log("RENDER COLS");
     var entity = Session.get("entity");
     switch (entity) {
         case "countries":
