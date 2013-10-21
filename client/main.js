@@ -90,7 +90,10 @@ Meteor.startup(function() {
     // TOOLTIPS
     Session.setDefault('showTooltip', false);
     Session.setDefault('tooltipCategory', 'all')
-    Session.setDefault('tooltipCategoryLevel', 'industry')
+    Session.setDefault('tooltipCategoryLevel', 'domain')
+    Session.setDefault('tooltipCountryCode', 'all')
+    Session.setDefault('tooltipCountryCodeX', 'all')
+    Session.setDefault('tooltipCountryCodeY', 'all')
 
     // SPLASH SCREEN
     Session.get("authorized", false);

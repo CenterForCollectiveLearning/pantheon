@@ -20,11 +20,7 @@ Template.scatterplot_svg.rendered = function() {
     // if( this.rendered ) return;
     // this.rendered = true;
 	var viz = d3plus.viz();
-
-	var aggregated = {};
-	var flatData = [];
-	var attrs = {};
-
+	
 	var vizMode = Session.get('vizMode');
 	if (vizMode === 'country_vs_country') {
 		var field = 'countryCode';
@@ -32,21 +28,39 @@ Template.scatterplot_svg.rendered = function() {
 		var y_code = Session.get('countryY');
 		var x_name = Countries.findOne({countryCode: x_code}).countryName;
 		var y_name = Countries.findOne({countryCode: y_code}).countryName;
+
+        var aggregatedField = 'occupation';
+
+        var nesting = ["nesting_1", "nesting_3", "nesting_5"];
+        var nestingDepth = "nesting_3";
 	} else if (vizMode === 'lang_vs_lang') {
 		var field = 'lang';
 		var x_code = Session.get('languageX');
 		var y_code = Session.get('languageY');
 		var x_name = Languages.findOne({lang: x_code}).lang_name;
 		var y_name = Languages.findOne({lang: y_code}).lang_name;
+
+        var aggregatedField = 'occupation';
+
+        var nesting = ["nesting_1", "nesting_3", "nesting_5"];
+        var nestingDepth = "nesting_3";
 	} else if (vizMode === 'domain_vs_domain') {
 		var field = 'domain';
-		var x_code = Session.get('domainX');
-		var y_code = Session.get('domainY');
+		var x_code = Session.get('categoryX');
+		var y_code = Session.get('categoryY');
 		var x_name = x_code;
-		var y_name = x_code
+		var y_name = y_code;
+
+        var aggregatedField = 'countryName';
+
+        var nesting = ["nesting_1", "nesting_3"];
+        var nestingDepth = "nesting_3";
 	}
 
 	var data = Scatterplot.find().fetch();
+    var aggregated = {};  // X, Y values for each data point (eg. {WRITER: {x:1, y:5}})
+    var flatData = [];  // Array of objects {xname: 130, yname:87, id: PHYSICIST}
+    var attrs = {};
 
 	if (vizMode === 'country_vs_country' || vizMode === 'lang_vs_lang') {
 		var attr = Domains.find().fetch();
@@ -101,7 +115,7 @@ Template.scatterplot_svg.rendered = function() {
                 , name: continent
             };
             var countryDict = {
-                id: countryCode
+                id: countryName
                 , name: countryName
             };
             attrs[continent] = {
@@ -110,8 +124,8 @@ Template.scatterplot_svg.rendered = function() {
                 , color: continent_color
                 , nesting_1: continentDict
             };
-            attrs[countryCode] = {
-                id: countryCode
+            attrs[countryName] = {
+                id: countryName
                 , name: countryName
                 , color: continent_color
                 , nesting_1: continentDict
@@ -120,49 +134,39 @@ Template.scatterplot_svg.rendered = function() {
         });
 	}
 
-	/*
-	    Flatten data 
-
-	    [{countryCode:'US', 
-	    domain: 'INSTITUTIONS', 
-	    industry: 'MILITARY', 
-	    occupation: 'EXPLORER', 
-	    count: 4}]
-
-	    TO
-	    
-	    {'EXPLORER': {x: 4, y:8}}
-	*/
+    // AGGREGATE
 	for (i in data) {
 		var datum = data[i]
-		var occ = datum.occupation;
+		var dataPoint = datum[aggregatedField];
 		var count = datum.count;
 		var code = datum[field];
 
 		var axis = code == x_code ? 'x' : 'y';
 		var other_axis = axis == 'x' ? 'y' : 'x';
 
-    	if (!aggregated.hasOwnProperty(occ)) {
-    		aggregated[occ] = {};
-    		aggregated[occ][axis] = count;
-    		aggregated[occ][other_axis] = 0;
+    	if (!aggregated.hasOwnProperty(dataPoint)) {
+    		aggregated[dataPoint] = {};
+    		aggregated[dataPoint][axis] = count;
+    		aggregated[dataPoint][other_axis] = 0;
     	} else {
-    		aggregated[occ][axis] = count;
+    		aggregated[dataPoint][axis] += count;
     	}
 	}
 	
-	for (var occ in aggregated) {
-		var datum = aggregated[occ];
+    // FLATTEN
+	for (var dataPoint in aggregated) {
+		var datum = aggregated[dataPoint];
 		var x = datum.x;
 		var y = datum.y;
 
     	var d = {
-			id: occ
-			, name: occ
+			id: dataPoint
+			, name: dataPoint
 			, active1: true
 			, active2: true
 			, year: 2002
 		}
+        console.log(x_name, y_name, x, y)
 		d[x_name] = x;
 		d[y_name] = y;
 		d['total'] = x + y;
@@ -176,6 +180,7 @@ Template.scatterplot_svg.rendered = function() {
 		return "This is some test HTML";
 	}
 
+    console.log("orignal data", data);
 	console.log("aggregated", aggregated);
 	console.log("FLAT DATA: ", flatData);
 	console.log("ATTRS: ", attrs);
@@ -191,8 +196,8 @@ Template.scatterplot_svg.rendered = function() {
 	    .xaxis_var(x_name)
 	    .yaxis_var(y_name)
 	    .value_var("total")
-        .nesting(["nesting_1", "nesting_3", "nesting_5"])
-        .depth("nesting_3")
+        .nesting(nesting)
+        .depth(nestingDepth)
         .text_format(text_formatting)
         .spotlight(false)
         .active_var("active1")

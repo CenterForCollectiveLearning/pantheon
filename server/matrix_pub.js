@@ -3,8 +3,8 @@ Meteor.publish("matrix_pub", function(begin, end, L, gender) {
     var sub = this;
 
     var args = {
-        numlangs: {$gt: L}
-        , birthyear: {$gte: begin, $lte: end}
+        birthyear: {$gte: begin, $lte: end}
+        , numlangs: {$gt: L}
     }
 
     if (gender === 'male' || gender === 'female') {

@@ -719,7 +719,9 @@ d3plus.viz = function() {
     
       nested_data
         .key(function(d){ 
-          return vars.attrs[d[vars.id_var]][nest_key][vars.id_var] 
+          try {
+            return vars.attrs[d[vars.id_var]][nest_key][vars.id_var];
+          } catch(e) {}
         })
       
       if (i == levels.length-1) {

@@ -145,16 +145,11 @@ d3plus.pie_scatter = function(vars) {
           color = d[vars.active_var] || d.num_children_active/d.num_children == 1 ? "#333" : find_color(d[vars.id_var]),
           viz = d3.select("g.chart");
 
-      var industry = d.id;
-      var countryNameX = vars.xaxis_var;
-      var countryNameY = vars.yaxis_var;
+      var dataPoint = d.id;
+      var xVar = vars.xaxis_var;
+      var yVar = vars.yaxis_var;
 
       var vizMode = Session.get("vizMode");
-      var countryCodeX = Countries.findOne({countryName: countryNameX}).countryCode;
-      var countryCodeY = Countries.findOne({countryName: countryNameY}).countryCode;
-      var category = industry;
-      var categoryLevel = "industry";  // TODO Don't hardcode this
-
 
       // Positioning
       var position = {
@@ -164,14 +159,28 @@ d3plus.pie_scatter = function(vars) {
       Session.set("tooltipPosition", position);
    
       // Subscription Parameters
-      Session.set("tooltipCategory", category);
-      Session.set("tooltipCategoryLevel", categoryLevel);
-      Session.set("tooltipCountryCodeX", countryCodeX);
-      Session.set("tooltipCountryCodeY", countryCodeY);
+      if (vizMode === 'country_vs_country') {
+        var countryCodeX = Countries.findOne({countryName: xVar}).countryCode;
+        var countryCodeY = Countries.findOne({countryName: yVar}).countryCode;
+        var category = dataPoint;
+        var categoryLevel = "industry";
 
-      Template.tooltip.heading = industry;
-      Template.tooltip.categoryA = countryNameX;
-      Template.tooltip.categoryB = industry;
+        Session.set("tooltipCategory", category);
+        Session.set("tooltipCategoryLevel", categoryLevel);
+        Session.set("tooltipCountryCodeX", countryCodeX);
+        Session.set("tooltipCountryCodeY", countryCodeY);
+      } else if (vizMode === 'domain_vs_domain') {
+        Session.set("tooltipCountryCode", Countries.findOne({countryName: dataPoint}).countryCode);
+
+        // Session.set("tooltipCountry", category);
+        Session.set("tooltipCategoryLevel", Session.get("categoryLevel"));
+        Session.set("tooltipCategoryX", xVar);
+        Session.set("tooltipCategoryY", yVar);
+      }
+
+      Template.tooltip.heading = dataPoint;
+      // Template.tooltip.categoryA = countryNameX;
+      // Template.tooltip.categoryB = dataPoint;
 
       Session.set("showTooltip", true);
 

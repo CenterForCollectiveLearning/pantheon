@@ -16,7 +16,6 @@ Matrix = new Meteor.Collection("matrix");
 Scatterplot = new Meteor.Collection("scatterplot");
 WorldMap = new Meteor.Collection("worldmap");
 Tooltips = new Meteor.Collection("tooltipCollection");
-TooltipsCount = new Meteor.Collection("tooltipPeopleCountCollection");
 
 var top10Sub = null;
 var dataSub = null;
@@ -151,6 +150,8 @@ Deps.autorun(function() {
     }
 
     var category = Session.get("tooltipCategory");
+    var categoryX = Session.get('categoryX');
+    var categoryY = Session.get('categoryY');
     var categoryLevel = Session.get("tooltipCategoryLevel")
 
     var countryCode = Session.get('tooltipCountryCode');
@@ -173,5 +174,5 @@ Deps.autorun(function() {
     //     }
     // }
     // TODO Pass in an array or object
-    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, category, categoryLevel, onPeopleReady);
+    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, onPeopleReady);
 });

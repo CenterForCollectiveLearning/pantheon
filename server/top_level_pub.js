@@ -126,7 +126,7 @@ Also a static query
 does not send over anything other than the people ids,
 because the whole set of people already exists client side
 */
-Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryLevel) {
+Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel) {
     var sub = this;
 
     var args = {
@@ -134,16 +134,31 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         , numlangs: {$gt: L}
     };
 
-    if (category.toLowerCase() !== 'all' ) {
-        args[categoryLevel] = category;
-    }
-
+    console.log("INTOOLTIPPEOPLE", category, category.toLowerCase());
+   
     if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode == "domain_exports_to" || vizMode === "map") {
         if (country !== 'all' ) {
             args.countryCode = country;
         }
+
+        if (category.toLowerCase() !== 'all' ) {
+            args[categoryLevel] = category;
+        }
     } else if (vizMode === "country_vs_country") {
+        if (category.toLowerCase() !== 'all' ) {
+            args[categoryLevel] = category;
+        }
         args.$or = [{countryCode: countryX}, {countryCode: countryY}]
+    } else if (vizMode === "domain_vs_domain") {
+        if (country !== 'all' ) {
+            args.countryCode = country;
+        }
+        
+        var or1 = {};
+        var or2 = {};
+        or1[categoryLevel] = categoryX;
+        or2[categoryLevel] = categoryY;
+        args.$or = [or1, or2]
     }
 
     var projection = {_id: 1};
@@ -156,6 +171,7 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         limit: limit, 
         sort: sort,
         hint: occupation_countryCode}).forEach(function(person){
+            console.log(person);
             sub.added("tooltipCollection", person._id, {});
          });
 

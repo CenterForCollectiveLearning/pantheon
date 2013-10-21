@@ -23,6 +23,8 @@ Template.select_mode.render_template = function() {
                 return new Handlebars.SafeString(Template.country_vs_country_mode(this));
             case "lang_vs_lang":
                 return new Handlebars.SafeString(Template.language_vs_language_mode(this));
+            case "domain_vs_domain":
+                return new Handlebars.SafeString(Template.domain_vs_domain_mode(this));
             case "map":
                 return new Handlebars.SafeString(Template.map_mode(this));
         }
@@ -61,8 +63,16 @@ Template.select_languageY.rendered = function() {
     $(this.find("select")).val(Session.get("languageY")).uniform();
 }
 
-Template.select_domain.rendered = function() {
+Template.select_category.rendered = function() {
     $(this.find("select")).val(Session.get("category")).uniform();
+}
+
+Template.select_categoryX.rendered = function() {
+    $(this.find("select")).val(Session.get("categoryX")).uniform();
+}
+
+Template.select_categoryY.rendered = function() {
+    $(this.find("select")).val(Session.get("categoryY")).uniform();
 }
 
 // TODO: Find closest round number
@@ -157,7 +167,37 @@ Template.select_languageY.events = {
     }
 }
 
-Template.select_domain.events = {
+Template.select_category.events = {
+    "change select": function(d) {
+        var path = window.location.pathname.split('/');
+
+        Session.set("categoryLevel", getCategoryLevel(d.target.value));
+
+        if (IOMapping[Session.get("vizMode")]["in"].indexOf("category") == 0)
+            path[3] = d.target.value;
+        else
+            path[4] = d.target.value;        
+        
+        Router.go(path.join('/'));
+    }
+}
+
+Template.select_categoryX.events = {
+    "change select": function(d) {
+        var path = window.location.pathname.split('/');
+
+        Session.set("categoryLevel", getCategoryLevel(d.target.value));
+
+        if (IOMapping[Session.get("vizMode")]["in"].indexOf("category") == 0)
+            path[3] = d.target.value;
+        else
+            path[4] = d.target.value;        
+        
+        Router.go(path.join('/'));
+    }
+}
+
+Template.select_categoryY.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
 
@@ -236,7 +276,7 @@ Template.language_dropdown.languages = function (){
     );
 };
 
-Template.domain_dropdown.domains = function (){
+Template.category_dropdown.domains = function (){
     var uniqueDomains = [];
     var res = [];
     _.each(Domains.find().fetch(), function(domain_obj) {
@@ -249,7 +289,7 @@ Template.domain_dropdown.domains = function (){
     return res;
 };
 
-Template.domain_dropdown.industries = function (){
+Template.category_dropdown.industries = function (){
     var uniqueIndustries = [];
     var res = [];
     _.each(Domains.find().fetch(), function(domain_obj) {

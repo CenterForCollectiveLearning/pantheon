@@ -58,9 +58,10 @@ Router.map(function() {
             // Reset defaults based on vizmode
             if (vizMode == 'country_exports')
                 Session.set("category", defaults.category)
-            else if (vizMode == 'domain_exports_to') {
+            else if (vizMode == 'domain_exports_to')
                 Session.set("country", defaults.country)
-            }
+            else if (vizMode == 'country_vs_country')
+                Session.set("country", defaults.country)
 
             if(IOMapping[vizMode]["in"][0] === "category")
                 Session.set("categoryLevel", getCategoryLevel(this.params.param1));

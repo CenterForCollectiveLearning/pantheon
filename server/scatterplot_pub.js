@@ -72,13 +72,11 @@ Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, cou
             )
         );
     } else if (vizMode === 'domain_vs_domain') {
-        domainX = domainX.substring(1);
-        domainY = domainY.substring(1);
         matchArgs.$or = [{domain: domainX}, {domain: domainY}];
         pipeline = [
             {$match: matchArgs },
             {$group: {
-                _id: {continent: "$continentName", countryCode: "$countryCode", countryName: "$countryName"},
+                _id: {continent: "$continentName", countryCode: "$countryCode", countryName: "$countryName", domain: "$domain", industry: "$industry", occupation: "$occupation"},
                 count: {$sum: 1 }
             }}
         ];
@@ -94,7 +92,6 @@ Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, cou
             Meteor.bindEnvironment(
                 function(err, result) {
                     _.each(result, function(e) {
-                        console.log(e);
                         // Generate a random disposable id for each aggregate
                         sub.added("scatterplot", Random.id(), {
                             continent: e._id.continent
