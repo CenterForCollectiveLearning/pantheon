@@ -76,11 +76,11 @@ Router.map(function() {
         }
     });
 
-    this.route('ranking', {
-            path: '/ranking',
+    this.route('rankings', {
+            path: '/rankings',
             before: [
                 function() {
-                    this.redirect('/ranking/' +
+                    this.redirect('/rankings/' +
                         defaults.entity + '/' +
                         defaults.country + '/' +
                         defaults.category + '/' +
@@ -90,8 +90,8 @@ Router.map(function() {
             ]}
     );
 
-    this.route('ranking', {
-            path: '/ranking/:entity/:country/:category/:from/:to',
+    this.route('rankings', {
+            path: '/rankings/:entity/:country/:category/:from/:to',
             data: function() {
                 Session.set('page', this.template);
                 Session.set('entity', this.params.entity);
@@ -121,7 +121,7 @@ Router.map(function() {
         path: '/people/:person',
         data: function() { 
             Session.set('page', this.template);
-            Session.set('person', this.params.person);
+            Session.set('person', this.params.person);X1
         }
     });
     this.route('team', {
