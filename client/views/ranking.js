@@ -80,7 +80,7 @@ Template.ranking_accordion.events = {
         if(option === "people_ranking"){
             category = "ASTRONAUT"; //TODO: figure out why all people ranking is SLOW.... default to astronauts now
         }
-        var path = '/ranking/' +
+        var path = '/rankings/' +
             modeToEntity[option] + '/' +
             defaults.country + '/' +
             category + '/' +
