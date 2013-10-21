@@ -9,6 +9,9 @@
                 {{> spinner}}
             {{/if}}
 	    </div>
+        {{#if initialDataReady}}
+            {{> time_slider}} 
+        {{/if}}                
         {{! TODO: Move this out }}
 <!--         <div class="legend">
             <div id="institutions" class="pill" style="background-color:#ECD078">Institutions</a></div>
@@ -20,8 +23,10 @@
             <div id="science_and_technology" class="pill" style="background-color:#53a9f1">Science &amp; Technology</div>
             <div id="sports" class="pill" style="background-color:#79BD9A">Sports</div>
         </div> -->
+<!--         {{!#if initialDataReady}}
+            {{!> time_slider}}
+        {{!/if}} -->
     </div>
-
     <div class="page-right span2">
         {{#if initialDataReady}}
     	    {{> ranked_list }}

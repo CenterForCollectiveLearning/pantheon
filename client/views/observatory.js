@@ -40,56 +40,11 @@ Template.visualization.render_template = function() {
         }
 }
 
-Template.slider.rendered = function() {
+Template.time_slider.rendered = function() {
     $('select#from, select#to').selectToUISlider({
         labels: 15
         , tooltip: false
     });
-    // TODO Make all increments equal (make a mapping dictionary?)
-    // var values = [-1000, -900, -800, -700, -600, -500, -400, -300, -200, -100, 1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1850, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000];
-    // var slider = $(".slider");
-
-    // slider.slider({
-    //     range: true
-    //     , min: values[0]
-    //     , max: values[values.length-1]
-    //     , step: 10
-    //     , values: [ Session.get("from"), Session.get("to") ]
-    //     // TODO Combine these two event listeners
-    //     , stop: function( event, ui ) {
-    //         // Change routing
-    //         var from = ui.values[0];
-    //         var to = ui.values[1];
-    //         if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
-    //             var path = window.location.pathname.split('/');
-    //             path[5] = from;
-    //             path[6] = to;
-    //             Router.go(path.join('/'));
-    //         } else {
-    //             return false;
-    //         }
-    //     }
-    //     , slide: function( event, ui ) {
-    //         // Change showing date range
-    //         var from = ui.values[0];
-    //         var to = ui.values[1];
-    //         var sliderHandles = $('.ui-slider-handle');
-    //         var fromHandle = sliderHandles[0];
-    //         var toHandle = sliderHandles[1];
-    //         if($.inArray(from, values) > -1 && $.inArray(to, values) > -1) {
-    //             $(fromHandle).text(from);
-    //             $(toHandle).text(to);
-    //         } else {
-    //             return false;
-    //         }
-    //     }
-    // });
-
-    // var sliderHandles = $('.ui-slider-handle');
-    // var fromHandle = sliderHandles[0];
-    // var toHandle = sliderHandles[1];
-    // $(fromHandle).text(Session.get("from"));
-    // $(toHandle).text(Session.get("to"));
 }
 
 Template.accordion.rendered = function() {
@@ -172,7 +127,7 @@ Handlebars.registerHelper("person_lookup", function(){
 });
 
 Template.ranked_list.top10 = function() {
-    return PeopleTop10.find();
+    return PeopleTop10.find({}, {sort: {numlangs: -1}})
 }
 
 Template.ranked_list.empty = function(){
@@ -185,8 +140,14 @@ Template.ranked_person.birthday = function() {
 }
 
 Template.date_header.helpers({
-    from: function() { return Session.get("from"); }
-    , to: function() { return Session.get("to"); }
+    from: function() { 
+        var from = Session.get("from"); 
+        return (from < 0) ? (from * -1) + " B.C." : from; 
+    }
+    , to: function() { 
+        var to = Session.get("to");
+        return (to < 0) ? (to * -1) + " B.C." : to; 
+    }
 });
 
 // Generate question given viz type

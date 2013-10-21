@@ -1,6 +1,5 @@
 <!-- Non-visualization specific Observatory elements (e.g. accordion, menu) -->
 <template name="observatory">
-
     <div class="page-top">   
         {{> question}}
         {{> date_header}}
@@ -11,22 +10,19 @@
             <div class="row-fluid">
                 <div class="page-left span2">
                     {{#if initialDataReady}}
-                        {{> observatory_options}}
+                        {{> observatory_options}} 
                     {{/if}}
                 </div>
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
                 {{> tooltip}}
             </div>
-            <div class="page-bottom row-fluid slider-row">
-                <div class="span8 offset2">
-                    {{#if initialDataReady}}
-                        {{> slider}}
-                    {{/if}}
-                </div>
-            </div>
         </div>
     </div>
+</template>
+
+<template name="time_slider">
+    <div class="slider"></div>
 </template>
 
 <template name="observatory_options">
@@ -65,10 +61,6 @@
     {{ render_template }}
 </template>
 
-<template name="slider">
-    <div class="slider"></div>
-</template>
-
 <!-- Accordion Selector -->
 <template name="accordion">
     <div class="accordion">
@@ -100,7 +92,7 @@
                 <li><span><a href="#" id="domain_vs_domain">Domain vs. Domain</a></span></li>
             </ul>
         </div>
-        <h3 class="app">THEMATIC MAPS</h3>
+        <h3 class="app">GEOGRAPHIC MAPS</h3>
         <div>
             <ul>
                 <li><span><a href="#" id="map">Global Exports</a></span></li>
@@ -115,7 +107,7 @@
 </template>
 
 <template name="date_header">
-    <div class="secondary-text">({{from}} &#8212; {{to}})</div>
+    <div class="secondary-text">[<span class="from">{{from}}</span> &#8212; <span class="to">{{to}}</span>]</div>
 </template>
 
 <!-- Ranked List for Treemap -->
