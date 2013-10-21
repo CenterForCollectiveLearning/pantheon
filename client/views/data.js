@@ -37,7 +37,7 @@ function renderTree(url){
         calcSize(allData);
 
         var m = [20, 120, 20, 120],
-            w = $('.page-middle').width(),
+            w = 800 - m[1] - m[3],
             h = 400 - m[0] - m[2],
             i = 0,
             root;
@@ -49,7 +49,7 @@ function renderTree(url){
             .projection(function(d) { return [d.y, d.x]; });
 
         var vis = d3.select("#classtree").append("svg:svg").attr("id", "tree")
-            .attr("width", w)
+            .attr("width", w + m[1] + m[3])
             .attr("height", h + m[0] + m[2])
             .append("svg:g")
             .attr("transform", "translate(" + m[3] + "," + m[0] + ")");

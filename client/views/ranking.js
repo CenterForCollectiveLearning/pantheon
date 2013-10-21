@@ -23,9 +23,6 @@ Template.ranking_table.rendered = function() {
 
     $("th").on({
         mousemove: function(e) {
-            console.log("ranking tooltip!!");
-            console.log(window.lastX);
-            console.log(window.lastY);
             var x = e.pageX;
             var y = e.pageY;
             var se = e.srcElement || e.target;
