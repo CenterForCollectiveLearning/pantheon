@@ -386,6 +386,7 @@ header {
 		float: right;
 		&:hover { @include opacity(1.0); }
 	}
+
     .justified{
       text-align: justify;
     }
