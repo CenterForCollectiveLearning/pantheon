@@ -3,6 +3,7 @@ Template.ranking_table.rendered = function() {
 
     $('#ranking').dataTable({
         "iDisplayLength": 25,
+        "bDeferRender": true,
         "fnDrawCallback": function ( oSettings ) {
             var that = this;
             // Redo for sorted AND filtered...
