@@ -39,8 +39,6 @@ Meteor.publish("peopletop10", function(begin, end, L, country, category, categor
         args[categoryLevel] = category;
     };
 
-    console.log("peopleTop10", args);
-
     People.find(args, {
         fields: {_id: 1}, //only get the ids of the people - look up the people in the client (from allpeople)
         limit: 10,
@@ -131,8 +129,6 @@ because the whole set of people already exists client side
 Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryLevel) {
     var sub = this;
 
-    console.log(category, categoryLevel);
-
     var args = {
         birthyear : {$gt:begin, $lte:end}
         , numlangs: {$gt: L}
@@ -141,8 +137,6 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
     if (category.toLowerCase() !== 'all' ) {
         args[categoryLevel] = category;
     }
-
-    console.log(args);
 
     if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode == "domain_exports_to" || vizMode === "map") {
         if (country !== 'all' ) {
@@ -162,7 +156,6 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         limit: limit, 
         sort: sort,
         hint: occupation_countryCode}).forEach(function(person){
-        console.log(person);
             sub.added("tooltipCollection", person._id, {});
          });
 
