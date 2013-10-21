@@ -73,6 +73,11 @@ Meteor.publish("peopletopN", function(begin, end, L, country, domain, N) {
         criteria.$or = [{domain:domain.substring(1)}, {industry:domain.substring(1)}, {occupation:domain.substring(1)}];
     };
 
+    console.log("CRITERIA: ");
+    console.log(criteria);
+    console.log("PROJECTION: ");
+    console.log(projection);
+
     People.find(criteria, projection).forEach(function(person){
             sub.added(collectionName, person._id, person);
         });

@@ -49,7 +49,7 @@ function renderTree(url){
             .projection(function(d) { return [d.y, d.x]; });
 
         var vis = d3.select("#classtree").append("svg:svg").attr("id", "tree")
-            .attr("width", w + m[1] + m[3])
+            .attr("width", w)
             .attr("height", h + m[0] + m[2])
             .append("svg:g")
             .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
