@@ -145,8 +145,8 @@ function mouseover(d){
     
     var countryName = Countries.findOne({countryCode3: countryCode3}).countryName;
     var countryCode = Countries.findOne({countryCode3: countryCode3}).countryCode;
-    var industry = Session.get("domain");
-    var domainAggregation = "occupation";
+    var category = Session.get("category");
+    var categoryAggregation = Session.get("categoryLevel");
 
     var position = {
         "left": (d3.event.pageX + 40),
@@ -155,14 +155,15 @@ function mouseover(d){
     Session.set("tooltipPosition", position);
 
     // Subscription Parameters
-    Session.set("tooltipDomain", industry);
-    Session.set("tooltipDomainAggregation", domainAggregation);
+
+    Session.set("tooltipCategory", category);
+    Session.set("tooltipCategoryLevel", categoryAggregation);
     Session.set("tooltipCountryCode", countryCode);
 
     // Retrieve and pass data to template
-    Template.tooltip.heading = countryName + ": " + industry;
+    Template.tooltip.heading = countryName + ": " + category;
     Template.tooltip.categoryA = countryName;
-    Template.tooltip.categoryB = industry;
+    Template.tooltip.categoryB = category;
 
     Session.set("showTooltip", true);     
 }

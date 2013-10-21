@@ -1,4 +1,4 @@
-Meteor.publish("map_pub", function(begin, end, L, domain) {
+Meteor.publish("map_pub", function(begin, end, L, category, categoryLevel) {
 /*
 The query will look something like this:
  db.people.aggregate([{"$match": {"numlangs": {"$gt": 25}, "birthyear": {"$gte": 0, "$lte":1950}, "domain": 'EXPLORATION'}},
@@ -14,9 +14,8 @@ The query will look something like this:
         birthyear: {$gte: begin, $lte:end}
     };
 
-    if (domain.toLowerCase() !== 'all' ) {
-        domain = domain.substring(1);
-        matchArgs.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
+    if (category.toLowerCase() !== 'all' ) {
+        matchArgs[categoryLevel] = category;
     };
 
     var pipeline = [];

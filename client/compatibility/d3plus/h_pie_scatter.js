@@ -152,8 +152,8 @@ d3plus.pie_scatter = function(vars) {
       var vizMode = Session.get("vizMode");
       var countryCodeX = Countries.findOne({countryName: countryNameX}).countryCode;
       var countryCodeY = Countries.findOne({countryName: countryNameY}).countryCode;
-      var industry = industry;
-      var domainAggregation = "industry";
+      var category = industry;
+      var categoryLevel = "industry";  // TODO Don't hardcode this
 
 
       // Positioning
@@ -164,8 +164,8 @@ d3plus.pie_scatter = function(vars) {
       Session.set("tooltipPosition", position);
    
       // Subscription Parameters
-      Session.set("tooltipDomain", industry);
-      Session.set("tooltipDomainAggregation", domainAggregation);
+      Session.set("tooltipCategory", category);
+      Session.set("tooltipCategoryLevel", categoryLevel);
       Session.set("tooltipCountryCodeX", countryCodeX);
       Session.set("tooltipCountryCodeY", countryCodeY);
 
@@ -282,6 +282,9 @@ d3plus.pie_scatter = function(vars) {
       
     })
     .on(d3plus.evt.out, function(d){
+      Session.set("showTooltip", false);
+      $("#tooltip").empty();
+
       if (!covered) d3plus.tooltip.remove(vars.type)
       d3.selectAll(".axis_hover").remove()
     })
