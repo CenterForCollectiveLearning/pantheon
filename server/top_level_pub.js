@@ -57,7 +57,7 @@ Meteor.publish("peopletop10", function(begin, end, L, country, category, categor
  This is a static query since the query doesn't ever change for some given parameters
  Push the ids here as well since people will be in the client side
  */
-Meteor.publish("peopletopN", function(begin, end, L, country, domain, N) {
+Meteor.publish("peopletopN", function(begin, end, L, country, category, categoryLevel, N) {
     var sub = this;
     var collectionName = "topNpeople";
 
@@ -69,8 +69,8 @@ Meteor.publish("peopletopN", function(begin, end, L, country, domain, N) {
         projection.limit = N;
     }
 
-    if (domain.toLowerCase() !== 'all' ) {
-        criteria.$or = [{domain:domain.substring(1)}, {industry:domain.substring(1)}, {occupation:domain.substring(1)}];
+    if (category.toLowerCase() !== 'all' ) {
+        criteria[categoryLevel] = category;
     };
 
     console.log("CRITERIA: ");

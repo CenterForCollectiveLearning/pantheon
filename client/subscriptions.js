@@ -98,7 +98,7 @@ Deps.autorun(function(){
                     break;
                 // Map modes
                 case "map":
-                    dataSub = Meteor.subscribe("map_pub", begin, end, langs, category, categoryLevel, categoryLevel, onReady);
+                    dataSub = Meteor.subscribe("map_pub", begin, end, langs, category, categoryLevel, onReady);
                     break;
                 default:
                     console.log("Unsupported vizMode");
@@ -106,13 +106,13 @@ Deps.autorun(function(){
         } else if(page === "ranking"){
             switch(entity){
                 case "countries":
-                    dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, onReady);
+                    dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, onReady);
                     break;
                 case "people":
-                    dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, category, 'all', onReady);
+                    dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, category, categoryLevel, 'all', onReady);
                     break;
                 case "domains":
-                    dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, onReady);
+                    dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady);
                     break;
                 default:
                     console.log("Invalid ranking entity!");

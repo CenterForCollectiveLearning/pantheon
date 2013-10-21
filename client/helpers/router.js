@@ -70,7 +70,7 @@ Router.map(function() {
                     this.redirect('/ranking/' +
                         defaults.entity + '/' +
                         defaults.country + '/' +
-                        defaults.domain + '/' +
+                        defaults.category + '/' +
                         defaults.from + '/' +
                         defaults.to);
                 }
@@ -78,12 +78,12 @@ Router.map(function() {
     );
 
     this.route('ranking', {
-            path: '/ranking/:entity/:country/:domain/:from/:to',
+            path: '/ranking/:entity/:country/:category/:from/:to',
             data: function() {
                 Session.set('page', this.template);
                 Session.set('entity', this.params.entity);
                 Session.set('country', this.params.country);
-                Session.set('domain', this.params.domain);
+                Session.set('category', this.params.category);
                 Session.set('from', this.params.from);
                 Session.set('to', this.params.to);
             }}

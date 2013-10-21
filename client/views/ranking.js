@@ -82,7 +82,7 @@ Template.ranking_accordion.events = {
         var path = '/ranking/' +
             modeToEntity[option] + '/' +
             defaults.country + '/' +
-            defaults.domain + '/' +
+            defaults.category + '/' +
             defaults.from + '/' +
             defaults.to
         Router.go(path);

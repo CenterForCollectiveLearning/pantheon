@@ -18,7 +18,7 @@
  * on a.countryCode == b.countryCode;
  *
  */
-Meteor.publish("countries_ranking_pub", function(begin, end, domain) {
+Meteor.publish("countries_ranking_pub", function(begin, end, category, categoryLevel) {
     var sub = this;
     var collectionName = "countries_ranking";
 
@@ -26,10 +26,8 @@ Meteor.publish("countries_ranking_pub", function(begin, end, domain) {
         birthyear: {$gte: begin, $lte:end}
     };
 
-    if (domain.toLowerCase() !== 'all' ) {
-        domain = domain.substring(1);
-        // TODO don't include category in this match for pages that are automatically 'all'
-        criteria.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
+    if (category.toLowerCase() !== 'all' ) {
+        criteria[categoryLevel] = category;
     };
 
     var country = {};
@@ -63,7 +61,7 @@ Meteor.publish("countries_ranking_pub", function(begin, end, domain) {
     return;
 });
 
-Meteor.publish("domains_ranking_pub", function(begin, end, country, domain) {
+Meteor.publish("domains_ranking_pub", function(begin, end, country, category, categoryLevel) {
     var sub = this;
     var collectionName = "domains_ranking";
 
@@ -75,10 +73,8 @@ Meteor.publish("domains_ranking_pub", function(begin, end, country, domain) {
         criteria.countryCode = country;
     }
 
-    if (domain.toLowerCase() !== 'all' ) {
-        domain = domain.substring(1);
-        // TODO don't include category in this match for pages that are automatically 'all'
-        criteria.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
+    if (category.toLowerCase() !== 'all' ) {
+        criteria[categoryLevel] = category;
     };
 
     var domain = {};
