@@ -82,20 +82,41 @@ jQuery.fn.selectToUISlider = function(settings){
 		orientation: 'horizontal',
 		max: selectOptions.length-1,
 		range: selects.length > 1,//multiple select elements = true
-		slide: function(e, ui) {//slide function
-				var thisHandle = jQuery(ui.handle);
-				//handle feedback 
-				var textval = ttText(ui.value);
-				thisHandle
-					.attr('aria-valuetext', textval)
-					.attr('aria-valuenow', ui.value)
-					.find('.ui-slider-tooltip .ttContent')
-						.text( textval );
+		stop: function(e, ui) {
+			var from = selectOptions[ui.values[0]].value;
+			var to = selectOptions[ui.values[1]].value;
 
-				//control original select menu
-				var currSelect = jQuery('#' + thisHandle.attr('id').split('handle_')[1]);
-				currSelect.find('option').eq(ui.value).attr('selected', 'selected');
+	    	var path = window.location.pathname.split('/');
+    		path[5] = from;
+            path[6] = to;
+            Router.go(path.join('/'));
+
 		},
+		slide: function(e, ui) {//slide function
+			var from_formatted = selectOptions[ui.values[0]].text;
+			var to_formatted = selectOptions[ui.values[1]].text;
+
+			var thisHandle = jQuery(ui.handle);
+
+			//handle feedback 
+			var textval = ttText(ui.value);
+			thisHandle
+			    .attr('aria-valuetext', textval)
+			    .attr('aria-valuenow', ui.value)
+			    .find('.ui-slider-tooltip .ttContent')
+			    .text( textval );
+
+			//control original select menu
+			var currSelect = jQuery('#' + thisHandle.attr('id').split('handle_')[1]);
+
+			// Update dropdown
+			currSelect.val(selectOptions[ui.value].value)
+			$.uniform.update(currSelect);
+
+			// Update date range header
+			$("span.from").text(from_formatted);
+			$("span.to").text(to_formatted);
+			},
 		values: (function(){
 			var values = [];
 			selects.each(function(){

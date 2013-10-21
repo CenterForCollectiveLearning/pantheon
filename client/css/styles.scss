@@ -36,6 +36,8 @@ $color_black_trans: rgba(0, 0, 0, 0.5);
 
 html, body { height: 100%; }
 
+body { overflow-y: hidden; }
+
 .wrapper { min-height: 100%; }
 
 h2 { 
@@ -128,6 +130,12 @@ div.text {
 				text-transform: uppercase;
 			}
 		}
+	}
+
+	a {
+		text-decoration: none;
+		color: $color_gold;
+		&:hover { text-decoration: underline; }
 	}
 }
 
@@ -664,6 +672,11 @@ footer {
 // Matrix
 .rect-background {
     fill: #202020;
+}
+
+#viz {
+	width: 700;
+    height: 560;
 }
 
 #viz svg.header {

@@ -40,7 +40,7 @@ Meteor.publish("peopletop10", function(begin, end, L, country, category, categor
     };
 
     People.find(args, {
-        fields: {_id: 1}, //only get the ids of the people - look up the people in the client (from allpeople)
+        fields: {_id: 1, numlangs: 1}, // Include numlangs in order to sort
         limit: 10,
         sort: {numlangs: -1}
     }).forEach(function(person){
@@ -168,7 +168,7 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         sort: sort,
         hint: occupation_countryCode}).forEach(function(person){
             sub.added("tooltipCollection", person._id, {});
-         });
+        });
 
     // Get count
     var count = People.find(args, {
