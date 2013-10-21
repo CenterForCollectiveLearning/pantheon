@@ -158,14 +158,16 @@ d3plus.tree_map = function(vars) {
       if (vizMode === "country_exports") {
         var countryCode = Session.get("country");
         var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
-        var industry = id.replace("_", " ");
-        var domainAggregation = "occupation";
+        var category = id.replace("_", " ");
+        var categoryLevel = "occupation";
       } else if (vizMode === "domain_exports_to") {
         var countryCode = id.replace("_", " ");
         var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
-        var industry = Session.get("domain");
-        var domainAggregation = "occupation";
+        var category = Session.get("category");
+        var categoryLevel = Session.get("categoryLevel");
       }
+
+      console.log(category, categoryLevel);
       
       // Positioning
       var position = {
@@ -175,13 +177,13 @@ d3plus.tree_map = function(vars) {
       Session.set("tooltipPosition", position);
    
       // Subscription Parameters
-      Session.set("tooltipDomain", industry);
-      Session.set("tooltipDomainAggregation", domainAggregation);
+      Session.set("tooltipCategory", category);
+      Session.set("tooltipCategoryLevel", categoryLevel);
       Session.set("tooltipCountryCode", countryCode);
 
-      Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + industry : industry;
+      Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
       Template.tooltip.categoryA = countryName;
-      Template.tooltip.categoryB = industry;
+      Template.tooltip.categoryB = category;
 
       Session.set("showTooltip", true);     
     })

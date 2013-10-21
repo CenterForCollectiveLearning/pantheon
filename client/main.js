@@ -25,9 +25,10 @@ this.defaults = {
     , language: 'all'
     , languageX: 'en'
     , languageY: 'ru'
-    , domain: 'all'
-    , domainX: '+ARTS'
-    , domainY: '+HUMANITIES'
+    , category: 'all'
+    , categoryX: 'ARTS'
+    , categoryY: 'HUMANITIES'
+    , categoryLevel: 'domain'
     , from: '-1000'
     , to: '1950'
     , langs: '25'
@@ -35,17 +36,17 @@ this.defaults = {
 }
 
 this.IOMapping = {
-    "country_exports": { "in": ["country", "language"], "out": "domain" }
-    , "country_imports": { "in": ["language", "country"], "out": "domain" }
-    , "domain_exports_to": { "in": ["domain", "language"], "out": "country" }
-    , "domain_imports_from": { "in": ["domain", "country"], "out": "language" }
-    , "bilateral_exporters_of": { "in": ["country", "language"], "out": "domain"}
-    , "bilateral_importers_of": { "in": ["country", "domain"], "out": "language"}
-    , "matrix_exports": { "in": ["country", "domain"], "out": "language"}
-    , "country_vs_country": { "in": ["countryX", "countryY"], "out": "domain"}
-    , "domain_vs_domain": { "in": ["domainX", "domainY"], "out": "country"}
-    , "lang_vs_lang": { "in": ["languageX", "languageY"], "out": "domain"}
-    , "map": { "in": ["domain", "language"], "out": "country" }
+    "country_exports": { "in": ["country", "language"], "out": "category" }
+    , "country_imports": { "in": ["language", "country"], "out": "category" }
+    , "domain_exports_to": { "in": ["category", "language"], "out": "country" }
+    , "domain_imports_from": { "in": ["category", "country"], "out": "language" }
+    , "bilateral_exporters_of": { "in": ["country", "language"], "out": "category"}
+    , "bilateral_importers_of": { "in": ["country", "category"], "out": "language"}
+    , "matrix_exports": { "in": ["country", "category"], "out": "language"}
+    , "country_vs_country": { "in": ["countryX", "countryY"], "out": "category"}
+    , "domain_vs_domain": { "in": ["categoryX", "categoryY"], "out": "country"}
+    , "lang_vs_lang": { "in": ["languageX", "languageY"], "out": "category"}
+    , "map": { "in": ["category", "language"], "out": "country" }
 }
 
 // Object containing domain hierarchy for domains dropdown
@@ -53,28 +54,7 @@ this.uniqueDomains = [];
 this.indByDom = {}
 this.occByInd = {}
 
-Meteor.startup(function() {
-    _.each(Domains.find().fetch(), function(domain_obj) {
-    var domain = domain_obj.domain
-    var industry = domain_obj.industry;
-    var occupation = domain_obj.occupation;
-
-    if (uniqueDomains.indexOf(domain) == -1)
-        uniqueDomains.push(domain);
-
-    if (!indByDom.hasOwnProperty(domain))
-        indByDom[domain] = [industry];
-    else {
-        if (indByDom[domain].indexOf(industry) == -1)
-            indByDom[domain].push(industry);
-    }
-
-    if (!occByInd.hasOwnProperty(industry))
-        occByInd[industry] = [occupation];
-    else
-        occByInd[industry].push(occupation);
-})
-    
+Meteor.startup(function() {    
     Session.setDefault('page', 'observatory');
     Session.setDefault('vizType', defaults.vizType);
     Session.setDefault('vizMode', defaults.vizMode);
@@ -84,13 +64,14 @@ Meteor.startup(function() {
     Session.setDefault('language', defaults.language);
     Session.setDefault('languageX', defaults.languageX);
     Session.setDefault('languageY', defaults.languageY);
-    Session.setDefault('domain', defaults.domain);
-    Session.setDefault('domainX', defaults.domainX);
-    Session.setDefault('domainY', defaults.domainY);
+    Session.setDefault('category', defaults.category);
+    Session.setDefault('categoryX', defaults.categoryX);
+    Session.setDefault('categoryY', defaults.categoryY);
     Session.setDefault('from', defaults.from);
     Session.setDefault('to', defaults.to);
     Session.setDefault('langs', defaults.langs);
     Session.setDefault('occ', 'all');
+    Session.setDefault('categoryLevel', defaults.categoryLevel);
 
     // MATRICES
     Session.setDefault('gender', 'both');
@@ -100,7 +81,8 @@ Meteor.startup(function() {
 
     // TOOLTIPS
     Session.setDefault('showTooltip', false);
-    Session.setDefault('tooltipDomainAggregation', 'industry')
+    Session.setDefault('tooltipCategory', 'all')
+    Session.setDefault('tooltipCategoryLevel', 'industry')
 
     // SPLASH SCREEN
     Session.get("authorized", false);
@@ -111,9 +93,9 @@ Meteor.startup(function() {
     }, 50);
     $(window).resize(throttledResize);
 
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-44888546-1', 'mit.edu');

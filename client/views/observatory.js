@@ -185,9 +185,9 @@ Template.question.question = function() {
         var s_countries = (Session.get("country") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("country")}).countryName;
         var s_countryX = (Session.get("countryX") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("countryX")}).countryName;
         var s_countryY = (Session.get("countryY") == "all") ? "the world" : Countries.findOne({countryCode: Session.get("countryY")}).countryName;
-        var s_domains = (Session.get("domain") == "all") ? "all domains" : decodeURIComponent(Session.get("domain"));
-        var s_domainX = (Session.get("domainX") == "all") ? "all domains" : decodeURIComponent(Session.get("domainX"));
-        var s_domainY = (Session.get("domainY") == "all") ? "all domains" : decodeURIComponent(Session.get("domainY"));
+        var s_domains = (Session.get("category") == "all") ? "all domains" : decodeURIComponent(Session.get("category"));
+        var s_domainX = (Session.get("categoryX") == "all") ? "all domains" : decodeURIComponent(Session.get("categoryX"));
+        var s_domainY = (Session.get("categoryY") == "all") ? "all domains" : decodeURIComponent(Session.get("categoryY"));
         var s_regions = (Session.get("language") == "all") ? "the world" : Languages.findOne({lang: Session.get("language")});
         var s_languageX = Languages.findOne({lang: Session.get("languageX")});
         var s_languageY = Languages.findOne({lang: Session.get("languageY")});
@@ -286,21 +286,21 @@ Template.question.question = function() {
 Template.tooltip.helpers({
     tooltipShown: function() { return Session.get("showTooltip") }
     , position: function() { return Session.get("tooltipPosition") }
+    , top5: function() { return Tooltips.find({_id: {$not: 'count'}}) } // Total count is also passed
     , count: function() {
-        var doc = TooltipsCount.findOne() 
-        return (typeof doc !== "undefined") ? doc.count : 0
+        var doc = Tooltips.findOne({_id: 'count'});
+        return (typeof doc !== "undefined") ? doc.count : 0;
     }
     , suffix: function() {
-        var doc = TooltipsCount.findOne() 
-        return (typeof doc !== "undefined" && doc.count > 1) ? "individuals" : "individual"
+        var doc = Tooltips.findOne({_id: 'count'});
+        return (typeof doc !== "undefined" && doc.count > 1) ? "individuals" : "individual";
     }
-    , top5: function() { return Tooltips.find() }
     , more: function() { 
-        var doc = TooltipsCount.findOne() 
-        return (typeof doc !== "undefined") ? doc.count > 5 : false
+        var doc = Tooltips.findOne({_id: 'count'});
+        return (typeof doc !== "undefined") ? doc.count > 5 : false;
     }
     , extras: function() { 
-        var doc = TooltipsCount.findOne() 
-        return (typeof doc !== "undefined") ? doc.count - 5 : 0
+        var doc = Tooltips.findOne({_id: 'count'});
+        return (typeof doc !== "undefined") ? doc.count - 5 : 0;
     }
 })

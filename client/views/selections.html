@@ -121,188 +121,33 @@
 
 <template name="domain_dropdown">
     <div class="parameter-selection">
-        <label>Importer</label>
-        <ul id="domain-menu">
+        <label>Domain</label>
+        <select>
+            <option value="all">All</option>
             {{#each domains}}
                 {{> domain_item}}
             {{/each}}
-        </ul>
+        </select>
     </div>
 </template>
 
 <template name="domain_item">
-    <li>
-        <a href="#">{{domain}}</a>
-        <ul>
-            {{#each industries_given_domain}}
-                {{>industry_item}}
-            {{/each}}
-        </ul>
-    </li>
+    <option class="domain" value="{{domain}}">{{domain}}</option>
+    {{#each industries_given_domain}}
+        {{> industry_item}}
+    {{/each}}
 </template>
 
 <template name="industry_item">
-    <li>
-        <a href="#">{{industry}}</a>
-        <ul>
-            {{#each occupations_given_industry}}
-                {{>occupation_item}}
-            {{/each}}
-        </ul>
-    </li>
+    <option class="industry" value="{{industry}}">&nbsp;&nbsp;&nbsp;&nbsp;{{industry}}</option>
+    {{#each occupations_given_industry}}
+        {{> occupation_item}}
+    {{/each}}
 </template>
 
 <template name="occupation_item">
-    <li>
-        <a href="#">{{occupation}}</a>
-    </li>
+    <option class="occupation" value="{{occupation}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{occupation}}</option>
 </template>
-<!-- 
-            <option value="+arts">Arts</option>
-            <option value="+humanities">Humanities</option>
-            <option value="+business%20&amp;%20law">Business & Law</option>
-            <option value="+exploration">Exploration</option>
-            <option value="+institutions">Institutions</option>
-            <option value="+public%20figure">Public Figure</option>
-            <option value="+science%20&amp;%20technology">Science & Technology</option>
-            <option value="+sports">Sports</option>
-
-            <option value="divider" disabled="disabled">-----------</option>
-
-            <optgroup value="Industries" label="Industries">
-                <option value="+design">Design</option>
-                <option value="+film%20and%20theatre">Film and Theatre</option>
-                <option value="+fine%20arts">Fine Arts</option>
-                <option value="+music">Music</option>
-                <option value="+business">Business</option>
-                <option value="+law">Law</option>
-                <option value="+explorer">Explorer</option>
-                <option value="+history">History</option>
-                <option value="+language">Language</option>
-                <option value="+philosophy">Philosophy</option>
-                <option value="+government">Government</option>
-                <option value="+media%20personality">Media Personality</option>
-                <option value="+outlaws">Outlaws</option>
-                <option value="+math">Math</option>
-                <option value="+natural%20sciences">Natural Sciences</option>
-                <option value="+social%20sciences">Social Sciences</option>
-                <option value="+individual%20sports">Individual sports</option>
-                <option value="+team%20sports">Team sports</option>
-            </optgroup>
-
-            <option value="divider" disabled="disabled">-----------</option>
-
-            <optgroup value="Arts" label="Arts">
-                <option value="-actor">Actor</option>
-                <option value="-architect">Architect</option>
-                <option value="-artist">Artist</option>
-                <option value="-comedian">Comedian</option>
-                <option value="-composer">Composer</option>
-                <option value="-comic%20artist">Comic artist</option>
-                <option value="-conductor">Conductor</option>
-                <option value="-dancer">Dancer</option>
-                <option value="-designer">Designer</option>
-                <option value="-fashion%20designer">Fashion designer</option>
-                <option value="-film%20director">Film director</option>
-                <option value="-game%20designer">Game designer</option>
-                <option value="-musician">Musician</option>
-                <option value="-painter">Painter</option>
-                <option value="-photographer">Photographer</option>
-                <option value="-sculptor">Sculptor</option>
-                <option value="-singer">Singer</option>
-            </optgroup>
-
-            <optgroup value="Business & Law" label="Business & Law">
-                <option value="-businessperson">Businessperson</option>
-                <option value="-lawyer">Lawyer</option>
-                <option value="-producer">Producer</option>
-            </optgroup>
-
-            <optgroup value="Exploration" label="Exploration">
-                <option value="-astronaut">Astronaut</option>
-                <option value="-explorer">Explorer</option>
-            </optgroup>
-
-            <optgroup value="Arts" label="Humanities">
-                <option value="-critic">Critic</option>
-                <option value="-historian">Historian</option>
-                <option value="-journalist">Journalist</option>
-                <option value="-linguist">Linguist</option>
-                <option value="-writer">Writer</option>
-            </optgroup>
-
-            <optgroup value="Institutions" label="Institutions">
-                <option value="-diplomat">Diplomat</option>
-                <option value="-judge">Judge</option>
-                <option value="-military">Military</option>
-                <option value="-nobleman">Nobleman</option>
-                <option value="-pilot">Pilot</option>
-                <option value="-politician">Politician</option>
-                <option value="-public worker">Public worker</option>
-                <option value="-religious figure">Religious figure</option>
-            </optgroup>
-
-            <optgroup value="Public Figures" label="Public Figures">
-                <option value="-celebrity">Celebrity</option>
-                <option value="-chef">Chef</option>
-                <option value="-extremist">Extremist</option>
-                <option value="-mafioso">Mafioso</option>
-                <option value="-magician">Magician</option>
-                <option value="-model">Model</option>
-                <option value="-pilot">Pilot</option>
-                <option value="-pirate">Pirate</option>
-                <option value="-pornographic%20actor">Pornographic actor</option>
-                <option value="-presenter">Presenter</option>
-                <option value="-social%20activist">Social activist</option>
-            </optgroup>
-
-            <optgroup value="Science & Technology" label="Science & Technology">
-                <option value="-anthropologist">Anthropologist</option>
-                <option value="-astronomer">Astronomer</option>
-                <option value="-archeologist">Archeologist</option>
-                <option value="-biologist">Biologist</option>
-                <option value="-chemist">Chemist</option>
-                <option value="-computer%20scientist">Computer scientist</option>
-                <option value="-economist">Economist</option>
-                <option value="-engineer">Engineer</option>
-                <option value="-geographer">Geographer</option>
-                <option value="-beologist">Geologist</option>
-                <option value="-inventor">Inventor</option>
-                <option value="-mathematician">Mathematician</option>
-                <option value="-physician">Physician</option>
-                <option value="-physicist">Physicist</option>
-                <option value="-political%20scientist">Political scientist</option>
-                <option value="-psychologist">Psychologist</option>
-                <option value="-sociologist">Sociologist</option>
-                <option value="-statistician">Statistician</option>
-            </optgroup>
-
-            <optgroup value="Sports" label="Sports">
-                <option value="-american%20football%20player">American football player</option>
-                <option value="-athlete">Athlete</option>
-                <option value="-baseball%20player">Baseball player</option>
-                <option value="-basketball%20player">Basketball player</option>
-                <option value="-boxer">Boxer</option>
-                <option value="-chessmaster">Chess master</option>
-                <option value="-cricketer">Cricketer</option>
-                <option value="-cyclist">Cyclist</option>
-                <option value="-golfer">Golfer</option>
-                <option value="-gymnast">Gymnast</option>
-                <option value="-hockey%20player">Hockey player</option>
-                <option value="-martial%20arts">Martial arts</option>
-                <option value="-mountaineer">Mountaineer</option>
-                <option value="-racecar%20driver">Racecar driver</option>
-                <option value="-referee">Referee</option>
-                <option value="-skater">Skater</option>
-                <option value="-skier">Skier</option>
-                <option value="-soccer%20player">Soccer player</option>
-                <option value="-swimmer">Swimmer</option>
-                <option value="-tennis%20player">Tennis Player</option>
-                <option value="-wrestler">Wrestler</option>
-            </optgroup>
-        </select>
-    </div>
-</template> -->
 
 <template name="select_domainX">
     <div class="parameter-selection">

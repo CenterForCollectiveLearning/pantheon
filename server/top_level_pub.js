@@ -1,4 +1,4 @@
-function getCountryExportArgs(begin, end, L, country, occ) {
+function getCountryExportArgs(begin, end, L, country, category, categoryLevel) {
     var args = {
         birthyear : {$gt:begin, $lte:end}
         , numlangs: {$gt: L}
@@ -6,8 +6,8 @@ function getCountryExportArgs(begin, end, L, country, occ) {
     if (country !== 'all' ) {
         args.countryCode = country;
     }
-    if (occ !== undefined && occ !== 'all') {
-        args.occupation = occ;
+    if (category !== undefined && occ !== 'all') {
+        args[categoryLevel] = category;
     }
     return args;
 }
@@ -29,14 +29,14 @@ Meteor.publish("languages_pub", function() {
     This is a static query since the query doesn't ever change for some given parameters
     Push the ids here as well since people will be in the client side
  */
-Meteor.publish("peopletop10", function(begin, end, L, country, domain) {
+Meteor.publish("peopletop10", function(begin, end, L, country, category, categoryLevel) {
     var sub = this;
     var collectionName = "top10people";
 
     var args = getCountryExportArgs(begin, end, L, country);
 
-    if (domain.toLowerCase() !== 'all' ) {
-        args.$or = [{domain:domain.substring(1)}, {industry:domain.substring(1)}, {occupation:domain.substring(1)}];
+    if (category.toLowerCase() !== 'all' ) {
+        args[categoryLevel] = category;
     };
 
     People.find(args, {
@@ -126,39 +126,35 @@ Also a static query
 does not send over anything other than the people ids,
 because the whole set of people already exists client side
 */
-Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
+Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryLevel) {
     var sub = this;
+
+    console.log(category, categoryLevel);
 
     var args = {
         birthyear : {$gt:begin, $lte:end}
         , numlangs: {$gt: L}
     };
-    if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode === "map") {
+
+    if (category.toLowerCase() !== 'all' ) {
+        args[categoryLevel] = category;
+    }
+
+    console.log(args);
+
+    if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode == "domain_exports_to" || vizMode === "map") {
         if (country !== 'all' ) {
             args.countryCode = country;
         }
-        if (domain.toLowerCase() !== 'all' ) {
-            // TODO don't include category in this match for pages that are automatically 'all'
-            args[domainAggregation] = domain;
-        };
     } else if (vizMode === "country_vs_country") {
-        var args = {
-            birthyear : {$gt:begin, $lte:end}
-            , numlangs: {$gt: L}
-        };
         args.$or = [{countryCode: countryX}, {countryCode: countryY}]
-        if (domain.toLowerCase() !== 'all' ) {
-            // TODO don't include category in this match for pages that are automatically 'all'
-            args[domainAggregation] = domain;
-        };
     }
 
     var projection = {_id: 1};
     var limit = 5;
     var sort = {numlangs: -1};
 
-    console.log(args);
-
+    // Get people
     People.find(args, {
         fields: projection, 
         limit: limit, 
@@ -168,52 +164,11 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
             sub.added("tooltipCollection", person._id, {});
          });
 
+    // Get count
     var count = People.find(args, {
         fields: projection,
         hint: occupation_countryCode}).count();
-
-    sub.added("tooltipCollection", Random.id(), {count: count});
-
-    return;
-});
-
-Meteor.publish("tooltipPeopleCount", function(vizMode, begin, end, L, country, countryX, countryY, gender, domain, domainAggregation) {
-    var sub = this;
-
-    var args = {
-        birthyear : {$gt:begin, $lte:end}
-        , numlangs: {$gt: L}
-    };
-    if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode === "map") {
-        if (country !== 'all' ) {
-            args.countryCode = country;
-        }
-        if (domain.toLowerCase() !== 'all' ) {
-            // TODO don't include category in this match for pages that are automatically 'all'
-            args[domainAggregation] = domain;
-        };
-    } else if (vizMode === "country_vs_country") {
-        var args = {
-            birthyear : {$gt:begin, $lte:end}
-            , numlangs: {$gt: L}
-        };
-        args.$or = [{countryCode: countryX}, {countryCode: countryY}]
-        if (domain.toLowerCase() !== 'all' ) {
-            // TODO don't include category in this match for pages that are automatically 'all'
-            args[domainAggregation] = domain;
-        };
-    }
-
-    var projection = {_id: 1};
-
-    var count = People.find(args, {
-        fields: projection,
-        hint: occupation_countryCode}).count();
-
-    console.log("PEOPLE COUNT", count);
-    sub.added("tooltipPeopleCountCollection", Random.id(), {count: count})
-
-    sub.ready();
+    sub.added("tooltipCollection", 'count', {count: count});
 
     return;
 });

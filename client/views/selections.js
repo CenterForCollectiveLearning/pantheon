@@ -27,7 +27,6 @@ Template.select_mode.render_template = function() {
                 return new Handlebars.SafeString(Template.map_mode(this));
         }
     };
-
 }
 
 // Change selected based on session variables
@@ -63,7 +62,7 @@ Template.select_languageY.rendered = function() {
 }
 
 Template.select_domain.rendered = function() {
-    // $(this.find("select")).val(Session.get("domain")).uniform();
+    $(this.find("select")).val(Session.get("category")).uniform();
 }
 
 // TODO: Find closest round number
@@ -162,7 +161,9 @@ Template.select_domain.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
 
-        if (IOMapping[Session.get("vizMode")]["in"].indexOf("domain") == 0)
+        Session.set("categoryLevel", getCategoryLevel(d.target.value));
+
+        if (IOMapping[Session.get("vizMode")]["in"].indexOf("category") == 0)
             path[3] = d.target.value;
         else
             path[4] = d.target.value;        
@@ -213,6 +214,16 @@ Template.select_industry_order.events = {
     }
 }
 
+function getCategoryLevel(s) {
+    var domains = Domains.find().fetch();
+    for (i in domains) {
+        var domain_obj = domains[i];
+        if (domain_obj.domain == s) return "domain";
+        if (domain_obj.industry == s) return "industry";
+        if (domain_obj.occupation == s) return "occupation";
+    }
+}
+
 Template.country_dropdown.countries = function (){
     return Countries.find( {},
         { sort: { "countryName": 1 } }
@@ -224,10 +235,6 @@ Template.language_dropdown.languages = function (){
         { sort: { "lang_name": 1 } }
     );
 };
-
-Template.domain_dropdown.rendered = function() {
-    $("#domain-menu").menu();
-}
 
 Template.domain_dropdown.domains = function (){
     var uniqueDomains = [];
@@ -242,18 +249,18 @@ Template.domain_dropdown.domains = function (){
     return res;
 };
 
-Template.domain_item.industries_given_domain = function() {
+Template.domain_dropdown.industries = function (){
     var uniqueIndustries = [];
     var res = [];
-    _.each(Domains.find({domain: this.domain}).fetch(), function(domain_obj) {
+    _.each(Domains.find().fetch(), function(domain_obj) {
         var industry = domain_obj.industry;
-        if (uniqueIndustries.indexOf(industry) == -1) {
-            uniqueIndustries.push(industry)
+        if (uniqueIndustries.indexOf(industry) === -1) {
+            uniqueIndustries.push(industry);
             res.push({industry: industry});
         }
     });
     return res;
-}
+};
 
 Template.industry_item.occupations_given_industry = function() {
     var uniqueOccupations = [];
@@ -267,3 +274,17 @@ Template.industry_item.occupations_given_industry = function() {
     });
     return res;
 }
+
+Template.domain_item.industries_given_domain = function() {
+    var uniqueIndustries = [];
+    var res = [];
+    _.each(Domains.find({domain: this.domain}).fetch(), function(domain_obj) {
+        var industry = domain_obj.industry;
+        if (uniqueIndustries.indexOf(industry) == -1) {
+            uniqueIndustries.push(industry)
+            res.push({industry: industry});
+        }
+    });
+    return res;
+}
+

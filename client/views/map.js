@@ -171,41 +171,6 @@ function mouseover(d){
     Template.tooltip.categoryB = industry;
 
     Session.set("showTooltip", true);     
-
-    // if ( d === mouseoverCell ) {
-    //     // Don't re-render the rest of the list
-    //     return;
-    // }
-    // else {
-    //     // Draw tooltip
-    //     mouseoverCell = d;
-    //     var doc = WorldMap.findOne({ countryCode: { $regex: d.id } });
-    //     if (!doc) {
-    //         // TODO show that this country has no data
-    //         Session.set("showTooltip", false);
-    //         return;
-    //     }
-
-    //     var args = {
-    //         numlangs: {$gt: +Session.get("langs")},
-    //         // TODO: put proper begin and end
-    //         birthyear: {$gte: 0, $lte: 2000},
-    //         // TODO: countryCode3 has spaces....
-    //         countryCode3: doc.countryCode
-    //     };
-
-    //     // Todo allow this to match on all categories
-    //     var domain = Session.get("domain");
-    //     if ( domain !== 'all' ) {
-    //         args.occupation = domain.substring(1).toUpperCase();
-    //     };
-
-    //     Session.set("tooltipHeading", doc.countryName);
-    //     // This might be slow
-    //     console.log(args);
-    //     Session.set("tooltipPeople", People.find(args, {limit: 5}).fetch());
-    //     Session.set("showTooltip", true);
-    // }
 }
 
 function mouseout(d){

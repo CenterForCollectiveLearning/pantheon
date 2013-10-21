@@ -339,12 +339,12 @@ Template.matrix_svg.rendered = function() {
         var countryCode = countries[p.y];
         var countryName = Countries.findOne({countryCode: countryCode}).countryName;
         var industry = industries[p.x];
-        var domainAggregation = "industry";
+        var categoryLevel = "industry";
 
 
         // Subscription Parameters
-        Session.set("tooltipDomain", industry);
-        Session.set("tooltipDomainAggregation", domainAggregation);
+        Session.set("tooltipCategory", industry);
+        Session.set("tooltipCategoryLevel", categoryLevel);
         Session.set("tooltipCountryCode", countryCode);
 
         // Retrieve and pass data to template

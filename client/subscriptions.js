@@ -36,19 +36,19 @@ Deps.autorun(function(){
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
-    var domain = Session.get('domain');
-    var domainX = Session.get('domainX');
-    var domainY = Session.get('domainY');
+    var category = Session.get('category');
+    var categoryX = Session.get('categoryX');
+    var categoryY = Session.get('categoryY');
     var gender = Session.get('gender');
     var entity = Session.get('entity');
     var page = Session.get('page');
 
-    if(domain){
-        domain = domain.toUpperCase();
+    if(category){
+        category = category.toUpperCase();
     }
     var occ = Session.get('occ');
     var vizMode = Session.get('vizMode');
-
+    var categoryLevel = Session.get('categoryLevel');
     /*
         TODO this is probably not the right way to check if no data should be loaded.
         Do something more robust.
@@ -83,23 +83,22 @@ Deps.autorun(function(){
                 case "domain_exports_to":
                 case "domain_imports_from":
                 case "bilateral_importers_of":
-                    top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, domain);
-                    dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, domain, onReady);
+                    top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, category, categoryLevel);
+                    dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, category, categoryLevel, onReady);
                     break;
                 // Matrix modes
                 case "matrix_exports":
-                    console.log("IN MATRIX EXPORTS")
                     dataSub = Meteor.subscribe("matrix_pub", begin, end, langs, gender, onReady);
                     break
                 // Scatterplot modes
                 case "country_vs_country":
                 case "lang_vs_lang":
                 case "domain_vs_domain":
-                    dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, domainX, domainY, onReady);
+                    dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, onReady);
                     break;
                 // Map modes
                 case "map":
-                    dataSub = Meteor.subscribe("map_pub", begin, end, langs, domain, onReady);
+                    dataSub = Meteor.subscribe("map_pub", begin, end, langs, category, categoryLevel, categoryLevel, onReady);
                     break;
                 default:
                     console.log("Unsupported vizMode");
@@ -107,13 +106,13 @@ Deps.autorun(function(){
         } else if(page === "ranking"){
             switch(entity){
                 case "countries":
-                    dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, domain, onReady);
+                    dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, onReady);
                     break;
                 case "people":
-                    dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, domain, 'all', onReady);
+                    dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, category, 'all', onReady);
                     break;
                 case "domains":
-                    dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, domain, onReady);
+                    dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, onReady);
                     break;
                 default:
                     console.log("Invalid ranking entity!");
@@ -131,7 +130,8 @@ Deps.autorun(function(){
         console.log("languageX: "+languageX);
         console.log("languageY: "+languageY);
         console.log("language: "+language);
-        console.log("domain: "+domain);
+        console.log("category: "+category);
+        console.log("categoryLevel: "+categoryLevel);
         console.log("gender: "+gender);
         console.log("entity: " +entity);
         console.log("page: " +page);
@@ -145,17 +145,13 @@ Deps.autorun(function() {
     // get rid of people and count ready once tooltip is working
     // Return both in one publication
     Session.set("tooltipPeopleReady", false);
-    Session.set("tooltipCountReady", false);
 
     function onPeopleReady() {
         Session.set("tooltipPeopleReady", true);
     }
-    function onCountReady() {
-        Session.set("tooltipCountReady", true);
-    }
 
-    var domain = Session.get("tooltipDomain");
-    var domainAggregation = Session.get("tooltipDomainAggregation")
+    var category = Session.get("tooltipCategory");
+    var categoryLevel = Session.get("tooltipCategoryLevel")
 
     var countryCode = Session.get('tooltipCountryCode');
     var countryCodeX = Session.get('tooltipCountryCodeX');
@@ -177,6 +173,5 @@ Deps.autorun(function() {
     //     }
     // }
     // TODO Pass in an array or object
-    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, domain, domainAggregation, onPeopleReady);
-    tooltipCountSub = Meteor.subscribe("tooltipPeopleCount", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, domain, domainAggregation, onCountReady);
+    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, category, categoryLevel, onPeopleReady);
 });

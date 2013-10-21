@@ -142,10 +142,6 @@ Template.scatterplot_svg.rendered = function() {
 		var axis = code == x_code ? 'x' : 'y';
 		var other_axis = axis == 'x' ? 'y' : 'x';
 
-		if (occ == 'EXPLORER' || occ == 'MILITARY OFFICER') {
-			continue;
-    	}
-
     	if (!aggregated.hasOwnProperty(occ)) {
     		aggregated[occ] = {};
     		aggregated[occ][axis] = count;
@@ -159,9 +155,7 @@ Template.scatterplot_svg.rendered = function() {
 		var datum = aggregated[occ];
 		var x = datum.x;
 		var y = datum.y;
-		if (occ == 'EXPLORER') {
-			continue;
-    	}
+
     	var d = {
 			id: occ
 			, name: occ

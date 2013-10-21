@@ -20,7 +20,7 @@ Meteor.publish("scatterplot_pub", function(vizMode, begin, end, L, countryX, cou
             {"$unwind": "$people"},
             {"$group": { "_id": "$_id", "count": { "$sum": 1} }}
         ];
-        driver.mongo.db.collection("imports").aggregate(
+        driver.mongo.db.collection("people").aggregate(
             pipeline,
             Meteor.bindEnvironment(
                 function(err, result) {

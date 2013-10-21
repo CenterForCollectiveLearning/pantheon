@@ -2,7 +2,7 @@
  * Static query that pushes the treemap structure
  * This needs to run a native mongo query due to aggregates being not supported directly yet
  */
-Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language, domain) {
+Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language, category, categoryLevel) {
     var sub = this;
     var driver = MongoInternals.defaultRemoteCollectionDriver();
 
@@ -21,10 +21,10 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
         matchArgs.lang = language;
     };
 
-    if (domain.toLowerCase() !== 'all' ) {
-        domain = domain.substring(1);
-        // TODO don't include category in this match for pages that are automatically 'all'
-        matchArgs.$or = [{domain:domain}, {industry:domain}, {occupation:domain}];
+    console.log(category);
+
+    if (category.toLowerCase() !== 'all' ) {
+        matchArgs[categoryLevel] = category;
     };
 
     var pipeline = [];
