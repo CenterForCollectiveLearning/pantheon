@@ -13,10 +13,6 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
         birthyear: {$gte: begin, $lte:end}
     };
 
-    if (country !== 'all' ) {
-        matchArgs.countryCode = country;
-    };
-
     if (language !== 'all' ) {
         matchArgs.lang = language;
     };
@@ -30,6 +26,10 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     var pipeline = [];
 
     if(vizMode === 'country_exports'){
+        if (country !== 'all' ) {
+            matchArgs.countryCode = country;
+        };
+    
         pipeline = [
             {$match: matchArgs },
             {$group: {
@@ -61,7 +61,6 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
         );
     }
     else if(vizMode === 'country_imports' || vizMode === 'bilateral_exporters_of'){
-        console.log(matchArgs);
         pipeline = [
             { $match: matchArgs },
             {"$group": { _id: {domain: "$category", industry: "$industry", occupation: "$occupation"},

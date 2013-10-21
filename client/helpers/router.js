@@ -54,6 +54,18 @@ Router.map(function() {
             Session.set('from', this.params.from); 
             Session.set('to', this.params.to);  
             Session.set('langs', this.params.langs);  
+
+            // Reset defaults based on vizmode
+            if (vizMode == 'country_exports')
+                Session.set("category", defaults.category)
+            else if (vizMode == 'domain_exports_to') {
+                Session.set("country", defaults.country)
+            }
+
+            if(IOMapping[vizMode]["in"][0] === "category")
+                Session.set("categoryLevel", getCategoryLevel(this.params.param1));
+            if(IOMapping[vizMode]["in"][1] === "category")
+                Session.set("categoryLevel", getCategoryLevel(this.params.param2));   
         }}
     );
 

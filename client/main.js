@@ -1,6 +1,14 @@
 // Set Defaults
 
-
+this.getCategoryLevel = function(s) {
+    var domains = Domains.find().fetch();
+    for (i in domains) {
+        var domain_obj = domains[i];
+        if (domain_obj.domain == s) return "domain";
+        if (domain_obj.industry == s) return "industry";
+        if (domain_obj.occupation == s) return "occupation";
+    }
+}
 
 // Enable caching for getting readrboard script
 jQuery.cachedScript = function( url, options ) {

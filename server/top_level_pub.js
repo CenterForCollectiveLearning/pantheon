@@ -39,6 +39,8 @@ Meteor.publish("peopletop10", function(begin, end, L, country, category, categor
         args[categoryLevel] = category;
     };
 
+    console.log("peopleTop10", args);
+
     People.find(args, {
         fields: {_id: 1}, //only get the ids of the people - look up the people in the client (from allpeople)
         limit: 10,
