@@ -155,9 +155,10 @@
 </template>
 
 <template name="ranked_people_list">
-    {{#each people_full_ranking}}
-    {{> ranked_ppl}}
-    {{/each}}
+    {{person_blob}}
+    {{!#each people_full_ranking}}
+    {{!> ranked_ppl}}
+    {{!/each}}
 </template>
 
 <template name="ranked_countries_list">

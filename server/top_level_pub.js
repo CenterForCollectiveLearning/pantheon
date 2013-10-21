@@ -79,8 +79,27 @@ Meteor.publish("peopletopN", function(begin, end, L, country, category, category
     console.log(projection);
 
     People.find(criteria, projection).forEach(function(person){
-            sub.added(collectionName, person._id, person);
-        });
+        sub.added(collectionName, person._id, person);
+    });
+
+    sub.ready();
+
+//
+//    People.find(criteria, projection).forEach(function(person){
+//        table += "<tr class='"+ person.domain + "'>";
+//        table += "<td>1</td>";
+//        table += "<td>" + person.name + "</td>";
+//        table += "<td>" + person.countryName + "</td>";
+//        table += "<td>" + person.birthyear + "</td>";
+//        table += "<td>" + person.gender + "</td>";
+//        table += "<td>" + person.occupation + "</td>";
+//        table += "<td>" + person.numlangs + "</td>";
+//        table += "</tr>";
+//    });
+//
+//    console.log(table);
+//
+//    sub.added(collectionName, "table", {table: table});
 
     sub.ready();
 

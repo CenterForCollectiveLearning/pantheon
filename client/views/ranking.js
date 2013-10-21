@@ -88,6 +88,7 @@ Template.ranking_accordion.events = {
 }
 
 Template.ranking_table.render_table = function() {
+    console.log("RENDER TABLES");
     var entity = Session.get("entity");
     switch (entity) {
         case "countries":
@@ -103,6 +104,7 @@ Template.ranking_table.render_table = function() {
 }
 
 Template.ranking_table.render_cols = function() {
+    console.log("RENDER COLS");
     var entity = Session.get("entity");
     switch (entity) {
         case "countries":
@@ -141,6 +143,27 @@ Template.ranked_domains_list.domains_full_ranking = function(){
 
 Template.ranked_domains_list.rank = function(){
     return 1;
+}
+
+Template.ranked_people_list.person_blob = function() {
+    console.log("IN PERSON BLOB");
+    var table = '';
+    var data = PeopleTopN.find().fetch();
+
+    _.forEach(data, function(person) {
+        table += "<tr class='"+ person.domain + "'>";
+        table += "<td>1</td>";
+        table += "<td>" + person.name + "</td>";
+        table += "<td>" + person.countryName + "</td>";
+        table += "<td>" + person.birthyear + "</td>";
+        table += "<td>" + person.gender + "</td>";
+        table += "<td>" + person.occupation + "</td>";
+        table += "<td>" + person.numlangs + "</td>";
+        table += "</tr>";
+    });
+
+    console.log("DONE")
+    return new Handlebars.SafeString(table);
 }
 
 // TODO: do this with CSS instead??
