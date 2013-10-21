@@ -65,6 +65,7 @@ Deps.autorun(function(){
          */
     }
     else {
+        console.log("SUBSCRIBING");
         Session.set("dataReady", false);
         // This gets passed to the subscriptions to indicate when data is ready
         var onReady = function() {
@@ -143,10 +144,10 @@ Deps.autorun(function(){
 Deps.autorun(function() {
     // get rid of people and count ready once tooltip is working
     // Return both in one publication
-    Session.set("tooltipPeopleReady", false);
+    Session.set("tooltipDataReady", false);
 
-    function onPeopleReady() {
-        Session.set("tooltipPeopleReady", true);
+    function onDataReady() {
+        Session.set("tooltipDataReady", true);
     }
 
     var category = Session.get("tooltipCategory");
@@ -174,5 +175,6 @@ Deps.autorun(function() {
     //     }
     // }
     // TODO Pass in an array or object
-    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, onPeopleReady);
+
+    tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, onDataReady);
 });

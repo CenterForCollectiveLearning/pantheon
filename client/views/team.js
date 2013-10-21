@@ -68,6 +68,30 @@ var teamMembers = [
 			"linkedin": "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
 			, "email": "mailto:defne@mit.edu"
 		}
+	},
+	{
+		"name": "Andrew Mao"
+		,"photo": "images/andrew_mao.png"
+		, "description": "Fifth Year Graduate Student at Harvard"
+		, "role": ["Development"]
+		, "media": {
+			"personal": "http://www.andrewmao.net/"
+			, "twitter": "https://twitter.com/mizzao"
+			, "linkedin": "www.linkedin.com/pub/andrew-mao/6/6a6/533"
+			, "email": "mailto:mao@seas.harvard.edu"
+		}
+	},
+	{
+		"name": "Deepak Jagdish"
+		,"photo": "images/deepak_jagdish.png"
+		, "description": "Second Year Graduate Student"
+		, "role": ["Design"]
+		, "media": {
+			"personal": "http://deepakjagdish.com/"
+			, "twitter": "https://twitter.com/dj247"
+			, "linkedin": "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
+			, "email": "mailto:defne@mit.edu"
+		}
 	}
 ]
 
@@ -77,6 +101,9 @@ Template.team.helpers({
 	},
 	second_row_teamMembers: function() {
 		return teamMembers.slice(3, 6);
+	},
+	third_row_teamMembers: function() {
+		return teamMembers.slice(6, 8);
 	}
 });
 

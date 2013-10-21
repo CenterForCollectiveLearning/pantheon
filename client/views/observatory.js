@@ -160,6 +160,10 @@ Handlebars.registerHelper("initialDataReady", function(){
     return Session.get("initialDataReady");
 });
 
+Handlebars.registerHelper("tooltipDataReady", function(){
+    return Session.get("tooltipDataReady");
+});
+
 // Create a global helper
 // Use this from multiple templates
 Handlebars.registerHelper("person_lookup", function(){
@@ -178,6 +182,11 @@ Template.ranked_person.birthday = function() {
     var birthday = (this.birthyear < 0) ? (this.birthyear * -1) + " B.C." : this.birthyear;
     return birthday;
 }
+
+Template.date_header.helpers({
+    from: function() { return Session.get("from"); }
+    , to: function() { return Session.get("to"); }
+});
 
 // Generate question given viz type
 Template.question.question = function() {
@@ -283,6 +292,7 @@ Template.question.question = function() {
 /*
  * TOOLTIPS
  */
+
 Template.tooltip.helpers({
     tooltipShown: function() { return Session.get("showTooltip") }
     , position: function() { return Session.get("tooltipPosition") }

@@ -229,6 +229,15 @@ header {
     	}
     }
 
+    .secondary-text {
+    	font-size: 1em; // 32px / 1px
+    	line-height: 1em;
+    	padding-bottom: 1em;
+    	text-align: center;
+    	text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
+    	margin-top: -1.5em;
+    }
+
     .name {
     	text-transform: capitalize;
     }

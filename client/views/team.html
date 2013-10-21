@@ -1,26 +1,36 @@
 <template name="teamMember">
 	<li class="span4 team-member">
-		<span class="name">{{name}}</span>
-		<div class="photo_container">
-			<img class="photo" src={{photo}} />
-			{{#with media}} 
-			<div class="info"> 
-				{{#if personal}}<span class="icon-stack"><a href={{personal}} target="_blank"><i class="icon-large icon-home"></i></a></span>{{/if}}
-				{{#if twitter}}<span class="icon-stack"><a href={{twitter}} target="_blank"><i class="icon-large icon-twitter"></i></a></span>{{/if}}           
-				{{#if linkedin}}<span class="icon-stack"><a href={{linkedin}} target="_blank"><i class="icon-large icon-linkedin"></i></a></span>{{/if}}           
-			    {{#if email}}<span class="icon-stack"><a href={{email}} target="_blank"><i class="icon-large icon-envelope"></i></a></span>{{/if}}           
-			</div>
-			{{/with}}
-		</div>
-		<div class="desc">{{description}}</div>
-		<div class="role">
-			<ul>
-				{{#each role}}
-				   <li>{{this}}</li>
-				{{/each}}
-			</ul>
-		</div>
+		{{>teamMemberInfo}}
 	</li>
+</template>
+
+<template name="thirdRowTeamMember">
+	<li class="span6 team-member">
+		{{>teamMemberInfo}}
+	</li>
+</template>
+
+<template name="teamMemberInfo">
+	<span class="name">{{name}}</span>
+	<div class="photo_container">
+		<img class="photo" src={{photo}} />
+		{{#with media}} 
+		<div class="info"> 
+			{{#if personal}}<span class="icon-stack"><a href={{personal}} target="_blank"><i class="icon-large icon-home"></i></a></span>{{/if}}
+			{{#if twitter}}<span class="icon-stack"><a href={{twitter}} target="_blank"><i class="icon-large icon-twitter"></i></a></span>{{/if}}           
+			{{#if linkedin}}<span class="icon-stack"><a href={{linkedin}} target="_blank"><i class="icon-large icon-linkedin"></i></a></span>{{/if}}           
+			{{#if email}}<span class="icon-stack"><a href={{email}} target="_blank"><i class="icon-large icon-envelope"></i></a></span>{{/if}}           
+		</div>
+		{{/with}}
+	</div>
+	<div class="desc">{{description}}</div>
+	<div class="role">
+		<ul>
+			{{#each role}}
+			<li>{{this}}</li>
+			{{/each}}
+		</ul>
+	</div>
 </template>
 
 <template name="team">
@@ -48,7 +58,13 @@
 						{{/each}}
 					</ul>
 				</div>
-
+				<div class="row-fluid">
+					<ul>
+						{{#each third_row_teamMembers}}
+						    {{> thirdRowTeamMember}}
+						{{/each}}
+					</ul>
+				</div>
 				</div>
 			</div>
 		</div>

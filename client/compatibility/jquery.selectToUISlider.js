@@ -182,9 +182,6 @@ jQuery.fn.selectToUISlider = function(settings){
 		
 	}
 	
-
-	
-	
 	//show and hide labels depending on labels pref
 	//show the last one if there are more than 1 specified
 	if(options.labels > 1) sliderComponent.find('.ui-slider-scale li:last span.ui-slider-label, .ui-slider-scale dd:last span.ui-slider-label').addClass('ui-slider-label-show');

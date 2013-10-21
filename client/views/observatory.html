@@ -3,6 +3,7 @@
 
     <div class="page-top">   
         {{> question}}
+        {{> date_header}}
     </div>
 
     <div id="page">
@@ -19,9 +20,9 @@
             </div>
             <div class="page-bottom row-fluid slider-row">
                 <div class="span8 offset2">
-                    {{!#if initialDataReady}}
-                        {{!> slider}}
-                    {{!/if}}
+                    {{#if initialDataReady}}
+                        {{> slider}}
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -113,6 +114,10 @@
     <div class="primary-text">{{question}}</div>
 </template>
 
+<template name="date_header">
+    <div class="secondary-text">({{from}} &#8212; {{to}})</div>
+</template>
+
 <!-- Ranked List for Treemap -->
 <template name="ranked_list">
     <div class="ranked_list">
@@ -147,9 +152,11 @@
 <!-- Tooltips -->
 <template name="tooltip">
     {{#if tooltipShown}}
+    {{#if tooltipDataReady}}
     <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
         <div id="tooltip-inner">
             <span class="category">{{heading}}</span>
+            
             <div class="total-count">{{count}} {{suffix}}</div>
             <div class="list">
                 {{#each top5}} 
@@ -157,8 +164,10 @@
                 {{/each}}
             </div>
             {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
+            
         </div>
     </div>
+    {{/if}}
     {{/if}}
 </template>
 

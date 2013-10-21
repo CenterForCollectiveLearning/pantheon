@@ -182,8 +182,8 @@ d3plus.tree_map = function(vars) {
       Session.set("tooltipCountryCode", countryCode);
 
       Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
-      Template.tooltip.categoryA = countryName;
-      Template.tooltip.categoryB = category;
+      // Template.tooltip.categoryA = countryName;
+      // Template.tooltip.categoryB = category;
 
       Session.set("showTooltip", true);     
     })

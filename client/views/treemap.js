@@ -30,8 +30,8 @@ Template.treemap_svg.rendered = function() {
     // this.rendered = true;
     var viz = d3plus.viz() ;
     var data = Treemap.find().fetch();
-    console.log("UNFLATTENED DATA:")
-    console.log(data);
+    // console.log("UNFLATTENED DATA:")
+    // console.log(data);
     var attrs = {};
     var vizMode = Session.get('vizMode');
 
@@ -82,10 +82,10 @@ Template.treemap_svg.rendered = function() {
             flat.push({"id": d.occupation, "name": d.occupation, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
         });
 
-        console.log("ATTRS:");
-        console.log(attrs);
-        console.log("DATA:")
-        console.log(flat);
+        // console.log("ATTRS:");
+        // console.log(attrs);
+        // console.log("DATA:")
+        // console.log(flat);
 
         viz
             .type("tree_map")
@@ -100,7 +100,7 @@ Template.treemap_svg.rendered = function() {
             .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
             .nesting(["nesting_1","nesting_3","nesting_5"])
             .depth("nesting_5")
-            .font("Open Sans")
+            .font("Lato")
             .font_weight("300")
             .color_var("color");
 

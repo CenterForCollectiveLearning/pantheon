@@ -166,7 +166,6 @@ Template.scatterplot_svg.rendered = function() {
 			, active2: true
 			, year: 2002
 		}
-        console.log(x_name, y_name, x, y)
 		d[x_name] = x;
 		d[y_name] = y;
 		d['total'] = x + y;
@@ -180,10 +179,10 @@ Template.scatterplot_svg.rendered = function() {
 		return "This is some test HTML";
 	}
 
-    console.log("orignal data", data);
-	console.log("aggregated", aggregated);
-	console.log("FLAT DATA: ", flatData);
-	console.log("ATTRS: ", attrs);
+ //    console.log("orignal data", data);
+	// console.log("aggregated", aggregated);
+	// console.log("FLAT DATA: ", flatData);
+	// console.log("ATTRS: ", attrs);
 
 	viz
 	    .type("pie_scatter")

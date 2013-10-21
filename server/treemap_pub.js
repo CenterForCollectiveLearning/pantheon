@@ -6,8 +6,6 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     var sub = this;
     var driver = MongoInternals.defaultRemoteCollectionDriver();
 
-    // TODO modify this query to be more general
-
     var matchArgs = {
         numlangs: {$gt: L},
         birthyear: {$gte: begin, $lte:end}
@@ -16,8 +14,6 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     if (language !== 'all' ) {
         matchArgs.lang = language;
     };
-
-    console.log(category);
 
     if (category.toLowerCase() !== 'all' ) {
         matchArgs[categoryLevel] = category;
@@ -37,6 +33,8 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
                 count: {$sum: 1 }
             }}
         ];
+
+        console.log("COUNTRY_EXPORTS", pipeline);
         driver.mongo.db.collection("people").aggregate(
             pipeline,
             Meteor.bindEnvironment(

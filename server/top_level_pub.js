@@ -126,15 +126,11 @@ Also a static query
 does not send over anything other than the people ids,
 because the whole set of people already exists client side
 */
+
+// TODO Combine with TOP N query?
 Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel) {
     var sub = this;
-
-    var args = {
-        birthyear : {$gt:begin, $lte:end}
-        , numlangs: {$gt: L}
-    };
-
-    console.log("INTOOLTIPPEOPLE", category, category.toLowerCase());
+    var args = getCountryExportArgs(begin, end, L, country);
    
     if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode == "domain_exports_to" || vizMode === "map") {
         if (country !== 'all' ) {
@@ -171,7 +167,6 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         limit: limit, 
         sort: sort,
         hint: occupation_countryCode}).forEach(function(person){
-            console.log(person);
             sub.added("tooltipCollection", person._id, {});
          });
 
@@ -180,6 +175,8 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         fields: projection,
         hint: occupation_countryCode}).count();
     sub.added("tooltipCollection", 'count', {count: count});
+
+    sub.ready();
 
     return;
 });

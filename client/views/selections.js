@@ -327,4 +327,3 @@ Template.domain_item.industries_given_domain = function() {
     });
     return res;
 }
-
