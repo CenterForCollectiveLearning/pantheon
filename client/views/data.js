@@ -18,7 +18,7 @@ function calcSize(n) {
     return n.size;
 }
 
-var u = "https://docs.google.com/spreadsheet/pub?key=0AgfOXjbH2KOddHR3c0JDbGpLa3E1UkVpUjRhaE5JeEE&single=true&gid=2&range=A1%3AD88&output=csv";
+var u = "https://docs.google.com/spreadsheet/pub?key=0AgfOXjbH2KOddHR3c0JDbGpLa3E1UkVpUjRhaE5JeEE&single=true&gid=2&range=A1%3AD89&output=csv";
 function renderTree(url){
     d3.select("#tree").remove();
     var allData = {};
