@@ -20,8 +20,6 @@ Template.sharing_options.rendered = function() {
     }
 }
 
-Template.visualization.preserve([".slider", ".ui-slider"]);
-
 // Re-render visualization template on window resize
 Template.visualization.resize = function() {
     Session.get("resize");
