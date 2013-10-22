@@ -226,6 +226,8 @@ Template.matrix_svg.rendered = function() {
             .attr("dy", ".32em")
             .attr("text-anchor", "end")
             .attr("font-family", "Lato")
+            .attr("fill", "#ffffff")
+            .attr("font-weight", "lighter")
             .attr("font-size", "0.8em");
 
         // ENTER + Update
@@ -264,7 +266,8 @@ Template.matrix_svg.rendered = function() {
             .attr("text-anchor", "start")
             .attr("font-family", "Lato")
             .attr("font-size", "1.2em")
-            .attr("font-weight", 400)
+            .attr("fill", "#ffffff")
+            .attr("font-weight", "lighter")
             .attr("x", 6)
             .attr("y", matrixScales.y.rangeBand()/2);
 
