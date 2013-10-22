@@ -1,20 +1,29 @@
 // Indexes
-// db.runCommand( { serverStatus: 0, repl: 0, indexCounters: 1 } ).indexCounters
+// Index Usage (???): db.runCommand( { serverStatus: 0, repl: 0, indexCounters: 1 } ).indexCounters
+
+// Heuristics: If _id not included in index, drop in projection
 
 /* 
  * TREEMAPS
  */
 // Country Exports (birthyear, numlangs, [category], [country])
-People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, countryCode: 1});
-People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, domain: 1, countryCode: 1});
-People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, industry: 1, countryCode: 1});
-People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, occupation: 1, countryCode: 1});
+People._ensureIndex({numlangs: 1, birthyear: 1, countryCode: 1, domain: 1, industry: 1, occupation: 1}) 
+// Checked: db.people.find({numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, countryCode: 'CN'}, {_id: 0, domain: 1, industry: 1, occupation: 1}).explain()
+
+// Domain Exports
+People._ensureIndex({numlangs: 1, birthyear: 1, domain: 1, countryCode: 1, countryName: 1, continent: 1})  
+// Checked: db.people.find({ numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, domain: 'ARTS' }, {_id: 0, countryCode: 1, countryName: 1, continent: 1}).explain()
+People._ensureIndex({numlangs: 1, birthyear: 1, industry: 1, countryCode: 1, countryName: 1, continent: 1})
+People._ensureIndex({numlangs: 1, birthyear: 1, occupation: 1, countryCode: 1, countryName: 1, continent: 1})
+
 
 /* 
  * MATRICES
  */
 // Matrix (birthyear, numlangs, gender)
-People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, gender: 1});
+// Index needed here to iterate through people
+People._ensureIndex({numlangs: 1, birthyear: 1, gender: 1, countryCode: 1, industry: 1, _id: 1});
+// Checked: db.people.find({ numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, gender: 'Female' }, {_id: 0, countryCode: 1, industry: 1}).explain()
 
 /* 
  * TOOLTIPS

@@ -108,7 +108,7 @@ Template.accordion.events = {
 
 // Global helper for data ready
 Handlebars.registerHelper("dataReady", function(){
-    console.log("DATA READY");
+    console.log("DATA READY", Session.get("dataReady"));
     return Session.get("dataReady");
 });
 

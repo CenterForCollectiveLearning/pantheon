@@ -22,12 +22,14 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
     var pipeline = [];
 
     if(vizMode === 'country_exports'){
+        var project = {_id: 0, domain: 1, industry: 1, occupation: 1};
         if (country !== 'all' ) {
             matchArgs.countryCode = country;
         };
     
         pipeline = [
             {$match: matchArgs },
+            {$project: project},
             {$group: {
                 _id: {domain: "$domain", industry: "$industry", occupation: "$occupation"},
                 count: {$sum: 1 }
@@ -89,8 +91,13 @@ Meteor.publish("treemap_pub", function(vizMode, begin, end, L, country, language
         );
     }
     else if(vizMode === 'domain_exports_to'){
+        var project = {_id: 0, continent: 1, countryCode: 1, countryName: 1};
+
+        console.log(matchArgs);
+
         pipeline = [
             {$match: matchArgs },
+            {$project: project},
             {$group: {
                 _id: {continent: "$continentName", countryCode: "$countryCode", countryName: "$countryName"},
                 count: {$sum: 1 }

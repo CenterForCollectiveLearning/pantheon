@@ -75,8 +75,6 @@ Template.matrix_svg.rendered = function() {
 
     var data = Matrix.find().fetch();
 
-    console.log(data);
-
     /* SVG Handles */
     var svg = d3.select(this.find("svg.matrix"))
         .attr("width", matrixProps.fullWidth)
@@ -326,6 +324,7 @@ Template.matrix_svg.rendered = function() {
 
     // TODO: Don't re-render tooltip for already selected cell
     function mouseover(p) {
+        Session.set("hover", true);
         d3.selectAll(".row text").classed("active", function(d, i) { return i == p.y; });
         d3.selectAll(".column-title").classed("active", function(d, i) { return i == p.x; });
 
@@ -357,6 +356,7 @@ Template.matrix_svg.rendered = function() {
     }
 
     function mouseout(p) {
+        Session.set("hover", false);
         destroyTooltip(p);
         d3.selectAll("text").classed("active", false);
     }

@@ -88,6 +88,7 @@ Meteor.startup(function() {
     
 
     // TOOLTIPS
+    Session.setDefault('hover', false);
     Session.setDefault('showTooltip', false);
     Session.setDefault('tooltipCategory', 'all')
     Session.setDefault('tooltipCategoryLevel', 'domain')
@@ -97,6 +98,9 @@ Meteor.startup(function() {
 
     // SPLASH SCREEN
     Session.get("authorized", false);
+
+    Session.get("googleAnalytics", false);
+    Session.get("showSpinner", false);
 
     // Set session variable if window resized (throttled rate)
     var throttledResize = _.throttle(function(){
@@ -108,31 +112,33 @@ Meteor.startup(function() {
 });
 
 Template.google_analytics.rendered = function() {
-  //   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  //     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  //     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    console.log("RENDERING GOOGLE ANALYTICS");
+    if (!Session.get("googleAnalytics")) {
+        console.log("RENDERING GOOGLE ANALYTICS");
 
-    var i = window;
-    var s = document;
-    var o = 'script';
-    var g = '//www.google-analytics.com/analytics.js'
-    var r = 'ga';
+        var i = window;
+        var s = document;
+        var o = 'script';
+        var g = '//www.google-analytics.com/analytics.js'
+        var r = 'ga';
 
-    i['GoogleAnalyticsObject']=r;
-    i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)
-    },
-    i[r].l=1*new Date();
-    a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];
-    a.async=1;
-    a.src=g
-    ;m.parentNode.insertBefore(a,m);
+        i['GoogleAnalyticsObject']=r;
+        i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)
+        },
+        i[r].l=1*new Date();
+        a=s.createElement(o), m=s.getElementsByTagName(o)[0];
+        a.async=1;
+        a.src=g;
+        m.parentNode.insertBefore(a,m);
 
-    ga('create', 'UA-44888546-1', 'mit.edu');
-    ga('send', 'pageview');
+        ga('create', 'UA-44888546-1', 'mit.edu');
+        ga('send', 'pageview');
+    }
+    Session.set("googleAnalytics", true);
+}
+
+Template.google_analytics.destroyed = function() {
+    Session.set("googleAnalytics", false);
 }
 
 
@@ -197,16 +203,21 @@ Template.section.helpers({
 })
 
 Template.spinner.rendered = function() {
-    $('header').css('border-bottom-width', '0px');
-    NProgress.configure({
-        minimum: 0.2
-        , trickleRate: 0.1
-        , trickleSpeed: 500
-    })
-    NProgress.start();
+    if (!Session.get("showSpinner")) {
+        console.log("RENDERING SPINNER");
+        $('header').css('border-bottom-width', '0px');
+        NProgress.configure({
+            minimum: 0.2
+            , trickleRate: 0.1
+            , trickleSpeed: 500
+        })
+        NProgress.start();
+    }
+    Session.set("showSpinner", true);
 }
 
 Template.spinner.destroyed = function() {
     NProgress.done();
     $('header').css('border-bottom-width', '3px');
+    Session.set("showSpinner", false);
 }

@@ -139,6 +139,7 @@ Template.map_svg.rendered = function() {
 var mouseoverCell = null;
 
 function mouseover(d){
+    Session.get("hover", true);
     // TODO optional: highlight selected country
 
     var countryCode3 = d.id;
@@ -169,6 +170,7 @@ function mouseover(d){
 }
 
 function mouseout(d){
+    Session.get("hover", false);
     Session.set("showTooltip", false);
     mouseoverCell = null;
     // TODO optional: un-highlight country

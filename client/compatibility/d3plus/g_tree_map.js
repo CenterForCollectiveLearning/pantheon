@@ -142,6 +142,7 @@ d3plus.tree_map = function(vars) {
   
   cell
     .on(d3plus.evt.over,function(d){
+      Session.set("hover", true);
       var id = find_variable(d,vars.id_var).replace(" ", "_"),
           self = d3.select("#cell_"+id).node()
 
@@ -187,6 +188,7 @@ d3plus.tree_map = function(vars) {
       Session.set("showTooltip", true);     
     })
     .on(d3plus.evt.out,function(d){
+      Session.get("hover", false);
       Template.tooltip.top5 = null;
       Session.set("showTooltip", false);
       $("#tooltip").empty();

@@ -136,7 +136,7 @@ d3plus.pie_scatter = function(vars) {
   
   nodes
     .on(d3plus.evt.over, function(d){
-      covered = false
+      Session.get("hover", true);
       
       var val = d[vars.value_var] ? d[vars.value_var] : vars.size_scale.domain()[0]
       var radius = vars.size_scale(val),
@@ -291,6 +291,7 @@ d3plus.pie_scatter = function(vars) {
       
     })
     .on(d3plus.evt.out, function(d){
+      Session.get("hover", false);
       Session.set("showTooltip", false);
       $("#tooltip").empty();
 

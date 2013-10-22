@@ -142,7 +142,12 @@ Deps.autorun(function(){
  Subscription for tooltips on hover
   */
 Deps.autorun(function() {
-    console.log("IN TOOLTIP DATA");
+    // Don't proceed if you're not hovering
+    var hover = Session.get('hover');
+    if (!hover) {
+        return;
+    }
+
     // get rid of people and count ready once tooltip is working
     // Return both in one publication
     Session.set("tooltipDataReady", false);
@@ -165,17 +170,6 @@ Deps.autorun(function() {
     var langs = parseInt(Session.get('langs'));
 
     var vizMode = Session.get('vizMode');
-
-    // TODO fix this hack
-    // if( window.Domains === undefined ) return;
-
-    // if( !countryCode || !begin || !end || !langs || !domain ) {
-    //     if( tooltipSub !== null ){
-    //         tooltipSub.stop();
-    //         tooltipSub = null;
-    //     }
-    // }
-    // TODO Pass in an array or object
 
     tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, onDataReady);
 });
