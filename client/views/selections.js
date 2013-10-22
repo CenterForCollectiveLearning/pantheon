@@ -185,14 +185,8 @@ Template.select_category.events = {
 Template.select_categoryX.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
-
         Session.set("categoryLevel", getCategoryLevel(d.target.value));
-
-        if (IOMapping[Session.get("vizMode")]["in"].indexOf("category") == 0)
-            path[3] = d.target.value;
-        else
-            path[4] = d.target.value;        
-        
+        path[3] = d.target.value;
         Router.go(path.join('/'));
     }
 }
@@ -200,14 +194,8 @@ Template.select_categoryX.events = {
 Template.select_categoryY.events = {
     "change select": function(d) {
         var path = window.location.pathname.split('/');
-
         Session.set("categoryLevel", getCategoryLevel(d.target.value));
-
-        if (IOMapping[Session.get("vizMode")]["in"].indexOf("category") == 0)
-            path[3] = d.target.value;
-        else
-            path[4] = d.target.value;        
-        
+        path[4] = d.target.value;        
         Router.go(path.join('/'));
     }
 }
@@ -277,6 +265,19 @@ Template.language_dropdown.languages = function (){
 };
 
 Template.category_dropdown.domains = function (){
+    var uniqueDomains = [];
+    var res = [];
+    _.each(Domains.find().fetch(), function(domain_obj) {
+        var domain = domain_obj.domain;
+        if (uniqueDomains.indexOf(domain) === -1) {
+            uniqueDomains.push(domain);
+            res.push({domain: domain});
+        }
+    });
+    return res;
+};
+
+Template.category_dropdown_only_domain.domains = function (){
     var uniqueDomains = [];
     var res = [];
     _.each(Domains.find().fetch(), function(domain_obj) {

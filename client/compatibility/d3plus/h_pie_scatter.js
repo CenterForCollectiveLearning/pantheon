@@ -157,6 +157,8 @@ d3plus.pie_scatter = function(vars) {
         "top": (d3.event.clientY - 45)
       }
       Session.set("tooltipPosition", position);
+
+      console.log("HOVERING");
    
       // Subscription Parameters
       if (vizMode === 'country_vs_country') {

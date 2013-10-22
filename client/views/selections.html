@@ -119,12 +119,28 @@
 </template>
 
 <template name="select_categoryX">
-    {{> category_dropdown}}
+    {{> category_dropdown_only_domain}}
 </template>
 
 <template name="select_categoryY">
-    {{> category_dropdown}}
+    {{> category_dropdown_only_domain}}
 </template>
+
+<template name="category_dropdown_only_domain">
+    <div class="parameter-selection">
+        <label>Domain</label>
+        <select>
+            {{#each domains}}
+                {{> domain_item_end}}
+            {{/each}}
+        </select>
+    </div>
+</template>
+
+<template name="domain_item_end">
+    <option class="domain" value="{{domain}}">{{domain}}</option>
+</template>
+
 
 <template name="category_dropdown">
     <div class="parameter-selection">
