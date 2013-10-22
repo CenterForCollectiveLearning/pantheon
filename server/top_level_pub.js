@@ -149,8 +149,10 @@ because the whole set of people already exists client side
 // TODO Combine with TOP N query?
 Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel) {
     var sub = this;
-    var args = getCountryExportArgs(begin, end, L, country);
-   
+    var args = {
+        numlangs: {$gt: L},
+        birthyear: {$gte: begin, $lte:end}
+    };
     if (vizMode === "country_exports" || vizMode === "matrix_exports" || vizMode == "domain_exports_to" || vizMode === "map") {
         if (country !== 'all' ) {
             args.countryCode = country;
@@ -180,6 +182,8 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
     var limit = 5;
     var sort = {numlangs: -1};
 
+    console.log(args, projection);
+
     // Get people
     People.find(args, {
         fields: projection, 
@@ -188,6 +192,7 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
         limit: limit, 
         sort: sort,
         hint: occupation_countryCode}).forEach(function(person){
+            console.log(person);
             sub.added("tooltipCollection", person._id, {});
         });
 

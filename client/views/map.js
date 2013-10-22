@@ -170,7 +170,7 @@ function mouseover(d){
 }
 
 function mouseout(d){
-    Session.get("hover", false);
+    Session.set("hover", false);
     Session.set("showTooltip", false);
     mouseoverCell = null;
     // TODO optional: un-highlight country

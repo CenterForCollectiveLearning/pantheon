@@ -188,7 +188,7 @@ d3plus.tree_map = function(vars) {
       Session.set("showTooltip", true);     
     })
     .on(d3plus.evt.out,function(d){
-      Session.get("hover", false);
+      Session.set("hover", false);
       Template.tooltip.top5 = null;
       Session.set("showTooltip", false);
       $("#tooltip").empty();

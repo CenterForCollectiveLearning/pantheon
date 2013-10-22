@@ -136,7 +136,7 @@ d3plus.pie_scatter = function(vars) {
   
   nodes
     .on(d3plus.evt.over, function(d){
-      Session.get("hover", true);
+      Session.set("hover", true);
       
       var val = d[vars.value_var] ? d[vars.value_var] : vars.size_scale.domain()[0]
       var radius = vars.size_scale(val),
@@ -157,8 +157,6 @@ d3plus.pie_scatter = function(vars) {
         "top": (d3.event.clientY - 45)
       }
       Session.set("tooltipPosition", position);
-
-      console.log("HOVERING");
    
       // Subscription Parameters
       if (vizMode === 'country_vs_country') {
@@ -293,7 +291,7 @@ d3plus.pie_scatter = function(vars) {
       
     })
     .on(d3plus.evt.out, function(d){
-      Session.get("hover", false);
+      Session.set("hover", false);
       Session.set("showTooltip", false);
       $("#tooltip").empty();
 

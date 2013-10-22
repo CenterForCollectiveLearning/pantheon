@@ -60,13 +60,22 @@ Router.map(function() {
                 Session.set("category", defaults.category)
             else if (vizMode == 'domain_exports_to')
                 Session.set("country", defaults.country)
-            else if (vizMode == 'country_vs_country')
-                Session.set("country", defaults.country)
+            else if (vizMode == 'country_vs_country') {
+                Session.set("country", defaults.country);
+                Session.set("category", defaults.category);
+                Session.set("categoryLevel", defaults.categoryLevel);
+            }
+            else if (vizMode == 'domain_vs_domain')
+                Session.set("category", defaults.category);
 
-            if(IOMapping[vizMode]["in"][0] === "category")
+            if(IOMapping[vizMode]["in"][0] === "category") {
                 Session.set("categoryLevel", getCategoryLevel(this.params.param1));
-            if(IOMapping[vizMode]["in"][1] === "category")
+            }
+                
+            if(IOMapping[vizMode]["in"][1] === "category") {
                 Session.set("categoryLevel", getCategoryLevel(this.params.param2));   
+            }
+                
         }}
     );
 
