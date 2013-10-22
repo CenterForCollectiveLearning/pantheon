@@ -103,13 +103,13 @@ Deps.autorun(function(){
                 default:
                     console.log("Unsupported vizMode");
             };
-        } else if(page === "ranking"){
+        } else if(page === "rankings"){
             switch(entity){
                 case "countries":
                     dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, onReady);
                     break;
                 case "people":
-                    dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, category, categoryLevel, 'all', onReady);
+                    dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, category, categoryLevel, "all", onReady);
                     break;
                 case "domains":
                     dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady);

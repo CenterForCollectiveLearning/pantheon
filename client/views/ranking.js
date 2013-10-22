@@ -75,14 +75,19 @@ Template.ranking_accordion.events = {
             , "people_ranking": "people"
             , "domains_ranking": "domains"
         }
-
+        var category = defaults.category;
         // Reset parameters for a viz type change
-        var path = '/ranking/' +
+        if(option === "people_ranking"){
+            category = "ASTRONAUT"; //TODO: figure out why all people ranking is SLOW.... default to astronauts now
+        }
+        var path = '/rankings/' +
             modeToEntity[option] + '/' +
             defaults.country + '/' +
-            defaults.category + '/' +
+            category + '/' +
             defaults.from + '/' +
             defaults.to
+
+
         Router.go(path);
     }
 }
@@ -141,6 +146,27 @@ Template.ranked_domains_list.domains_full_ranking = function(){
 
 Template.ranked_domains_list.rank = function(){
     return 1;
+}
+
+Template.ranked_people_list.person_blob = function() {
+    console.log("IN PERSON BLOB");
+    var table = '';
+    var data = PeopleTopN.find().fetch();
+
+    _.forEach(data, function(person) {
+        table += "<tr class='"+ person.domain + "'>";
+        table += "<td>1</td>";
+        table += "<td>" + person.name + "</td>";
+        table += "<td>" + person.countryName + "</td>";
+        table += "<td>" + person.birthyear + "</td>";
+        table += "<td>" + person.gender + "</td>";
+        table += "<td>" + person.occupation + "</td>";
+        table += "<td>" + person.numlangs + "</td>";
+        table += "</tr>";
+    });
+
+    console.log("DONE")
+    return new Handlebars.SafeString(table);
 }
 
 // TODO: do this with CSS instead??
