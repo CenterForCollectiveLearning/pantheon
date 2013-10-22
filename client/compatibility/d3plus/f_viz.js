@@ -32,7 +32,7 @@ d3plus.viz = function() {
     "error": "",
     "filter": [],
     "filtered_data": null,
-    "font": "sans-serif",
+    "font": "Lato",
     "font_weight": "lighter",
     "graph": {"timing": 0},
     "group_bgs": true,

@@ -161,7 +161,7 @@ Template.treemap_svg.rendered = function() {
             .total_bar({"prefix": "Total Exports: ", "suffix": " individuals"})
             .nesting(["nesting_1","nesting_3"])
             .depth("nesting_3")
-            .font("Open Sans")
+            .font("Lato")
             .font_weight("300")
             .color_var("color");
 
