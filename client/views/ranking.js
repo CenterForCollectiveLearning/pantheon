@@ -78,7 +78,7 @@ Template.ranking_accordion.events = {
         var category = defaults.category;
         // Reset parameters for a viz type change
         if(option === "people_ranking"){
-            category = "ASTRONAUT"; //TODO: figure out why all people ranking is SLOW.... default to astronauts now
+            category = "EXPLORATION"; //TODO: figure out why all people ranking is SLOW.... default to astronauts now
         }
         var path = '/rankings/' +
             modeToEntity[option] + '/' +
