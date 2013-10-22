@@ -35,9 +35,9 @@ Deps.autorun(function(){
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
-    var category = Session.get('category');
-    var categoryX = Session.get('categoryX');
-    var categoryY = Session.get('categoryY');
+    var category = Session.get('category').toUpperCase();
+    var categoryX = Session.get('categoryX').toUpperCase();
+    var categoryY = Session.get('categoryY').toUpperCase();
     var gender = Session.get('gender');
     var entity = Session.get('entity');
     var page = Session.get('page');
@@ -142,6 +142,7 @@ Deps.autorun(function(){
  Subscription for tooltips on hover
   */
 Deps.autorun(function() {
+    console.log("IN TOOLTIP DATA");
     // get rid of people and count ready once tooltip is working
     // Return both in one publication
     Session.set("tooltipDataReady", false);

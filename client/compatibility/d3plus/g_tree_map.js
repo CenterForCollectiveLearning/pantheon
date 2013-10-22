@@ -156,14 +156,15 @@ d3plus.tree_map = function(vars) {
 
       var vizMode = Session.get("vizMode");
       if (vizMode === "country_exports") {
+        console.log("GETTING TOOLTIPS");
         var countryCode = Session.get("country");
         var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
-        var category = id.replace("_", " ");
+        var category = id.replace("_", " ").toUpperCase();
         var categoryLevel = "occupation";
       } else if (vizMode === "domain_exports_to") {
         var countryCode = id.replace("_", " ");
         var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
-        var category = Session.get("category");
+        var category = Session.get("category").toUpperCase();
         var categoryLevel = Session.get("categoryLevel");
       }
 
