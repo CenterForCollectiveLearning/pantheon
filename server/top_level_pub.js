@@ -182,17 +182,12 @@ Meteor.publish("tooltipPeople", function(vizMode, begin, end, L, country, countr
     var limit = 5;
     var sort = {numlangs: -1};
 
-    console.log(args, projection);
-
     // Get people
     People.find(args, {
         fields: projection, 
-
-        
         limit: limit, 
         sort: sort,
         hint: occupation_countryCode}).forEach(function(person){
-            console.log(person);
             sub.added("tooltipCollection", person._id, {});
         });
 

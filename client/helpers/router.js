@@ -68,11 +68,10 @@ Router.map(function() {
             else if (vizMode == 'domain_vs_domain')
                 Session.set("category", defaults.category);
 
-            if(IOMapping[vizMode]["in"][0] === "category") {
+            if(IOMapping[vizMode]["in"][0] === "category" || IOMapping[vizMode]["in"][0] === "categoryX" || IOMapping[vizMode]["in"][0] === "categoryY") {
                 Session.set("categoryLevel", getCategoryLevel(this.params.param1));
-            }
-                
-            if(IOMapping[vizMode]["in"][1] === "category") {
+            }   
+            if(IOMapping[vizMode]["in"][1] === "category" || IOMapping[vizMode]["in"][1] === "categoryX" || IOMapping[vizMode]["in"][1] === "categoryY") {
                 Session.set("categoryLevel", getCategoryLevel(this.params.param2));   
             }
                 
@@ -130,7 +129,7 @@ Router.map(function() {
         path: '/people/:person',
         data: function() { 
             Session.set('page', this.template);
-            Session.set('person', this.params.person);X1
+            Session.set('person', this.params.person);
         }
     });
     this.route('team', {
