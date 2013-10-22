@@ -43,7 +43,7 @@ Deps.autorun(function(){
     var page = Session.get('page');
 
     if(category){
-        category = category.toUpperCase();
+        category = category;
     }
     var occ = Session.get('occ');
     var vizMode = Session.get('vizMode');
