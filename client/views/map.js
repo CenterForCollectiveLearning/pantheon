@@ -64,13 +64,6 @@ Template.map_svg.rendered = function() {
       // .append("g")
       //   .attr("class", "viz"); // .data([data]);
 
-    // If it's the first time the app is being built, add this group element
-    var key_enter = svg.append("g").attr("class", "key")
-        // TODO don't hardcode the position of this bar if the SVG size changes
-        .attr("transform", "translate(30, 550)")
-        .append("rect")
-        .call(key_gradient)
-
     /////////////////////////////////////////////////
     // Enter
     //////////////////////////////////////////////////
@@ -93,6 +86,14 @@ Template.map_svg.rendered = function() {
         .attr("stroke-width", 0.5)
         .attr("d", d3.geo.path().projection(map_projection))
 
+    // Draw the key after the paths so it appears on top
+    // If it's the first time the app is being built, add this group element
+    var key_enter = svg.append("g").attr("class", "key")
+        // TODO don't hardcode the position of this bar if the SVG size changes
+        .attr("transform", "translate(400, 480)")
+        .append("rect")
+        .call(key_gradient)
+
     // Draw key
     d3.select(".key").selectAll("rect.ticks")
         .data(value_range_big)
@@ -110,19 +111,18 @@ Template.map_svg.rendered = function() {
         .attr("x", function(d, i) { return Math.round((50*Math.pow((590/50),i/10)))})
         .attr("y", 12)
         .attr("dy", 12)
-        .attr("text-anchor", "middle");
+        .attr("text-anchor", "middle")
+        .style("fill", "#fff");
 
     /////////////////////////////////////////////////
     // Update
     //////////////////////////////////////////////////
     svg.selectAll("path")
         .attr("fill", function(d){
-            // TODO get rid of the space so we don't have to use an inefficient regex here
-            var doc = WorldMap.findOne({ countryCode: { $regex: d.id } });
+            var doc = WorldMap.findOne({ countryCode: d.id });
             if( doc ) return value_color(doc.count);
             else return "#FFF";
         })
-        // TODO add tooltips
         .on("mousemove", mouseover)
         .on("mouseout", mouseout)
 

@@ -38,9 +38,10 @@ Template.treemap_svg.rendered = function() {
     if(vizMode === 'country_exports' || vizMode === 'country_imports' || vizMode === 'bilateral_exporters_of'){
         var attr = Domains.find().fetch();
         attr.forEach(function(a){
-            var dom = a.domain;
-            var ind = a.industry;
-            var occ = a.occupation;
+            console.log(a.domain.capitalize(), a.industry.capitalize(), a.occupation.capitalize());
+            var dom = a.domain.capitalize();
+            var ind = a.industry.capitalize();
+            var occ = a.occupation.capitalize();
             var dom_color = color_domains(dom.toUpperCase());
             var domDict = {
                 id: dom
@@ -79,7 +80,7 @@ Template.treemap_svg.rendered = function() {
 
         var flat = [];
         data.forEach(function(d){
-            flat.push({"id": d.occupation, "name": d.occupation, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
+            flat.push({"id": d.occupation.capitalize(), "name": d.occupation.capitalize(), "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
         });
 
         // console.log("ATTRS:");
@@ -112,7 +113,7 @@ Template.treemap_svg.rendered = function() {
         attr.forEach(function(a){
             var continent = a.continentName;
             var countryCode = a.countryCode;
-            var countryName = a.countryName;
+            var countryName = a.countryName.capitalize();
             var continent_color = color_countries(continent);
             var continentDict = {
                 id: continent
@@ -139,7 +140,7 @@ Template.treemap_svg.rendered = function() {
 
         var flat = [];
         data.forEach(function(d){
-            flat.push({"id": d.countryCode, "name": d.countryName, "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
+            flat.push({"id": d.countryCode, "name": d.countryName.capitalize(), "num_ppl": d.count, "year":2000});  //use a dummy year here for now ...
         });
 
         console.log("ATTRS:");

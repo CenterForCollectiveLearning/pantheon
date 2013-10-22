@@ -291,7 +291,7 @@ d3plus.tree_map = function(vars) {
         var arr = vars.name_array ? vars.name_array : [vars.text_var,vars.id_var]
         arr.forEach(function(n){
           var name = find_variable(d,n)
-          if (name) text.push(vars.text_format(name))
+          if (name) text.push(name)
         })
         
         var size = (d.dx)/7

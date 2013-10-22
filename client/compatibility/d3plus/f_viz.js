@@ -90,9 +90,7 @@ d3plus.viz = function() {
     "sub_title": null,
     "svg_height": window.innerHeight,
     "svg_width": window.innerWidth,
-    "text_format": function(text,name) { 
-      return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase() 
-    },
+    "text_format": Object, // Don't transform the text
     "text_var": "name",
     "title": null,
     "title_center": true,
