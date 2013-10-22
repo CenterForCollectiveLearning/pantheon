@@ -252,13 +252,10 @@ header {
 }
 
 .page-bottom {
-	@include opacity(0.5);
 	position: absolute;
 	width: 100%;
 	bottom: -0.5em;
 	margin-left: -20px;
-
-	&:hover { @include opacity(1.0); }
 }
 
 
