@@ -714,9 +714,8 @@ table.display td {
   color: #666;
 }
 
-@media only screen 
-and (min-width : 1824px) {
-	.secondary-text {
+@media only screen and (min-width : 1824px) {
+	.page-top .secondary-text {
 		padding-bottom: 4em;
 	}
 	.page-bottom {
