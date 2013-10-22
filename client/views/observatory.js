@@ -141,10 +141,12 @@ Template.ranked_person.birthday = function() {
 Template.date_header.helpers({
     from: function() { 
         var from = Session.get("from"); 
+        if (from === "1") return "1 A.D."
         return (from < 0) ? (from * -1) + " B.C." : from; 
     }
     , to: function() { 
         var to = Session.get("to");
+        if (to === "1") return "1 A.D."
         return (to < 0) ? (to * -1) + " B.C." : to; 
     }
 });

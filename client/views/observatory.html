@@ -5,13 +5,26 @@
         {{> date_header}}
     </div>
 
+    <!-- Hack to bypass order of templating (not found when changing viz -->
+
+
     <div id="page">
+
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="page-left span2">
                     {{#if initialDataReady}}
                         {{> observatory_options}} 
                     {{/if}}
+                </div>
+                <div class="container-fluid page-bottom">
+                    <div class="row-fluid">
+                        <div class="page-left span8 offset2">
+                            {{#if initialDataReady}}
+                            {{> time_slider}} 
+                            {{/if}}
+                        </div>
+                    </div>
                 </div>
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}

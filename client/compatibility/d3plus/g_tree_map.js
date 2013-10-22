@@ -167,8 +167,6 @@ d3plus.tree_map = function(vars) {
         var categoryLevel = Session.get("categoryLevel");
       }
 
-      console.log(category, categoryLevel);
-      
       // Positioning
       var position = {
         "left": (d3.event.clientX + 40),

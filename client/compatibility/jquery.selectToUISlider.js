@@ -23,11 +23,11 @@ jQuery.fn.selectToUISlider = function(settings){
 		labels: 3, //number of visible labels
 		tooltip: true, //show tooltips, boolean
 		tooltipSrc: 'text',//accepts 'value' as well
-		labelSrc: 'value',//accepts 'value' as well	,
+		labelSrc: 'text',//accepts 'value' as well	,
 		sliderOptions: null
 	}, settings);
 
-
+j
 	//handle ID attrs - selects each need IDs for handles to find them
 	var handleIds = (function(){
 		var tempArr = [];
