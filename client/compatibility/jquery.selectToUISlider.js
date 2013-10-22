@@ -27,7 +27,7 @@ jQuery.fn.selectToUISlider = function(settings){
 		sliderOptions: null
 	}, settings);
 
-
+j
 	//handle ID attrs - selects each need IDs for handles to find them
 	var handleIds = (function(){
 		var tempArr = [];
