@@ -510,27 +510,42 @@ div.scale {
 	bottom: 0;
 }
 
+div.viz-options {
+	position: absolute;
+	width: 100%;
+}
+
 .parameter-selection {
-	height: 30px;
+	height: 50px;
+	width: 100%;
 }
 
 div.range {
 	font-size: 1.2em;
 }
 
-div.selector, div.range {
-	position: absolute;
-	right: 0;
-	margin-top: -30px;
+// Select Styling
+div.selector {
+	width: 80% !important;
+	margin-left: 10%;
+	margin-top: -5px;
+
+	span { 
+		width: 100% !important;
+		text-align: center;
+	}
+	select {
+		width: 100% !important;
+
+		option {
+			color:black;
+		}
+	}
 }
 
-// Select Styling
-select {
-	width:120px;
-
-	option {
-		color:black;
-	}
+label {
+	text-align: center;
+	margin-bottom: 0px;
 }
 
 footer {
@@ -614,6 +629,11 @@ footer {
 #viz svg.matrix {
     background-color: $color_black_trans;
     border-width: 0;
+}
+
+.ui-slider {
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .column-title,

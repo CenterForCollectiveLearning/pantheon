@@ -3,6 +3,7 @@
 	    <div id="viz" class="scatterplot">
 	    	{{#if dataReady}}
 	    	    {{> scatterplot_svg}}
+	    	    {{> time_slider}} 
 	    	{{else}}
 	    	    {{> spinner}}
 	    	{{/if}}

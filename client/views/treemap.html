@@ -4,9 +4,10 @@
 	    <div id="viz" class="treemap">
             {{#if dataReady}}
                 {{> treemap_svg}}
+                {{> time_slider}} 
             {{else}}
                 {{! TODO Place this spinner somewhere central}}
-                {{> spinner}}
+                    {{> spinner}}
             {{/if}}
 	    </div>              
         {{! TODO: Move this out }}

@@ -97,10 +97,8 @@ Meteor.startup(function() {
     Session.setDefault('tooltipCountryCodeY', 'all')
 
     // SPLASH SCREEN
-    Session.get("authorized", false);
-
-    Session.get("googleAnalytics", false);
-    Session.get("showSpinner", false);
+    Session.set("googleAnalytics", false);
+    Session.set("showSpinner", false);
 
     // Set session variable if window resized (throttled rate)
     var throttledResize = _.throttle(function(){
