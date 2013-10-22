@@ -6,14 +6,12 @@
  */
 // Country Exports (birthyear, numlangs, [category], [country])
 People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, countryCode: 1});
-People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, countryCode: 1});
-People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, countryCode: 1});
 People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, domain: 1, countryCode: 1});
 People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, industry: 1, countryCode: 1});
 People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, occupation: 1, countryCode: 1});
 
 /* 
- * TREEMAPS
+ * MATRICES
  */
 // Matrix (birthyear, numlangs, gender)
 People._ensureIndex({ _id: 1, birthyear: 1, numlangs: 1, gender: 1});

@@ -35,9 +35,9 @@ Deps.autorun(function(){
     var begin = parseInt(Session.get('from'));
     var end = parseInt(Session.get('to'));
     var langs = parseInt(Session.get('langs'));
-    var category = Session.get('category').toUpperCase();
-    var categoryX = Session.get('categoryX').toUpperCase();
-    var categoryY = Session.get('categoryY').toUpperCase();
+    var category = Session.get('category');
+    var categoryX = Session.get('categoryX');
+    var categoryY = Session.get('categoryY');
     var gender = Session.get('gender');
     var entity = Session.get('entity');
     var page = Session.get('page');
