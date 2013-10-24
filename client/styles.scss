@@ -666,6 +666,14 @@ table.display td {
   color: black;
 }
 
+aside {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	background-color: $color_black_1;
+	color: $color_gold;
+}
+
 //Data tree
 #classtree .node circle {
   cursor: pointer;

@@ -41,9 +41,20 @@
 
         <!-- render to the footer yield -->
     </div>
+
+    <aside>
+        {{yield 'aside'}}
+    </aside>
+
     <footer>
         {{yield 'footer'}}
     </footer>
+</template>
+
+<template name="aside">
+    <div class="more">
+        More from Macro Connections
+    </div>
 </template>
 
 <template name="nav">
