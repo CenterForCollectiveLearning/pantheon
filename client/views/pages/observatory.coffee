@@ -25,8 +25,8 @@ Template.sharing_options.rendered = ->
 
 # Re-render visualization template on window resize
 Template.visualization.resize = ->
-  Session.get "resize"
-
+  if Session.get "resize"
+    return
 
 # Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = ->
@@ -198,23 +198,23 @@ Template.question.question = ->
     mode = Session.get("vizMode")
     switch mode
       when "country_exports"
-        return new Handlebars.SafeString("What are the cultural exports of " + boldify(s_countries) + "?")
+        return new Handlebars.SafeString("Who are the cultural exports of " + boldify(s_countries) + "?")
       when "country_imports"
-        return new Handlebars.SafeString((if (Session.get("language") is "all") then "What does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
+        return new Handlebars.SafeString((if (Session.get("language") is "all") then "Who does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
       when "domain_exports_to"
         return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?")
       when "domain_imports_from"
         return new Handlebars.SafeString("Who imports " + boldify(s_domains) + "?")
       when "bilateral_exporters_of"
-        return new Handlebars.SafeString("What does " + boldify(s_countries) + " export to " + boldify(s_regions + speakers_or_no_speakers) + "?")
+        return new Handlebars.SafeString("Who does " + boldify(s_countries) + " export to " + boldify(s_regions + speakers_or_no_speakers) + "?")
       when "bilateral_importers_of"
         return new Handlebars.SafeString("Where does " + boldify(s_countries) + " export " + boldify(s_domains) + " to?")
       when "matrix_exports"
-        return new Handlebars.SafeString("What " + boldify(gender) + " does " + boldify(s_countries) + " export?")
+        return new Handlebars.SafeString("Who " + boldify(gender) + " does " + boldify(s_countries) + " export?")
       when "country_vs_country"
-        return new Handlebars.SafeString("What does " + boldify(s_countryX) + " export compared to " + boldify(s_countryY) + "?")
+        return new Handlebars.SafeString("Who does " + boldify(s_countryX) + " export compared to " + boldify(s_countryY) + "?")
       when "lang_vs_lang"
-        return new Handlebars.SafeString("What do " + boldify(s_languageX) + " speakers import compared to " + boldify(s_languageY) + " speakers?")
+        return new Handlebars.SafeString("Who do " + boldify(s_languageX) + " speakers import compared to " + boldify(s_languageY) + " speakers?")
       when "domain_vs_domain"
         return new Handlebars.SafeString("Who exports " + boldify(s_domainX) + " compared to " + boldify(s_domainY) + "?")
       when "map"

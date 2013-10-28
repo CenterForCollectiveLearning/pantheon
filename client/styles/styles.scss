@@ -1,4 +1,6 @@
-// Parameters
+/*
+ * Parameters
+ */
 $color_gold: #d8c568;
 $color_grey: #cccccc;
 $color_fairly_black: #2C2C2C;
@@ -6,6 +8,9 @@ $color_almost_black: #010101;
 $color_black_1: rgba(0, 0, 0, 1.0);
 $color_black_trans: rgba(0, 0, 0, 0.5);
 
+/*
+ * Mixins
+ */
 @mixin opacity($trans) {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$trans * 100})";
   filter: alpha(opacity=#{$trans * 100});
@@ -38,6 +43,7 @@ html, body { height: 100%; }
 
 body { overflow-y: hidden; }
 
+// Necessary for the footer
 .wrapper { min-height: 100%; }
 
 h2 { 
@@ -675,71 +681,75 @@ aside {
 }
 
 //Data tree
-#classtree .node circle {
-  cursor: pointer;
-  fill: #fff;
-  stroke: $color_gold;
-  stroke-width: 2.0px;
-}
+#classtree {
+  .node {
+    circle {
+      cursor: pointer;
+      fill: #fff;
+      stroke: $color_gold;
+      stroke-width: 2.0px;
+    }
 
-#classtree .node text {
-  font-size: 11px;
-}
+    text {
+      font-size: 11px;
+      fill: none;
+      stroke: #ccc;
+      stroke-width: 1.0px;
+      opacity: 0.6;
+    }
+  }
 
-#classtree path.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1.0px;
-  opacity: 0.6;
-}
+  path.link {}
 
-#classtree #chart, #header{
-  position: absolute;
-  top: 0;
-}
+  #chart, #header{
+    position: absolute;
+    top: 0;
+  }
 
-#classtree rect {
-  fill: none;
-  pointer-events: all;
-}
+  rect {
+    fill: none;
+    pointer-events: all;
+  }
 
-#classtree pre {
-  font-size: 18px;
-}
+  pre {
+    font-size: 18px;
+  }
 
-#classtree line {
-  stroke: #000;
-  stroke-width: 1.5px;
-}
+  line {
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
 
-#classtree .string, .regexp {
-  color: #f39;
-}
+  .string, .regexp {
+    color: #f39;
+  }
 
-#classtree .keyword {
-  color: #00c;
-}
+  .keyword {
+    color: #00c;
+  }
 
-#classtree .comment {
-  color: #777;
-  font-style: oblique;
-}
+  .comment {
+    color: #777;
+    font-style: oblique;
+  }
 
-#classtree .number {
-  color: #369;
-}
+  .number {
+    color: #369;
+  }
 
-#classtree .class, .special {
-  color: #1181B8;
-}
+  .class, .special {
+    color: #1181B8;
+  }
 
-#classtree a:link, a:visited {
-  color: #000;
-  text-decoration: none;
-}
-
-#classtree a:hover {
-  color: #666;
+  a {
+    &:link, &:visited {
+      color: #000;
+      text-decoration: none;
+    }
+    &:hover {
+      color: #666;
+    }
+  }
 }
 
 @media only screen and (min-width : 1824px) {

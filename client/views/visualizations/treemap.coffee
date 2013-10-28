@@ -28,7 +28,6 @@ Template.treemap_svg.rendered = ->
   if vizMode is "country_exports" or vizMode is "country_imports" or vizMode is "bilateral_exporters_of"
     attr = Domains.find().fetch()
     attr.forEach (a) ->
-      console.log a.domain.capitalize(), a.industry.capitalize(), a.occupation.capitalize()
       dom = a.domain.capitalize()
       ind = a.industry.capitalize()
       occ = a.occupation.capitalize()
