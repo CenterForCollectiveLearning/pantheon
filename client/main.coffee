@@ -96,18 +96,18 @@ jQuery.cachedScript = (url, options) ->
 @occByInd = {}
 Meteor.startup ->
   
-  # Get client location
-  if navigator.geolocation
-    console.log "GEOLOCATION WORKS"
-    navigator.geolocation.getCurrentPosition (position) ->
-      console.log position
-      $.getJSON "http://ws.geonames.org/countryCode",
-        lat: position.coords.latitude
-        lng: position.coords.longitude
-        type: "JSON"
-      , (result) ->
-        defaults.countryCode = result.countryCode
-        Session.set "country", result.countryCode
+  # # Get client location
+  # if navigator.geolocation
+  #   console.log "GEOLOCATION WORKS"
+  #   navigator.geolocation.getCurrentPosition (position) ->
+  #     console.log position
+  #     $.getJSON "http://ws.geonames.org/countryCode",
+  #       lat: position.coords.latitude
+  #       lng: position.coords.longitude
+  #       type: "JSON"
+  #     , (result) ->
+  #       defaults.countryCode = result.countryCode
+  #       Session.set "country", result.countryCode
 
   Session.setDefault "country", defaults.countryCode
 
