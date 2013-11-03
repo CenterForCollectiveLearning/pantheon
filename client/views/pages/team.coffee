@@ -49,11 +49,13 @@ teamMembers = [
     linkedin: "http://www.linkedin.com/in/shaharronen"
     email: "mailto:sronen@media.mit.edu"
 ,
-  name: "Defne Gurel"
-  photo: "images/defne_gurel.png"
-  description: "Computer Science Undergraduate"
-  role: ["Data"]
+  name: "Deepak Jagdish"
+  photo: "images/deepak_jagdish.png"
+  description: "Second Year Graduate Student"
+  role: ["Design", "Content"]
   media:
+    personal: "http://deepakjagdish.com/"
+    twitter: "https://twitter.com/dj247"
     linkedin: "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
     email: "mailto:defne@mit.edu"
 ,
@@ -66,14 +68,11 @@ teamMembers = [
     twitter: "https://twitter.com/mizzao"
     linkedin: "www.linkedin.com/pub/andrew-mao/6/6a6/533"
     email: "mailto:mao@seas.harvard.edu"
-,
-  name: "Deepak Jagdish"
-  photo: "images/deepak_jagdish.png"
-  description: "Second Year Graduate Student"
-  role: ["Design"]
+  name: "Defne Gurel"
+  photo: "images/defne_gurel.png"
+  description: "Computer Science Undergraduate"
+  role: ["Data"]
   media:
-    personal: "http://deepakjagdish.com/"
-    twitter: "https://twitter.com/dj247"
     linkedin: "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
     email: "mailto:defne@mit.edu"
 ]

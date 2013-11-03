@@ -97,6 +97,8 @@ Deps.autorun ->
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady)
         else
           console.log "Invalid ranking entity!"
+    else if page is "timeline"
+      dataSub = Meteor.subscribe("timeline_pub", begin, end, onReady)
     console.log "vizMode: " + vizMode
     console.log "begin: " + begin
     console.log "end: " + end

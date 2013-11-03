@@ -77,6 +77,10 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
+  @route "timeline",
+    data: ->
+      Session.set "page", @template
+
   @route "people",
     path: "/people/:person"
     data: ->
