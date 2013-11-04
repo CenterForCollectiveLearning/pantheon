@@ -1,0 +1,23 @@
+<template name="stackedAreaChart">
+    <!-- TODO Why is the 12-column layout overflowing? -->
+    <div class="page-middle span8">
+	    <div id="viz" class="treemap">
+            {{#if dataReady}}
+                {{> stacked_svg}}
+                {{> time_slider}} 
+            {{else}}
+                {{! TODO Place this spinner somewhere central}}
+                {{> spinner}}
+            {{/if}}
+	    </div>  {{! TODO Add color key for chart}}
+    </div>
+    <div class="page-right span2">
+        {{#if initialDataReady}}
+    	    {{> ranked_list }}
+        {{/if}}
+    </div>
+</template>
+
+<template name="stacked_svg">
+    <svg class="stackedAreaChart" width="{{properties.width}}" height="{{properties.height}}"></svg>
+</template>
