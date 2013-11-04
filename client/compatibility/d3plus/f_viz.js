@@ -10,8 +10,7 @@ d3plus.viz = function() {
     "arc_inners": {},
     "arc_sizes": {},
     "attrs": {},
-    "background": "#000000", // CUSTOM
-    "background_opacity": 0.5,  // CUSTOM
+    "background": "#ffffff",
     "boundaries": null,
     "click_function": null,
     "color_var": "color",
@@ -23,7 +22,6 @@ d3plus.viz = function() {
     "coord_change": false,
     "csv_columns": null,
     "data": null,
-    "data_source": null,
     "depth": null,
     "descs": {},
     "dev": false,
@@ -32,8 +30,14 @@ d3plus.viz = function() {
     "error": "",
     "filter": [],
     "filtered_data": null,
-    "font": "Lato",
+    "font": "sans-serif",
     "font_weight": "lighter",
+    "footer": false,
+    "format": function(value,name) {
+      if (typeof value === "number") return vars.number_format(value,name)
+      if (typeof value === "string") return vars.text_format(value,name)
+      else return value
+    },
     "graph": {"timing": 0},
     "group_bgs": true,
     "grouping": "name",
@@ -49,7 +53,7 @@ d3plus.viz = function() {
     "margin": {"top": 0, "right": 0, "bottom": 0, "left": 0},
     "mirror_axis": false,
     "name_array": null,
-    "nesting": [],
+    "nesting": null,
     "nesting_aggs": {},
     "nodes": null,
     "number_format": function(value,name) { 
@@ -84,13 +88,14 @@ d3plus.viz = function() {
     "size_scale_type": "sqrt",
     "solo": [],
     "sort": "total",
-    "source_text": null,
     "spotlight": true,
     "stack_type": "linear",
     "sub_title": null,
     "svg_height": window.innerHeight,
     "svg_width": window.innerWidth,
-    "text_format": Object, // Don't transform the text
+    "text_format": function(text,name) {
+      return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase() 
+    },
     "text_var": "name",
     "title": null,
     "title_center": true,
@@ -125,10 +130,9 @@ d3plus.viz = function() {
       solo_change = false,
       value_change = false,
       axis_change = false,
-      footer = true,
       nodes,
       links,
-      static_axis = true,
+      static_axes = true,
       xaxis_domain = null,
       yaxis_domain = null;
       
@@ -244,6 +248,9 @@ d3plus.viz = function() {
           
           if (vars.dev) console.log("[d3plus] Nesting Data")
           
+          if (!vars.nesting) vars.nesting = [vars.id_var]
+          if (!vars.depth || vars.nesting.indexOf(vars.depth) < 0) vars.depth = vars.nesting[0]
+          
           vars.nesting.forEach(function(depth){
             
             var level = vars.nesting.slice(0,vars.nesting.indexOf(depth)+1)
@@ -350,7 +357,6 @@ d3plus.viz = function() {
       vars.svg_enter.append("rect")
         .attr("id","svgbg")
         .attr("fill",vars.background)
-        .attr("fill-opacity",vars.background_opacity)  // CUSTOM
         .attr('width',vars.svg_width)
         .attr('height',vars.svg_height)
     
@@ -391,7 +397,7 @@ d3plus.viz = function() {
       if (vars.type == "pie_scatter" && vars.data) {
         if (vars.dev) console.log("[d3plus] Setting Axes Domains")
         if (xaxis_domain instanceof Array) vars.xaxis_domain = xaxis_domain
-        else if (!static_axis) {
+        else if (!static_axes) {
           vars.xaxis_domain = d3.extent(data_obj[data_type[vars.type]][vars.depth][vars.spotlight][vars.year],function(d){
             return d[vars.xaxis_var]
           })
@@ -402,7 +408,7 @@ d3plus.viz = function() {
           })
         }
         if (yaxis_domain instanceof Array) vars.yaxis_domain = yaxis_domain
-        else if (!static_axis) {
+        else if (!static_axes) {
           vars.yaxis_domain = d3.extent(data_obj[data_type[vars.type]][vars.depth][vars.spotlight][vars.year],function(d){
             return d[vars.yaxis_var]
           }).reverse()
@@ -474,11 +480,10 @@ d3plus.viz = function() {
         if (vars.dev) console.log("[d3plus] Calculating Color Range")
         
         var data_range = []
+        vars.color_domain = null
         
         if (vars.type == "tree_map") {
-        
-          vars.color_domain = [0,0]
-        
+          
           function check_child_colors(c) {
             if (c.children) {
               c.children.forEach(function(c2){
@@ -511,21 +516,22 @@ d3plus.viz = function() {
         if (typeof data_range[0] == "number") {
           data_range.sort(function(a,b) {return a-b})
           vars.color_domain = [d3.quantile(data_range,0.1),d3.quantile(data_range,0.9)]
+          var new_range = vars.color_range.slice(0)
           if (vars.color_domain[0] < 0 && vars.color_domain[1] > 0) {
-            vars.color_domain[2] = vars.color_domain[1]
+            vars.color_domain.push(vars.color_domain[1])
             vars.color_domain[1] = 0
           }
           else if (vars.color_domain[1] > 0) {
             vars.color_domain[0] = 0
-            vars.color_domain.unshift(0)
+            new_range.splice(0,1)
           }
           else if (vars.color_domain[0] < 0) {
             vars.color_domain[1] = 0
-            vars.color_domain.push(0)
+            new_range.pop()
           }
           vars.color_scale
             .domain(vars.color_domain)
-            .range(vars.color_range)
+            .range(new_range)
         }
         
       }
@@ -535,6 +541,7 @@ d3plus.viz = function() {
       
       vars.svg_enter.append("g")
         .attr("class","footer")
+        .attr("transform","translate(0,"+vars.svg_height+")")
 
       // Create titles
       vars.margin.top = 0
@@ -568,7 +575,7 @@ d3plus.viz = function() {
             vars.margin.top = vars.title_height
           }
         }
-        update_footer(vars.data_source)
+        update_footer(vars.footer)
       }
       
       d3.select("g.titles").transition().duration(d3plus.timing)
@@ -613,24 +620,24 @@ d3plus.viz = function() {
           .style("font-family",vars.font)
           .style("font-weight",vars.font_weight)
           .style(vars.info_style)
-          .text(vars.text_format("Loading..."))
+          .text(vars.format("Loading..."))
       
       // vars.loader.select("div#d3plus_loader_text").transition().duration(d3plus.timing)
-
+      
       if (!error && !vars.data) {
-        vars.error = vars.text_format("No Data Available","error")
+        vars.error = vars.format("No Data Available","error")
       }
       else if (vars.type == "rings" && !vars.connections[vars.highlight]) {
         vars.data = null
-        vars.error = vars.text_format("No Connections Available","error")
+        vars.error = vars.format("No Connections Available","error")
       }
       else if (error) {
         vars.data = null
         if (error === true) {
-          vars.error = vars.text_format("Error","error")
+          vars.error = vars.format("Error","error")
         }
         else {
-          vars.error = vars.text_format(error,"error")
+          vars.error = vars.format(error,"error")
         }
       }
       else {
@@ -666,8 +673,7 @@ d3plus.viz = function() {
           }
           else if (key != vars.value_var || vars.type != "rings") {
             var value = find_variable(d,key)
-            // CUSTOM
-            // if (!value) ret = false
+            if (!value) ret = false
           }
         }
       })
@@ -709,17 +715,17 @@ d3plus.viz = function() {
   }
 
   nest = function(flat_data,levels) {
-  
+    
     var flattened = [];
     var nested_data = d3.nest();
     
     levels.forEach(function(nest_key, i){
-    
+      
       nested_data
         .key(function(d){ 
-          try {
-            return vars.attrs[d[vars.id_var]][nest_key][vars.id_var];
-          } catch(e) {}
+          var n = find_variable(d,nest_key)
+          if (typeof n === "object") return n[vars.id_var]
+          else return n
         })
       
       if (i == levels.length-1) {
@@ -731,9 +737,8 @@ d3plus.viz = function() {
           }
           
           var nest_obj = find_variable(leaves[0],nest_key)
-          // var nest_obj = vars.attrs[leaves[0][vars.id_var]][nest_key]
-          
-          to_return[vars.id_var] = nest_obj[vars.id_var]
+          if (typeof nest_obj === "object") to_return[vars.id_var] = nest_obj[vars.id_var]
+          else to_return[vars.id_var] = nest_obj
           
           if (nest_obj.display_id) to_return.display_id = nest_obj.display_id;
           
@@ -742,10 +747,10 @@ d3plus.viz = function() {
               to_return[key] = d3[vars.nesting_aggs[key]](leaves, function(d){ return d[key]; })
             }
             else {
-              if ([vars.year_var,"icon"].indexOf(key) >= 0) {
+              if ([vars.year_var,"icon"].indexOf(key) >= 0 || (key == vars.id_var && !to_return[vars.id_var])) {
                 to_return[key] = leaves[0][key];
               }
-              else if (vars.keys[key] === "number") {
+              else if (vars.keys[key] === "number" && key != vars.id_var) {
                 to_return[key] = d3.sum(leaves, function(d){ return d[key]; })
               }
               else if (key == vars.color_var) {
@@ -807,7 +812,7 @@ d3plus.viz = function() {
         }
     
     if (type == "total_bar" && t) {
-      title = vars.number_format(t,vars.value_var)
+      title = vars.format(t,vars.value_var)
       vars.total_bar.prefix ? title = vars.total_bar.prefix + title : null;
       vars.total_bar.suffix ? title = title + vars.total_bar.suffix : null;
       
@@ -817,8 +822,8 @@ d3plus.viz = function() {
           else if (vars.year == d[vars.year_var]) return d[vars.value_var]
         })
         var pct = (t/overall_total)*100
-        ot = vars.number_format(overall_total,vars.value_var)
-        title += " ("+vars.number_format(pct,"share")+"% of "+ot+")"
+        ot = vars.format(overall_total,vars.value_var)
+        title += " ("+vars.format(pct,"share")+"% of "+ot+")"
       }
       
     }
@@ -850,7 +855,7 @@ d3plus.viz = function() {
         .attr("x",function(d) { return d.x; })
         .attr("y",function(d) { return d.y+offset; })
         .attr("font-size",font_size)
-        .attr("fill","#cccccc") // CUSTOM
+        .attr("fill","#333")
         .attr("text-anchor", "middle")
         .attr("font-family", vars.font)
         .style("font-weight", vars.font_weight)
@@ -883,7 +888,7 @@ d3plus.viz = function() {
   
   update_footer = function(footer_text) {
     
-    if (footer && footer_text) {
+    if (footer_text) {
       if (footer_text.indexOf("<a href=") == 0) {
         var div = document.createElement("div")
         div.innerHTML = footer_text
@@ -961,7 +966,7 @@ d3plus.viz = function() {
         })
       })
       
-    source.exit().transition().duration(d3plus.evt.timing)
+    source.exit().transition().duration(d3plus.timing)
       .attr("opacity",0)
       .remove()
       
@@ -973,7 +978,7 @@ d3plus.viz = function() {
       vars.margin.bottom = 0
     }
     
-    d3.select("g.footer")
+    d3.select("g.footer").transition().duration(d3plus.timing)
       .attr("transform","translate(0,"+(vars.svg_height-vars.margin.bottom)+")")
     
   }
@@ -1063,20 +1068,14 @@ d3plus.viz = function() {
     
     function format_key(key,group) {
       if (!group) var group = null
-      else var group = vars.text_format(group)
+      else var group = vars.format(group)
       
       var value = extra_data[key] || find_variable(id,key)
       if (value !== false) {
-        var name = vars.text_format(key),
+        var name = vars.format(key),
             h = tooltip_highlights.indexOf(key) >= 0
             
-        if (typeof value == "string") {
-          value = value.toString()
-          var val = vars.text_format(value,key)
-        }
-        else if (typeof value == "number") {
-          var val = vars.number_format(value,key)
-        }
+        var val = vars.format(value,key)
         
         var obj = {"name": name, "value": val, "highlight": h, "group": group}
         
@@ -1200,7 +1199,7 @@ d3plus.viz = function() {
 
     if (value === null) value = 0
     if (variable == vars.text_var && value) {
-      return vars.text_format(value)
+      return vars.format(value)
     }
     else return value
     
@@ -1208,16 +1207,17 @@ d3plus.viz = function() {
   
   find_color = function(id) {
     var color = find_variable(id,vars.color_var)
-    if (!color) return "#ccc"
-    else if (typeof color == "string") return color
+    if (!color && vars.color_domain instanceof Array) color = 0
+    else if (!color) color = d3plus.utils.rand_color()
+    if (typeof color == "string") return color
     else return vars.color_scale(color)
   }
   
   footer_text = function() {
 
-    var text = vars.click_function || vars.tooltip_info.long ? vars.text_format("Click for More Info") : null
+    var text = vars.click_function || vars.tooltip_info.long ? vars.format("Click for More Info") : null
     
-    if (!text && vars.type == "geo_map") return vars.text_format("Click to Zoom")
+    if (!text && vars.type == "geo_map") return vars.format("Click to Zoom")
     else return text
     
   }
@@ -1252,12 +1252,6 @@ d3plus.viz = function() {
     return chart;
   };
   
-  chart.color_domain = function(x) {
-    if (!arguments.length) return vars.color_domain;
-    vars.color_domain = x;
-    return chart;
-  };
-  
   chart.color_var = function(x) {
     if (!arguments.length) return vars.color_var;
     vars.color_var = x;
@@ -1278,7 +1272,7 @@ d3plus.viz = function() {
       column_init.forEach(function(c){
         if (vars.keys[c] || c == vars.text_var) {
           columns.push(c)
-          titles.push(vars.text_format(c))
+          titles.push(vars.format(c))
         }
       })
       
@@ -1351,12 +1345,6 @@ d3plus.viz = function() {
     return chart;
   };
   
-  chart.data_source = function(x) {
-    if (!arguments.length) return vars.data_source;
-    vars.data_source = x;
-    return chart;
-  };
-  
   chart.depth = function(x) {
     if (!arguments.length) return vars.depth;
     vars.depth = x;
@@ -1422,8 +1410,8 @@ d3plus.viz = function() {
   };
   
   chart.footer = function(x) {
-    if (!arguments.length) return footer;
-    footer = x;
+    if (!arguments.length) return vars.footer;
+    vars.footer = x;
     return chart;
   };
   
@@ -1581,12 +1569,6 @@ d3plus.viz = function() {
     vars.sort = x;
     return chart;
   };
-  
-  chart.source_text = function(x) {
-    if (!arguments.length) return vars.source_text;
-    vars.source_text = x;
-    return chart;
-  };
 
   chart.spotlight = function(x) {
     if (!arguments.length) return vars.spotlight;
@@ -1602,9 +1584,9 @@ d3plus.viz = function() {
     return chart;
   };
 
-  chart.static_axis = function(x) {
-    if (!arguments.length) return static_axis;
-    static_axis = x;
+  chart.static_axes = function(x) {
+    if (!arguments.length) return static_axes;
+    static_axes = x;
     return chart;
   };
   
@@ -1793,16 +1775,13 @@ d3plus.viz = function() {
   }
   
   var axis_style = {
-    "font-size": "14px",
-    "font-weight": vars.font_weight,
-    "fill": "#FFF"
+    "font-size": "12px",
+    "fill": "#888"
   }
   
-  // CUSTOM
   var label_style = {
-    "font-size": "16px",
-    "font-weight": vars.font_weight,
-    "fill": "#FFF",
+    "font-size": "14px",
+    "fill": "#333",
     "text-anchor": "middle"
   }
   
@@ -1817,7 +1796,7 @@ d3plus.viz = function() {
             
         if (vars.xaxis_var == vars.year_var) var text = d;
         else {
-          var text = vars.number_format(d,vars.xaxis_var);
+          var text = vars.format(d,vars.xaxis_var);
         }
       
         d3.select(this)
@@ -1878,7 +1857,7 @@ d3plus.viz = function() {
           var text = d*100+"%"
         }
         else {
-          var text = vars.number_format(d,vars.yaxis_var);
+          var text = vars.format(d,vars.yaxis_var);
         }
       
         d3.select(this)
@@ -1934,7 +1913,7 @@ d3plus.viz = function() {
       .attr("transform", "translate(" + vars.graph.margin.left + "," + vars.graph.margin.top + ")")
 
     vars.chart_enter.append("rect")
-      .style('fill','#000000') // CUSTOM
+      .style('fill','#fafafa')
       .attr("id","background")
       .attr('x',0)
       .attr('y',0)
@@ -1972,7 +1951,7 @@ d3plus.viz = function() {
       .attr('class', 'x_axis_label')
       .attr('x', labelx)
       .attr('y', vars.height-10)
-      .text(vars.text_format(vars.xaxis_var))
+      .text(vars.format(vars.xaxis_var))
       .attr("font-family",vars.font)
       .attr("font-weight",vars.font_weight)
       .attr(label_style)
@@ -1982,7 +1961,7 @@ d3plus.viz = function() {
       .attr('class', 'y_axis_label')
       .attr('y', 15)
       .attr('x', -(vars.graph.height/2+vars.graph.margin.top))
-      .text(vars.text_format(vars.yaxis_var))
+      .text(vars.format(vars.yaxis_var))
       .attr("transform","rotate(-90)")
       .attr("font-family",vars.font)
       .attr("font-weight",vars.font_weight)
@@ -2049,7 +2028,7 @@ d3plus.viz = function() {
         if (vars.data.length == 0) return 0
         else return 1
       })
-      .text(vars.text_format(vars.xaxis_var))
+      .text(vars.format(vars.xaxis_var))
 
     // Update Y axis label
     d3.select(".y_axis_label")
@@ -2059,7 +2038,7 @@ d3plus.viz = function() {
         if (vars.data.length == 0) return 0
         else return 1
       })
-      .text(vars.text_format(vars.yaxis_var))
+      .text(vars.format(vars.yaxis_var))
       
     // Axis Dotted Lines
     vars.chart_enter.append("line")
@@ -2100,8 +2079,8 @@ d3plus.viz = function() {
     d3.select("#y_axis_val_text").transition().duration(vars.graph.timing)
       .text(function(){
         if (y_val != null) {
-          var v = vars.number_format(y_val,y_name)
-          return y_name ? vars.text_format(y_name) + ": " + v : v
+          var v = vars.format(y_val,y_name)
+          return y_name ? vars.format(y_name) + ": " + v : v
         }
         else return null
       })
@@ -2146,8 +2125,8 @@ d3plus.viz = function() {
     d3.select("#x_axis_val_text").transition().duration(vars.graph.timing)
       .text(function(){
         if (x_val != null) {
-          var v = vars.number_format(x_val,x_name)
-          return x_name ? vars.text_format(x_name) + ": " + v : v
+          var v = vars.format(x_val,x_name)
+          return x_name ? vars.format(x_name) + ": " + v : v
         }
         else return null
       })

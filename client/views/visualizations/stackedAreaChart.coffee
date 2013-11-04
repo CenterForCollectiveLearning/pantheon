@@ -11,178 +11,39 @@ chartProps =
 Template.stacked_svg.properties = chartProps
 
 Template.stacked_svg.rendered = ->
-  
-  # Don't re-render with the same parameters...?
+  console.log("rendering STACKED AREA CHART")
   context = this
-  
-  # if( this.rendered ) return;
-  # this.rendered = true;
-  viz = d3plus.viz()
-  data = Treemap.find().fetch()
-  
-  # console.log("UNFLATTENED DATA:")
-  # console.log(data);
-  attrs = {}
-  vizMode = Session.get("vizMode")
-  if vizMode is "country_exports" or vizMode is "country_imports" or vizMode is "bilateral_exporters_of"
-    attr = Domains.find().fetch()
-    attr.forEach (a) ->
-      dom = a.domain.capitalize()
-      ind = a.industry.capitalize()
-      occ = a.occupation.capitalize()
-      dom_color = color_domains(dom.toUpperCase())
-      domDict =
-        id: dom
-        name: dom
 
-      indDict =
-        id: ind
-        name: ind
+  d3.json "/partido.json", (partido) ->
+    d3.json "/candidatura.json", (attr) ->
+      d3.json "/pontuacao.json", (data) ->
+        attrs = {}
+        attr.candidaturas.forEach (a) ->
+          a.candidatura = a.id
+          partido.partidos.forEach (p) ->
+            a.partidoNome = p.name_pt  if p.id is a.partido
 
-      occDict =
-        id: occ
-        name: occ
+          attrs[a.id] = a
 
-      attrs[dom] =
-        id: dom
-        name: dom
-        color: dom_color
-        nesting_1: domDict
+        viz = d3plus.viz()
+          .type("stacked")
+          .id_var("candidatura")
+          .attrs(attrs)
+          .text_var("partidoNome")
+          .value_var("pontos")
+          .tooltip_info(["candidatura", "name_pt", "partido", "partidoNome", "politico", "pontos", "rodada"])
+          .nesting(["partido", "candidatura"])
+          .depth("partido")
+          .xaxis_var("rodada")
+          .year_var("rodada")
+          .font("Helvetica Neue")
+          .font_weight("lighter")
+          .title("Test")
+          .stack_type("monotone")
+          .layout("value")
+          .width($(".page-middle").width())
+          .height("564")
 
-      attrs[ind] =
-        id: ind
-        name: ind
-        color: dom_color
-        nesting_1: domDict
-        nesting_3: indDict
-
-      attrs[occ] =
-        id: occ
-        name: occ
-        color: dom_color
-        nesting_1: domDict
-        nesting_3: indDict
-        nesting_5: occDict
-
-    flat = []
-    data.forEach (d) ->
-      flat.push #use a dummy year here for now ...
-        id: d.occupation.capitalize()
-        name: d.occupation.capitalize()
-        num_ppl: d.count
-        year: 2000
-
-
-    
-    # console.log("ATTRS:");
-    # console.log(attrs);
-    # console.log("DATA:")
-    # console.log(flat);
-    
-    #        .dev(true)
-    viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
-      prefix: "Total Exports: "
-      suffix: " individuals"
-    ).nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var "color"
-    d3.select(context.find("svg")).datum(flat).call viz
-  else if vizMode is "domain_exports_to"
-    attr = Countries.find().fetch()
-    attr.forEach (a) ->
-      continent = a.continentName
-      countryCode = a.countryCode
-      countryName = a.countryName.capitalize()
-      continent_color = color_countries(continent)
-      continentDict =
-        id: continent
-        name: continent
-
-      countryDict =
-        id: countryCode
-        name: countryName
-
-      attrs[continent] =
-        id: continent
-        name: continent
-        color: continent_color
-        nesting_1: continentDict
-
-      attrs[countryCode] =
-        id: countryCode
-        name: countryName
-        color: continent_color
-        nesting_1: continentDict
-        nesting_3: countryDict
-
-    flat = []
-    data.forEach (d) ->
-      flat.push #use a dummy year here for now ...
-        id: d.countryCode
-        name: d.countryName.capitalize()
-        num_ppl: d.count
-        year: 2000
-
-
-    console.log "ATTRS:"
-    console.log attrs
-    console.log "DATA:"
-    console.log flat
-    
-    #        .dev(true)
-    viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
-      prefix: "Total Exports: "
-      suffix: " individuals"
-    ).nesting(["nesting_1", "nesting_3"]).depth("nesting_3").font("Lato").font_weight("300").color_var "color"
-    d3.select(context.find("svg")).datum(flat).call viz
-  else if vizMode is "domain_imports_from" or vizMode is "bilateral_importers_of"
-    attr = Languages.find().fetch()
-    attr.forEach (a) ->
-      family = a.lang_family
-      langCode = a.lang
-      langName = a.lang_name
-      family_color = color_languages(family)
-      familyDict =
-        id: family
-        name: family
-
-      langDict =
-        id: langCode
-        name: langName
-
-      attrs[family] =
-        id: family
-        name: family
-        color: family_color
-        nesting_1: familyDict
-
-      attrs[langCode] =
-        id: langCode
-        name: langName
-        color: family_color
-        nesting_1: familyDict
-        nesting_3: langDict
-
-    flat = []
-    data.forEach (d) ->
-      flat.push #use a dummy year here for now ...
-        id: d.lang
-        name: d.lang_name
-        num_ppl: d.count
-        year: 2000
-
-
-    console.log "ATTRS:"
-    console.log attrs
-    console.log "DATA:"
-    console.log flat
-    console.log "WIDTH", $(".page-middle").width()
-    console.log "HEIGHT", $(".page-middle").height()
-    
-    #        .dev(true)
-    
-    #.font_size("1.2em")
-    viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
-      prefix: "Total: "
-      suffix: " Wikipedia Pages"
-    ).nesting(["nesting_1", "nesting_3"]).depth("nesting_3").font("Lato").font_weight(400).color_var "color"
-    console.log context
-    d3.select(context.find("svg")).datum(flat).call viz
+        d3.select("#viz")
+          .datum(data.pontuacoes)
+          .call(viz)

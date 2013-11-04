@@ -7,18 +7,18 @@ d3plus.tooltip = {};
 d3plus.tooltip.create = function(params) {
   
   var default_width = params.fullscreen ? 250 : 200
-  params.width = params.width ? params.width : default_width
-  params.max_width = params.max_width ? params.max_width : 386
-  params.id = params.id ? params.id : "default"
+  params.width = params.width || default_width
+  params.max_width = params.max_width || 386
+  params.id = params.id || "default"
   params.size = params.fullscreen || params.html ? "large" : "small"
-  params.offset = params.offset ? params.offset : 0
+  params.offset = params.offset || 0
   params.arrow_offset = params.arrow ? 8 : 0
-  params.x = params.x ? params.x : 0
-  params.y = params.y ? params.y : 0
-  params.color = params.color ? params.color : "#333"
-  params.parent = params.parent ? params.parent : d3.select("body")
-  params.background = params.background ? params.background : "#ffffff"
-  params.style = params.style ? params.style : "default"
+  params.x = params.x || 0
+  params.y = params.y || 0
+  params.color = params.color || "#333"
+  params.parent = params.parent || d3.select("body")
+  params.background = params.background || "#ffffff"
+  params.style = params.style || "default"
   
   d3plus.tooltip.remove("d3plus_tooltip_id_"+params.id)
   
@@ -127,7 +127,7 @@ d3plus.tooltip.create = function(params) {
     
     var newout = function() {
       
-      var target = d3.event.toElement
+      var target = d3.event.toElement || d3.event.relatedTarget
       if (target) {
         var c = typeof target.className == "string" ? target.className : target.className.baseVal
         var istooltip = c.indexOf("d3plus_tooltip") == 0
@@ -135,7 +135,6 @@ d3plus.tooltip.create = function(params) {
       else {
         var istooltip = false
       }
-      // console.log(!ischild(tooltip.node(),target), !ischild(params.mouseevents,target), !istooltip)
       if (!target || (!ischild(tooltip.node(),target) && !ischild(params.mouseevents,target) && !istooltip)) {
         oldout(d3.select(params.mouseevents).datum())
         d3plus.tooltip.close()
@@ -202,7 +201,7 @@ d3plus.tooltip.create = function(params) {
   
   if (params.data) {
       
-    var val_width = 0
+    var val_width = 0, val_heights = {}
       
     var last_group = null
     params.data.forEach(function(d,i){
@@ -218,6 +217,7 @@ d3plus.tooltip.create = function(params) {
       
       var block = data_container.append("div")
         .attr("class","d3plus_tooltip_data_block")
+        .datum(d)
         
       if (d.highlight) {
         block.style("color",d3plus.utils.darker_color(params.color))
@@ -277,6 +277,7 @@ d3plus.tooltip.create = function(params) {
       }
           
       var w = parseFloat(val.style("width"),10)
+      if (w > params.width/2) w = params.width/2
       if (w > val_width) val_width = w
           
       if (i != params.data.length-1) {
@@ -290,11 +291,20 @@ d3plus.tooltip.create = function(params) {
     data_container.selectAll(".d3plus_tooltip_data_name")
       .style("width",function(){
         var w = parseFloat(d3.select(this.parentNode).style("width"),10)
-        return (w-val_width-25)+"px"
+        return (w-val_width-30)+"px"
       })
     
     data_container.selectAll(".d3plus_tooltip_data_value")
       .style("width",val_width+"px")
+      .each(function(d){
+        var h = parseFloat(d3.select(this).style("height"),10)
+        val_heights[d.name] = h
+      })
+    
+    data_container.selectAll(".d3plus_tooltip_data_name")
+      .style("min-height",function(d){
+        return val_heights[d.name]+"px"
+      })
     
   }
     
@@ -463,107 +473,100 @@ d3plus.tooltip.remove = function(id) {
 //-------------------------------------------------------------------
 
 d3plus.tooltip.move = function(x,y,id) {
-  if (!id) var tooltip = d3.select("#tooltip") // div#d3plus_tooltip_id_default")
-  else var tooltip = d3.select("#tooltip") //div#d3plus_tooltip_id_"+id)
-
-  var position = {
-    "left": x + 40,
-    "top": y - 45
-  }
-  Session.set("tooltipPosition", position);
-
-  // if (tooltip.node()) {
+  
+  if (!id) var tooltip = d3.select("div#d3plus_tooltip_id_default")
+  else var tooltip = d3.select("div#d3plus_tooltip_id_"+id)
+  
+  if (tooltip.node()) {
     
-  //   var d = tooltip.datum()
+    var d = tooltip.datum()
   
-  //   d.cx = x
-  //   d.cy = y
+    d.cx = x
+    d.cy = y
   
-  //   if (!d.fixed) {
+    if (!d.fixed) {
 
-  //     // Set initial values, based off of anchor
-  //     if (d.anchor.y != "center") {
+      // Set initial values, based off of anchor
+      if (d.anchor.y != "center") {
 
-  //       if (d.anchor.x == "right") {
-  //         d.x = d.cx - d.arrow_offset - 4
-  //       }
-  //       else if (d.anchor.x == "center") {
-  //         d.x = d.cx - d.width/2
-  //       }
-  //       else if (d.anchor.x == "left") {
-  //         d.x = d.cx - d.width + d.arrow_offset + 2
-  //       }
+        if (d.anchor.x == "right") {
+          d.x = d.cx - d.arrow_offset - 4
+        }
+        else if (d.anchor.x == "center") {
+          d.x = d.cx - d.width/2
+        }
+        else if (d.anchor.x == "left") {
+          d.x = d.cx - d.width + d.arrow_offset + 2
+        }
 
-  //       // Determine whether or not to flip the tooltip
-  //       if (d.anchor.y == "bottom") {
-  //         d.flip = d.cy + d.height + d.offset <= window.innerHeight
-  //       }
-  //       else if (d.anchor.y == "top") {
-  //         d.flip = d.cy - d.height - d.offset < 0
-  //       }
+        // Determine whether or not to flip the tooltip
+        if (d.anchor.y == "bottom") {
+          d.flip = d.cy + d.height + d.offset <= window.innerHeight
+        }
+        else if (d.anchor.y == "top") {
+          d.flip = d.cy - d.height - d.offset < 0
+        }
         
-  //       if (d.flip) {
-  //         d.y = d.cy + d.offset + d.arrow_offset
-  //       }
-  //       else {
-  //         d.y = d.cy - d.height - d.offset - d.arrow_offset
-  //       }
+        if (d.flip) {
+          d.y = d.cy + d.offset + d.arrow_offset
+        }
+        else {
+          d.y = d.cy - d.height - d.offset - d.arrow_offset
+        }
     
-  //     }
-  //     else {
+      }
+      else {
 
-  //       d.y = d.cy - d.height/2
+        d.y = d.cy - d.height/2
         
-  //       // Determine whether or not to flip the tooltip
-  //       if (d.anchor.x == "right") {
-  //         d.flip = d.cx + d.width + d.offset <= window.innerWidth
-  //       }
-  //       else if (d.anchor.x == "left") {
-  //         d.flip = d.cx - d.width - d.offset < 0
-  //       }
+        // Determine whether or not to flip the tooltip
+        if (d.anchor.x == "right") {
+          d.flip = d.cx + d.width + d.offset <= window.innerWidth
+        }
+        else if (d.anchor.x == "left") {
+          d.flip = d.cx - d.width - d.offset < 0
+        }
     
-  //       if (d.anchor.x == "center") {
-  //         d.flip = false
-  //         d.x = d.cx - d.width/2
-  //       }
-  //       else if (d.flip) {
-  //         d.x = d.cx + d.offset + d.arrow_offset
-  //       }
-  //       else {
-  //         d.x = d.cx - d.width - d.offset
-  //       }
-  //     }
+        if (d.anchor.x == "center") {
+          d.flip = false
+          d.x = d.cx - d.width/2
+        }
+        else if (d.flip) {
+          d.x = d.cx + d.offset + d.arrow_offset
+        }
+        else {
+          d.x = d.cx - d.width - d.offset
+        }
+      }
   
-  //     // Limit X to the bounds of the screen
-  //     if (d.x < 0) {
-  //       d.x = 0
-  //     }
-  //     else if (d.x + d.width > window.innerWidth) {
-  //       d.x = window.innerWidth - d.width
-  //     }
+      // Limit X to the bounds of the screen
+      if (d.x < 0) {
+        d.x = 0
+      }
+      else if (d.x + d.width > window.innerWidth) {
+        d.x = window.innerWidth - d.width
+      }
   
-  //     // Limit Y to the bounds of the screen
-  //     if (d.y < 0) {
-  //       d.y = 0
-  //     }
-  //     else if (d.y + d.height > window.innerHeight) {
-  //       d.y = window.innerHeight - d.height
-  //     }
+      // Limit Y to the bounds of the screen
+      if (d.y < 0) {
+        d.y = 0
+      }
+      else if (d.y + d.height > window.innerHeight) {
+        d.y = window.innerHeight - d.height
+      }
       
-  //   }
+    }
     
-
-    
-  //   tooltip
-  //     .style("top",d.y+"px")
-  //     .style("left",d.x+"px")
+    tooltip
+      .style("top",d.y+"px")
+      .style("left",d.x+"px")
   
-  //   if (d.arrow) {
-  //     tooltip.selectAll(".d3plus_tooltip_arrow")
-  //       .call(d3plus.tooltip.arrow)
-  //   }
+    if (d.arrow) {
+      tooltip.selectAll(".d3plus_tooltip_arrow")
+        .call(d3plus.tooltip.arrow)
+    }
     
-  // }
+  }
     
 }
 
