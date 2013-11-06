@@ -182,7 +182,7 @@ Template.google_analytics.destroyed = ->
 
 # Section Navigation
 # TODO Is this repetitiveness necessary for correct formatting?
-left_sections = [
+leftSections = [
   section: "Observatory"
   template: "observatory"
   url: "/observatory"
@@ -201,7 +201,7 @@ left_sections = [
   template: "vision"
   url: "/vision"
 ]
-right_sections = [
+rightSections = [
   section: "Data"
   template: "data"
   url: "/data"
@@ -221,8 +221,8 @@ right_sections = [
   url: "/team"
 ]
 Template.nav.helpers
-  left_sections: left_sections
-  right_sections: right_sections
+  leftSections: leftSections
+  rightSections: rightSections
 
 Template.section.helpers selected: ->
   (if Session.equals("page", @template) then "selected_section" else "")

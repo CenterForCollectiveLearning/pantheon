@@ -20,14 +20,14 @@ Router.map ->
     ]
 
   @route "observatory",
-    path: "/:vizType/:vizMode/:param1/:param2/:from/:to/:langs"
+    path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs"
     data: ->
       vizMode = @params.vizMode
       Session.set "page", @template
       Session.set "vizType", @params.vizType
       Session.set "vizMode", @params.vizMode
-      Session.set IOMapping[vizMode]["in"][0], @params.param1
-      Session.set IOMapping[vizMode]["in"][1], @params.param2
+      Session.set IOMapping[vizMode]["in"][0], @params.paramOne
+      Session.set IOMapping[vizMode]["in"][1], @params.paramTwo
       Session.set "from", @params.from
       Session.set "to", @params.to
       Session.set "langs", @params.langs
@@ -97,8 +97,8 @@ Router.map ->
 
 
 Router.configure
-  layout: "defaultLayout"
-  renderTemplates:
+  layoutTemplate: "defaultLayout"
+  yieldTemplates:
     nav:
       to: "nav"
 

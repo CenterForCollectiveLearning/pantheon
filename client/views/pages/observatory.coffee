@@ -22,11 +22,9 @@ Template.sharing_options.rendered = ->
     js.src = p + "://platform.twitter.com/widgets.js"
     fjs.parentNode.insertBefore js, fjs
 
-
 # Re-render visualization template on window resize
 Template.visualization.resize = ->
-  if Session.get "resize"
-    return
+  if Session.get "resize" then return
 
 # Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = ->
@@ -40,23 +38,20 @@ Template.visualization.render_template = ->
       new Handlebars.SafeString(Template.scatterplot(this))
     when "map"
       new Handlebars.SafeString(Template.map(this))
+    when "histogram"
+      new Handlebars.SafeString(Template.histogram(this))
     when "stacked"
       new Handlebars.SafeString(Template.stacked(this))
-
 Template.time_slider.rendered = ->
   $("select#from, select#to").selectToUISlider
     labels: 15
     tooltip: false
 
-
 Template.accordion.rendered = ->
-  
-  # TODO Make such mappings global...or do something about it
-  mapping =
-    treemap: 0
-    matrix: 1
-    scatterplot: 2
-    map: 3
+  # Map from vizTypes to accordion div indexes
+  mapping = {}
+  $(".accordion div").each (i) -> 
+      mapping[this.id] = i
 
   accordion = $(".accordion")
   accordion.accordion
@@ -67,39 +62,27 @@ Template.accordion.rendered = ->
 
   accordion.accordion "resize"
 
-Template.accordion.events = "click li a": (d) ->
-  srcE = (if d.srcElement then d.srcElement else d.target)
-  option = $(srcE).attr("id")
-  modeToType =
-    country_exports: "treemap"
-    country_imports: "treemap"
-    domain_exports_to: "treemap"
-    domain_imports_from: "treemap"
-    bilateral_exporters_of: "treemap"
-    bilateral_importers_of: "treemap"
-    matrix_exports: "matrix"
-    country_vs_country: "scatterplot"
-    lang_vs_lang: "scatterplot"
-    domain_vs_domain: "scatterplot"
-    map: "map"
+Template.accordion.events = 
+  "click li a": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    vizType = $(srcE).data "viz-type"
+    vizMode = $(srcE).data "viz-mode"
 
-  
-  # Parameters depend on vizMode (e.g countries -> languages for exports)
-  param1 = IOMapping[option]["in"][0]
-  param2 = IOMapping[option]["in"][1]
-  
-  # Reset parameters for a viz type change
-  # First input (e.g. exporter country)
-  # Second input (e.g. importer lang)
-  # From
-  # To
-  path = "/" + modeToType[option] + "/" + option + "/" + defaults[param1] + "/" + defaults[param2] + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" # Langs
-  Router.go path
+    # Parameters depend on vizMode (e.g countries -> languages for exports)
+    [paramOne, paramTwo] = IOMapping[vizMode]["in"]
 
+    # Reset parameters for a viz type change
+    Router.go "observatory",
+      vizType: vizType
+      vizMode: vizMode
+      paramOne: defaults[paramOne]
+      paramTwo: defaults[paramTwo]
+      from: defaults.from
+      to: defaults.to
+      langs: defaults.langs
 
 # Global helper for data ready
 Handlebars.registerHelper "dataReady", ->
-  console.log "DATA READY", Session.get("dataReady")
   Session.get "dataReady"
 
 Handlebars.registerHelper "initialDataReady", ->
@@ -107,7 +90,6 @@ Handlebars.registerHelper "initialDataReady", ->
 
 Handlebars.registerHelper "tooltipDataReady", ->
   Session.get "tooltipDataReady"
-
 
 # Create a global helper
 # Use this from multiple templates
@@ -118,7 +100,6 @@ Template.ranked_list.top10 = ->
   PeopleTop10.find {},
     sort:
       numlangs: -1
-
 
 Template.ranked_list.empty = ->
   PeopleTop10.find().count() is 0
@@ -221,8 +202,6 @@ Template.question.question = ->
         return new Handlebars.SafeString("Who exports " + boldify(s_domainX) + " compared to " + boldify(s_domainY) + "?")
       when "map"
         return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?")
-
-
 #
 # * TOOLTIPS
 # 
@@ -236,7 +215,6 @@ Template.tooltip.helpers
   top5: -> # Total count is also passed
     Tooltips.find _id:
       $not: "count"
-
 
   count: ->
     doc = Tooltips.findOne(_id: "count")

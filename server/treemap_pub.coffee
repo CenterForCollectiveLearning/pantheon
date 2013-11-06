@@ -13,8 +13,8 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
       $gte: begin
       $lte: end
 
-  matchArgs.lang = language  if language isnt "all"
-  matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
+  matchArgs.lang = language if language isnt "all"
+  matchArgs[categoryLevel] = category if category.toLowerCase() isnt "all"
   pipeline = []
   if vizMode is "country_exports"
     project =
@@ -23,7 +23,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
       industry: 1
       occupation: 1
 
-    matchArgs.countryCode = country  if country isnt "all"
+    matchArgs.countryCode = country if country isnt "all"
     pipeline = [
       $match: matchArgs
     ,
