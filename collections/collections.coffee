@@ -18,3 +18,4 @@
 @WorldMap = new Meteor.Collection "worldmap"
 @Tooltips = new Meteor.Collection "tooltipCollection"
 @Timeline = new Meteor.Collection "timeline"
+@Stacked = new Meteor.Collection "stacked"

@@ -40,8 +40,8 @@ Template.visualization.render_template = ->
       new Handlebars.SafeString(Template.scatterplot(this))
     when "map"
       new Handlebars.SafeString(Template.map(this))
-    when "stackedAreaChart"
-      new Handlebars.SafeString(Template.stackedAreaChart(this))
+    when "stacked"
+      new Handlebars.SafeString(Template.stacked(this))
 
 Template.time_slider.rendered = ->
   $("select#from, select#to").selectToUISlider

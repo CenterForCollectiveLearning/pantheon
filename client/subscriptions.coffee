@@ -34,6 +34,7 @@ Deps.autorun ->
   category = category  if category
   occ = Session.get("occ")
   vizMode = Session.get("vizMode")
+  vizType = Session.get("vizType")
   categoryLevel = Session.get("categoryLevel")
   
   #
@@ -63,28 +64,23 @@ Deps.autorun ->
     
     # Give a handle to this subscription so we can check if it's ready
     if page is "observatory"
-      switch vizMode
-        
+      switch vizType
         # Treemap modes
-        when "country_imports"
-        , "country_exports"
-        , "bilateral_exporters_of"
-        , "domain_exports_to"
-        , "domain_imports_from"
-        , "bilateral_importers_of"
+        when "treemap"
           top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, category, categoryLevel)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, category, categoryLevel, onReady)
-        
         # Matrix modes
-        when "matrix_exports"
+        when "matrix"
           dataSub = Meteor.subscribe("matrix_pub", begin, end, langs, gender, onReady)
         # Scatterplot modes
-        when "country_vs_country", "lang_vs_lang", "domain_vs_domain"
+        when "scatterplot"
           dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, onReady)
-        
         # Map modes
         when "map"
           dataSub = Meteor.subscribe("map_pub", begin, end, langs, category, categoryLevel, onReady)
+        when "stacked"
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, category, categoryLevel)
+          dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, langs, country, language, category, categoryLevel, onReady)
         else
           console.log "Unsupported vizMode"
     else if page is "rankings"
