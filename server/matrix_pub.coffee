@@ -20,10 +20,8 @@ Meteor.publish "matrix_pub", (begin, end, L, gender) ->
       industry: 1
 
   pipeline = [
-    $match: matchArgs
-  ,
-    $project: project
-  ,
+    $match: matchArgs,
+    $project: project,
     $group:
       _id:
         countryCode: "$countryCode"

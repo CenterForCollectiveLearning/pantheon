@@ -1,0 +1,17 @@
+<template name="histogram">
+    <!-- TODO Why is the 12-column layout overflowing? -->
+    <div class="page-middle span8">
+	    <div id="viz" class="histogram">
+            {{#if dataReady}}
+                {{> histogram_svg}}
+                {{> time_slider}} 
+            {{else}}
+                    {{> spinner}}
+            {{/if}}
+	    </div>              
+    </div>
+</template>
+
+<template name="histogram_svg">
+    <svg class="histogram" width="{{properties.width}}" height="{{properties.height}}"></svg>
+</template>

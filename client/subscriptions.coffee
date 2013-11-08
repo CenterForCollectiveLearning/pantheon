@@ -24,15 +24,15 @@ Deps.autorun ->
   languageY = Session.get("languageY")
   begin = parseInt(Session.get("from"))
   end = parseInt(Session.get("to"))
-  langs = parseInt(Session.get("langs"))
+  L = parseInt(Session.get("langs"))
   category = Session.get("category")
   categoryX = Session.get("categoryX")
   categoryY = Session.get("categoryY")
   gender = Session.get("gender")
   entity = Session.get("entity")
   page = Session.get("page")
-  category = category  if category
   occ = Session.get("occ")
+  vizType = Session.get("vizType")
   vizMode = Session.get("vizMode")
   vizType = Session.get("vizType")
   categoryLevel = Session.get("categoryLevel")
@@ -41,7 +41,7 @@ Deps.autorun ->
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
   #      
-  unless not country or not begin or not end or not langs
+  unless not country or not begin or not end or not L
     
     #
     #         Do nothing:
@@ -60,7 +60,6 @@ Deps.autorun ->
     onReady = ->
       Session.set "dataReady", true
       Session.set "initialDataReady", true
-
     
     # Give a handle to this subscription so we can check if it's ready
     if page is "observatory"
@@ -78,27 +77,31 @@ Deps.autorun ->
         # Map modes
         when "map"
           dataSub = Meteor.subscribe("map_pub", begin, end, langs, category, categoryLevel, onReady)
+        when "histogram"
+          dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         when "stacked"
           top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, category, categoryLevel)
           dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, langs, country, language, category, categoryLevel, onReady)
         else
-          console.log "Unsupported vizMode"
+          console.log "Unsupported vizType"
     else if page is "rankings"
       switch entity
         when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, onReady)
         when "people"
-          dataSub = Meteor.subscribe("peopletopN", begin, end, langs, country, category, categoryLevel, "all", onReady)
+          dataSub = Meteor.subscribe("peopletopN", begin, end, L, country, category, categoryLevel, "all", onReady)
         when "domains"
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady)
         else
           console.log "Invalid ranking entity!"
     else if page is "timeline"
       dataSub = Meteor.subscribe("timeline_pub", begin, end, onReady)
+
+    console.log "vizType: " + vizType
     console.log "vizMode: " + vizMode
     console.log "begin: " + begin
     console.log "end: " + end
-    console.log "L: " + langs
+    console.log "L: " + L
     console.log "country: " + country
     console.log "countryX: " + countryX
     console.log "countryY: " + countryY
@@ -110,8 +113,6 @@ Deps.autorun ->
     console.log "gender: " + gender
     console.log "entity: " + entity
     console.log "page: " + page
-
-
 #
 # Subscription for tooltips on hover
 #  
@@ -135,6 +136,6 @@ Deps.autorun ->
   gender = Session.get("gender")
   begin = parseInt(Session.get("from"))
   end = parseInt(Session.get("to"))
-  langs = parseInt(Session.get("langs"))
+  L = parseInt(Session.get("langs"))
   vizMode = Session.get("vizMode")
-  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, langs, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, onDataReady)
+  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, onDataReady)

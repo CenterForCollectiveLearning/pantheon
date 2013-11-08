@@ -66,53 +66,53 @@
 <template name="accordion">
     <div class="accordion">
         <h3 class="app">TREEMAPS</h3>
-        <div>
+        <div id="treemap">
             <ul>
-                <li><span><a href="#" id="country_exports">Exports by Country</a></span></li>
-                <!--li><span><a href="#" id="country_imports">Imports</a></span></li-->
-                <li><span><a href="#" id="domain_exports_to">Exporters of Domain</a></span></li>
-                <!--li><span><a href="#" id="domain_imports_from">Importers from</a></span></li-->
+                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="country_exports">Exports by Country</a></span></li>
+                <!--li><span><a href="#" data-viz-mode="country_imports">Imports</a></span></li-->
+                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="domain_exports_to">Exporters of Domain</a></span></li>
+                <!--li><span><a href="#" data-viz-mode="domain_imports_from">Importers from</a></span></li-->
             </ul>
             <!--span class="app_subtitle">Bilateral</span>
             <ul>
-                <li><span><a href="#" id="bilateral_exporters_of">Exports to</a></span></li>
-                <li><span><a href="#" id="bilateral_importers_of">Exporters of</a></span></li>
+                <li><span><a href="#" data-viz-mode="bilateral_exporters_of">Exports to</a></span></li>
+                <li><span><a href="#" data-viz-mode="bilateral_importers_of">Exporters of</a></span></li>
             </ul-->
         </div>
         <h3 class="app">MATRICES</h3>
-        <div>
+        <div id="matrix">
             <ul>
-            <li><span><a href="#" id="matrix_exports">Global Exports</a></span></li>
+                <li><span><a href="#" data-viz-type="matrix" data-viz-mode="matrix_exports">Global Exports</a></span></li>
             </ul>
         </div>
         <h3 class="app">SCATTERPLOTS</h3>
-        <div>
+        <div id="scatterplot">
             <ul>
-                <li><span><a href="#" id="country_vs_country">Country vs. Country</a></span></li>
-                <!-- <li><span><a href="#" id="lang_vs_lang">Language vs. Language</a></span></li> -->
-                <li><span><a href="#" id="domain_vs_domain">Domain vs. Domain</a></span></li>
+                <li><span><a href="#" data-viz-type="scatterplot" data-viz-mode="country_vs_country">Country vs. Country</a></span></li>
+                <!-- <li><span><a href="#" data-viz-mode="lang_vs_lang">Language vs. Language</a></span></li> -->
+                <li><span><a href="#" data-viz-type="scatterplot" data-viz-mode="domain_vs_domain">Domain vs. Domain</a></span></li>
             </ul>
         </div>
         <h3 class="app">MAPS</h3>
-        <div>
+        <div id="map">
             <ul>
-                <li><span><a href="#" id="map">Global Exports</a></span></li>
+                <li><span><a href="#" data-viz-type="map" data-viz-mode="map">Global Exports</a></span></li>
             </ul>
         </div>
-<!--         <h3 class="app">HISTOGRAMS</h3>
-        <div>
+        <h3 class="app">HISTOGRAMS</h3>
+        <div id="histogram">
             <ul>
-                <li><span><a href="#" id="map">Exports by Country</a></span></li>
-                <li><span><a href="#" id="map">Imports by Language</a></span></li>
+                <li><span><a href="#" data-viz-type="histogram" data-viz-mode="country_exports">Exports by Country</a></span></li>
+                <li><span><a href="#" data-viz-type="histogram" data-viz-mode="domain_exports_to">Exports of Domain</a></span></li>
             </ul>
         </div>
         <h3 class="app">STACKED AREA CHARTS</h3>
-        <div>
+        <div id="stacked">
             <ul>
-                <li><span><a href="#" id="country_exports">Exports by Country</a></span></li>
-                <li><span><a href="#" id="domain_exports_to">Exporters of Domain</a></span></li>
+                <li><span><a href="#" data-viz-mode="country_exports">Exports by Country</a></span></li>
+                <li><span><a href="#" data-viz-mode="domain_exports_to">Exporters of Domain</a></span></li>
             </ul>
-        </div> -->
+        </div> 
     </div>
 </template>
 
@@ -159,22 +159,22 @@
 <!-- Tooltips -->
 <template name="tooltip">
     {{#if tooltipShown}}
-    {{#if tooltipDataReady}}
-    <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
-        <div id="tooltip-inner">
-            <span class="category">{{heading}}</span>
-            
-            <div class="total-count">{{count}} {{suffix}}</div>
-            <div class="list">
-                {{#each top5}} 
-                    {{> tt_person person_lookup}} 
-                {{/each}}
+        {{#if tooltipDataReady}}
+        <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
+            <div id="tooltip-inner">
+                <span class="category">{{heading}}</span>
+                
+                <div class="total-count">{{count}} {{suffix}}</div>
+                <div class="list">
+                    {{#each top5}} 
+                        {{> tt_person person_lookup}} 
+                    {{/each}}
+                </div>
+                {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
+                
             </div>
-            {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
-            
         </div>
-    </div>
-    {{/if}}
+        {{/if}}
     {{/if}}
 </template>
 

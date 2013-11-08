@@ -16,6 +16,7 @@
 @Matrix = new Meteor.Collection "matrix"
 @Scatterplot = new Meteor.Collection "scatterplot"
 @WorldMap = new Meteor.Collection "worldmap"
+@Histogram = new Meteor.Collection "histogram"
 @Tooltips = new Meteor.Collection "tooltipCollection"
 @Timeline = new Meteor.Collection "timeline"
 @Stacked = new Meteor.Collection "stacked"
