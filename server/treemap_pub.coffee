@@ -120,8 +120,6 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
           countryCode: e._id.countryCode
           countryName: e._id.countryName
           count: e.count
-
-
       sub.ready()
     , (error) ->
       Meteor._debug "Error doing aggregation: " + error

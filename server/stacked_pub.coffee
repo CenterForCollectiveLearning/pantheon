@@ -13,15 +13,9 @@ Meteor.publish "stacked_pub", (vizMode, begin, end, L, country, language, catego
       $gte: begin
       $lte: end
 
-  matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
   pipeline = []
 
   if vizMode is "country_exports"
-    project =
-      _id: 0
-      occupation: 1
-      year: 1
-
     matchArgs.countryCode = country  if country isnt "all"
     pipeline = [
       $match: matchArgs
@@ -43,6 +37,37 @@ Meteor.publish "stacked_pub", (vizMode, begin, end, L, country, language, catego
           year: e._id.year
           count: e.count
 
+      sub.ready()
+    , (error) ->
+      Meteor._debug "Error doing aggregation: " + error
+    )
+  else if vizMode is "domain_exports_to"
+    project =
+      _id: 0
+      countryCode: 1
+      year: 1
+
+    matchArgs.categoryLevel = category  if category.toLowerCase() isnt "all"
+
+    pipeline = [
+      $match: matchArgs
+    ,
+      $group:
+        _id:
+          countryCode: "$countryCode"
+          year: "$birthyear"
+
+        count:
+          $sum: 1
+    ]
+    driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
+      _.each result, (e) ->
+
+        # Generate a random disposable id for each aggregate
+        sub.added "stacked", Random.id(),
+          countryCode: e._id.countryCode
+          year: e._id.year
+          count: e.count
       sub.ready()
     , (error) ->
       Meteor._debug "Error doing aggregation: " + error
