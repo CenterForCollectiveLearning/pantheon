@@ -66,22 +66,22 @@ Deps.autorun ->
       switch vizType
         # Treemap modes
         when "treemap"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, category, categoryLevel)
-          dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, langs, country, language, category, categoryLevel, onReady)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel)
+          dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         # Matrix modes
         when "matrix"
-          dataSub = Meteor.subscribe("matrix_pub", begin, end, langs, gender, onReady)
+          dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, onReady)
         # Scatterplot modes
         when "scatterplot"
-          dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, langs, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, onReady)
+          dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, onReady)
         # Map modes
         when "map"
-          dataSub = Meteor.subscribe("map_pub", begin, end, langs, category, categoryLevel, onReady)
+          dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, onReady)
         when "histogram"
           dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         when "stacked"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, langs, country, category, categoryLevel)
-          dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, langs, country, language, category, categoryLevel, onReady)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel)
+          dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         else
           console.log "Unsupported vizType"
     else if page is "rankings"
