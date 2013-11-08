@@ -34,7 +34,6 @@ Deps.autorun ->
   occ = Session.get("occ")
   vizType = Session.get("vizType")
   vizMode = Session.get("vizMode")
-  vizType = Session.get("vizType")
   categoryLevel = Session.get("categoryLevel")
   
   #

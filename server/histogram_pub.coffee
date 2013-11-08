@@ -1,6 +1,7 @@
 Meteor.publish "histogram_pub", (vizMode, begin, end, L, country, language, category, categoryLevel) ->
   console.log "In histogram publication"
   sub = this
+  allAverages = {}
   driver = MongoInternals.defaultRemoteCollectionDriver()
 
   matchArgs =
@@ -38,16 +39,20 @@ Meteor.publish "histogram_pub", (vizMode, begin, end, L, country, language, cate
           $sum: 1
     ]
 
+    # TODO Figure out how to access the scoped data
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
-      _.each result, (e) ->
-        industryGlobalAverages[e._id.industry] = e.count / countriesCount
-        root = exports ? this
-        root.industryGlobalAverages = industryGlobalAverages
-            # console.log e._id.industry, e.count, countriesCount
+      _.each result, (e) -> allAveraainges[e._id.industry] = e.count / countriesCount
     , (error) ->
       Meteor._debug "Error doing aggregation: " + error
     )
-    console.log "OUTSIDE AGGREGATION", industryGlobalAverages
+
+    # driver.mongo.db.collection("people").aggregate pipeline, (err, result) -> global.result = result
+    # console.log global.result
+    # , (err, result) ->
+    #   global.industryGlobalAverages = result
+    #   # _.each result, (e) -> global.industryGlobalAverages[e._id.industry] = e.count / countriesCount
+    #   console.log global.industryGlobalAverages
+    # console.log global.industryGlobalAverages
 
     matchArgs.countryCode = country if country isnt "all"
     pipeline[0] = $match: matchArgs

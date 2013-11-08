@@ -48,10 +48,13 @@ Template.time_slider.rendered = ->
     tooltip: false
 
 Template.accordion.rendered = ->
-  # Map from vizTypes to accordion div indexes
-  mapping = {}
-  $(".accordion div").each (i) -> 
-      mapping[this.id] = i
+  mapping = 
+    treemap: 0
+    matrix: 1
+    scatterplot: 2
+    map: 3
+    histogram: 4
+    stacked: 5
 
   accordion = $(".accordion")
   accordion.accordion
