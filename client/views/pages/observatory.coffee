@@ -42,6 +42,7 @@ Template.visualization.render_template = ->
       new Handlebars.SafeString(Template.histogram(this))
     when "stacked"
       new Handlebars.SafeString(Template.stacked(this))
+
 Template.time_slider.rendered = ->
   $("select#from, select#to").selectToUISlider
     labels: 15
