@@ -107,10 +107,10 @@ d3plus.stacked = function(vars) {
   small_tooltip = function(d) {
     
     covered = false
-    
+
     var id = find_variable(d,vars.id_var),
         self = d3.select("#path_"+id).node()
-    
+
     d3.select(self).attr("opacity",1)
 
     d3.selectAll("line.rule").remove();
@@ -164,7 +164,7 @@ d3plus.stacked = function(vars) {
 //      "footer": footer_text(),
 //      "mouseevents": false
 //    })
-      Session.set("hover", true);
+      Session.set("hover", true); // TODO: this is redundant ... but why is it not working when one is taken out??? 
       var id = find_variable(d,vars.id_var).replace(" ", "_"),
           self = d3.select("#path_"+id).node()
       console.log("ID:" + id);
