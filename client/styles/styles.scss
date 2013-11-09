@@ -752,6 +752,31 @@ aside {
   }
 }
 
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+}
+
+.x.axis path {
+  display: none;
+}
+
+label {
+  top: 10px;
+  right: 10px;
+}
+
 @media only screen and (min-width : 1824px) {
 	.page-top .secondary-text {
 		padding-bottom: 4em;

@@ -31,7 +31,7 @@ Router.map ->
       Session.set "from", @params.from
       Session.set "to", @params.to
       Session.set "langs", @params.langs
-      
+
       # Reset defaults based on vizmode
       if vizMode is "country_exports"
         Session.set "category", defaults.category
@@ -42,8 +42,8 @@ Router.map ->
         Session.set "category", defaults.category
         Session.set "categoryLevel", defaults.categoryLevel
       else Session.set "category", defaults.category  if vizMode is "domain_vs_domain"
-      Session.set "categoryLevel", getCategoryLevel(@params.param1)  if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"
-      Session.set "categoryLevel", getCategoryLevel(@params.param2)  if IOMapping[vizMode]["in"][1] is "category" or IOMapping[vizMode]["in"][1] is "categoryX" or IOMapping[vizMode]["in"][1] is "categoryY"
+      Session.set "categoryLevel", getCategoryLevel(@params.paramOne)  if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"
+      Session.set "categoryLevel", getCategoryLevel(@params.paramTwo)  if IOMapping[vizMode]["in"][1] is "category" or IOMapping[vizMode]["in"][1] is "categoryX" or IOMapping[vizMode]["in"][1] is "categoryY"
 
   @route "vision",
     data: ->

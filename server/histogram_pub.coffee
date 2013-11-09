@@ -10,8 +10,8 @@ Meteor.publish "histogram_pub", (vizMode, begin, end, L, country, language, cate
     birthyear:
       $gte: begin
       $lte: end
-  matchArgs.lang = language if language isnt "all"
-  matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
+  # matchArgs.lang = language if language isnt "all"
+  # matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
 
   pipeline = []
 
@@ -19,12 +19,22 @@ Meteor.publish "histogram_pub", (vizMode, begin, end, L, country, language, cate
   if vizMode is "country_exports"
     countriesCount = Countries.find().count()
 
+    # Get global averages for industries
+    # Can't use aggregation pipeline because of scoping issues
+    data = People.find(matchArgs).fetch()
+    industriesData = _.groupBy(data, "industry")
+    industryGlobalAverages = {}
+    for industry, people of industriesData
+        industryGlobalAverages[industry] = people.length / countriesCount
+
+    # Calculate RCAs for every industry
     project =
       _id: 0
       domain: 1
       industry: 1
 
-    # Find global average for the given categorization    
+    matchArgs.countryCode = country if country isnt "all"
+
     pipeline = [
       $match: matchArgs
     ,
@@ -38,33 +48,19 @@ Meteor.publish "histogram_pub", (vizMode, begin, end, L, country, language, cate
         count:
           $sum: 1
     ]
-
-    # TODO Figure out how to access the scoped data
-    driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
-      _.each result, (e) -> allAveraainges[e._id.industry] = e.count / countriesCount
-    , (error) ->
-      Meteor._debug "Error doing aggregation: " + error
-    )
-
-    # driver.mongo.db.collection("people").aggregate pipeline, (err, result) -> global.result = result
-    # console.log global.result
-    # , (err, result) ->
-    #   global.industryGlobalAverages = result
-    #   # _.each result, (e) -> global.industryGlobalAverages[e._id.industry] = e.count / countriesCount
-    #   console.log global.industryGlobalAverages
-    # console.log global.industryGlobalAverages
-
-    matchArgs.countryCode = country if country isnt "all"
+    
     pipeline[0] = $match: matchArgs
 
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
-        # Generate a random disposable id for each aggregate
-        # console.log e._id.industry, e.count
+        count = e.count
+        industry = e._id.industry
         sub.added "histogram", Random.id(),
           domain: e._id.domain
-          industry: e._id.industry
-          count: e.count
+          industry: industry
+          count: count
+          rca: count / industryGlobalAverages[industry]
+          globalAverage: industryGlobalAverages[industry]
       sub.ready()
     , (error) ->
       Meteor._debug "Error doing aggregation: " + error

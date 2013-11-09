@@ -28,7 +28,7 @@ Template.visualization.resize = ->
 
 # Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = ->
-  type = Session.get("vizType")
+  type = Session.get "vizType"
   switch type
     when "treemap"
       new Handlebars.SafeString(Template.treemap(this))
