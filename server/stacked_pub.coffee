@@ -47,7 +47,7 @@ Meteor.publish "stacked_pub", (vizMode, begin, end, L, country, language, catego
       countryCode: 1
       year: 1
 
-    matchArgs.categoryLevel = category  if category.toLowerCase() isnt "all"
+    matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
 
     pipeline = [
       $match: matchArgs

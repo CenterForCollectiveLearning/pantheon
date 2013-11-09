@@ -119,8 +119,10 @@ d3plus.stacked = function(vars) {
     var rev_x_scale = d3.scale.linear()
       .domain(vars.x_scale.range()).range(vars.x_scale.domain());
     var this_x = Math.round(rev_x_scale(mouse_x));
-    var this_x_index = vars.years.indexOf(this_x)
-    var this_value = d.values[this_x_index]
+    var this_x_index = vars.years.indexOf(this_x);
+    var this_value = d.values[this_x_index];
+    console.log("THIS.X: " + this_x);
+    console.log("THIS.value: " + this_value.y); // TODO: update tooltip to show values for specified years, for continents?
     
     // add dashed line at closest X position to mouse location
     d3.selectAll("line.rule").remove()
@@ -136,33 +138,73 @@ d3plus.stacked = function(vars) {
       .attr("pointer-events","none")
     
     // tooltip
-    var tooltip_data = get_tooltip_data(this_value,"short")
-    if (vars.layout == "share") {
-      var share = vars.format(this_value.y*100,"share")+"%"
-      tooltip_data.push({"name": vars.format("share"), "value": share})
-    }
-  
-    var path_height = vars.y_scale(this_value.y + this_value.y0)-vars.y_scale(this_value.y0),
-        tooltip_x = vars.x_scale(this_x)+vars.graph.margin.left+vars.margin.left+vars.parent.node().offsetLeft,
-        tooltip_y = vars.y_scale(this_value.y0 + this_value.y)-(path_height/2)+vars.graph.margin.top+vars.margin.top+vars.parent.node().offsetTop
+//    var tooltip_data = get_tooltip_data(this_value,"short")
+//    if (vars.layout == "share") {
+//      var share = vars.format(this_value.y*100,"share")+"%"
+//      tooltip_data.push({"name": vars.format("share"), "value": share})
+//    }
+//
+//    var path_height = vars.y_scale(this_value.y + this_value.y0)-vars.y_scale(this_value.y0),
+//        tooltip_x = vars.x_scale(this_x)+vars.graph.margin.left+vars.margin.left+vars.parent.node().offsetLeft,
+//        tooltip_y = vars.y_scale(this_value.y0 + this_value.y)-(path_height/2)+vars.graph.margin.top+vars.margin.top+vars.parent.node().offsetTop
+//
+//    d3plus.tooltip.remove(vars.type)
+//    d3plus.tooltip.create({
+//      "data": tooltip_data,
+//      "title": find_variable(d[vars.id_var],vars.text_var),
+//      "id": vars.type,
+//      "icon": find_variable(d[vars.id_var],"icon"),
+//      "style": vars.icon_style,
+//      "color": find_color(d[vars.id_var]),
+//      "x": tooltip_x,
+//      "y": tooltip_y,
+//      "offset": -(path_height/2),
+//      "align": "top center",
+//      "arrow": true,
+//      "footer": footer_text(),
+//      "mouseevents": false
+//    })
+      Session.set("hover", true);
+      var id = find_variable(d,vars.id_var).replace(" ", "_"),
+          self = d3.select("#path_"+id).node()
+      console.log("ID:" + id);
 
-    d3plus.tooltip.remove(vars.type)
-    d3plus.tooltip.create({
-      "data": tooltip_data,
-      "title": find_variable(d[vars.id_var],vars.text_var),
-      "id": vars.type,
-      "icon": find_variable(d[vars.id_var],"icon"),
-      "style": vars.icon_style,
-      "color": find_color(d[vars.id_var]),
-      "x": tooltip_x,
-      "y": tooltip_y,
-      "offset": -(path_height/2),
-      "align": "top center",
-      "arrow": true,
-      "footer": footer_text(),
-      "mouseevents": false
-    })
-    
+      d3.select("#path_"+id)
+          .style("cursor","pointer")
+          .attr("opacity",1)
+
+      var vizMode = Session.get("vizMode");
+      if (vizMode === "country_exports") {
+          console.log("GETTING TOOLTIPS");
+          var countryCode = Session.get("country");
+          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
+          var category = id.replace("_", " ").toUpperCase();
+          var categoryLevel = "domain"; // this is hardcoded based on what the stacks are
+      } else if (vizMode === "domain_exports_to") {
+          var countryCode = id.replace("_", " ").toUpperCase();
+          console.log("countryCode: " + countryCode)
+          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
+          var category = Session.get("category").toUpperCase();
+          var categoryLevel = Session.get("categoryLevel");
+      }
+
+      // Positioning
+      var position = {
+          "left": (d3.event.clientX + 40),
+          "top": (d3.event.clientY - 45)
+      }
+      Session.set("tooltipPosition", position);
+
+      // Subscription Parameters
+      Session.set("tooltipCategory", category);
+      Session.set("tooltipCategoryLevel", categoryLevel);
+      Session.set("tooltipCountryCode", countryCode);
+
+      Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
+      // Template.tooltip.categoryA = countryName;
+      // Template.tooltip.categoryB = category;
+
+      Session.set("showTooltip", true);
   }
   
   // UPDATE
@@ -174,6 +216,11 @@ d3plus.stacked = function(vars) {
       small_tooltip(d) 
     })
     .on(d3plus.evt.out, function(d){
+      // remove the tooltip
+      Session.set("hover", false);
+      Template.tooltip.top5 = null;
+      Session.set("showTooltip", false);
+      $("#tooltip").empty();
       
       var id = find_variable(d,vars.id_var),
           self = d3.select("#path_"+id).node()

@@ -85,7 +85,7 @@ Template.stacked_svg.rendered = ->
     .text_var("countryCode")
     .value_var("count")
     .nesting(["continentName", "countryCode"])
-    .depth("continentName")
+    .depth("countryCode")
     .xaxis_var("year")
     .year_var("year")
     .font("Helvetica Neue")
