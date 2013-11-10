@@ -182,10 +182,14 @@ Template.question.question = ->
         s_domainY = s_domainY.substring(1) + "s"
     s_domainX = s_domainX.substring(1)  if s_domainX.charAt(0) is "+"
     s_domainY = s_domainY.substring(1)  if s_domainY.charAt(0) is "+"
+    type = Session.get("vizType")
     mode = Session.get("vizMode")
     switch mode
       when "country_exports"
-        return new Handlebars.SafeString("Who are the cultural exports of " + boldify(s_countries) + "?")
+        if type is "treemap"
+          return new Handlebars.SafeString("Who are the cultural exports of " + boldify(s_countries) + "?")
+        else if type is "histogram"
+          return new Handlebars.SafeString("What is the competitive advantage of " + boldify(s_countries) + "?")
       when "country_imports"
         return new Handlebars.SafeString((if (Session.get("language") is "all") then "Who does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
       when "domain_exports_to"

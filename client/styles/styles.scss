@@ -147,7 +147,9 @@ div.text {
 
 body {
 	// background:url(/joseon_palace_light_blur.png) no-repeat center center fixed;
-	background:url(/joseon_palace_dark_no_grain.png) no-repeat center center fixed;
+	// background:url(/joseon_palace_dark_no_grain.png) no-repeat center center fixed;
+	// background:url(/church.png) no-repeat center center fixed;
+	background:url(/church_2.png) no-repeat center center fixed;
 	// background:url(/LoC_forum_boario_grain.png) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -752,30 +754,31 @@ aside {
   }
 }
 
+.bar {
+	fill-opacity: .7;
+}
+
+.positive { 
+	fill: $color_gold;
+}
+
+.negative {
+	fill: red;
+}
+
+
 .axis text {
-  font: 10px sans-serif;
+	fill: #FFF;
+	font: 0.8rem Lato;
 }
 
 .axis path,
 .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+	fill: none;
+	stroke: #FFF;
+	shape-rendering: crispEdges;
 }
 
-.bar {
-  fill: steelblue;
-  fill-opacity: .9;
-}
-
-.x.axis path {
-  display: none;
-}
-
-label {
-  top: 10px;
-  right: 10px;
-}
 
 @media only screen and (min-width : 1824px) {
 	.page-top .secondary-text {

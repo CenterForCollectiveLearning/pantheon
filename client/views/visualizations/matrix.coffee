@@ -95,7 +95,6 @@ Template.matrix_svg.rendered = ->
       g = row.enter().append("g").attr("class", "row")
       row.append("line").attr "x2", matrixProps.width
       text = row.append("text").attr("class", "row-title").attr("x", -6).attr("y", matrixScales.x.rangeBand() / 2).attr("dy", ".32em").attr("text-anchor", "end").attr("font-family", "Lato").attr("fill", "#ffffff").attr("font-weight", "lighter").attr("font-size", "0.8em")
-      
       # ENTER + Update
       g.attr "transform", (d, i) ->
         "translate(0," + matrixScales.x(i) + ")"

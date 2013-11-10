@@ -20,8 +20,10 @@ Meteor.publish "matrix_pub", (begin, end, L, gender) ->
       industry: 1
 
   pipeline = [
-    $match: matchArgs,
-    $project: project,
+    $match: matchArgs
+  ,
+    $project: project
+  ,
     $group:
       _id:
         countryCode: "$countryCode"
@@ -29,6 +31,8 @@ Meteor.publish "matrix_pub", (begin, end, L, gender) ->
       count:
         $sum: 1
   ]
+
+  console.log pipeline
 
   driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
     _.each result, (e) ->

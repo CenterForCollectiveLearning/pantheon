@@ -55,12 +55,13 @@ Meteor.publish "histogram_pub", (vizMode, begin, end, L, country, language, cate
       _.each result, (e) ->
         count = e.count
         industry = e._id.industry
-        sub.added "histogram", Random.id(),
-          domain: e._id.domain
-          industry: industry
-          count: count
-          rca: count / industryGlobalAverages[industry]
-          globalAverage: industryGlobalAverages[industry]
+        if count
+          sub.added "histogram", Random.id(),
+            domain: e._id.domain
+            industry: industry
+            count: count
+            rca: count / industryGlobalAverages[industry]
+            globalAverage: industryGlobalAverages[industry]
       sub.ready()
     , (error) ->
       Meteor._debug "Error doing aggregation: " + error
