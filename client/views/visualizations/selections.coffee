@@ -32,10 +32,14 @@ getCategoryLevel = (s) ->
 Template.select_mode.render_template = ->
   page = Session.get("page")
   if page is "observatory"
+    type = Session.get("vizType")
     mode = Session.get("vizMode")
     switch mode
       when "country_exports"
-        return new Handlebars.SafeString(Template.country_exporters_mode(this))
+        if type is "treemap"
+          return new Handlebars.SafeString(Template.country_exporters_mode(this))
+        else if type is "histogram"
+          return new Handlebars.SafeString(Template.histogram_country_exporters_mode(this))
       when "country_imports"
         return new Handlebars.SafeString(Template.country_importers_mode(this))
       when "domain_exports_to"
