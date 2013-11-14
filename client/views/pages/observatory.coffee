@@ -189,11 +189,14 @@ Template.question.question = ->
         if type is "treemap"
           return new Handlebars.SafeString("Who are the cultural exports of " + boldify(s_countries) + "?")
         else if type is "histogram"
-          return new Handlebars.SafeString("What is the competitive advantage of " + boldify(s_countries) + "?")
+          return new Handlebars.SafeString("What is the comparative advantage of " + boldify(s_countries) + "?")
       when "country_imports"
         return new Handlebars.SafeString((if (Session.get("language") is "all") then "Who does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
       when "domain_exports_to"
-        return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?")
+        if type is "treemap"
+          return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?")
+        else if type is "histogram"
+          return new Handlebars.SafeString("Who has comparative advantage in " + boldify(s_domains) + "?")
       when "domain_imports_from"
         return new Handlebars.SafeString("Who imports " + boldify(s_domains) + "?")
       when "bilateral_exporters_of"
