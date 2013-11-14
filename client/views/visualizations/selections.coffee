@@ -43,7 +43,10 @@ Template.select_mode.render_template = ->
       when "country_imports"
         return new Handlebars.SafeString(Template.country_importers_mode(this))
       when "domain_exports_to"
-        return new Handlebars.SafeString(Template.domain_mode(this))
+        if type is "treemap"
+          return new Handlebars.SafeString(Template.domain_mode(this))
+        else if type is "histogram"
+          return new Handlebars.SafeString(Template.histogram_domain_mode(this))
       when "domain_imports_from"
         return new Handlebars.SafeString(Template.domain_mode(this))
       when "bilateral_exporters_of"

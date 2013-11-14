@@ -1,13 +1,11 @@
-# http://bl.ocks.org/mbostock/3885705
-
 histProps = 
     width: 725
     height: 560
     margin:
         top: 50
-        right: 10
+        right: 60
         bottom: 5
-        left: 30
+        left: 60
 
 Template.histogram_svg.properties = 
     fullWidth: histProps.width + histProps.margin.left + histProps.margin.right
@@ -31,7 +29,7 @@ Template.histogram_svg.rendered = ->
         d3.format(",3f") value
 
     barPadding = 0.2
-    x = d3.scale.log().range([0, histProps.width])
+    x = d3.scale.linear().range([0, histProps.width])
     y = d3.scale.ordinal().rangeRoundBands([0, histProps.height], barPadding)
     xAxis = d3.svg.axis().scale(x).orient("top").tickFormat(formatNumber)
 
@@ -45,9 +43,15 @@ Template.histogram_svg.rendered = ->
 
     data = Histogram.find().fetch()
 
-    # TODO Include y-axis guideline
+    vizMode = Session.get "vizMode"
+    if vizMode is "country_exports"
+        yVar = 'industry'
+    else if vizMode is "domain_exports_to"    
+        yVar = 'countryName'
+
     mouseover = (p) ->
         Session.set "hover", true
+        console.log p
   
         # Positioning
         position =
@@ -55,27 +59,35 @@ Template.histogram_svg.rendered = ->
           top: (d3.event.pageY - 45)
   
         Session.set "tooltipPosition", position
-        countryCode = Session.get "country"
-        countryName = Countries.findOne(countryCode: countryCode).countryName
-
         rca = p.rca
-        industry = p.industry
-        categoryLevel = "industry"
+        if vizMode is "country_exports"
+            countryCode = Session.get "country"
+            countryName = Countries.findOne(countryCode: countryCode).countryName
+            category = p[yVar]
+            categoryLevel = "industry"    
+        else if vizMode is "domain_exports_to"
+            countryCode = p.countryCode
+            countryName = p.countryName
+            category = Session.get "category"
+            categoryLevel = Session.get "categoryLevel"
+
+        console.log countryCode, countryName, category, categoryLevel
         
         # Subscription Parameters
-        Session.set "tooltipCategory", industry
+        Session.set "tooltipCategory", category
         Session.set "tooltipCategoryLevel", categoryLevel
         Session.set "tooltipCountryCode", countryCode
         
         # Retrieve and pass data to template
-        Template.tooltip.heading = countryName + ": " + industry
+        Template.tooltip.heading = countryName + ": " + category
         Template.tooltip.categoryA = countryName
-        Template.tooltip.categoryB = industry
+        Template.tooltip.categoryB = category
         Session.set "showTooltip", true
 
-        xVal = x(Math.min(1, rca)) + Math.abs(x(rca) - x(1))
+        xVal = x(Math.min(1, rca)) 
+        if rca >= 1 then xVal += Math.abs(x(rca) - x(1))
         xText = formatNumber rca
-        yVal = y industry
+        yVal = y category
         radius = 5
         color = "white"
 
@@ -121,7 +133,9 @@ Template.histogram_svg.rendered = ->
         d3.selectAll(".axis_hover").remove()
 
     x.domain(d3.extent(data, (d) -> d.rca)).nice()
-    y.domain(data.map((d) -> d.industry))
+    y.domain(data.map((d) -> 
+        console.log d[yVar], yVar
+        d[yVar]))
 
     svg.selectAll(".bar")
         .data(data)
@@ -129,7 +143,7 @@ Template.histogram_svg.rendered = ->
         .append("rect")
         .attr("class", (d) -> (if d.rca < 1 then "bar negative" else "bar positive"))
         .attr("x", (d) -> x Math.min(1, d.rca))
-        .attr("y", (d) -> y d.industry)
+        .attr("y", (d) -> y d[yVar])
         .attr("width", (d) -> Math.abs(x(d.rca) - x(1)))
         .attr("height", y.rangeBand())
         .on("mousemove", mouseover)
@@ -140,13 +154,13 @@ Template.histogram_svg.rendered = ->
       .enter()
         .append("text")
         .attr("class", "label")
-        .text((d) -> d.industry)
+        .text((d) -> d[yVar])
         .attr("x", (d) ->
             xVal = x Math.min(1, d.rca)
             if d.rca >= 1 then xVal += Math.abs(x(d.rca) - x(1))
             xVal)
         .attr("dx", (d) -> if d.rca >= 1 then "0.2em" else "-0.2em")
-        .attr("y", (d) -> y(d.industry) + (histProps.height / (data.length + barPadding)) / 2) #+ (histProps.height / data.length - barPadding) / 2)
+        .attr("y", (d) -> y(d[yVar]) + (histProps.height / (data.length + barPadding)) / 2)
         .attr("text-anchor", (d) -> if d.rca >= 1 then "start" else "end")
         .attr("font-family", "Lato")
         .attr("fill", "#ffffff")
@@ -165,17 +179,23 @@ Template.histogram_svg.rendered = ->
         .attr("y2", histProps.height)
 
     Deps.autorun ->
-        change = (industryOrder) ->
+
+        change = (order) ->
             # Copy-on-write since tweens are evaluated after a delay.
-            sortedData = data.sort(if industryOrder is "count" then (a, b) -> b.rca - a.rca else (a, b) -> d3.ascending(a.industry, b.industry)).map((d) -> d.industry)
+            sortedData = data.sort(if industryOrder is "count" then (a, b) -> b.rca - a.rca else (a, b) -> d3.ascending(a[yVar], b[yVar])).map((d) -> d[yVar])
             yNew = y.domain(sortedData).copy()
 
             transition = svg.transition().duration(750)
             delay = (d, i) -> i * 50  # Staggered delay
 
-            transition.selectAll(".bar").delay(delay).attr "y", (d) -> yNew d.industry
-            transition.selectAll(".label").delay(delay).attr "y", (d) -> yNew(d.industry) + (histProps.height / (data.length + barPadding)) / 2
+            transition.selectAll(".bar").delay(delay).attr "y", (d) -> yNew d[yVar]
+            transition.selectAll(".label").delay(delay).attr "y", (d) -> yNew(d[yVar]) + (histProps.height / (data.length + barPadding)) / 2
 
+        countryOrder = Session.get "countryOrder"
         industryOrder = Session.get "industryOrder"
-        change industryOrder
+        if vizMode is "country_exports"
+            order = industryOrder
+        else if vizMode is "domain_exports_to"
+            order = countryOrder
+        change order
         
