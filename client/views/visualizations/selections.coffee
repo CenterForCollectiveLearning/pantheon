@@ -23,7 +23,7 @@
 #    Your current approach is going to be setting session variables twice.
 # 
 getCategoryLevel = (s) ->
-  domains = Domains.find().fetch()
+  domains = Domains.find({dataset: Session.get("dataset")}).fetch()
   for i of domains
     domain_obj = domains[i]
     return "domain"  if domain_obj.domain is s
@@ -193,7 +193,7 @@ Template.select_industry_order.events = "change select": (d) ->
   Session.set "industryOrder", d.target.value
 
 Template.country_dropdown.countries = ->
-  Countries.find {},
+  Countries.find {dataset: Session.get("dataset")},
     sort:
       countryName: 1
 
@@ -207,7 +207,7 @@ Template.language_dropdown.languages = ->
 Template.category_dropdown.domains = ->
   uniqueDomains = []
   res = []
-  _.each Domains.find().fetch(), (domain_obj) ->
+  _.each Domains.find({dataset: Session.get("dataset")}).fetch(), (domain_obj) ->
     domain = domain_obj.domain
     if uniqueDomains.indexOf(domain) is -1
       uniqueDomains.push domain
@@ -218,7 +218,7 @@ Template.category_dropdown.domains = ->
 Template.category_dropdown_only_domain.domains = ->
   uniqueDomains = []
   res = []
-  _.each Domains.find().fetch(), (domain_obj) ->
+  _.each Domains.find({dataset: Session.get("dataset")}).fetch(), (domain_obj) ->
     domain = domain_obj.domain
     if uniqueDomains.indexOf(domain) is -1
       uniqueDomains.push domain
@@ -229,7 +229,7 @@ Template.category_dropdown_only_domain.domains = ->
 Template.category_dropdown.industries = ->
   uniqueIndustries = []
   res = []
-  _.each Domains.find().fetch(), (domain_obj) ->
+  _.each Domains.find({dataset: Session.get("dataset")}).fetch(), (domain_obj) ->
     industry = domain_obj.industry
     if uniqueIndustries.indexOf(industry) is -1
       uniqueIndustries.push industry

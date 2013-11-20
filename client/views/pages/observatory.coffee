@@ -84,6 +84,7 @@ Template.accordion.events =
       from: defaults.from
       to: defaults.to
       langs: defaults.langs
+      dataset: defaults.dataset
 
 # Global helper for data ready
 Handlebars.registerHelper "dataReady", ->
