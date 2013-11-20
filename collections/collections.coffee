@@ -1,5 +1,7 @@
 # @ is used to place collections in the global namespace
 
+
+
 # Fundamental Collections
 @Countries = new Meteor.Collection "countries"
 @Domains = new Meteor.Collection "domains"

@@ -10,6 +10,7 @@ getCountryExportArgs = (begin, end, L, country, category, categoryLevel) ->
   args.countryCode = country  if country isnt "all"
   args[categoryLevel] = category  if category isnt `undefined` and occ isnt "all"
   args
+
 Meteor.publish "countries_pub", ->
   Countries.find()
 
@@ -25,11 +26,12 @@ Meteor.publish "languages_pub", ->
 #    This is a static query since the query doesn't ever change for some given parameters
 #    Push the ids here as well since people will be in the client side
 # 
-Meteor.publish "peopletop10", (begin, end, L, country, category, categoryLevel) ->
+Meteor.publish "peopletop10", (begin, end, L, country, category, categoryLevel, dataset) ->
   sub = this
   collectionName = "top10people"
   args = getCountryExportArgs(begin, end, L, country)
   args[categoryLevel] = category  if category.toLowerCase() isnt "all"
+  args.dataset = dataset
   # Include numlangs in order to sort
   People.find(args,
     fields:
@@ -65,24 +67,6 @@ Meteor.publish "peopletopN", (begin, end, L, country, category, categoryLevel, N
   People.find(criteria, projection).forEach (person) ->
     sub.added collectionName, person._id, person
 
-  sub.ready()
-  
-  #
-  #    People.find(criteria, projection).forEach(function(person){
-  #        table += "<tr class='"+ person.domain + "'>";
-  #        table += "<td>1</td>";
-  #        table += "<td>" + person.name + "</td>";
-  #        table += "<td>" + person.countryName + "</td>";
-  #        table += "<td>" + person.birthyear + "</td>";
-  #        table += "<td>" + person.gender + "</td>";
-  #        table += "<td>" + person.occupation + "</td>";
-  #        table += "<td>" + person.numlangs + "</td>";
-  #        table += "</tr>";
-  #    });
-  #
-  #    console.log(table);
-  #
-  #    sub.added(collectionName, "table", {table: table});
   sub.ready()
   return
 

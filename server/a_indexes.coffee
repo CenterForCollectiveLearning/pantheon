@@ -105,3 +105,10 @@ People._ensureIndex occupation_countryCode
 # Imports._ensureIndex({ occupation: 1} );
 # Imports._ensureIndex({ countryCode: 1, numlangs: 1, birthyear: 1}, {background: true});
 # Imports._ensureIndex({birthyear: 1, numlangs: 1});
+
+#
+# DATASETS
+#
+
+People._ensureIndex
+  dataset: 1

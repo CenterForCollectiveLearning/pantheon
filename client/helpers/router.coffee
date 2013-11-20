@@ -10,17 +10,17 @@ Router.map ->
   @route "observatory",
     path: "/"
     before: [->
-      @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs
+      @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
     ]
 
   @route "observatory",
     path: "/observatory"
     before: [->
-      @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs
+      @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
     ]
 
   @route "observatory",
-    path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs"
+    path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
     data: ->
       vizMode = @params.vizMode
       Session.set "page", @template
@@ -31,6 +31,7 @@ Router.map ->
       Session.set "from", @params.from
       Session.set "to", @params.to
       Session.set "langs", @params.langs
+      Session.set "dataset", @params.dataset
 
       # Reset defaults based on vizmode
       if vizMode is "country_exports"

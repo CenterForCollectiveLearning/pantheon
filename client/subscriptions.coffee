@@ -35,6 +35,7 @@ Deps.autorun ->
   vizType = Session.get("vizType")
   vizMode = Session.get("vizMode")
   categoryLevel = Session.get("categoryLevel")
+  dataset = Session.get("dataset")
   
   #
   #        TODO this is probably not the right way to check if no data should be loaded.
@@ -65,8 +66,8 @@ Deps.autorun ->
       switch vizType
         # Treemap modes
         when "treemap"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel)
-          dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
+          dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
         when "matrix"
           dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, onReady)

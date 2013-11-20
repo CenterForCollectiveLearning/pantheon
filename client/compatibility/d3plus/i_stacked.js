@@ -121,8 +121,9 @@ d3plus.stacked = function(vars) {
     var this_x = Math.round(rev_x_scale(mouse_x));
     var this_x_index = vars.years.indexOf(this_x);
     var this_value = d.values[this_x_index];
-    console.log("THIS.X: " + this_x);
-    console.log("THIS.value: " + this_value.y); // TODO: update tooltip to show values for specified years, for continents?
+    console.log("THIS.X: " + this_x); // this is the year
+    console.log("THIS.value: " + this_value.y); // this is the number of people
+    // TODO: update tooltip to show values for specified years, for continents?
     
     // add dashed line at closest X position to mouse location
     d3.selectAll("line.rule").remove()
@@ -138,33 +139,8 @@ d3plus.stacked = function(vars) {
       .attr("pointer-events","none")
     
     // tooltip
-//    var tooltip_data = get_tooltip_data(this_value,"short")
-//    if (vars.layout == "share") {
-//      var share = vars.format(this_value.y*100,"share")+"%"
-//      tooltip_data.push({"name": vars.format("share"), "value": share})
-//    }
-//
-//    var path_height = vars.y_scale(this_value.y + this_value.y0)-vars.y_scale(this_value.y0),
-//        tooltip_x = vars.x_scale(this_x)+vars.graph.margin.left+vars.margin.left+vars.parent.node().offsetLeft,
-//        tooltip_y = vars.y_scale(this_value.y0 + this_value.y)-(path_height/2)+vars.graph.margin.top+vars.margin.top+vars.parent.node().offsetTop
-//
-//    d3plus.tooltip.remove(vars.type)
-//    d3plus.tooltip.create({
-//      "data": tooltip_data,
-//      "title": find_variable(d[vars.id_var],vars.text_var),
-//      "id": vars.type,
-//      "icon": find_variable(d[vars.id_var],"icon"),
-//      "style": vars.icon_style,
-//      "color": find_color(d[vars.id_var]),
-//      "x": tooltip_x,
-//      "y": tooltip_y,
-//      "offset": -(path_height/2),
-//      "align": "top center",
-//      "arrow": true,
-//      "footer": footer_text(),
-//      "mouseevents": false
 //    })
-      Session.set("hover", true); // TODO: this is redundant ... but why is it not working when one is taken out??? 
+      Session.set("hover", true); // TODO: this is redundant ... but why is it not working when one is taken out???
       var id = find_variable(d,vars.id_var).replace(" ", "_"),
           self = d3.select("#path_"+id).node()
       console.log("ID:" + id);
