@@ -138,4 +138,5 @@ Deps.autorun ->
   end = parseInt(Session.get("to"))
   L = parseInt(Session.get("langs"))
   vizMode = Session.get("vizMode")
-  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, onDataReady)
+  dataset = Session.get("dataset")
+  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, dataset, onDataReady)

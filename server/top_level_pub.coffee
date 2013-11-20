@@ -108,7 +108,7 @@ Meteor.publish "allpeople", ->
 #
 
 # TODO Combine with TOP N query?
-Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel) ->
+Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, dataset) ->
   sub = this
   args =
     numlangs:
@@ -117,6 +117,9 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     birthyear:
       $gte: begin
       $lte: end
+
+  args.dataset = dataset
+#  TODO: Murray dataset does not work here on the tooltip because the domain is being passed as ALL CAPS
 
   if vizMode is "country_exports" or vizMode is "matrix_exports" or vizMode is "domain_exports_to" or vizMode is "map"
     args.countryCode = country  if country isnt "all"
@@ -138,7 +141,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
   projection = _id: 1
   limit = 5
   sort = numlangs: -1
-  
+
   # Get people
   People.find(args,
     fields: projection
