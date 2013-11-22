@@ -6,7 +6,8 @@
       "iron-router": {},
       "scss": {},
       "autocomplete": {},
-      "font-awesome": {}
+      "font-awesome": {},
+      "tutorials": {}
     },
     "packages": {
       "jquery-ui": {
@@ -31,8 +32,23 @@
       },
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
-        "tag": "v3.2.1",
-        "commit": "38bdfff72dfb8857b272f9a9b056045d6a015489"
+        "tag": "v4.0.3",
+        "commit": "61e9361384347547ae144f8228faa4deffda23db"
+      },
+      "tutorials": {
+        "git": "https://github.com/mizzao/meteor-tutorials.git",
+        "tag": "v0.3.0",
+        "commit": "67b6519a8fc0889310c17605dee8225b76caf96f"
+      },
+      "bootboxjs": {
+        "git": "https://github.com/TimHeckel/meteor-bootboxjs.git",
+        "tag": "v3.2.2",
+        "commit": "580adfebfa12b4d2186a80cec1109dab74ad6228"
+      },
+      "jqueryui": {
+        "git": "https://github.com/mizzao/meteor-jqueryui.git",
+        "tag": "v1.10.3",
+        "commit": "c1c44a17c2e2d92e206dc4ecbaad0b83272de85c"
       }
     }
   }

@@ -13,7 +13,8 @@ iron-router
 underscore
 scss
 bootstrap
-jquery-ui
 autocomplete
 font-awesome
 coffeescript
+tutorials
+jquery-ui
