@@ -1,5 +1,5 @@
 # Make sure this is indexed
-Meteor.publish "matrix_pub", (begin, end, L, gender) ->
+Meteor.publish "matrix_pub", (begin, end, L, gender, dataset) ->
   sub = this
   driver = MongoInternals.defaultRemoteCollectionDriver()
 
@@ -9,6 +9,7 @@ Meteor.publish "matrix_pub", (begin, end, L, gender) ->
     birthyear:
       $gte: begin
       $lte: end
+    dataset: dataset
 
   if gender is "male" or gender is "female"
     genderField = gender.charAt(0).toUpperCase() + gender.slice(1)

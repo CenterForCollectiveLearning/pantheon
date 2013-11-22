@@ -2,7 +2,7 @@
 # * Static query that pushes the data for the stacked area charts
 # * This needs to run a native mongo query due to aggregates being not supported directly yet
 # 
-Meteor.publish "stacked_pub", (vizMode, begin, end, L, country, language, category, categoryLevel) ->
+Meteor.publish "stacked_pub", (vizMode, begin, end, L, country, language, category, categoryLevel, dataset) ->
   sub = this
   driver = MongoInternals.defaultRemoteCollectionDriver()
   matchArgs =
@@ -12,6 +12,8 @@ Meteor.publish "stacked_pub", (vizMode, begin, end, L, country, language, catego
     birthyear:
       $gte: begin
       $lte: end
+
+    dataset: dataset
 
   pipeline = []
 

@@ -70,18 +70,18 @@ Deps.autorun ->
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
         when "matrix"
-          dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, onReady)
+          dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, dataset, onReady)
         # Scatterplot modes
         when "scatterplot"
-          dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, onReady)
+          dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, dataset, onReady)
         # Map modes
         when "map"
-          dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, onReady)
+          dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, dataset, onReady)
         when "histogram"
           dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         when "stacked"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel)
-          dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
+          dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         else
           console.log "Unsupported vizType"
     else if page is "rankings"

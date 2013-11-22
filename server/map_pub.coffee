@@ -1,4 +1,4 @@
-Meteor.publish "map_pub", (begin, end, L, category, categoryLevel) ->
+Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
   
   #
   #The query will look something like this:
@@ -16,6 +16,8 @@ Meteor.publish "map_pub", (begin, end, L, category, categoryLevel) ->
     birthyear:
       $gte: begin
       $lte: end
+
+    dataset: dataset
 
   matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
   pipeline = []

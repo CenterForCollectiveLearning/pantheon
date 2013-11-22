@@ -119,7 +119,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       $lte: end
 
   args.dataset = dataset
-#  TODO: Murray dataset does not work here on the tooltip because the domain is being passed as ALL CAPS
+
 
   if vizMode is "country_exports" or vizMode is "matrix_exports" or vizMode is "domain_exports_to" or vizMode is "map"
     args.countryCode = country  if country isnt "all"
@@ -141,6 +141,8 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
   projection = _id: 1
   limit = 5
   sort = numlangs: -1
+
+  console.log(args)
 
   # Get people
   People.find(args,

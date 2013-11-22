@@ -56,9 +56,10 @@ mouseover = (d) ->
   Session.set "hover", true
   
   # TODO optional: highlight selected country
+  dataset = Session.get("dataset")
   countryCode3 = d.id
-  countryName = Countries.findOne(countryCode3: countryCode3).countryName
-  countryCode = Countries.findOne(countryCode3: countryCode3).countryCode
+  countryName = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryName
+  countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
   category = Session.get("category")
   categoryAggregation = Session.get("categoryLevel")
   position =
