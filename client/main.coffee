@@ -193,16 +193,19 @@ leftSections = [
   template: "rankings"
   url: "/rankings"
 ,
-  
-  # {
-  #     section: "People",
-  #     template: "people",
-  #     url: "/people"
-  # },
+  section: "People",
+  template: "people",
+  url: "/people"
+,
+  section: "Timeline"
+  template: "timeline"
+  url: "/timeline"
+,
   section: "Vision"
   template: "vision"
   url: "/vision"
 ]
+
 rightSections = [
   section: "Data"
   template: "data"

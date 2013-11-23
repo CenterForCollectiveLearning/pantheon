@@ -1,26 +1,28 @@
 <template name="people">
-	{{#if dataReady}}
-    	{{#with person}}
-    	    {{> person}}
-    	{{/with}}
-	{{else}}
-	    {{> spinner}}
-	{{/if}}     
+	{{#with name}}
+  	    {{> person}}
+	{{/with}}
 </template>
 
 <template name="person">
 	<div class="page-top">
 		<div class="primary-text name">
+			{{name}} </br>
 			{{>person_name}}
 		</div>
 	</div>
 	<div id="page" class="container-fluid person-page">
 		<div class="row-fluid">
 			<div class="page-middle trans-bg text span6 offset3">
+<!-- 				<section class="picture">
+					<img class="photo" src="/images/people/{{en_curid}}.jpg">
+					{{! Why doesn't people_images work?}}
+				</section> -->
 				<section class="description">
-					Born {{birthyear}} in {{birthcity}}, {{countryName}} {{gender}} was a {{occupation}} featured in {{numlangs}} language editions.
+					<b class="name">{{name}}</b> was a <b class="occupation">{{occupation}}</b> born in <b class="birthcity">{{birthcity}}</b>, <b class="country-name">{{countryName}}</b> in <b class="birthyear">{{birthyear}}</b>. <b class="gender">{{gender}}</b> is featured in <b class="numlangs">{{numlangs}}</b> language editions.
 				</section>
 				<section class="ranking">
+					{{> people_accordion}}
 				</section>
 			</div>
 		</div>
@@ -28,11 +30,54 @@
 </template>
 
 <template name="person_name">
-	{{inputAutocomplete settings id="msg" class="primary-text input-xlarge" placeholder="Chat..."}}
+	{{!inputAutocomplete settings id="msg" class="primary-text input-xlarge" placeholder="Chat..."}}
 </template>
 
 <template name="user_pill">
 	<div class="primary-text name">
 	    {{name}}
 	</div>
+</template>
+
+<!-- Accordion Selector -->
+<template name="people_accordion">
+    <div class="people-accordion">
+        <h3 class="app">{{occupation}}</h3>
+        <div>
+            <ul>
+            	{{#each occupationPeople}}
+            	    {{> ranking_person}}
+                {{/each}}
+            </ul>
+        </div>
+        <h3 class="app">People Born in {{time_period}}</h3>
+        <div>
+            <ul>
+            	{{#each birthyearPeople}}
+            	    {{> ranking_person}}
+                {{/each}}
+            </ul>
+        </div>
+        <h3 class="app">People Born in {{countryName}}</h3>
+        <div>
+            <ul>
+            	{{#each countryPeople}}
+            	    {{> ranking_person}}
+                {{/each}}
+            </ul>
+        </div>
+        {{! TODO Add gender category}}
+    </div>
+</template>
+
+<template name="ranking_person">
+	<li>
+		<a href="{{pathFor 'people'}}">
+			<div class="person-photo-container">
+				<div class="top-info"><div class="rank">{{rank}}</div><div class="numlangs">{{numlangs}}</div></div>
+				<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.gif'"/></a>
+				<div class="bottom-info"><div>{{name}}</div></div>
+			</div>
+		</a>
+	</li>
 </template>

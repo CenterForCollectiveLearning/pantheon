@@ -30,12 +30,24 @@ Deps.autorun ->
   categoryY = Session.get("categoryY")
   gender = Session.get("gender")
   entity = Session.get("entity")
-  page = Session.get("page")
+
   occ = Session.get("occ")
+  categoryLevel = Session.get("categoryLevel")
+
+  # Changing Pages
+  page = Session.get("page")
+
+  # Changing Visualizations
+  dataset = Session.get("dataset")
   vizType = Session.get("vizType")
   vizMode = Session.get("vizMode")
-  categoryLevel = Session.get("categoryLevel")
-  dataset = Session.get("dataset")
+
+  # People Page
+  personID = Session.get("personID")
+  personOccupation = Session.get("personOccupation")
+  personBirthyear = Session.get("personBirthyear")
+  personCountry = Session.get("personCountry")
+
   
   #
   #        TODO this is probably not the right way to check if no data should be loaded.
@@ -96,6 +108,12 @@ Deps.autorun ->
           console.log "Invalid ranking entity!"
     else if page is "timeline"
       dataSub = Meteor.subscribe("timeline_pub", begin, end, onReady)
+    else if page is "people"
+      console.log personOccupation, personBirthyear, personCountry
+      if personOccupation and personBirthyear and personCountry
+        occDataSub = Meteor.subscribe("occupation_pub", personID, personOccupation, onReady)
+        birthyearDataSub = Meteor.subscribe("birthyear_pub", personID, personBirthyear, onReady)
+        countryDataSub = Meteor.subscribe("country_pub", personID, personCountry, onReady)
 
     console.log "vizType: " + vizType
     console.log "vizMode: " + vizMode

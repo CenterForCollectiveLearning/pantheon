@@ -31,7 +31,6 @@ Template.publications.rendered = ->
       window.location.hash = section
       ignore_waypoints = false
 
-
   
   # returns a jQuery object suitable for setting scrollTop to
   # scroll the page, either directly for via animate()

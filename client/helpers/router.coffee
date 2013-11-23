@@ -74,19 +74,21 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
-  @route "people",
-    data: ->
-      Session.set "page", @template
+
+  # TODO Route to a random person
+  # @route "people",
+  #   data: ->
+  #     Session.set "page", @template
 
   @route "timeline",
     data: ->
       Session.set "page", @template
 
   @route "people",
-    path: "/people/:person"
+    path: "/people/:name"
     data: ->
       Session.set "page", @template
-      Session.set "person", @params.person
+      Session.set "name", @params.name
 
   @route "team",
     data: ->

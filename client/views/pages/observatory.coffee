@@ -214,8 +214,9 @@ Template.question.question = ->
         return new Handlebars.SafeString("Who exports " + boldify(s_domainX) + " compared to " + boldify(s_domainY) + "?")
       when "map"
         return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?")
+
 #
-# * TOOLTIPS
+# TOOLTIPS
 # 
 Template.tooltip.helpers
   tooltipShown: ->

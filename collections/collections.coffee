@@ -22,3 +22,8 @@
 @Tooltips = new Meteor.Collection "tooltipCollection"
 @Timeline = new Meteor.Collection "timeline"
 @Stacked = new Meteor.Collection "stacked"
+
+# People Page
+@OccupationPeople = new Meteor.Collection "occupationPeople"
+@BirthyearPeople = new Meteor.Collection "birthyearPeople"
+@CountryPeople = new Meteor.Collection "countryPeople"

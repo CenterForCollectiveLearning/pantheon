@@ -184,9 +184,25 @@ Template.treemap_svg.rendered = ->
     #        .dev(true)
     
     #.font_size("1.2em")
-    viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
-      prefix: "Total: "
-      suffix: " Wikipedia Pages"
-    ).nesting(["nesting_1", "nesting_3"]).depth("nesting_3").font("Lato").font_weight(400).color_var "color"
+    viz.type("tree_map")
+        .tooltip_info({})
+        .width($(".page-middle").width())
+        .height($(".page-middle").height())
+        .id_var("id")
+        .attrs(attrs)
+        .text_var("name")
+        .value_var("num_ppl")
+        .total_bar(
+          prefix: "Total: "
+          suffix: " Wikipedia Pages"
+          )
+        .nesting(["nesting_1", "nesting_3"])
+        .depth("nesting_3")
+        .font("Lato")
+        .font_weight(400)
+        .color_var("color")
+
     console.log context
-    d3.select(context.find("svg")).datum(flat).call viz
+    d3.select(context.find("svg"))
+        .datum(flat)
+        .call viz

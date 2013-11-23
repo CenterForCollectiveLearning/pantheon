@@ -346,7 +346,6 @@ header {
 	    					color: $color_gold; 
 	    				}
 	    			}
-
 	    		}
 
 	    		div.role {
@@ -619,6 +618,98 @@ footer {
     }
 }
 
+section.description {
+	font-size: 1.25em;
+	margin: 1em 0 2em 0;
+}
+
+.people-accordion {
+	font-family: 'Lato' !important;
+    h3.app {
+    	background-color: #2b2b2b;
+    	border-radius: 0px;
+    	padding: 5px;
+    	font-weight: 300;
+    	text-align: center;
+    	color: white;
+    	font-size: 0.75em;
+    	letter-spacing: 1px;
+    }
+
+    // Tidy up this CSS!
+    div {
+    	ul {
+    		list-style-type: none;
+    		li {
+    			width: 150px;
+    			height: 215px;
+    			display: inline;
+    			list-style-type: none;
+
+    			div.person-photo-container {
+    				width: 150px;
+    				height: 215px;
+    				float: left;
+    				position: relative;
+    				// text-transform: uppercase;
+    				
+    				font-size: 1.0em;
+
+    				div.top-info {
+    					@include opacity(0.7);
+    					position: absolute;
+    					color: white;
+    					background-color: black;
+    					height: 1.5em;
+
+
+    					width: 100%;
+
+    					div.rank {
+    						width: 50%;
+    						position: absolute; 
+    						padding-left: 5px;   						
+    						left: 0;
+    						margin: 0;
+    						display: inline;
+    						text-align: left;
+    					}
+
+    					div.numlangs {
+    						width: 50%;
+    						position: absolute;
+    						padding-right: 5px;
+    						right: 0;
+    						margin: 0;
+    						display: inline;
+    						text-align: right;
+    					}
+    				}
+
+    				div.bottom-info {
+    					@include opacity(0.7);
+    					position: absolute;
+    					background-color: black;
+    					bottom: 0;
+    					color: white;
+    					width: 100%;
+    				}
+
+    				img.person-image {
+    					width: 150px;
+    				}
+    			}
+    			a {
+    				text-decoration: none;
+    				color: $color_grey;
+    				&:hover { color: $color_gold; }
+
+    			}  
+    		}
+    	}
+    }
+}
+
 // Matrix
 .rect-background {
     fill: #202020;
@@ -779,6 +870,9 @@ aside {
 	shape-rendering: crispEdges;
 }
 
+.node {
+	cursor: pointer;
+}
 
 @media only screen and (min-width : 1824px) {
 	.page-top .secondary-text {
@@ -790,3 +884,4 @@ aside {
 		bottom: 8em;
 	}
 }
+
