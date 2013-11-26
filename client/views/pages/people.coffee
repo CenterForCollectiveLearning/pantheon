@@ -36,11 +36,14 @@ Template.people_accordion.rendered = ->
     fillSpace: false
   accordion.accordion "resize"
 
-
 Template.people_accordion.helpers
   occupation: -> this.occupation.capitalize() + "s"
   time_period: -> this.birthyear
   # TODO Expose global date mapping, if notable time period or decade then state
+  personImports: -> 
+    Session.set "personID", this._id
+    console.log "PERSON IMPORTS", Imports.find().fetch()
+    Imports.find()
   occupationPeople: -> 
     Session.set "personID", this._id
     Session.set "personOccupation", this.occupation

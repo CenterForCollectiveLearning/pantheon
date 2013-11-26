@@ -41,6 +41,9 @@
 
 <!-- Accordion Selector -->
 <template name="people_accordion">
+	{{#each personImports}}
+	    {{lang_name}}
+	{{/each}}
     <div class="people-accordion">
         <h3 class="app">{{occupation}}</h3>
         <div>

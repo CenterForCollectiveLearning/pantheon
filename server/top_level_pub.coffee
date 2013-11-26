@@ -66,22 +66,8 @@ Meteor.publish "peopletopN", (begin, end, L, country, category, categoryLevel, N
   console.log projection
   People.find(criteria, projection).forEach (person) ->
     sub.added collectionName, person._id, person
-
   sub.ready()
   return
-
-
-#
-#    Publish five people (+/- two) given a rank and either a country, domain, or birthyear range.
-#    TODO: How do you do this correctly?X1
-# 
-Meteor.publish "fivepeoplebyrank", (begin, end, L, country, domain) ->
-  sub = this
-  collectionName = "fivepeople"
-  args = getCountryExportArgs(begin, end, L, country)
-  sub.ready()
-  return
-
 
 #
 #This is also a static query
