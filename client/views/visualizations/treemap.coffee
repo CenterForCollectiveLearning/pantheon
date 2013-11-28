@@ -69,14 +69,15 @@ Template.treemap_svg.rendered = ->
         nesting_5: occDict
 
     flat = []
+    inner_html = (obj) ->
+      return "This is some test HTML"
+
     data.forEach (d) ->
       flat.push #use a dummy year here for now ...
         id: d.occupation.capitalize()
         name: d.occupation.capitalize()
         num_ppl: d.count
         year: 2000
-
-
     
     # console.log("ATTRS:");
     # console.log(attrs);
@@ -87,7 +88,8 @@ Template.treemap_svg.rendered = ->
     viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
       prefix: "Total Exports: "
       suffix: " individuals"
-    ).nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var "color"
+    ).nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color").click_function(inner_html)
+    # click_function - adding a click event for the treemaps?
     d3.select(context.find("svg")).datum(flat).call viz
   else if vizMode is "domain_exports_to"
     attr = Countries.find().fetch()

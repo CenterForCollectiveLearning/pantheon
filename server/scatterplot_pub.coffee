@@ -1,4 +1,4 @@
-Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, languageX, languageY, domainX, domainY, dataset) ->
+Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, languageX, languageY, domainX, domainY, categoryLevel, dataset) ->
   sub = this
   driver = MongoInternals.defaultRemoteCollectionDriver()
   matchArgs =
@@ -9,6 +9,10 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, l
       $gte: begin
       $lte: end
 
+    dataset: dataset
+
+  console.log("SCATTERPLOT ARGS")
+  console.log(matchArgs)
 
   pipeline = []
   if vizMode is "country_vs_country"

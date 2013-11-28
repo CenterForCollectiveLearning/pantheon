@@ -131,6 +131,7 @@ Deps.autorun ->
     console.log "gender: " + gender
     console.log "entity: " + entity
     console.log "page: " + page
+    console.log "dataset: " + dataset
 #
 # Subscription for tooltips on hover
 #  

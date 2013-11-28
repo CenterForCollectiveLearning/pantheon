@@ -52,6 +52,29 @@ mapData = `{"type": "FeatureCollection", "features": {"2": {"geometry": {"type":
 #////////////////////////////////////////////////
 # No need to exit anything since nodes are always
 # present on page
+
+clicked = (d) ->
+  x = undefined
+  y = undefined
+  k = undefined
+  if d and centered isnt d
+    centroid = path.centroid(d)
+    x = centroid[0]
+    y = centroid[1]
+    k = 4
+    centered = d
+  else
+    x = width / 2
+    y = height / 2
+    k = 1
+    centered = null
+  g.selectAll("path").classed "active", centered and (d) ->
+    d is centered
+
+  g.transition().duration(750)
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+    .style "stroke-width", 1.5 / k + "px"
+
 mouseover = (d) ->
   Session.set "hover", true
   

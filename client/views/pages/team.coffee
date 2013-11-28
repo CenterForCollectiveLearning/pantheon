@@ -68,6 +68,7 @@ teamMembers = [
     twitter: "https://twitter.com/mizzao"
     linkedin: "www.linkedin.com/pub/andrew-mao/6/6a6/533"
     email: "mailto:mao@seas.harvard.edu"
+,
   name: "Defne Gurel"
   photo: "images/defne_gurel.png"
   description: "Computer Science Undergraduate"
