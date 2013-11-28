@@ -1,7 +1,5 @@
 # @ is used to place collections in the global namespace
 
-
-
 # Fundamental Collections
 @Countries = new Meteor.Collection "countries"
 @Domains = new Meteor.Collection "domains"
@@ -27,3 +25,4 @@
 @OccupationPeople = new Meteor.Collection "occupationPeople"
 @BirthyearPeople = new Meteor.Collection "birthyearPeople"
 @CountryPeople = new Meteor.Collection "countryPeople"
+@PersonImports = new Meteor.Collection "person_imports"

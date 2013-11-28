@@ -47,7 +47,6 @@ Deps.autorun ->
   personOccupation = Session.get("personOccupation")
   personBirthyear = Session.get("personBirthyear")
   personCountry = Session.get("personCountry")
-
   
   #
   #        TODO this is probably not the right way to check if no data should be loaded.
@@ -110,7 +109,8 @@ Deps.autorun ->
       dataSub = Meteor.subscribe("timeline_pub", begin, end, onReady)
     else if page is "people"
       console.log personOccupation, personBirthyear, personCountry
-      if personOccupation and personBirthyear and personCountry
+      if personID and personOccupation and personBirthyear and personCountry
+        Meteor.subscribe("person_imports", personID)
         occDataSub = Meteor.subscribe("occupation_pub", personID, personOccupation, onReady)
         birthyearDataSub = Meteor.subscribe("birthyear_pub", personID, personBirthyear, onReady)
         countryDataSub = Meteor.subscribe("country_pub", personID, personCountry, onReady)

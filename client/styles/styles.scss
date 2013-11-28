@@ -12,11 +12,11 @@ $color_black_trans: rgba(0, 0, 0, 0.5);
  * Mixins
  */
 @mixin opacity($trans) {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$trans * 100})";
-  filter: alpha(opacity=#{$trans * 100});
-  -moz-opacity: $trans;
-  -khtml-opacity: $trans;
-  opacity: $trans;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$trans * 100})";
+    filter: alpha(opacity=#{$trans * 100});
+    -moz-opacity: $trans;
+    -khtml-opacity: $trans;
+    opacity: $trans;
 }
 
 @mixin fade {
@@ -587,6 +587,7 @@ footer {
 // Accordion
 .accordion {
 	font-family: 'Lato' !important;
+
     h3.app {
     	background-color: #2b2b2b;
     	border-radius: 0px;
@@ -607,16 +608,14 @@ footer {
     		margin-top:2px;
     		li {
     			margin-left:20px;
-    			padding-left:0;
-    			a {
-    				text-decoration: none;
+    			padding-left:0;                                                       				
+    			text-decoration: none;
     				color: $color_grey;
     				&:hover { color: $color_gold; }
-    			}    		
-    		}
+    		}    		
     	}
     }
-}
+   }
 
 section.description {
 	font-size: 1.25em;
@@ -657,12 +656,9 @@ section.description {
 
     				div.top-info {
     					@include opacity(0.7);
-    					position: absolute;
     					color: white;
     					background-color: black;
     					height: 1.5em;
-
-
     					width: 100%;
 
     					div.rank {
@@ -688,7 +684,6 @@ section.description {
 
     				div.bottom-info {
     					@include opacity(0.7);
-    					position: absolute;
     					background-color: black;
     					bottom: 0;
     					color: white;
