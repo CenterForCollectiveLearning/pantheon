@@ -110,3 +110,6 @@ Router.configure
 
     footer:
       to: "footer"
+
+#    tutorial:
+#      to: "tutorial"

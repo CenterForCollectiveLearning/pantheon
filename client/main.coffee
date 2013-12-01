@@ -129,6 +129,7 @@ Meteor.startup ->
   Session.setDefault "langs", defaults.langs
   Session.setDefault "occ", "all"
   Session.setDefault "categoryLevel", defaults.categoryLevel
+  Session.setDefault "dataset", defaults.dataset
   
   # MATRICES
   Session.setDefault "gender", "both"

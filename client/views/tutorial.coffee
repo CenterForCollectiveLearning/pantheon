@@ -10,4 +10,4 @@ tutorialSteps = [
 
 Template.tutorial.options =
   steps: tutorialSteps
-  onFinish: -> # make the tutorial disappear
+  onFinish: -> Router.go "/"

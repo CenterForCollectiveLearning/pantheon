@@ -18,14 +18,9 @@ Template.treemap_svg.rendered = ->
   
   # Don't re-render with the same parameters...?
   context = this
-  
-  # if( this.rendered ) return;
-  # this.rendered = true;
   viz = d3plus.viz()
   data = Treemap.find().fetch()
-  
-  # console.log("UNFLATTENED DATA:")
-  # console.log(data);
+
   attrs = {}
   vizMode = Session.get("vizMode")
   if vizMode is "country_exports" or vizMode is "country_imports" or vizMode is "bilateral_exporters_of"
@@ -70,7 +65,7 @@ Template.treemap_svg.rendered = ->
 
     flat = []
     inner_html = (obj) ->
-      return "This is some test HTML"
+      return Session.get("tooltipCategory")
 
     data.forEach (d) ->
       flat.push #use a dummy year here for now ...
@@ -79,17 +74,23 @@ Template.treemap_svg.rendered = ->
         num_ppl: d.count
         year: 2000
     
-    # console.log("ATTRS:");
-    # console.log(attrs);
-    # console.log("DATA:")
-    # console.log(flat);
-    
-    #        .dev(true)
-    viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
-      prefix: "Total Exports: "
-      suffix: " individuals"
-    ).nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color").click_function(inner_html)
-    # click_function - adding a click event for the treemaps?
+
+    viz.type("tree_map")
+      .tooltip_info({})
+      # you cannot do this what is wrong withy  ou
+      .width($(".page-middle").width())
+      .height($(".page-middle").height())
+      .id_var("id")
+      .attrs(attrs)
+      .text_var("name")
+      .value_var("num_ppl")
+      .total_bar(
+        prefix: "Total Exports: "
+        suffix: " individuals"
+      )
+      .nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color").click_function(inner_html)
+    # click_function - adding a click event for the treemaps
+    # this is not rendered with a template here
     d3.select(context.find("svg")).datum(flat).call viz
   else if vizMode is "domain_exports_to"
     attr = Countries.find().fetch()
@@ -120,6 +121,9 @@ Template.treemap_svg.rendered = ->
         nesting_3: countryDict
 
     flat = []
+    inner_html = (obj) ->
+      return Session.get("tooltipCountryCode")
+
     data.forEach (d) ->
       flat.push #use a dummy year here for now ...
         id: d.countryCode
@@ -127,17 +131,10 @@ Template.treemap_svg.rendered = ->
         num_ppl: d.count
         year: 2000
 
-
-    console.log "ATTRS:"
-    console.log attrs
-    console.log "DATA:"
-    console.log flat
-    
-    #        .dev(true)
     viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
       prefix: "Total Exports: "
       suffix: " individuals"
-    ).nesting(["nesting_1", "nesting_3"]).depth("nesting_3").font("Lato").font_weight("300").color_var "color"
+    ).nesting(["nesting_1", "nesting_3"]).depth("nesting_3").font("Lato").font_weight("300").color_var("color").click_function(inner_html)
     d3.select(context.find("svg")).datum(flat).call viz
   else if vizMode is "domain_imports_from" or vizMode is "bilateral_importers_of"
     attr = Languages.find().fetch()
@@ -174,18 +171,8 @@ Template.treemap_svg.rendered = ->
         name: d.lang_name
         num_ppl: d.count
         year: 2000
-
-
-    console.log "ATTRS:"
-    console.log attrs
-    console.log "DATA:"
-    console.log flat
-    console.log "WIDTH", $(".page-middle").width()
-    console.log "HEIGHT", $(".page-middle").height()
     
-    #        .dev(true)
-    
-    #.font_size("1.2em")
+
     viz.type("tree_map")
         .tooltip_info({})
         .width($(".page-middle").width())
@@ -204,7 +191,6 @@ Template.treemap_svg.rendered = ->
         .font_weight(400)
         .color_var("color")
 
-    console.log context
     d3.select(context.find("svg"))
         .datum(flat)
         .call viz

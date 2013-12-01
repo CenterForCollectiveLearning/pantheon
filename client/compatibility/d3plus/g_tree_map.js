@@ -175,7 +175,7 @@ d3plus.tree_map = function(vars) {
         "top": (d3.event.clientY - 45)
       }
       Session.set("tooltipPosition", position);
-   
+
       // Subscription Parameters
       Session.set("tooltipCategory", category);
       Session.set("tooltipCategoryLevel", categoryLevel);
@@ -185,23 +185,23 @@ d3plus.tree_map = function(vars) {
       // Template.tooltip.categoryA = countryName;
       // Template.tooltip.categoryB = category;
 
-      Session.set("showTooltip", true);     
+      Session.set("showTooltip", true);
     })
     .on(d3plus.evt.out,function(d){
       Session.set("hover", false);
       Template.tooltip.top5 = null;
       Session.set("showTooltip", false);
       $("#tooltip").empty();
-      
+
       var id = find_variable(d,vars.id_var).replace(" ", "_");
-      
+
       d3.select("#cell_"+id).select("rect")
         .attr("opacity",0.85)
-        
+
       if (!covered) {
         d3plus.tooltip.remove(vars.type)
       }
-      
+
     })
     .on(d3plus.evt.down,function(d){
       
@@ -220,7 +220,7 @@ d3plus.tree_map = function(vars) {
         var ex = {}
         ex[vars.text_format("share")] = d.share
         var tooltip_data = get_tooltip_data(d,"long",ex)
-        
+
         d3plus.tooltip.create({
           "title": find_variable(d,vars.text_var),
           "color": find_color(d),
@@ -232,7 +232,7 @@ d3plus.tree_map = function(vars) {
           "footer": vars.data_source,
           "data": tooltip_data,
           "mouseevents": true,
-          "parent": vars.parent,
+          "parent": d3.select("#viz"), 
           "background": vars.background
         })
         
@@ -240,7 +240,10 @@ d3plus.tree_map = function(vars) {
       
       var html = vars.click_function ? vars.click_function(id) : null
       
-      if (typeof html == "string") make_tooltip(html)
+      if (typeof html == "string"){
+          make_tooltip(html)
+          console.log(html)
+      }
       else if (html && html.url && html.callback) {
         d3.json(html.url,function(data){
           html = html.callback(data)

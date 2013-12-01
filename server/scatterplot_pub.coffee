@@ -11,9 +11,6 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, l
 
     dataset: dataset
 
-  console.log("SCATTERPLOT ARGS")
-  console.log(matchArgs)
-
   pipeline = []
   if vizMode is "country_vs_country"
     matchArgs.$or = [

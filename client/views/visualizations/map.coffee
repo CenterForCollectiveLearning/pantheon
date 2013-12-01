@@ -53,28 +53,6 @@ mapData = `{"type": "FeatureCollection", "features": {"2": {"geometry": {"type":
 # No need to exit anything since nodes are always
 # present on page
 
-clicked = (d) ->
-  x = undefined
-  y = undefined
-  k = undefined
-  if d and centered isnt d
-    centroid = path.centroid(d)
-    x = centroid[0]
-    y = centroid[1]
-    k = 4
-    centered = d
-  else
-    x = width / 2
-    y = height / 2
-    k = 1
-    centered = null
-  g.selectAll("path").classed "active", centered and (d) ->
-    d is centered
-
-  g.transition().duration(750)
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-    .style "stroke-width", 1.5 / k + "px"
-
 mouseover = (d) ->
   Session.set "hover", true
   
@@ -101,6 +79,7 @@ mouseover = (d) ->
   Template.tooltip.categoryA = countryName
   Template.tooltip.categoryB = category
   Session.set "showTooltip", true
+
 mouseout = (d) ->
   Session.set "hover", false
   Session.set "showTooltip", false
@@ -146,7 +125,8 @@ Template.map_svg.rendered = ->
   data = WorldMap.find().fetch()
   value_range = get_range_log(data, 5)
   value_range_big = get_range_log(data, 10)
-  svg = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height())
+  svg = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).append("svg:g").attr("id", "countries")
+
   map_projection = d3.geo.equirectangular().scale($(".page-middle").width() * 0.17).translate([$(".page-middle").width() / 2, $(".page-middle").height() / 2])
   value_color = d3.scale.log().domain(value_range).interpolate(d3.interpolateRgb).range([color_gradient[0], color_gradient[1], color_gradient[2], color_gradient[3], color_gradient[4], color_gradient[5]])
   svg.selectAll("path").data(d3.values(mapData.features)).enter().append("path").attr("id", (d, i) ->
@@ -165,9 +145,17 @@ Template.map_svg.rendered = ->
       value_color doc.count
     else
       "#FFF"
-  ).on("mousemove", mouseover).on "mouseout", mouseout
+  ).on("mousemove", mouseover).on("mouseout", mouseout)
   d3.select(".key").selectAll("text").text (d, i) ->
     value_range_big[i].toFixed 0
+
+  # make the treemap zoomable using d3.behavior.zoom()
+  zoom = d3.behavior.zoom()
+  .scaleExtent([1, 5])
+  .on("zoom", ->
+      svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
+    )
+  svg.call(zoom)
 
 
 mouseoverCell = null
