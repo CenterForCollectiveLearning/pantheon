@@ -232,7 +232,7 @@ d3plus.tree_map = function(vars) {
           "footer": vars.data_source,
           "data": tooltip_data,
           "mouseevents": true,
-          "parent": d3.select("#viz"), 
+          "parent": d3.select("#viz"),
           "background": vars.background
         })
         
@@ -242,7 +242,6 @@ d3plus.tree_map = function(vars) {
       
       if (typeof html == "string"){
           make_tooltip(html)
-          console.log(html)
       }
       else if (html && html.url && html.callback) {
         d3.json(html.url,function(data){

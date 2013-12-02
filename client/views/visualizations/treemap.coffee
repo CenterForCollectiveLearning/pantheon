@@ -64,8 +64,17 @@ Template.treemap_svg.rendered = ->
         nesting_5: occDict
 
     flat = []
-    inner_html = (obj) ->
-      return Session.get("tooltipCategory")
+    inner_html = (obj) -> #Change the below to update using the same from/to/L/dataset!
+      category = Session.get("tooltipCategory")
+      from = Session.get("from")
+      to = Session.get("to")
+      L = Session.get("langs")
+      dataset = Session.get("dataset")
+      params = "/all/" + [from, to, L, dataset].join("/")
+      html = "<div>Who Exports " + category.capitalize() + "s? View in: <a href='/treemap/domain_exports_to/" + category + params + "'>Treemap</a>"
+      html += " | " + "<a href='/map/map/" + category + params + "'>World Map</a>" + "</br>"
+      html += "<a href='/histogram/domain_exports_to/" + category + params + "'> Who has comparative advantage in " + category.capitalize() +  "s?</a></div>"
+      return html
 
     data.forEach (d) ->
       flat.push #use a dummy year here for now ...
@@ -121,8 +130,17 @@ Template.treemap_svg.rendered = ->
         nesting_3: countryDict
 
     flat = []
-    inner_html = (obj) ->
-      return Session.get("tooltipCountryCode")
+    inner_html = (obj) -> #Change the below to update using the same from/to/L/dataset!
+      countryCode = Session.get("tooltipCountryCode")
+      from = Session.get("from")
+      to = Session.get("to")
+      L = Session.get("langs")
+      dataset = Session.get("dataset")
+      params = "/all/" + [from, to, L, dataset].join("/")
+      country = (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
+      html = "<div>Who are the cultural exports of " + country + "? View in: <a href='/treemap/country_exports/" + countryCode + params + "'>Treemap</a>"
+      html += "</br><a href='/histogram/country_exports/" + countryCode + params + "'> What is the comparative advantage of " + country +  "?</a></div>"
+      return html
 
     data.forEach (d) ->
       flat.push #use a dummy year here for now ...
