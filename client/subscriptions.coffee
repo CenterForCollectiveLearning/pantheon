@@ -80,13 +80,14 @@ Deps.autorun ->
           top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
-        when "matrix"
+        when "matrix" #TODO: add top10Sub here, but take into account gender!
           dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, dataset, onReady)
         # Scatterplot modes
         when "scatterplot"
           dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, dataset, onReady)
         # Map modes
         when "map"
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, dataset, onReady)
         when "histogram"
           dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
