@@ -36,6 +36,7 @@ Template.people_accordion.rendered = ->
     fillSpace: false
   accordion.accordion "resize"
 
+
 Template.people_accordion.helpers
   occupation: -> this.occupation.capitalize() + "s"
   time_period: -> this.birthyear
