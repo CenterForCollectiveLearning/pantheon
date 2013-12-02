@@ -109,6 +109,9 @@ Template.select_country_order.rendered = ->
 Template.select_industry_order.rendered = ->
   $(@find("select")).val(Session.get("industryOrder")).uniform()
 
+Template.select_dataset.rendered = ->
+  $(@find("select")).val(Session.get("dataset")).uniform()
+
 Template.select_country.events = "change select": (d) ->
   console.log d
   path = window.location.pathname.split("/")
@@ -191,6 +194,12 @@ Template.select_country_order.events = "change select": (d) ->
 
 Template.select_industry_order.events = "change select": (d) ->
   Session.set "industryOrder", d.target.value
+
+Template.select_dataset.events = "change select": (d) ->
+  Session.set "dataset", d.target.value
+  path = window.location.pathname.split("/")
+  path[8] = d.target.value
+  Router.go path.join("/")
 
 Template.country_dropdown.countries = ->
   Countries.find {dataset: Session.get("dataset")},
