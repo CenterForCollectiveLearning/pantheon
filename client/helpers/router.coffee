@@ -7,11 +7,15 @@
 # Router.configure before: splashCheck
 
 Router.map ->
-  @route "observatory",
+  @route "home",
     path: "/"
-    before: [->
-      @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
-    ]
+    template: "home"
+    data: -> 
+      Session.set "page", @template
+    # path: "/"
+    # before: [->
+    #   @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
+    # ]
 
   @route "observatory",
     path: "/observatory"

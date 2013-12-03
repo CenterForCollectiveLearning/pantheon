@@ -11,10 +11,10 @@ jquery
 meteor
 iron-router
 underscore
-scss
 bootstrap
 autocomplete
 font-awesome
 coffeescript
 jquery-ui
 # tutorials
+less

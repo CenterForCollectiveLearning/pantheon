@@ -97,6 +97,7 @@ People._ensureIndex occupation_countryCode
 #  * in at least one of the indices below
 # 
 
+Imports._ensureIndex({name: 1, lang: 1, lang_name: 1})
 # Imports._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} );
 # Imports._ensureIndex({ continentName:1, countryCode: 1, occupation: 1, birthyear: 1} );
 # Imports._ensureIndex({ lang_family: 1, lang: 1, occupation: 1, birthyear: 1} );
