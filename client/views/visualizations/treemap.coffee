@@ -71,9 +71,9 @@ Template.treemap_svg.rendered = ->
       L = Session.get("langs")
       dataset = Session.get("dataset")
       params = "/all/" + [from, to, L, dataset].join("/")
-      html = "<div>Who Exports " + category.capitalize() + "s? View in: <a href='/treemap/domain_exports_to/" + category + params + "'>Treemap</a>"
-      html += " | " + "<a href='/map/map/" + category + params + "'>World Map</a>" + "</br>"
-      html += "<a href='/histogram/domain_exports_to/" + category + params + "'> Who has comparative advantage in " + category.capitalize() +  "s?</a></div>"
+      html = "<div>Who Exports " + category.capitalize() + "s?</br> <a href='/treemap/domain_exports_to/" + category + params + "'><img src='/treemap_icon.png'></a>"
+      html += "&nbsp&nbsp&nbsp<a href='/map/map/" + category + params + "'><img src='/map_icon.png'></a>" + "</br></br>"
+      html += "Who has comparative advantage in " + category.capitalize() +  "s?</br><a href='/histogram/domain_exports_to/" + category + params + "'><img src='/histogram_icon.png'></a></div>"
       return html
 
     data.forEach (d) ->
@@ -138,8 +138,8 @@ Template.treemap_svg.rendered = ->
       dataset = Session.get("dataset")
       params = "/all/" + [from, to, L, dataset].join("/")
       country = (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
-      html = "<div>Who are the cultural exports of " + country + "? View in: <a href='/treemap/country_exports/" + countryCode + params + "'>Treemap</a>"
-      html += "</br><a href='/histogram/country_exports/" + countryCode + params + "'> What is the comparative advantage of " + country +  "?</a></div>"
+      html = "<div>Who are the cultural exports of " + country + "? </br> <a href='/treemap/country_exports/" + countryCode + params + "'><img src='/treemap_icon.png'></a>"
+      html += "</br>What is the comparative advantage of " + country +  "?</br><a href='/histogram/country_exports/" + countryCode + params + "'><img src='/histogram_icon.png'></a></div>"
       return html
 
     data.forEach (d) ->

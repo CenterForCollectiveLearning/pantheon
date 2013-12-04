@@ -10,7 +10,7 @@ renaissanceStory = [
     Router.go "/treemap/country_exports/all/all/1400/1600/25/OGC"
 ,
   template: Template.renaissance_step2
-  spot: "#viz"
+  spot: "#cell_Artist"
 ,
   template: Template.renaissance_step3
   spot: ".ranked_list"
