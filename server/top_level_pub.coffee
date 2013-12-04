@@ -26,12 +26,17 @@ Meteor.publish "languages_pub", ->
 #    This is a static query since the query doesn't ever change for some given parameters
 #    Push the ids here as well since people will be in the client side
 # 
-Meteor.publish "peopletop10", (begin, end, L, country, category, categoryLevel, dataset) ->
+Meteor.publish "peopletop10", (begin, end, L, country, gender, category, categoryLevel, dataset) ->
   sub = this
   collectionName = "top10people"
   args = getCountryExportArgs(begin, end, L, country)
   args[categoryLevel] = category  if category.toLowerCase() isnt "all"
   args.dataset = dataset
+
+  if gender is "male" or gender is "female"
+    genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
+    args.gender = genderField
+
   # Include numlangs in order to sort
   People.find(args,
     fields:

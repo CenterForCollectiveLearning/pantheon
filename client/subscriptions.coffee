@@ -77,23 +77,23 @@ Deps.autorun ->
       switch vizType
         # Treemap modes
         when "treemap"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, "both", category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
         when "matrix" #TODO: need to alter top10Sub to take gender into account! this also is an issue with the tooltips
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, gender, category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, dataset, onReady)
         # Scatterplot modes
         when "scatterplot"
           dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, dataset, onReady)
         # Map modes
         when "map"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, "both", category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, dataset, onReady)
         when "histogram"
           dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         when "stacked"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, "both", category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         else
           console.log "Unsupported vizType"

@@ -84,6 +84,7 @@ Template.accordion.events =
       from: defaults.from
       to: defaults.to
       langs: defaults.langs
+      gender: defaults.gender
       dataset: defaults.dataset
 
 # Global helper for data ready

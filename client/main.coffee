@@ -43,6 +43,7 @@ jQuery.cachedScript = (url, options) ->
   to: "1950"
   langs: "25"
   entity: "countries"
+  gender: "both"
   dataset: "OGC"
 
 @IOMapping =
@@ -129,6 +130,7 @@ Meteor.startup ->
   Session.setDefault "langs", defaults.langs
   Session.setDefault "occ", "all"
   Session.setDefault "categoryLevel", defaults.categoryLevel
+  Session.setDefault "gender", defaults.gender
   Session.setDefault "dataset", defaults.dataset
   
   # MATRICES
