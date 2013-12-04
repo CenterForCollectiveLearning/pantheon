@@ -80,7 +80,8 @@ Deps.autorun ->
           top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
-        when "matrix" #TODO: add top10Sub here, but take into account gender!
+        when "matrix" #TODO: need to alter top10Sub to take gender into account! this also is an issue with the tooltips
+          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, category, categoryLevel, dataset)
           dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, dataset, onReady)
         # Scatterplot modes
         when "scatterplot"

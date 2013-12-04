@@ -106,6 +106,11 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
 
   args.dataset = dataset
 
+  # TODO - this is hardcoded fix for matrix to update tooltip with gender - may want to generalize this
+  if gender is "male" or gender is "female"
+    genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
+    if vizMode is "matrix_exports"
+      args.gender = genderField
 
   if vizMode is "country_exports" or vizMode is "matrix_exports" or vizMode is "domain_exports_to" or vizMode is "map"
     args.countryCode = country  if country isnt "all"
@@ -127,8 +132,6 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
   projection = _id: 1
   limit = 5
   sort = numlangs: -1
-
-  console.log(args)
 
   # Get people
   People.find(args,
