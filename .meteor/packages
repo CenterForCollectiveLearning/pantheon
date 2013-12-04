@@ -15,6 +15,7 @@ bootstrap
 autocomplete
 font-awesome
 coffeescript
+tutorials
+# load jquery-ui after tutorials so the version loaded by tutorials gets overwritten; bad hack
 jquery-ui
-# tutorials
 less

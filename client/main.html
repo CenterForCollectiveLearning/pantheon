@@ -52,7 +52,7 @@
     </footer>
 
     {{! uncomment the below to start the tutorial }}
-    {{! yield 'tutorial' }}
+    {{> tutorial }}
 </template>
 
 <template name="aside">
@@ -102,10 +102,4 @@
 </template>
 
 <template name="spinner">
-</template>
-
-<template name="tutorial">
-    {{#if dataReady}}
-        {{tutorial options}}
-    {{/if}}
 </template>
