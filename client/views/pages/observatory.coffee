@@ -64,7 +64,7 @@ Template.accordion.rendered = ->
     heightStyle: "content"
     fillSpace: false
 
-  accordion.accordion "resize"
+  # accordion.accordion "resize"
 
 Template.accordion.events = 
   "click li a": (d) ->

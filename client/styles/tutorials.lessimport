@@ -1,0 +1,15 @@
+div.tutorial {
+	div.modal {
+		background-color: transparent;
+
+		div.modal-body {
+			border-bottom: 0;
+			background-color: rgba(0, 0, 0, 0.85);
+		}
+
+		div.modal-footer {
+			border-top: 0;
+			background-color: rgba(0, 0, 0, 0.85);
+		}
+	}
+}

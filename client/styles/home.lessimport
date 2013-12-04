@@ -28,6 +28,7 @@ section#narratives {
 			padding: 10px;
 
 			&:hover {
+				background-color: black;
 				opacity: 1;
 			}
 		}
