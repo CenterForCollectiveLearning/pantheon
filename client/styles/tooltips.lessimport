@@ -1,0 +1,40 @@
+// TOOLTIPS
+#tooltip {
+	background-color: rgba(0, 0, 0, 0.85);
+	position: absolute;
+	border-radius: 2px;
+
+	#tooltip-inner {
+		margin: 0.5em;
+		span.category {
+			text-transform: uppercase;
+			color: @color_gold;
+			letter-spacing: 1px;
+		}
+		div.total-count {
+			// color: @color_gold;
+		}
+		div.list {
+			height: 100%;
+			width: 100%;
+			border-top: 1px solid @color_gold;
+			margin-top:3px;
+
+			span.birthplace {
+				font-size: 70%;
+			}
+		}
+		span.extras {
+			font-size: 70%;
+		}
+	}	
+}
+
+.invisible{
+  visibility:hidden;
+  display:none;
+}
+
+.visible{
+  display:block;
+}

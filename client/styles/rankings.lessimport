@@ -1,0 +1,4 @@
+// Table
+table.display td {
+	color: black;
+}

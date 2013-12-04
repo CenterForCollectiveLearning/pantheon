@@ -1,0 +1,11 @@
+.bar {
+	fill-opacity: .7;
+}
+
+.positive { 
+	fill: @color_gold;
+}
+
+.negative {
+	fill: red;
+}

@@ -1,0 +1,14 @@
+.axis text {
+	fill: #FFF;
+	font: 0.8rem Lato;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #FFF;
+	shape-rendering: crispEdges;
+}
+
+.node {
+	cursor: pointer;
+}

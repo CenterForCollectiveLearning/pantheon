@@ -1,0 +1,71 @@
+//Data tree
+#classtree {
+	.node {
+		circle {
+			cursor: pointer;
+			fill: #fff;
+			stroke: @color_gold;
+			stroke-width: 2.0px;
+		}
+
+		text {
+			font-size: 11px;
+			fill: none;
+			stroke: #ccc;
+			stroke-width: 1.0px;
+			opacity: 0.6;
+		}
+	}
+
+	path.link {}
+
+	#chart, #header{
+		position: absolute;
+		top: 0;
+	}
+
+	rect {
+		fill: none;
+		pointer-events: all;
+	}
+
+	pre {
+		font-size: 18px;
+	}
+
+	line {
+		stroke: #000;
+		stroke-width: 1.5px;
+	}
+
+	.string, .regexp {
+		color: #f39;
+	}
+
+	.keyword {
+		color: #00c;
+	}
+
+	.comment {
+		color: #777;
+		font-style: oblique;
+	}
+
+	.number {
+		color: #369;
+	}
+
+	.class, .special {
+		color: #1181B8;
+	}
+
+	a {
+		&:link, &:visited {
+			color: #000;
+			text-decoration: none;
+		}
+		&:hover {
+			color: #666;
+		}
+	}
+}

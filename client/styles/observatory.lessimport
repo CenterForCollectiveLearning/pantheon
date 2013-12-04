@@ -1,0 +1,162 @@
+//
+// Universal elements on Observatory page (not visualization-specific)
+//
+
+.page-top {
+	padding-top: 10%;
+	color: @color_gold;
+    .bold {
+    	font-weight: 500;
+    }
+
+    .primary-text {
+    	font-size: 2em; // 32px / 1px
+    	line-height: 1em;
+    	padding-bottom: 1em;
+    	text-align: center;
+    	text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
+
+    	b {
+    		font-weight: 500;
+    	}
+    }
+
+    .secondary-text {
+    	font-size: 1em; // 32px / 1px
+    	line-height: 1em;
+    	padding-bottom: 1em;
+    	text-align: center;
+    	text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
+    	margin-top: -1.5em;
+    }
+
+    .name {
+    	text-transform: capitalize;
+    }
+}
+
+#page {
+	// TODO Proper vertical centering and sizing
+
+	.page-left {
+		.no-select;
+		.fade;
+		.opacity(0.5);
+		position: relative;
+		float: left;
+		.spacer { height: 3.0em; }
+		&:hover { .opacity(1.0); }
+	}
+	.page-middle {
+		// Visualization
+		svg {
+			.opacity(1.0);  // 0.85
+		}
+
+		video {
+			max-width: 100%;
+		}
+
+		// Legends
+		.legend {
+			position: absolute;
+			bottom: 0;
+			// width: 750px;
+
+			.pill {
+				float:left;
+				padding-left:11.7px;
+				padding-right:11.7px;
+				padding-top:6px;
+				padding-bottom:6px;
+				font-size:13px;
+				color:#000000;
+				cursor:pointer;
+			}
+		}
+
+	}
+
+	.page-right {
+		.fade;
+		.opacity(0.5);
+		.no-select;
+		float: right;
+		&:hover { .opacity(1.0); }
+	}
+
+    .justified{
+    	text-align: justify;
+    }
+}
+
+.page-bottom {
+	position: absolute;
+	width: 100%;
+	bottom: -0.5em;
+	margin-left: -20px;
+}
+
+.ranked_list {
+	color: #cccccc;
+	overflow:hidden;
+	line-height: 18px;
+	max-height: 100%;
+
+	li {
+		padding-bottom: 0.75em;
+		span {
+			padding-left: 1.5em;
+			font-size: 70%;
+		}
+	}
+
+	ol {
+		margin: 0;
+		padding-left: 0;
+		list-style-position: inside;
+	}
+}
+
+.section-header {
+	text-align: center;
+	text-transform: uppercase;
+	padding-bottom: 14px;
+	// color: @color_gold;
+	letter-spacing: 1px;
+	color: #cccccc;
+}
+
+div.viz-options {
+	position: absolute;
+	width: 100%;
+}
+
+.parameter-selection {
+	height: 50px;
+	width: 100%;
+}
+
+// Select Styling
+div.selector {
+	width: 80% !important;
+	margin-left: 10%;
+	margin-top: -5px;
+
+	span { 
+		width: 100% !important;
+		text-align: center;
+	}
+	select {
+		width: 100% !important;
+
+		option {
+			color:black;
+		}
+	}
+}
+
+label {
+	text-align: center;
+	margin-bottom: 0px;
+}
