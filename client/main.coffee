@@ -199,10 +199,10 @@ leftSections = [
   template: "people",
   url: "/people"
 ,
-  section: "Timeline"
-  template: "timeline"
-  url: "/timeline"
-,
+#   section: "Timeline"
+#   template: "timeline"
+#   url: "/timeline"
+# ,
   section: "Vision"
   template: "vision"
   url: "/vision"

@@ -1,0 +1,82 @@
+<!-- Landing page -->
+<template name="home">
+    <div class="scroll-wrap">
+        <section id="narratives">
+           {{>narratives}}
+        </section>
+        <section id="visualizations">
+            {{>visualizations}}
+        </section>
+        <section id="video">
+            {{>video}}
+        </section>
+    </div>
+</template>
+
+<template name="narratives">	
+    <div class="flexslider">
+        <ul class="slides">
+            {{#each narratives}}
+                {{>narrative}}
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="narrative">
+    <li>
+        <div class="container">
+            <div class="page-top">
+                <div class="title primary-text">{{title}}</div>
+                <div class="domain secondary-text">{{domain}}</div>
+            </div>
+            <div class="description">{{description}}</div>
+            <div data-tutorial-type="{{tutorialType}}" class="learn-more trans-bg">Learn More</div>
+        </div>
+        <div class="background" style="background: url(/{{image}})" />
+    </li>
+</template>
+
+<template name="visualizations">
+    <div class="title">Visualizations</div>
+    <div class="container">
+        <ul>
+            <li>
+                <div class="viz-label">Treemaps</div>
+                <a href="#" data-viz-type="treemap" data-viz-mode="country_exports">
+                    <img src="treemap_icon.png" />
+                </a>
+            </li>
+            <li>
+                <div class="viz-label">Matrices</div>
+                <a href="#" data-viz-type="matrix" data-viz-mode="matrix_exports">
+                    <img src="matrix_icon.png" />
+                </a>
+            </li>
+            <li>
+                <div class="viz-label">Scatterplots</div>
+                <a href="#" data-viz-type="scatterplot" data-viz-mode="country_vs_country">
+                    <img src="scatterplot_icon.png" />
+                </a>
+            </li>
+            <li>
+                <div class="viz-label">Histograms</div>
+                <a href="#" data-viz-type="histogram" data-viz-mode="country_exports">
+                    <img src="histogram_icon.png" />
+                </a>
+            </li>
+            <li>
+                <div class="viz-label">Maps</div>
+                <a href="#" data-viz-type="map" data-viz-mode="map">
+                    <img src="map_icon.png" />
+                </a>
+            </li>
+        </ul>
+    </div>
+</template>
+
+<template name="video">
+    <div class="title">Vision</div>
+    <!-- <div class="title">A data visualization engine for exploring cultural development</div> -->
+    <iframe src="//player.vimeo.com/video/78195602?byline=0&portrait=0&badge=0&title=0&color=D8C568" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</template>
