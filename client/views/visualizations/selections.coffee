@@ -65,141 +65,106 @@ Template.select_mode.render_template = ->
         return new Handlebars.SafeString(Template.map_mode(this))
 
 Template.select_country.rendered = ->
-  $(@find("select")).val(Session.get("country")).uniform()
+  $(@find("select")).val(Session.get("country")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    countryCode = $(this).val()
+    if IOMapping[Session.get("vizMode")]["in"].indexOf("country") is 0 then path[3] = countryCode
+    else path[4] = countryCode
+    Router.go path.join("/"))
 
 Template.select_countryX.rendered = ->
-  $(@find("select")).val(Session.get("countryX")).uniform()
+  $(@find("select")).val(Session.get("countryX")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[3] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_countryY.rendered = ->
-  $(@find("select")).val(Session.get("countryY")).uniform()
+  $(@find("select")).val(Session.get("countryY")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[4] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_language.rendered = ->
-  $(@find("select")).val(Session.get("language")).uniform()
+  $(@find("select")).val(Session.get("language")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    language = $(this).val()
+    if IOMapping[Session.get("vizMode")]["in"].indexOf("language") is 0 then path[3] = language
+    else path[4] = language
+    Router.go path.join("/"))
 
 Template.select_languageX.rendered = ->
-  $(@find("select")).val(Session.get("languageX")).uniform()
+  $(@find("select")).val(Session.get("languageX")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[3] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_languageY.rendered = ->
-  $(@find("select")).val(Session.get("languageY")).uniform()
+  $(@find("select")).val(Session.get("languageY")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[3] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_category.rendered = ->
-  $(@find("select")).val(Session.get("category")).uniform()
+  $(@find("select")).val(Session.get("category")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    category = $(this).val()
+    Session.set "categoryLevel", getCategoryLevel(category)
+    if IOMapping[Session.get("vizMode")]["in"].indexOf("category") is 0 then path[3] = category
+    else path[4] = category
+    Router.go path.join("/"))
 
 Template.select_categoryX.rendered = ->
-  $(@find("select")).val(Session.get("categoryX")).uniform()
+  $(@find("select")).val(Session.get("categoryX")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    category = $(this).val()
+    Session.set "categoryLevel", getCategoryLevel(category)
+    path[3] = category
+    Router.go path.join("/"))
 
 Template.select_categoryY.rendered = ->
-  $(@find("select")).val(Session.get("categoryY")).uniform()
+  $(@find("select")).val(Session.get("categoryY")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    category = $(this).val()
+    path[4] = category
+    Router.go path.join("/"))
 
 Template.select_from.rendered = ->
-  $(@find("select")).val(Session.get("from")).uniform()
+  $(@find("select")).val(Session.get("from")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[5] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_to.rendered = ->
-  $(@find("select")).val(Session.get("to")).uniform()
+  $(@find("select")).val(Session.get("to")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[6] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_l.rendered = ->
-  $(@find("select")).val(Session.get("langs")).uniform()
+  $(@find("select")).val(Session.get("langs")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[7] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_gender.rendered = ->
-  $(@find("select")).val(Session.get("gender")).uniform()
+  $(@find("select")).val(Session.get("gender")).chosen().change( ->
+    Session.set "gender", $(this).val())
 
 Template.select_country_order.rendered = ->
-  $(@find("select")).val(Session.get("countryOrder")).uniform()
+  $(@find("select")).val(Session.get("countryOrder")).chosen().change( ->
+    Session.set "countryOrder", $(this).val())
 
 Template.select_industry_order.rendered = ->
-  $(@find("select")).val(Session.get("industryOrder")).uniform()
+  $(@find("select")).val(Session.get("industryOrder")).chosen().change( ->
+    Session.set "industryOrder", $(this).val())
 
 Template.select_dataset.rendered = ->
-  $(@find("select")).val(Session.get("dataset")).uniform()
-
-Template.select_country.events = "change select": (d) ->
-  console.log d
-  path = window.location.pathname.split("/")
-  if IOMapping[Session.get("vizMode")]["in"].indexOf("country") is 0
-    path[3] = d.target.value
-  else
-    path[4] = d.target.value
-  path[3] = d.target.value
-  Router.go path.join("/")
-
-Template.select_countryX.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  path[3] = d.target.value
-  Router.go path.join("/")
-
-Template.select_countryY.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  path[4] = d.target.value
-  Router.go path.join("/")
-
-Template.select_language.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  if IOMapping[Session.get("vizMode")]["in"].indexOf("language") is 0
-    path[3] = d.target.value
-  else
-    path[4] = d.target.value
-  Router.go path.join("/")
-
-Template.select_languageX.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  path[3] = d.target.value
-  Router.go path.join("/")
-
-Template.select_languageY.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  path[4] = d.target.value
-  Router.go path.join("/")
-
-Template.select_category.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  Session.set "categoryLevel", getCategoryLevel(d.target.value)
-  if IOMapping[Session.get("vizMode")]["in"].indexOf("category") is 0
-    path[3] = d.target.value
-  else
-    path[4] = d.target.value
-  Router.go path.join("/")
-
-Template.select_categoryX.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  Session.set "categoryLevel", getCategoryLevel(d.target.value)
-  path[3] = d.target.value
-  Router.go path.join("/")
-
-Template.select_categoryY.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  Session.set "categoryLevel", getCategoryLevel(d.target.value)
-  path[4] = d.target.value
-  Router.go path.join("/")
-
-Template.select_from.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  path[5] = d.target.value
-  Router.go path.join("/")
-
-Template.select_to.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  path[6] = d.target.value
-  Router.go path.join("/")
-
-Template.select_l.events = "change select": (d) ->
-  path = window.location.pathname.split("/")
-  path[7] = d.target.value
-  Router.go path.join("/")
-
-Template.select_gender.events = "change select": (d) ->
-  Session.set "gender", d.target.value
-
-Template.select_country_order.events = "change select": (d) ->
-  Session.set "countryOrder", d.target.value
-
-Template.select_industry_order.events = "change select": (d) ->
-  Session.set "industryOrder", d.target.value
-
-Template.select_dataset.events = "change select": (d) ->
-  Session.set "dataset", d.target.value
-  path = window.location.pathname.split("/")
-  path[8] = d.target.value
-  Router.go path.join("/")
+  $(@find("select")).val(Session.get("dataset")).chosen().change( ->
+    dataset = $(this).val()
+    Session.set "dataset", dataset
+    path = window.location.pathname.split("/")
+    path[8] = dataset
+    Router.go path.join("/"))
 
 Template.country_dropdown.countries = ->
   Countries.find {dataset: Session.get("dataset")},

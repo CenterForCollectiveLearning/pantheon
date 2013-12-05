@@ -138,6 +138,29 @@ div.viz-options {
 }
 
 // Select Styling
+
+div.chosen-container {
+	width: 100% !important;
+	a.chosen-single {
+		text-align: center;
+		border: 0;
+		// border: 1px solid @color_gold;
+		span {
+			margin-right: 0;
+		}
+	}
+
+	div.chosen-drop {
+		div.chosen-search {
+
+		}
+		div.chosen-results {
+
+		}
+	}
+}
+
+
 div.selector {
 	width: 80% !important;
 	margin-left: 10%;

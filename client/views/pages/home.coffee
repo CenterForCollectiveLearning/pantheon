@@ -30,8 +30,6 @@ Template.home.rendered = ->
         easing: "swing"
         prevText: "Previous"
         nextText: "Next"
-
-        # Special properties
         )
 
 Template.home.destroyed = ->

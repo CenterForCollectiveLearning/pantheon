@@ -1,6 +1,7 @@
 div.tutorial {
 	div.modal {
 		background-color: transparent;
+		border: 1px solid @color_gold;
 
 		div.modal-body {
 			border-bottom: 0;
