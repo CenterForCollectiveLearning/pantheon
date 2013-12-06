@@ -82,6 +82,14 @@
     </li>
 </template>
 
+<template name="sharing_options">
+    <div class="sharing-options">
+        <a href="#"><i class="icon-tumblr-sign"></i></a>
+        <a href="#"><i class="icon-twitter-sign"></i></a>
+        <a href="#"><i class="icon-facebook-sign"></i></a>
+    </div>
+</template>
+
 <template name="footer">
     {{> google_analytics}}
     <!--    <div class="footer-logo">
@@ -90,6 +98,10 @@
 
         <div class="footer-license center">
             &copy; 2013 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a>, <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>, <a href="http://web.mit.edu/" target="_blank">Massachusetts Institute of Technology</a>.<br>This work is being shared under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons By-NC-SA license</a>.
+        </div>
+
+        <div class="share">
+            {{> sharing_options}}
         </div>
 
         <!--

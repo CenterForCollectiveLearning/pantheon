@@ -1,27 +1,3 @@
-# Helper methods for observatory page
-Template.sharing_options.rendered = ->
-  
-  # Google Plus
-  po = document.createElement("script")
-  po.type = "text/javascript"
-  po.async = true
-  po.src = "https://apis.google.com/js/plusone.js"
-  s = document.getElementsByTagName("script")[0]
-  s.parentNode.insertBefore po, s
-  
-  # Twitter
-  d = document
-  s = "script"
-  id = "twitter-wjs"
-  js = undefined
-  fjs = d.getElementsByTagName(s)[0]
-  p = (if /^http:/.test(d.location) then "http" else "https")
-  unless d.getElementById(id)
-    js = d.createElement(s)
-    js.id = id
-    js.src = p + "://platform.twitter.com/widgets.js"
-    fjs.parentNode.insertBefore js, fjs
-
 # Re-render visualization template on window resize
 Template.visualization.resize = ->
   if Session.get "resize" then return

@@ -234,6 +234,37 @@ Template.nav.helpers
 Template.section.helpers selected: ->
   (if Session.equals("page", @template) then "selected_section" else "")
 
+# Template.sharing_options.rendered = ->
+
+#     $('.twitter-popup').click ->
+#     width  = 575
+#     height = 400
+#     left   = ($(window).width()  - width)  / 2
+#     top    = ($(window).height() - height) / 2
+#     url    = this.href
+#     opts   = 'status=1' +
+#              ',width='  + width  +
+#              ',height=' + height +
+#              ',top='    + top    +
+#              ',left='   + left
+
+#     console.log encodeURIComponent(location.href)
+#     window.open url, 'twitter', opts
+#     return false
+
+#   # Twitter
+#   d = document
+#   s = "script"
+#   id = "twitter-wjs"
+#   js = undefined
+#   fjs = d.getElementsByTagName(s)[0]
+#   p = (if /^http:/.test(d.location) then "http" else "https")
+#   unless d.getElementById(id)
+#     js = d.createElement(s)
+#     js.id = id
+#     js.src = p + "://platform.twitter.com/widgets.js"
+#     fjs.parentNode.insertBefore js, fjs
+
 Template.spinner.rendered = ->
   unless Session.get("showSpinner")
     console.log "RENDERING SPINNER"

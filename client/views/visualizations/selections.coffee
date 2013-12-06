@@ -26,9 +26,10 @@ getCategoryLevel = (s) ->
   domains = Domains.find({dataset: Session.get("dataset")}).fetch()
   for i of domains
     domain_obj = domains[i]
-    return "domain"  if domain_obj.domain is s
-    return "industry"  if domain_obj.industry is s
-    return "occupation"  if domain_obj.occupation is s
+    return "domain" if domain_obj.domain is s
+    return "industry" if domain_obj.industry is s
+    return "occupation" if domain_obj.occupation is s
+
 Template.select_mode.render_template = ->
   page = Session.get("page")
   if page is "observatory"
