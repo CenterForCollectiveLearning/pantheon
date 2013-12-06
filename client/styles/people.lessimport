@@ -30,13 +30,14 @@
     	ul {
     		list-style-type: none;
     		li {
-    			width: 150px;
+    			width: 20%;
     			height: 215px;
     			display: inline;
     			list-style-type: none;
 
     			div.person-photo-container {
-    				width: 150px;
+                    min-width: 100px;
+    				max-width: 150px;
     				height: 215px;
     				float: left;
     				position: relative;
