@@ -1,27 +1,3 @@
-
-# selections for Observatory (visualizations)
-
-# Change selected based on session variables
-# The below code also sets uniform on each element individually
-# Setting them at a parent template will cause the errors we saw before
-# This is equivalent to $(item).val(blah)
-#                       $(item).uniform()
-#
-
-# $(this.find("select")).val(Session.get("country")).chosen({width: "60%"});
-
-# TODO: Find closest round number
-
-# TODO: Do this correctly and reduce redundancy
-# TODO: How do you get this tracking correctly?
-
-# My idea:
-#   If you're going to do it this way, don't copy the same code 9 times :)
-#    However, the way I would do it is to cut the current value out of the right part of the route (as an integer index)
-#     and then just update the router to the new route. This will set session variables as a side effect.
-#
-#    Your current approach is going to be setting session variables twice.
-# 
 getCategoryLevel = (s) ->
   domains = Domains.find({dataset: Session.get("dataset")}).fetch()
   for i of domains
@@ -160,6 +136,7 @@ Template.select_industry_order.rendered = ->
     Session.set "industryOrder", $(this).val())
 
 Template.select_dataset.rendered = ->
+  console.log "RENDERING DATASET", Session.get("dataset")
   $(@find("select")).val(Session.get("dataset")).chosen().change( ->
     dataset = $(this).val()
     Session.set "dataset", dataset
