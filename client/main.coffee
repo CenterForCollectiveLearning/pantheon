@@ -130,7 +130,6 @@ Meteor.startup ->
   Session.setDefault "from", defaults.from
   Session.setDefault "to", defaults.to
   Session.setDefault "langs", defaults.langs
-  Session.setDefault "occ", "all"
   Session.setDefault "categoryLevel", defaults.categoryLevel
   Session.setDefault "gender", defaults.gender
   Session.setDefault "dataset", defaults.dataset

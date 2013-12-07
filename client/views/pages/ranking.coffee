@@ -93,11 +93,11 @@ Template.ranking_table.render_cols = ->
       return new Handlebars.SafeString(Template.dom_cols(this))
 
 Template.ranked_people_list.people_full_ranking = ->
-  PeopleTopN.find()
-
-Template.ranked_people_list.rank = ->
-  rank = 1 # the rank gets populated by datatables?
-  rank
+  if(Session.get "clicktooltip")
+    Tooltips.find _id:
+      $not: "count"
+  else
+    PeopleTopN.find()
 
 Template.ranked_ppl.occupation = ->
   @occupation.capitalize()
@@ -105,14 +105,8 @@ Template.ranked_ppl.occupation = ->
 Template.ranked_countries_list.countries_full_ranking = ->
   CountriesRanking.find()
 
-Template.ranked_countries_list.rank = ->
-  1
-
 Template.ranked_domains_list.domains_full_ranking = ->
   DomainsRanking.find()
-
-Template.ranked_domains_list.rank = ->
-  1
 
 Template.ranked_people_list.person_blob = ->
   console.log "IN PERSON BLOB"

@@ -79,12 +79,10 @@ Handlebars.registerHelper "person_lookup", ->
   People.findOne @_id
 
 Template.ranked_list.top10 = ->
-  PeopleTop10.find {},
-    sort:
-      numlangs: -1
+  PeopleTopN.find()
 
 Template.ranked_list.empty = ->
-  PeopleTop10.find().count() is 0
+  PeopleTopN.find().count() is 0
 
 Template.ranked_person.birthday = ->
   birthday = (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
@@ -221,3 +219,62 @@ Template.tooltip.helpers
   extras: ->
     doc = Tooltips.findOne(_id: "count")
     (if (typeof doc isnt "undefined") then doc.count - 5 else 0)
+
+Template.clicktooltip.helpers
+  showclicktooltip: ->
+    Session.get "clicktooltip"
+  title: ->
+    vizMode = Session.get "vizMode"
+    switch vizMode
+      when "map"
+        countryCode = Session.get("bigtooltipCountryCode")
+        country = (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
+        return country
+  categoryName : ->
+    Session.get("bigtooltipCategory").capitalize()
+  category : ->
+    Session.get("bigtooltipCategory")
+  from : ->
+    Session.get("from")
+  to : ->
+    Session.get("to")
+  L : ->
+    Session.get("langs")
+  dataset : ->
+    Session.get("dataset")
+  count: -> # TODO: update this count properly
+    doc = Tooltips.findOne(_id: "count")
+    (if (typeof doc isnt "undefined") then doc.count else 0)
+
+Template.clicktooltip.events =
+  "click .d3plus_tooltip_close,.d3plus_tooltip_curtain": (d) ->
+    $("#clicktooltip").fadeOut()
+    Session.set "clicktooltip", false
+  "click .closeclicktooltip": (d) ->
+    $("#clicktooltip").fadeOut()
+    Session.set "clicktooltip", false
+
+Template.tt_table.rendered = ->
+
+  #initializations
+  $("#tt_table").dataTable
+    iDisplayLength: 10
+    bDeferRender: true
+    fnDrawCallback: (oSettings) ->
+      that = this
+
+      # Redo for sorted AND filtered...
+      # if ( oSettings.bSorted || oSettings.bFiltered )
+      # Only redo for sorted, not filtered (ie. you can search/filter and ranking stays stable)
+      if oSettings.bSorted
+        @$("td:first-child",
+          filter: "applied"
+        ).each (i) ->
+          that.fnUpdate i + 1, @parentNode, 0, false, false
+
+
+    aoColumnDefs: [
+      bSortable: false
+      aTargets: [0]
+    ]
+    aaSorting: [[6, "desc"]]

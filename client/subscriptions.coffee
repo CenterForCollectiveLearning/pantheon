@@ -6,11 +6,32 @@ Meteor.subscribe "domains_pub"
 # These subscriptions are explicitly global variables
 allpeopleSub = Meteor.subscribe("allpeople")
 
-# These are client only collections
+# Derived Collections -- These are client only collections
+# TODO: Do we need the @ sign here?
+@PeopleTopN = new Meteor.Collection "topNpeople"
+@Treemap = new Meteor.Collection "treemap"
+@CountriesRanking = new Meteor.Collection "countries_ranking"
+@DomainsRanking = new Meteor.Collection "domains_ranking"
+@Matrix = new Meteor.Collection "matrix"
+@Scatterplot = new Meteor.Collection "scatterplot"
+@WorldMap = new Meteor.Collection "worldmap"
+@Histogram = new Meteor.Collection "histogram"
+@Tooltips = new Meteor.Collection "tooltipCollection"
+@Timeline = new Meteor.Collection "timeline"
+@Stacked = new Meteor.Collection "stacked"
+
+# People Page
+@OccupationPeople = new Meteor.Collection "occupationPeople"
+@BirthyearPeople = new Meteor.Collection "birthyearPeople"
+@CountryPeople = new Meteor.Collection "countryPeople"
+@PersonImports = new Meteor.Collection "person_imports"
+
+# Subscription names ... TODO: do we need these?
 top10Sub = null
 dataSub = null
 tooltipSub = null
 tooltipCountSub = null
+clicktooltipSub = null
 
 #
 #Subscription for the current data that is being visualized
@@ -77,23 +98,24 @@ Deps.autorun ->
       switch vizType
         # Treemap modes
         when "treemap"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, "both", category, categoryLevel, dataset)
+          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
-        when "matrix" #TODO: need to alter top10Sub to take gender into account! this also is an issue with the tooltips
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, gender, category, categoryLevel, dataset)
+        when "matrix"
+          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, gender, category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, dataset, onReady)
         # Scatterplot modes
         when "scatterplot"
           dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, dataset, onReady)
         # Map modes
         when "map"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, "both", category, categoryLevel, dataset)
+          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, dataset, onReady)
+#          clicktooltipSub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
         when "histogram"
           dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         when "stacked"
-          top10Sub = Meteor.subscribe("peopletop10", begin, end, L, country, "both", category, categoryLevel, dataset)
+          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         else
           console.log "Unsupported vizType"
@@ -102,7 +124,7 @@ Deps.autorun ->
         when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, onReady)
         when "people"
-          dataSub = Meteor.subscribe("peopletopN", begin, end, L, country, category, categoryLevel, "all", onReady)
+          dataSub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
         when "domains"
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady)
         else
@@ -145,13 +167,20 @@ Deps.autorun ->
   onDataReady = ->
     Session.set "tooltipDataReady", true
   hover = Session.get("hover")
-  return  unless hover
+  showclicktooltip = Session.get("clicktooltip")
+  return  unless hover or showclicktooltip
   Session.set "tooltipDataReady", false
-  category = Session.get("tooltipCategory")
+  if hover
+    category = Session.get("tooltipCategory")
+    categoryLevel = Session.get("tooltipCategoryLevel")
+    countryCode = Session.get("tooltipCountryCode")
+  else if showclicktooltip
+    category = Session.get("bigtooltipCategory")
+    categoryLevel = Session.get("bigtooltipCategoryLevel")
+    countryCode = Session.get("bigtooltipCountryCode")
+
   categoryX = Session.get("categoryX")
   categoryY = Session.get("categoryY")
-  categoryLevel = Session.get("tooltipCategoryLevel")
-  countryCode = Session.get("tooltipCountryCode")
   countryCodeX = Session.get("tooltipCountryCodeX")
   countryCodeY = Session.get("tooltipCountryCodeY")
   gender = Session.get("gender")
@@ -160,4 +189,21 @@ Deps.autorun ->
   L = parseInt(Session.get("langs"))
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
-  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, dataset, onDataReady)
+  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, dataset, showclicktooltip, onDataReady)
+
+
+
+
+#Deps.autorun ->
+#  onDataReady = ->
+#    Session.set "tooltipDataReady", true
+#  showclicktooltip = Session.get "clicktooltip"
+#  return unless showclicktooltip
+#  category = Session.get("tooltipCategory")
+#  categoryLevel = Session.get("tooltipCategoryLevel")
+#  country = Session.get("tooltipCountryCode")
+#  begin = parseInt(Session.get("from"))
+#  end = parseInt(Session.get("to"))
+#  L = parseInt(Session.get("langs"))
+#  dataset = Session.get("dataset")
+#  clicktooltipSub = Meteor.subscribe("peopletopN", begin, end, L, country, category, categoryLevel, "all", dataset, onDataReady) #TODO: move this subscription???

@@ -17,6 +17,7 @@
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
                 {{> tooltip}}
+                {{> clicktooltip }}
             </div>
         </div>
     </div>
@@ -170,6 +171,67 @@
 </template>
 
 <!-- Big Tooltip (Overlay for visualization click events -->
-<template name="bigtooltip">
-    <div></div>
+<!-- Reuses the d3plus tooltip_large styling TODO: update to custom styling for OGC-->
+<template name="clicktooltip">
+    {{#if showclicktooltip}}
+        {{#if tooltipDataReady}}
+        <div id = "clicktooltip">
+            <div id="d3plus_tooltip_curtain_tree_map" class="d3plus_tooltip_curtain" style="background-color: rgb(255, 255, 255);"></div>
+            <div id = "d3plus_tooltip_id_treemap" class="d3plus_tooltip d3plus_tooltip_large">
+                <div class="d3plus_tooltip_container" style="width: 900px; height: 500px;">
+                    <div class="d3plus_tooltip_title">{{title}} : {{categoryName}} ({{count}} individuals)</div>
+                    <div class="d3plus_tooltip_body" style="width: 250px;">
+                        <!--<div class="d3plus_tooltip_data_container">-->
+                            <!--<div class="d3plus_tooltip_data_block">-->
+                                <!--<div class="d3plus_tooltip_data_name">Share</div>-->
+                                <!--<div class="d3plus_tooltip_data_value">{{share}}</div>-->
+                            <!--</div>-->
+                            <!--<div class="d3plus_tooltip_data_seperator"></div>-->
+                            <!--<div class="d3plus_tooltip_data_block" style="color: rgb(69, 135, 101);">-->
+                                <!--<div class="d3plus_tooltip_data_name">Total Exports</div>-->
+                                <!--<div class="d3plus_tooltip_data_value">{{count}}</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div>Who Exports {{categoryName}}s?<br> <a class="closeclicktooltip" href="/treemap/domain_exports_to/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}">
+                            <img src="/treemap_icon.png"></a>&nbsp;&nbsp;&nbsp;
+                            <!--a href="/map/map/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/map_icon.png"></a--><br>
+                            <br>Who has comparative advantage in {{categoryName}}s?<br>
+                            <a class="closeclicktooltip" href="/histogram/domain_exports_to/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/histogram_icon.png"></a>
+                        </div>
+                    </div>
+                    <div class="d3plus_tooltip_html" style="width: 640px; height: 425px;">
+                        {{> tt_table }}
+                    </div>
+                </div>
+                <div class="d3plus_tooltip_close" style="background-color: rgb(216, 197, 104);">×</div>
+            </div>
+        </div>
+        {{/if}}
+    {{/if}}
+</template>
+
+<template name="tt_table">
+    {{#constant}}
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="tt_table">
+        <thead>
+        {{> tt_pp_cols }}
+        </thead>
+        <tbody>
+        {{> ranked_people_list }}
+        </tbody>
+    </table>
+    {{/constant}}
+</template>
+
+<!--Person header template -->
+<template name="tt_pp_cols">
+    <tr>
+        <th name="Rank Index">Ranking</th>
+        <th name="Name of Individual">Name</th>
+        <th name="Country of Birth">Country</th>
+        <th name="Birth year of individual">Birth Year</th>
+        <th name="Gender">Gender</th>
+        <th name="Occupation - lowest level of domain classification">Occupation</th>
+        <th name="Number of Wikipedia language editions">L</th>
+    </tr>
 </template>

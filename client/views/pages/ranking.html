@@ -72,7 +72,7 @@
 <!-- Country in Ranked List -->
 <template name="ranked_country">
     <tr class = "{{continentName}}">
-        <td>{{rank}}</td>
+        <td>1</td>
         <td>{{countryName}}</td>
         <td>{{numppl}}</td>
         <td>{{percentwomen}}</td>
@@ -98,8 +98,8 @@
 <!-- Person in Ranked List -->
 <template name="ranked_ppl">
     <tr class = "{{domain}}">
-        <td>{{rank}}</td>
-        <td>{{name}}</td>
+        <td>1</td>
+        <td><a class="closeclicktooltip" href="{{pathFor 'people'}}">{{name}}</a></td>
         <td>{{countryName}}</td>
         <td>{{birthyear}}</td>
         <td>{{gender}}</td>
@@ -124,7 +124,7 @@
 <!-- Domain in Ranked List -->
 <template name="ranked_domain">
     <tr class = "{{domain}}">
-        <td>{{rank}}</td>
+        <td>1</td>
         <td>{{occupation}}</td>
         <td>{{industry}}</td>
         <td>{{domain}}</td>
@@ -152,10 +152,10 @@
 </template>
 
 <template name="ranked_people_list">
-    {{person_blob}}
-    {{!#each people_full_ranking}}
-    {{!> ranked_ppl}}
-    {{!/each}}
+    {{!person_blob}}
+    {{#each people_full_ranking}}
+    {{> ranked_ppl person_lookup}}
+    {{/each}}
 </template>
 
 <template name="ranked_countries_list">

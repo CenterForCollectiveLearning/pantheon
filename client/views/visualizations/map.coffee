@@ -79,6 +79,21 @@ mouseout = (d) ->
   Session.set "showTooltip", false
   mouseoverCell = null
 
+clickevent = (d) ->
+  Session.set "hover", false
+  dataset = Session.get("dataset")
+  countryCode3 = d.id
+  countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
+  category = Session.get("category")
+  categoryAggregation = Session.get("categoryLevel")
+  # Subscription Parameters
+  Session.set "bigtooltipCategory", category
+  Session.set "bigtooltipCategoryLevel", categoryAggregation
+  Session.set "bigtooltipCountryCode", countryCode
+  Session.set "clicktooltip", true
+
+
+
 # TODO optional: un-highlight country
 get_range_log = (data, num_buckets) ->
   min = d3.min(data, (c) ->
@@ -139,7 +154,7 @@ Template.map_svg.rendered = ->
       value_color doc.count
     else
       "#FFF"
-  ).on("mousemove", mouseover).on("mouseout", mouseout)
+  ).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
   d3.select(".key").selectAll("text").text (d, i) ->
     value_range_big[i].toFixed 0
 
