@@ -132,6 +132,29 @@ Template.histogram_svg.rendered = ->
         $("#tooltip").empty()
         d3.selectAll(".axis_hover").remove()
 
+    clickevent = (p) ->
+      Session.set "hover", false
+      Session.set "showTooltip", false
+      dataset = Session.get("dataset")
+
+      if vizMode is "country_exports"
+        countryCode = Session.get "country"
+        countryName = Countries.findOne({countryCode: countryCode, dataset:dataset}).countryName
+        category = p[yVar]
+        categoryLevel = "industry"
+      else if vizMode is "domain_exports_to"
+        countryCode = p.countryCode
+        countryName = p.countryName
+        category = Session.get "category"
+        categoryLevel = Session.get "categoryLevel"
+
+      # Subscription Parameters
+      Session.set "bigtooltipCategory", category
+      Session.set "bigtooltipCategoryLevel", categoryLevel
+      Session.set "bigtooltipCountryCode", countryCode
+      Template.clicktooltip.title = countryName + ": " + category
+      Session.set "clicktooltip", true
+
     x.domain(d3.extent(data, (d) -> d.rca)).nice()
     y.domain(data.map((d) -> 
         console.log d[yVar], yVar
@@ -148,6 +171,7 @@ Template.histogram_svg.rendered = ->
         .attr("height", y.rangeBand())
         .on("mousemove", mouseover)
         .on("mouseout", mouseout)
+        .on("click", clickevent)
 
     svg.selectAll("text")
         .data(data)

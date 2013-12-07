@@ -23,6 +23,7 @@ Template.ranking_table.rendered = ->
     ]
     aaSorting: [[6, "desc"]]
 
+#  Render a tooltip for the column headers
   $("th").on mousemove: (e) ->
     x = e.pageX
     y = e.pageY
@@ -68,7 +69,7 @@ Template.ranking_accordion.events = "click h3": (d) ->
   category = defaults.category
   
   # Reset parameters for a viz type change
-  category = "EXPLORATION"  if option is "people_ranking" #TODO: figure out why all people ranking is SLOW.... default to astronauts now
+  category = "EXPLORATION"  if option is "people_ranking" #TODO: all people ranking is SLOW.... default to astronauts now
   path = "/rankings/" + modeToEntity[option] + "/" + defaults.country + "/" + category + "/" + defaults.from + "/" + defaults.to
   Router.go path
 

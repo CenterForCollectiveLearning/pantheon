@@ -85,8 +85,6 @@ Template.treemap_svg.rendered = ->
     
 
     viz.type("tree_map")
-      .tooltip_info({})
-      # you cannot do this what is wrong withy  ou
       .width($(".page-middle").width())
       .height($(".page-middle").height())
       .id_var("id")
@@ -97,9 +95,7 @@ Template.treemap_svg.rendered = ->
         prefix: "Total Exports: "
         suffix: " individuals"
       )
-      .nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color").click_function(inner_html)
-    # click_function - adding a click event for the treemaps
-    # this is not rendered with a template here
+      .nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color")
     d3.select(context.find("svg")).datum(flat).call viz
   else if vizMode is "domain_exports_to"
     attr = Countries.find().fetch()
@@ -149,10 +145,22 @@ Template.treemap_svg.rendered = ->
         num_ppl: d.count
         year: 2000
 
-    viz.type("tree_map").tooltip_info({}).width($(".page-middle").width()).height($(".page-middle").height()).id_var("id").attrs(attrs).text_var("name").value_var("num_ppl").total_bar(
-      prefix: "Total Exports: "
-      suffix: " individuals"
-    ).nesting(["nesting_1", "nesting_3"]).depth("nesting_3").font("Lato").font_weight("300").color_var("color").click_function(inner_html)
+    viz.type("tree_map")
+        .width($(".page-middle").width())
+        .height($(".page-middle").height())
+        .id_var("id")
+        .attrs(attrs)
+        .text_var("name")
+        .value_var("num_ppl")
+        .total_bar(
+          prefix: "Total Exports: "
+          suffix: " individuals"
+          )
+        .nesting(["nesting_1", "nesting_3"])
+        .depth("nesting_3")
+        .font("Lato")
+        .font_weight("300")
+        .color_var("color")
     d3.select(context.find("svg")).datum(flat).call viz
   else if vizMode is "domain_imports_from" or vizMode is "bilateral_importers_of"
     attr = Languages.find().fetch()
@@ -192,7 +200,6 @@ Template.treemap_svg.rendered = ->
     
 
     viz.type("tree_map")
-        .tooltip_info({})
         .width($(".page-middle").width())
         .height($(".page-middle").height())
         .id_var("id")

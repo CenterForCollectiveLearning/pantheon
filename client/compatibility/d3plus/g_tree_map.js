@@ -198,65 +198,32 @@ d3plus.tree_map = function(vars) {
       d3.select("#cell_"+id).select("rect")
         .attr("opacity",0.85)
 
-      if (!covered) {
-        d3plus.tooltip.remove(vars.type)
-      }
-
     })
     .on(d3plus.evt.down,function(d){
-      
-      covered = true
-        
-      var id = find_variable(d,vars.id_var),
-          self = d3.select("#cell_"+id).node()
-      
-      make_tooltip = function(html) {
-      
-        d3.select("#cell_"+id).select("rect")
-          .attr("opacity",0.85)
-        
-        d3plus.tooltip.remove(vars.type)
-
-        var ex = {}
-        ex[vars.text_format("share")] = d.share
-        var tooltip_data = get_tooltip_data(d,"long",ex)
-
-        d3plus.tooltip.create({
-          "title": find_variable(d,vars.text_var),
-          "color": find_color(d),
-          "icon": find_variable(d,"icon"),
-          "style": vars.icon_style,
-          "id": vars.type,
-          "fullscreen": true,
-          "html": html,
-          "footer": vars.data_source,
-          "data": tooltip_data,
-          "mouseevents": true,
-          "parent": d3.select("#viz"),
-          "background": vars.background
-        })
-        
+      Session.set("hover", false);
+      Session.set("showTooltip", false);
+      var id = find_variable(d,vars.id_var).replace(" ", "_");
+      var dataset = Session.get("dataset");
+      var vizMode = Session.get("vizMode");
+      if (vizMode === "country_exports") {
+          console.log("GETTING TOOLTIPS");
+          var countryCode = Session.get("country");
+          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
+          var category = id.replace("_", " ").toUpperCase();
+          var categoryLevel = "occupation";
+      } else if (vizMode === "domain_exports_to") {
+          var countryCode = id.replace("_", " ");
+          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
+          var category = Session.get("category").toUpperCase();
+          var categoryLevel = Session.get("categoryLevel");
       }
-      
-      var html = vars.click_function ? vars.click_function(id) : null
-      
-      if (typeof html == "string"){
-          make_tooltip(html)
-      }
-      else if (html && html.url && html.callback) {
-        d3.json(html.url,function(data){
-          html = html.callback(data)
-          make_tooltip(html)
-        })
-      }
-      else if (vars.tooltip_info.long) {
-        make_tooltip(html)
-      }
-      
-    })
-    .on(d3plus.evt.move,function(d){
-      covered = false
-      d3plus.tooltip.move(d3.event.clientX,d3.event.clientY,vars.type)
+      // Subscription Parameters
+      Session.set("bigtooltipCategory", category);
+      Session.set("bigtooltipCategoryLevel", categoryLevel);
+      Session.set("bigtooltipCountryCode", countryCode);
+      Template.clicktooltip.title = countryCode !== "all" ? countryName + ": " + category : category;
+      // Set the session variable to show the clicktooltip
+      Session.set("clicktooltip", true);
     })
   
   cell.transition().duration(d3plus.timing)

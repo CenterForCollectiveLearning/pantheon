@@ -223,13 +223,6 @@ Template.tooltip.helpers
 Template.clicktooltip.helpers
   showclicktooltip: ->
     Session.get "clicktooltip"
-  title: ->
-    vizMode = Session.get "vizMode"
-    switch vizMode
-      when "map"
-        countryCode = Session.get("bigtooltipCountryCode")
-        country = (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
-        return country
   categoryName : ->
     Session.get("bigtooltipCategory").capitalize()
   category : ->
@@ -242,7 +235,7 @@ Template.clicktooltip.helpers
     Session.get("langs")
   dataset : ->
     Session.get("dataset")
-  count: -> # TODO: update this count properly
+  count: ->
     doc = Tooltips.findOne(_id: "count")
     (if (typeof doc isnt "undefined") then doc.count else 0)
 
@@ -262,17 +255,11 @@ Template.tt_table.rendered = ->
     bDeferRender: true
     fnDrawCallback: (oSettings) ->
       that = this
-
-      # Redo for sorted AND filtered...
-      # if ( oSettings.bSorted || oSettings.bFiltered )
-      # Only redo for sorted, not filtered (ie. you can search/filter and ranking stays stable)
       if oSettings.bSorted
         @$("td:first-child",
           filter: "applied"
         ).each (i) ->
           that.fnUpdate i + 1, @parentNode, 0, false, false
-
-
     aoColumnDefs: [
       bSortable: false
       aTargets: [0]

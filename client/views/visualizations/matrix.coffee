@@ -37,10 +37,28 @@ Template.matrix_svg.rendered = ->
   svg = d3.select(@find("svg.matrix")).attr("width", matrixProps.fullWidth).append("g").attr("transform", "translate(" + matrixProps.margin.left + "," + 0 + ")")
   header_svg = d3.select(@find("svg.header")).attr("width", matrixProps.fullWidth).append("g").attr("transform", "translate(" + matrixProps.margin.left + "," + matrixProps.headerHeight + ")")
   
-  Deps.autorun ->
+  Deps.autorun -> # TODO: why is this in a Deps.autorun?
 
 
     # TODO: Don't re-render tooltip for already selected cell
+    clickevent = (p) ->
+      Session.set "hover", false
+      Session.set "showTooltip", false
+      dataset = Session.get("dataset")
+
+      countryCode = countries[p.y]
+      countryName = Countries.findOne({countryCode: countryCode, dataset:dataset}).countryName
+
+      industry = industries[p.x]
+      categoryLevel = "industry"
+
+      # Subscription Parameters
+      Session.set "bigtooltipCategory", industry
+      Session.set "bigtooltipCategoryLevel", categoryLevel
+      Session.set "bigtooltipCountryCode", countryCode
+      Template.clicktooltip.title = countryName + ": " + industry
+      Session.set "clicktooltip", true
+
     mouseover = (p) ->
       console.log "MOUSEOVER"
       Session.set "hover", true
@@ -116,7 +134,7 @@ Template.matrix_svg.rendered = ->
         ))
         rect = cell.enter().append("rect").attr("class", "cell").attr("x", (d) ->
           -matrixScales.x(d.y) - matrixScales.x.rangeBand()
-        ).attr("width", (Math.round(matrixScales.x.rangeBand() * 10) / 10) - 0.1).attr("height", (Math.round(matrixScales.y.rangeBand() * 10) / 10) - 0.5).on("mousemove", mouseover).on("mouseout", mouseout)
+        ).attr("width", (Math.round(matrixScales.x.rangeBand() * 10) / 10) - 0.1).attr("height", (Math.round(matrixScales.y.rangeBand() * 10) / 10) - 0.5).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
         
         # ENTER + UPDATE
         rect.style "fill", (d) ->

@@ -83,6 +83,7 @@ clickevent = (d) ->
   Session.set "hover", false
   dataset = Session.get("dataset")
   countryCode3 = d.id
+  countryName = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryName
   countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
   category = Session.get("category")
   categoryAggregation = Session.get("categoryLevel")
@@ -90,6 +91,7 @@ clickevent = (d) ->
   Session.set "bigtooltipCategory", category
   Session.set "bigtooltipCategoryLevel", categoryAggregation
   Session.set "bigtooltipCountryCode", countryCode
+  Template.clicktooltip.title = (if category isnt "all" then countryName + ": " + category else countryName)
   Session.set "clicktooltip", true
 
 
@@ -130,6 +132,7 @@ Template.matrix_svg.properties =
 
 Template.map_svg.properties = mapProps
 color_gradient = ["#f2ecb4", "#f2e671", "#f6d626", "#f9b344", "#eb8c30", "#e84d24"]
+
 Template.map_svg.rendered = ->
   data = WorldMap.find().fetch()
   value_range = get_range_log(data, 5)
