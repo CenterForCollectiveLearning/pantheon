@@ -49,11 +49,15 @@
 <template name="country_vs_country_mode">
     {{> select_countryX}}
     {{> select_countryY}}
+    {{> select_scale}}
+    {{> select_mirror}}
 </template>
 
 <template name="language_vs_language_mode">
     {{> select_languageX}}
     {{> select_languageY}}
+    {{> select_scale}}
+    {{> select_mirror}}
 </template>
 
 <template name="domain_vs_domain_mode">
@@ -181,6 +185,27 @@
 
 <template name="occupation_item">
     <option class="occupation" value="{{occupation}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{occupation}}</option>
+</template>
+
+<template name="select_scale">
+    <div class="parameter-selection">
+        <label>Scale Type</label>
+        <div class="btn-group">
+            <button class="btn" data-scale-type="linear">Linear</button>
+            <button class="btn" data-scale-type="log">Logarithmic</button>
+        </div>
+    </div>
+</template>
+
+
+<template name="select_mirror">
+    <div class="parameter-selection">
+        <label>Square Axes</label>
+        <div class="btn-group">
+            <button class="btn" data-mirror-type="true">Yes</button>
+            <button class="btn" data-mirror-type="false">No</button>
+        </div>
+    </div>
 </template>
 
 <template name="select_from">

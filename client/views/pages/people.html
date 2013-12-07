@@ -13,7 +13,7 @@
 	</div>
 	<div id="page" class="container-fluid person-page">
 		<div class="row-fluid">
-			<div class="page-middle trans-bg text span6 offset3">
+			<div class="page-middle trans-bg text span8 offset2">
 <!-- 				<section class="picture">
 					<img class="photo" src="/images/people/{{en_curid}}.jpg">
 					{{! Why doesn't people_images work?}}
@@ -41,9 +41,9 @@
 
 <!-- Accordion Selector -->
 <template name="people_accordion">
-	{{#each personImports}}
-	    {{lang_name}}
-	{{/each}}
+	{{!#each personImports}}
+	    {{!lang_name}}
+	{{!/each}}
     <div class="people-accordion">
         <h3 class="app">{{occupation}}</h3>
         <div>
@@ -74,12 +74,14 @@
 </template>
 
 <template name="ranking_person">
-	<li>
+	<li class="person">
 		<a href="{{pathFor 'people'}}">
-			<div class="person-photo-container">
-				<div class="top-info"><div class="rank">{{rank}}</div><div class="numlangs">{{numlangs}}</div></div>
-				<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.gif'"/></a>
-				<div class="bottom-info"><div>{{name}}</div></div>
+			<div class="person-container">
+				<div class="top-info"><div class="rank">Rank: {{rank}}</div><div class="numlangs">Number of Languages: {{numlangs}}</div></div>
+				<div class="person-image-container">
+					<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.gif'"/></a>
+				</div>
+				<div class="bottom-info">{{name}}</div>
 			</div>
 		</a>
 	</li>

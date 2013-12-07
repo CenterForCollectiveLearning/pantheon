@@ -167,6 +167,20 @@ Template.select_dataset.rendered = ->
     path[8] = dataset
     Router.go path.join("/"))
 
+Template.select_scale.events =
+  "click button": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    scaleType = $(srcE).data "scale-type"
+    console.log scaleType
+    Session.set "scatterplotScale", scaleType
+
+Template.select_mirror.events =
+  "click button": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    mirrorType = $(srcE).data "mirror-type"
+    Session.set "scatterplotMirror", mirrorType
+
+
 Template.country_dropdown.countries = ->
   Countries.find {dataset: Session.get("dataset")},
     sort:

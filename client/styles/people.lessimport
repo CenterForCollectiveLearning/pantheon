@@ -23,26 +23,27 @@
     	color: white;
     	font-size: 0.75em;
     	letter-spacing: 1px;
+        text-transform: uppercase;
+
+        span {
+            background-image: none;
+        }
     }
 
     // Tidy up this CSS!
     div {
+        padding: 0 !important;
     	ul {
+            margin: 0;
     		list-style-type: none;
     		li {
-    			width: 20%;
-    			height: 215px;
     			display: inline;
     			list-style-type: none;
 
-    			div.person-photo-container {
-                    min-width: 100px;
-    				max-width: 150px;
-    				height: 215px;
+    			div.person-container {
+                    width: 20%;
     				float: left;
     				position: relative;
-    				// text-transform: uppercase;
-    				
     				font-size: 1.0em;
 
     				div.top-info {
@@ -51,6 +52,11 @@
     					background-color: black;
     					height: 1.5em;
     					width: 100%;
+
+                        &.hovered {
+                            background-color: @color_gold;
+                            color: black;
+                        }
 
     					div.rank {
     						width: 50%;
@@ -79,11 +85,21 @@
     					bottom: 0;
     					color: white;
     					width: 100%;
-    				}
+                        // TODO Handle overflow gracefully
+                        // white-space: nowrap;
+                        // text-overflow: ellipsis;
 
-    				img.person-image {
-    					width: 150px;
-    				}
+                        &.hovered {
+                            background-color: @color_gold;
+                            color: black;
+                        }
+                    }
+
+                    div.person-image-container {
+                        border: 1px solid black;
+                        img.person-image {
+                        }
+                    }
     			}
     			a {
     				text-decoration: none;

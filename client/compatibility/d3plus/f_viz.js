@@ -10,7 +10,7 @@ d3plus.viz = function() {
     "arc_inners": {},
     "arc_sizes": {},
     "attrs": {},
-    "background": "#ffffff",
+    "background": "#000000",
     "boundaries": null,
     "click_function": null,
     "color_var": "color",
@@ -111,12 +111,12 @@ d3plus.viz = function() {
     "xaxis_val": null,
     "xaxis_var": null,
     "xscale": null,
-    "xscale_type": "linear",
+    "xscale_type": "log", // "linear",
     "yaxis_domain": null,
     "yaxis_val": null,
     "yaxis_var": null,
     "yscale": null,
-    "yscale_type": "linear",
+    "yscale_type": "log", // "linear",
     "year": null,
     "years": null,
     "year_var": "year",
@@ -152,7 +152,7 @@ d3plus.viz = function() {
 
   chart = function(selection) {
     selection.each(function(data_passed) {
-      
+
       if (vars.dev) console.log("[d3plus] *** Start Chart ***")
       
       // Things to do ONLY when the data has changed
@@ -855,7 +855,7 @@ d3plus.viz = function() {
         .attr("x",function(d) { return d.x; })
         .attr("y",function(d) { return d.y+offset; })
         .attr("font-size",font_size)
-        .attr("fill","#333")
+        .attr("fill","#FFF")  // Changed
         .attr("text-anchor", "middle")
         .attr("font-family", vars.font)
         .style("font-weight", vars.font_weight)
@@ -1668,6 +1668,13 @@ d3plus.viz = function() {
     vars.svg_width = x;
     return chart;
   };
+
+  // CHANGED
+  chart.xscale_type = function(x) {
+    if (!arguments.length) return vars.xscale_type;
+    vars.xscale_type = x;
+    return chart;
+  };
   
   chart.xaxis_domain = function(x) {
     if (!arguments.length) return vars.xaxis_domain;
@@ -1694,6 +1701,13 @@ d3plus.viz = function() {
     return chart;
   };
   
+  // CHANGED
+  chart.yscale_type = function(x) {
+    if (!arguments.length) return vars.yscale_type;
+    vars.yscale_type = x;
+    return chart;
+  };
+
   chart.yaxis_domain = function(x) {
     if (!arguments.length) return vars.yaxis_domain;
     yaxis_domain = x.reverse();
@@ -1781,7 +1795,7 @@ d3plus.viz = function() {
   
   var label_style = {
     "font-size": "14px",
-    "fill": "#333",
+    "fill": "#888", // Changed
     "text-anchor": "middle"
   }
   
@@ -1913,7 +1927,6 @@ d3plus.viz = function() {
       .attr("transform", "translate(" + vars.graph.margin.left + "," + vars.graph.margin.top + ")")
 
     vars.chart_enter.append("rect")
-      .style('fill','#fafafa')
       .attr("id","background")
       .attr('x',0)
       .attr('y',0)
@@ -1925,7 +1938,6 @@ d3plus.viz = function() {
       
     vars.chart_enter.append("path")
       .attr("id","mirror")
-      .attr("fill","#000")
       .attr("fill-opacity",0.03)
       .attr("stroke-width",1)
       .attr("stroke","#ccc")
@@ -1951,6 +1963,7 @@ d3plus.viz = function() {
       .attr('class', 'x_axis_label')
       .attr('x', labelx)
       .attr('y', vars.height-10)
+      .attr("fill", "#FFF") // Changed
       .text(vars.format(vars.xaxis_var))
       .attr("font-family",vars.font)
       .attr("font-weight",vars.font_weight)
@@ -1961,6 +1974,7 @@ d3plus.viz = function() {
       .attr('class', 'y_axis_label')
       .attr('y', 15)
       .attr('x', -(vars.graph.height/2+vars.graph.margin.top))
+      .attr("fill", "#FFF") // Changed
       .text(vars.format(vars.yaxis_var))
       .attr("transform","rotate(-90)")
       .attr("font-family",vars.font)
@@ -1996,10 +2010,13 @@ d3plus.viz = function() {
         
     d3.select("#mirror").transition().duration(vars.graph.timing)
       .attr("opacity",function(){
-        return vars.mirror_axis ? 1 : 0
+        return 1
       })
       .attr("d",function(){
-        return "M "+vars.graph.width+" "+vars.graph.height+" L 0 "+vars.graph.height+" L "+vars.graph.width+" 0 Z"
+        // TODO Make it work for reversed axes
+        // TODO Take buffer into account programmatically
+        // TODO Don't make the dotted line collide
+        return "M "+vars.graph.width+" "+(vars.graph.height+1)+" L 0 "+(vars.graph.height+1)+" L "+(vars.xaxis_domain[1] + 4.5)+" 0 L "+vars.graph.width+" 0 Z"
       })
 
     // Update X axis

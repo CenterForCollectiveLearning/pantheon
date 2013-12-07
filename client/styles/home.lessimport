@@ -131,6 +131,17 @@ section {
 	}
 }
 
+section#vision {
+	background-color: black;
+	padding-top: 2em;
+	height: 100%;
+	border: solid @color_gold;
+    border-width: 0 0 3px 0;
+	.text {
+		font-size: 1.25em;
+	}
+}
+
 section#video {
 	background: black;
 	padding-top: 2em;

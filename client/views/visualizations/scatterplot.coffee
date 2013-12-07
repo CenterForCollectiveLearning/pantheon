@@ -150,12 +150,37 @@ Template.scatterplot_svg.rendered = ->
   inner_html = (obj) ->
     "This is some test HTML"
 
-  
-  #    console.log("orignal data", data);
+  # console.log("orignal data", data);
   # console.log("aggregated", aggregated);
   # console.log("FLAT DATA: ", flatData);
   # console.log("ATTRS: ", attrs);
+
+  Deps.autorun( ->
+    scaleType = Session.get("scatterplotScale")
+    mirrorType = (Session.get("scatterplotMirror") is "true")
+
+    viz.type("pie_scatter")
+      .width($(".page-middle").width() - 20)
+      .height($(".page-middle").height() - 20).id_var("id")
+      .attrs(attrs)
+      .text_var("name")
+      .xaxis_var(x_name)
+      .yaxis_var(y_name)
+      .xscale_type(scaleType)
+      .yscale_type(scaleType)
+      # .value_var("total")
+      .nesting(nesting)
+      .depth(nestingDepth)
+      .text_format(text_formatting)
+      .spotlight(false)
+      .active_var("active1")
+      .click_function(inner_html)
+      .font_weight(300)
+      .background("#000000")
+      .font("Lato")
+      .mirror_axis(mirrorType)
+
+    d3.select(context.find("svg")).datum(flatData).call viz
+  )
   
-  # .dev(true)
-  viz.type("pie_scatter").width($(".page-middle").width() - 20).height($(".page-middle").height() - 20).id_var("id").attrs(attrs).text_var("name").xaxis_var(x_name).yaxis_var(y_name).value_var("total").nesting(nesting).depth(nestingDepth).text_format(text_formatting).spotlight(false).active_var("active1").click_function(inner_html).background("#000000").font("Lato").font_weight(400).mirror_axis false
-  d3.select(context.find("svg")).datum(flatData).call viz
+  

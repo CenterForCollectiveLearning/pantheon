@@ -80,7 +80,7 @@ d3plus.pie_scatter = function(vars) {
     .outerRadius(function(d) { return d.arc_radius })
     .endAngle(function(d) { return d.arc_angle })
   
-  // sort nodes so that smallest are always on top
+  // sort nodes so that smallest are always on top"
   vars.data.sort(function(node_a, node_b){
     return node_b[vars.value_var] - node_a[vars.value_var];
   })
@@ -139,7 +139,7 @@ d3plus.pie_scatter = function(vars) {
       Session.set("hover", true);
       
       var val = d[vars.value_var] ? d[vars.value_var] : vars.size_scale.domain()[0]
-      var radius = vars.size_scale(val),
+      var radius = 9, // CHANGED vars.size_scale(val),
           x = vars.x_scale(d[vars.xaxis_var]),
           y = vars.y_scale(d[vars.yaxis_var]),
           color = d[vars.active_var] || d.num_children_active/d.num_children == 1 ? "#333" : find_color(d[vars.id_var]),
@@ -355,7 +355,7 @@ d3plus.pie_scatter = function(vars) {
 
       var val = d[vars.value_var]
       val = val && val > 0 ? val : vars.size_scale.domain()[0]
-      d.arc_radius = vars.size_scale(val);
+      d.arc_radius = 9; // vars.size_scale(val);
       
       d3.select(this).select("circle").transition().duration(d3plus.timing)
         .style("stroke", function(dd){

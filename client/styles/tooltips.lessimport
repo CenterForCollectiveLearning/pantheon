@@ -3,6 +3,7 @@
 	background-color: rgba(0, 0, 0, 0.85);
 	position: absolute;
 	border-radius: 2px;
+	z-index: 1000;
 
 	#tooltip-inner {
 		margin: 0.5em;

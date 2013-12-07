@@ -138,7 +138,7 @@ Template.question.question = ->
       when "female"
         gender = "women"
       when "ratio"
-        gender = "ratio of women to men"
+        gender = "women vs. men"
     if s_domains.charAt(0) is "-"
       console.log s_domains.charAt(s_domains.length - 1)
       if s_domains.charAt(s_domains.length - 1) is "y"
@@ -165,14 +165,14 @@ Template.question.question = ->
     switch mode
       when "country_exports"
         if type is "treemap"
-          return new Handlebars.SafeString("Who are the cultural exports of " + boldify(s_countries) + "?")
+          return new Handlebars.SafeString("Who are the culturally impactful people born in " + boldify(s_countries) + "?")
         else if type is "histogram"
           return new Handlebars.SafeString("What is the comparative advantage of " + boldify(s_countries) + "?")
       when "country_imports"
         return new Handlebars.SafeString((if (Session.get("language") is "all") then "Who does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
       when "domain_exports_to"
         if type is "treemap"
-          return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?")
+          return new Handlebars.SafeString("Where are the culturally impactful " + boldify(s_domains) + "from?")
         else if type is "histogram"
           return new Handlebars.SafeString("Who has comparative advantage in " + boldify(s_domains) + "?")
       when "domain_imports_from"
@@ -182,15 +182,15 @@ Template.question.question = ->
       when "bilateral_importers_of"
         return new Handlebars.SafeString("Where does " + boldify(s_countries) + " export " + boldify(s_domains) + " to?")
       when "matrix_exports"
-        return new Handlebars.SafeString("Who " + boldify(gender) + " does " + boldify(s_countries) + " export?")
+        return new Handlebars.SafeString("Who are culturally impactful " + boldify(gender) + "?")
       when "country_vs_country"
-        return new Handlebars.SafeString("Who does " + boldify(s_countryX) + " export compared to " + boldify(s_countryY) + "?")
+        return new Handlebars.SafeString("What culturally impactful people were born in " + boldify(s_countryX) + " vs. " + boldify(s_countryY) + "?")
       when "lang_vs_lang"
         return new Handlebars.SafeString("Who do " + boldify(s_languageX) + " speakers import compared to " + boldify(s_languageY) + " speakers?")
       when "domain_vs_domain"
         return new Handlebars.SafeString("Who exports " + boldify(s_domainX) + " compared to " + boldify(s_domainY) + "?")
       when "map"
-        return new Handlebars.SafeString("Who exports " + boldify(s_domains) + "?")
+        return new Handlebars.SafeString("Where are the culturally impactful " + boldify(s_domains) + "from?")
 
 #
 # TOOLTIPS

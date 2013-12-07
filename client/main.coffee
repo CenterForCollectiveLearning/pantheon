@@ -45,6 +45,8 @@ jQuery.cachedScript = (url, options) ->
   entity: "countries"
   gender: "both"
   dataset: "OGC"
+  scatterplotScale: "linear"
+  scatterplotMirror: true
 
 @IOMapping =
   country_exports:
@@ -137,6 +139,10 @@ Meteor.startup ->
   Session.setDefault "gender", "both"
   Session.setDefault "countryOrder", "count"
   Session.setDefault "industryOrder", "count"
+
+  # SCATTERPLOT
+  Session.setDefault "scatterplotScale", defaults.scatterplotScale
+  Session.setDefault "scatterplotMirror", defaults.scatterplotMirror
   
   # TOOLTIPS
   Session.setDefault "hover", false
@@ -203,9 +209,9 @@ leftSections = [
 #   template: "timeline"
 #   url: "/timeline"
 # ,
-  section: "Vision"
-  template: "vision"
-  url: "/vision"
+  # section: "Vision"
+  # template: "vision"
+  # url: "/vision"
 ]
 
 rightSections = [
