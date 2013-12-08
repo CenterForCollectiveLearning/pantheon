@@ -239,6 +239,97 @@ Template.clicktooltip.helpers
     doc = Tooltips.findOne(_id: "count")
     (if (typeof doc isnt "undefined") then doc.count else 0)
 
+Template.clicktooltip.render_links = ->
+  vizType = Session.get("vizType")
+  vizMode = Session.get("vizMode")
+  switch vizType
+    when "treemap"
+      if vizMode is "country_exports"
+        return new Handlebars.SafeString(Template.tt_treemap_country_exports(this))
+      else if vizMode is "domain_exports_to"
+        return new Handlebars.SafeString(Template.tt_treemap_domain_exports_to(this))
+    when "matrix","map"
+      return new Handlebars.SafeString(Template.tt_global_exports(this))
+    when "histogram"
+      if vizMode is "country_exports"
+        return new Handlebars.SafeString(Template.tt_histogram_country_exports(this))
+      else if vizMode is "domain_exports_to"
+        return new Handlebars.SafeString(Template.tt_histogram_domain_exports_to(this))
+
+Template.domain_exporter_question.categoryName = ->
+    Session.get("bigtooltipCategory").capitalize()
+
+Template.country_exports_question.countryName = ->
+  countryCode = Session.get("tooltipCountryCode")
+  return (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
+
+Template.country_advantage_question.countryName = ->
+  countryCode = Session.get("tooltipCountryCode")
+  return (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
+
+Template.domain_advantage_question.categoryName = ->
+  Session.get("bigtooltipCategory").capitalize()
+
+Template.treemap_domain_exports_to.helpers
+  category : ->
+    Session.get("bigtooltipCategory")
+  from : ->
+    Session.get("from")
+  to : ->
+    Session.get("to")
+  L : ->
+    Session.get("langs")
+  dataset : ->
+    Session.get("dataset")
+
+Template.treemap_country_exports.helpers
+  country : ->
+    Session.get("bigtooltipCountryCode")
+  from : ->
+    Session.get("from")
+  to : ->
+    Session.get("to")
+  L : ->
+    Session.get("langs")
+  dataset : ->
+    Session.get("dataset")
+
+Template.map_global_exports.helpers
+  category : ->
+    Session.get("bigtooltipCategory")
+  from : ->
+    Session.get("from")
+  to : ->
+    Session.get("to")
+  L : ->
+    Session.get("langs")
+  dataset : ->
+    Session.get("dataset")
+
+Template.histogram_domain_exports_to.helpers
+  category : ->
+    Session.get("bigtooltipCategory")
+  from : ->
+    Session.get("from")
+  to : ->
+    Session.get("to")
+  L : ->
+    Session.get("langs")
+  dataset : ->
+    Session.get("dataset")
+
+Template.histogram_country_exports.helpers
+  country : ->
+    Session.get("bigtooltipCountryCode")
+  from : ->
+    Session.get("from")
+  to : ->
+    Session.get("to")
+  L : ->
+    Session.get("langs")
+  dataset : ->
+    Session.get("dataset")
+
 Template.clicktooltip.events =
   "click .d3plus_tooltip_close,.d3plus_tooltip_curtain": (d) ->
     $("#clicktooltip").fadeOut()

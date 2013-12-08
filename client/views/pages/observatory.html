@@ -192,11 +192,8 @@
                                 <!--<div class="d3plus_tooltip_data_value">{{count}}</div>-->
                             <!--</div>-->
                         <!--</div>-->
-                        <div>Who Exports {{categoryName}}s?<br> <a class="closeclicktooltip" href="/treemap/domain_exports_to/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}">
-                            <img src="/treemap_icon.png"></a>&nbsp;&nbsp;&nbsp;
-                            <!--a href="/map/map/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/map_icon.png"></a--><br>
-                            <br>Who has comparative advantage in {{categoryName}}s?<br>
-                            <a class="closeclicktooltip" href="/histogram/domain_exports_to/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/histogram_icon.png"></a>
+                        <div>
+                            {{ render_links }}
                         </div>
                     </div>
                     <div class="d3plus_tooltip_html" style="width: 640px; height: 425px;">
@@ -208,6 +205,69 @@
         </div>
         {{/if}}
     {{/if}}
+</template>
+
+<template name="domain_exporter_question">
+    Who Exports {{categoryName}}s?
+</template>
+
+<template name="country_exports_question">
+    Who are the cultural exports of {{countryName}}?
+</template>
+
+<template name="domain_advantage_question">
+    Who has comparative advantage in {{categoryName}}s?
+</template>
+
+<template name="country_advantage_question">
+    What is the comparative advantage of {{countryName}}?
+</template>
+
+<template name="treemap_domain_exports_to">
+    <a class="closeclicktooltip" href="/treemap/domain_exports_to/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/treemap_icon.png"></a>
+</template>
+
+<template name="treemap_country_exports">
+    <a class="closeclicktooltip" href="/treemap/country_exports/{{country}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/treemap_icon.png"></a>
+</template>
+
+<template name="map_global_exports">
+    <a class="closeclicktooltip" href="/map/map/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/map_icon.png"></a>
+</template>
+
+<template name="histogram_domain_exports_to">
+    <a class="closeclicktooltip" href="/histogram/domain_exports_to/{{category}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/histogram_icon.png"></a>
+</template>
+
+<template name="histogram_country_exports">
+    <a class="closeclicktooltip" href="/histogram/country_exports/{{country}}/all/{{from}}/{{to}}/{{L}}/{{dataset}}"><img src="/histogram_icon.png"></a>
+</template>
+
+<template name="tt_treemap_country_exports">
+    <br>{{> domain_exporter_question}}<br> {{> treemap_domain_exports_to}} &nbsp;&nbsp;&nbsp;
+    {{> map_global_exports }} <br>
+    <br>{{> domain_advantage_question}}<br>
+    {{> histogram_domain_exports_to}}
+</template>
+
+<template name="tt_treemap_domain_exports_to">
+    <br>{{> country_exports_question}}<br> {{> treemap_country_exports}} <br>
+    <br>{{> country_advantage_question}}<br>
+    {{> histogram_country_exports}}
+</template>
+
+<template name="tt_global_exports">
+    {{> tt_treemap_country_exports }}
+    {{> tt_treemap_domain_exports_to }}
+</template>
+
+<template name="tt_histogram_country_exports">
+    <br>{{> domain_exporter_question}}<br> {{> treemap_domain_exports_to}} &nbsp;&nbsp;&nbsp;
+    {{> map_global_exports }} <br>
+</template>
+
+<template name="tt_histogram_domain_exports_to">
+    <br>{{> country_exports_question}}<br> {{> treemap_country_exports}} <br>
 </template>
 
 <template name="tt_table">
