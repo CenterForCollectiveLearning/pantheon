@@ -2,21 +2,28 @@ div.text {
 	margin: 0 auto;
 	padding: 2em;
 	border-radius: 3px;
+	color: #121212;
+	border: 3px solid black;
+	min-width: 645px !important;
+
+	font: 17px/26px georgia, "times new roman", times, serif;
+
+	background-color: white;
 
 	h2 {
 		margin-top: 0;
 		margin-bottom: 1em;
 		line-height: 1em;
+		text-align: center
 	}
 
 	max-height: 65%;
 	overflow-y: auto;
-	font-size: 1em;  // 16px
-	line-height: 1.5em; // 24px
 
 	p {
-		margin-top: 0;
-		margin-bottom: 1em;
+		width: 645px;
+		margin: 0 auto 24px auto;
+		color: #121212;
 	}
 
 	figure {

@@ -1,7 +1,6 @@
 /* @group Base */
 .chosen-container {
   position: absolute;
-  right: 6px;
   display: inline-block;
   vertical-align: middle;
   color: black;
@@ -39,7 +38,7 @@
   position: relative;
   display: block;
   overflow: hidden;
-  padding: 0 0 0 8px;
+  padding: 0 0 0 0;
   height: 23px;
   border: 1px solid #aaa;
   border-radius: 0px;

@@ -183,6 +183,16 @@ div.viz-options {
 .parameter-selection {
 	height: 50px;
 	width: 100%;
+
+	&.inline {
+		display: inline;
+		float: left;
+		width: 33%;
+
+		div.chosen-container {
+			width: 33% !important;
+		}
+	}
 }
 
 // Select Styling
