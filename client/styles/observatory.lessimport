@@ -259,3 +259,7 @@ label {
 	text-align: center;
 	margin-bottom: 0px;
 }
+
+rect.bar, rect.cell {
+	cursor: pointer;
+}

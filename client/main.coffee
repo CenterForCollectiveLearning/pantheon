@@ -12,19 +12,7 @@
   @toLowerCase().replace /(?:^|\s)\S/g, (a) ->
     a.toUpperCase()
 
-# Enable caching for getting readrboard script
-jQuery.cachedScript = (url, options) ->
-  
-  # Allow user to set any option except for dataType, cache, and url
-  options = $.extend(options or {},
-    dataType: "script"
-    cache: true
-    url: url
-  )
-  
-  # Use $.ajax() since it is more flexible than $.getScript
-  # Return the jqXHR object so we can chain callbacks
-  jQuery.ajax options
+@getRandomCountryCode = -> Countries.find({}, {skip: Math.floor(Countries.find().count() * Math.random()), limit: 1}).fetch()[0].countryCode
 
 @defaults =
   vizType: "treemap"
@@ -112,8 +100,6 @@ Meteor.startup ->
   #     , (result) ->
   #       defaults.countryCode = result.countryCode
   #       Session.set "country", result.countryCode
-
-  Session.setDefault "country", defaults.countryCode
 
   Session.setDefault "page", "observatory"
   Session.setDefault "vizType", defaults.vizType

@@ -176,10 +176,11 @@
     {{#if showclicktooltip}}
         {{#if tooltipDataReady}}
         <div id = "clicktooltip">
-            <div id="d3plus_tooltip_curtain_tree_map" class="d3plus_tooltip_curtain" style="background-color: rgb(0, 0, 0);"></div>
+            <div id="d3plus_tooltip_curtain_tree_map" class="d3plus_tooltip_curtain" style="background-color: rgb(255, 255, 255);"></div>
             <div id = "d3plus_tooltip_id_treemap" class="d3plus_tooltip d3plus_tooltip_large">
-                <div class="d3plus_tooltip_container" style="width: 900px; height: 500px;">
-                    <div class="d3plus_tooltip_title">{{title}} ({{count}} individuals)</div>
+                <div class="d3plus_tooltip_container" style="width: 900px;">
+                    <div class="d3plus_tooltip_title">{{title}}</div>
+                    <div class="d3plus_tooltip_subtitle">{{count}} individuals</div>
                     <div class="d3plus_tooltip_body" style="width: 250px;">
                         <!--<div class="d3plus_tooltip_data_container">-->
                             <!--<div class="d3plus_tooltip_data_block">-->
@@ -196,7 +197,7 @@
                             {{ render_links }}
                         </div>
                     </div>
-                    <div class="d3plus_tooltip_html" style="width: 640px; height: 425px;">
+                    <div class="d3plus_tooltip_html" style="width: 640px;">
                         {{> tt_table }}
                     </div>
                 </div>
@@ -244,16 +245,26 @@
 </template>
 
 <template name="tt_treemap_country_exports">
-    <br>{{> domain_exporter_question}}<br> {{> treemap_domain_exports_to}} &nbsp;&nbsp;&nbsp;
-    {{> map_global_exports }} <br>
-    <br>{{> domain_advantage_question}}<br>
-    {{> histogram_domain_exports_to}}
+    <div class="explore-group">
+        <div class="question">{{> domain_exporter_question}}</div>
+        {{> treemap_domain_exports_to}}
+        {{> map_global_exports }}
+    </div>
+    <div class="explore-group">
+        <div class="question">{{> domain_advantage_question}}</div>
+        {{> histogram_domain_exports_to}}
+    </div>
 </template>
 
 <template name="tt_treemap_domain_exports_to">
-    <br>{{> country_exports_question}}<br> {{> treemap_country_exports}} <br>
-    <br>{{> country_advantage_question}}<br>
-    {{> histogram_country_exports}}
+    <div class="explore-group">
+        <div class="question">{{> country_exports_question}}</div>
+        {{> treemap_country_exports}} 
+    </div>
+    <div class="explore-group">
+        <div class="question">{{> country_advantage_question}}</div>
+        {{> histogram_country_exports}}
+    </div>
 </template>
 
 <template name="tt_global_exports">
@@ -262,12 +273,18 @@
 </template>
 
 <template name="tt_histogram_country_exports">
-    <br>{{> domain_exporter_question}}<br> {{> treemap_domain_exports_to}} &nbsp;&nbsp;&nbsp;
-    {{> map_global_exports }} <br>
+    <div class="explore-group">
+        <div class="question">{{> domain_exporter_question}}</div>
+        {{> treemap_domain_exports_to}}
+        {{> map_global_exports }} 
+    </div>
 </template>
 
 <template name="tt_histogram_domain_exports_to">
-    <br>{{> country_exports_question}}<br> {{> treemap_country_exports}} <br>
+    <div class="explore-group">
+        <div class="question">{{> country_exports_question}}</div>
+        {{> treemap_country_exports}} 
+    </div>
 </template>
 
 <template name="tt_table">
