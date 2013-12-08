@@ -23,7 +23,7 @@ Template.ranking_table.rendered = ->
     ]
     aaSorting: [[6, "desc"]]
 
-#  Render a tooltip for the column headers
+#  Render a basic tooltip for the column headers
   $("th").on mousemove: (e) ->
     x = e.pageX
     y = e.pageY

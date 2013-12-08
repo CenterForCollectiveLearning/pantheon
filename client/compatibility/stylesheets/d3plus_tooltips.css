@@ -2,6 +2,12 @@
  * Tooltip Styling
  ********************/
 
+#clicktooltip{
+    position: fixed;
+    top: 25%;
+    left: 27%;
+}
+
 div.d3plus_tooltip {
   color: #333;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -23,7 +29,7 @@ div.d3plus_tooltip_arrow {
 }
 
 div.d3plus_tooltip_curtain {
-  position: absolute;
+  position: fixed;
   top: 0px;
   right: 0px;
   bottom: 0px;
