@@ -124,6 +124,7 @@ d3plus.pie_scatter = function(vars) {
         
       d3.select(this)
         .append("path")
+        .attr("class", "circle")
         .style('fill', find_color(d[vars.id_var]) )
         .style("fill-opacity", 1)
         

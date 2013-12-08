@@ -154,11 +154,12 @@ Template.scatterplot_svg.rendered = ->
 
   Deps.autorun( ->
     scaleType = Session.get("scatterplotScale")
-    mirrorType = (Session.get("scatterplotMirror") is "true")
+    mirrorType = Session.get("scatterplotMirror")
 
     viz.type("pie_scatter")
-      .width($(".page-middle").width() - 20)
-      .height($(".page-middle").height() - 20).id_var("id")
+      .width($(".page-middle").width())
+      .height($(".page-middle").height())
+      .id_var("id")
       .attrs(attrs)
       .text_var("name")
       .xaxis_var(x_name)

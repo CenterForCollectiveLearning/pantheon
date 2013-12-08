@@ -1,3 +1,7 @@
 .scatter-container {
 	padding: 1em;
 }
+
+path.circle {
+	cursor: pointer;
+}
