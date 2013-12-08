@@ -243,10 +243,10 @@ Template.clicktooltip.render_links = ->
   vizType = Session.get("vizType")
   vizMode = Session.get("vizMode")
   switch vizType
-    when "treemap"
-      if vizMode is "country_exports"
+    when "treemap", "scatterplot"
+      if vizMode in ["country_exports", "country_vs_country"]
         return new Handlebars.SafeString(Template.tt_treemap_country_exports(this))
-      else if vizMode is "domain_exports_to"
+      else if vizMode in ["domain_exports_to", "domain_vs_domain"]
         return new Handlebars.SafeString(Template.tt_treemap_domain_exports_to(this))
     when "matrix","map"
       return new Handlebars.SafeString(Template.tt_global_exports(this))

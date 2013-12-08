@@ -295,57 +295,49 @@ d3plus.pie_scatter = function(vars) {
       Session.set("showTooltip", false);
       $("#tooltip").empty();
 
-      if (!covered) d3plus.tooltip.remove(vars.type)
       d3.selectAll(".axis_hover").remove()
     })
     .on(d3plus.evt.click, function(d){
-      covered = true
-      var id = find_variable(d,vars.id_var)
-      var self = this
-      
-      make_tooltip = function(html) {
-        
-        d3plus.tooltip.remove(vars.type)
-        d3.selectAll(".axis_hover").remove()
-        
-        var ex = null
-        if (d.num_children > 1 && !vars.spotlight && d.num_children_active != d.num_children) {
-          var num = d.num_children_active,
-              den = d.num_children
-          ex = {"fill":num+"/"+den+" ("+vars.number_format((num/den)*100,"share")+"%)"}
-        }
-        var tooltip_data = get_tooltip_data(d,"long",ex)
-        
-        d3plus.tooltip.create({
-          "title": find_variable(d,vars.text_var),
-          "color": find_color(d),
-          "icon": find_variable(d,"icon"),
-          "style": vars.icon_style,
-          "id": vars.type,
-          "fullscreen": true,
-          "html": html,
-          "footer": vars.data_source,
-          "data": tooltip_data,
-          "mouseevents": self,
-          "parent": vars.parent,
-          "background": vars.background
-        })
-        
+      // On click show clicktooltip overlay
+      Session.set("hover", false);
+      Session.set("showTooltip", false);
+
+      var dataPoint = d.id;
+      var xVar = vars.xaxis_var;
+      var yVar = vars.yaxis_var;
+
+      var dataset = Session.get("dataset");
+      var vizMode = Session.get("vizMode");
+
+      // Positioning
+      var position = {
+          "left": (d3.event.clientX + 40),
+          "top": (d3.event.clientY - 45)
       }
-      
-      var html = vars.click_function ? vars.click_function(id) : null
-      
-      if (typeof html == "string") make_tooltip(html)
-      else if (html && html.url && html.callback) {
-        d3.json(html.url,function(data){
-          html = html.callback(data)
-          make_tooltip(html)
-        })
+      Session.set("tooltipPosition", position);
+
+      // Subscription Parameters
+      if (vizMode === 'country_vs_country') {
+          var countryCodeX = Countries.findOne({countryName: xVar, dataset: dataset}).countryCode;
+          var countryCodeY = Countries.findOne({countryName: yVar, dataset: dataset}).countryCode;
+          var category = dataPoint;
+          var categoryLevel = "industry";
+
+          Session.set("bigtooltipCategory", category);
+          Session.set("bigtooltipCategoryLevel", categoryLevel);
+          Session.set("bigtooltipCountryCodeX", countryCodeX);
+          Session.set("bigtooltipCountryCodeY", countryCodeY);
+      } else if (vizMode === 'domain_vs_domain') {
+          Session.set("bigtooltipCountryCode", Countries.findOne({countryName: dataPoint, dataset: dataset}).countryCode);
+          Session.set("bigtooltipCategoryLevel", Session.get("categoryLevel"));
+          Session.set("bigtooltipCategoryX", xVar);
+          Session.set("bigtooltipCategoryY", yVar);
       }
-      else if (vars.tooltip_info.long) {
-        make_tooltip(html)
-      }
-      
+
+      Template.clicktooltip.title = dataPoint;
+
+      // Set the session variable to show the clicktooltip
+      Session.set("clicktooltip", true);
     })
     
   nodes.transition().duration(d3plus.timing)

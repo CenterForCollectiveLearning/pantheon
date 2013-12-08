@@ -147,9 +147,6 @@ Template.scatterplot_svg.rendered = ->
   text_formatting = (d) ->
     d.charAt(0).toUpperCase() + d.substr(1)
 
-  inner_html = (obj) ->
-    "This is some test HTML"
-
   # console.log("orignal data", data);
   # console.log("aggregated", aggregated);
   # console.log("FLAT DATA: ", flatData);
@@ -174,7 +171,6 @@ Template.scatterplot_svg.rendered = ->
       .text_format(text_formatting)
       .spotlight(false)
       .active_var("active1")
-      .click_function(inner_html)
       .font_weight(300)
       .background("#000000")
       .font("Lato")
