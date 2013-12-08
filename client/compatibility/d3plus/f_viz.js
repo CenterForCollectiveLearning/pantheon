@@ -2013,10 +2013,11 @@ d3plus.viz = function() {
         return 1
       })
       .attr("d",function(){
+        // CHANGED
         // TODO Make it work for reversed axes
         // TODO Take buffer into account programmatically
         // TODO Don't make the dotted line collide
-        return "M "+vars.graph.width+" "+(vars.graph.height+1)+" L 0 "+(vars.graph.height+1)+" L "+(vars.xaxis_domain[1] + 4.5)+" 0 L "+vars.graph.width+" 0 Z"
+        return "M "+vars.graph.width+" "+vars.graph.height+" L 0 "+vars.graph.height+" L "+vars.xaxis_domain[1]+" 0 L "+vars.graph.width+" 0 Z"
       })
 
     // Update X axis

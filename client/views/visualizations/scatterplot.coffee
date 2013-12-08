@@ -165,7 +165,7 @@ Template.scatterplot_svg.rendered = ->
       .yaxis_var(y_name)
       .xscale_type(scaleType)
       .yscale_type(scaleType)
-      # .value_var("total")
+      .value_var("total")
       .nesting(nesting)
       .depth(nestingDepth)
       .text_format(text_formatting)

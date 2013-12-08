@@ -19,7 +19,7 @@ Template.visualization.render_template = ->
     when "stacked"
       new Handlebars.SafeString(Template.stacked(this))
 
-Template.time_slider.rendered = ->
+Template.time_slider.created = ->
   $("select#from, select#to").selectToUISlider
     labels: 15
     tooltip: false

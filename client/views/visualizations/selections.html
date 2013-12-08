@@ -63,6 +63,8 @@
 <template name="domain_vs_domain_mode">
     {{> select_categoryX}}
     {{> select_categoryY}}
+    {{> select_scale}}
+    {{> select_mirror}}
 </template>
 
 <template name="map_mode">
@@ -191,8 +193,8 @@
     <div class="parameter-selection">
         <label>Scale Type</label>
         <div class="btn-group">
-            <button class="btn" data-scale-type="linear">Linear</button>
-            <button class="btn" data-scale-type="log">Logarithmic</button>
+            <button id="linear-button" class="btn" data-scale-type="linear">Linear</button>
+            <button id="log-button" class="btn" data-scale-type="log">Logarithmic</button>
         </div>
     </div>
 </template>
@@ -211,7 +213,7 @@
 <template name="select_from">
     <div class="parameter-selection inline">
         <label>From</label>
-        <select>
+        <select id="from">
             <option value="-3000">3000 B.C.</option>
             <option value="-2000">2000 B.C.</option>
             <option value="-1000">1000 B.C.</option>
@@ -262,7 +264,7 @@
 <template name="select_to">
     <div class="parameter-selection inline">
         <label>To</label>
-        <select>
+        <select id="to">
             <option value="-3000">3000 B.C.</option>
             <option value="-2000">2000 B.C.</option>
             <option value="-1000">1000 B.C.</option>
