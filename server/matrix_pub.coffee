@@ -9,6 +9,7 @@ Meteor.publish "matrix_pub", (begin, end, L, gender, dataset) ->
     birthyear:
       $gte: begin
       $lte: end
+    countryCode: {$ne:"UNK"}
     dataset: dataset
 
   if gender is "male" or gender is "female"

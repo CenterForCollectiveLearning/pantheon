@@ -159,7 +159,7 @@ Template.select_mirror.events =
 
 
 Template.country_dropdown.countries = ->
-  Countries.find {dataset: Session.get("dataset")},
+  Countries.find {dataset: Session.get("dataset"), countryCode: {$ne:"UNK"}},
     sort:
       countryName: 1
 
