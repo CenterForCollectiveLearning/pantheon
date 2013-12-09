@@ -187,10 +187,10 @@ div.viz-options {
 	&.inline {
 		display: inline;
 		float: left;
-		width: 33%;
+		width: 33.3333%;
 
 		div.chosen-container {
-			width: 33% !important;
+			width: 33.3333% !important;
 		}
 	}
 }
@@ -198,6 +198,8 @@ div.viz-options {
 // Select Styling
 div.chosen-container {
 	width: 100% !important;
+	background-color: rgba(0, 0, 0, 0.75);
+	border-radius: 2px;
 	a.chosen-single {
 		box-shadow: none;
 		background: none;

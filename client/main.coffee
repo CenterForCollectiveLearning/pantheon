@@ -14,28 +14,6 @@
 
 @getRandomCountryCode = -> Countries.find({}, {skip: Math.floor(Countries.find().count() * Math.random()), limit: 1}).fetch()[0].countryCode
 
-@defaults =
-  vizType: "treemap"
-  vizMode: "country_exports"
-  country: "all"
-  countryX: "US"
-  countryY: "RU"
-  language: "all"
-  languageX: "en"
-  languageY: "ru"
-  category: "all"
-  categoryX: "ARTS"
-  categoryY: "HUMANITIES"
-  categoryLevel: "domain"
-  from: "-3000"
-  to: "1950"
-  langs: "25"
-  entity: "countries"
-  gender: "both"
-  dataset: "OGC"
-  scatterplotScale: "linear"
-  scatterplotMirror: true
-
 @IOMapping =
   country_exports:
     in: ["country", "language"]
@@ -100,6 +78,32 @@ Meteor.startup ->
   #     , (result) ->
   #       defaults.countryCode = result.countryCode
   #       Session.set "country", result.countryCode
+
+  @defaults =
+    vizType: "treemap"
+    vizMode: "country_exports"
+    language: "all"
+    languageX: "en"
+    languageY: "ru"
+    category: "all"
+    categoryX: "ARTS"
+    categoryY: "HUMANITIES"
+    categoryLevel: "domain"
+    from: "-3000"
+    to: "1950"
+    langs: "25"
+    entity: "countries"
+    gender: "both"
+    dataset: "OGC"
+    scatterplotScale: "linear"
+    scatterplotMirror: true
+
+  Meteor.subscribe("allpeople", () ->
+    console.log "ALL PEOPLE READY", getRandomCountryCode()
+    defaults.country = getRandomCountryCode()
+    defaults.countryX = getRandomCountryCode()
+    defaults.countryY = getRandomCountryCode()
+    )
 
   Session.setDefault "page", "observatory"
   Session.setDefault "vizType", defaults.vizType
