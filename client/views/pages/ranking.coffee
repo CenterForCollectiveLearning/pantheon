@@ -1,5 +1,5 @@
 Template.ranking_table.rendered = ->
-  
+
   #initializations
   $("#ranking").dataTable
     iDisplayLength: 25
@@ -15,7 +15,6 @@ Template.ranking_table.rendered = ->
           filter: "applied"
         ).each (i) ->
           that.fnUpdate i + 1, @parentNode, 0, false, false
-
 
     aoColumnDefs: [
       bSortable: false
@@ -43,6 +42,13 @@ Template.ranking_table.rendered = ->
     tt.style.zIndex = "100"
 
 
+Template.rankings.events = 
+  "click a": (e) ->
+    e.preventDefault()
+    console.log "Pressing next"
+    Session.set("peopleRankingSkip", Session.get("peopleRankingSkip") + Session.get("peopleRankingLimit"))
+
+
 Template.ranking_accordion.rendered = ->
   mapping =
     countries: 0
@@ -56,7 +62,7 @@ Template.ranking_accordion.rendered = ->
     heightStyle: "content"
     fillSpace: false
 
-  accordion.accordion "resize"
+  # accordion.accordion "resize"
 
 Template.ranking_accordion.events = "click h3": (d) ->
   srcE = (if d.srcElement then d.srcElement else d.target)
@@ -99,6 +105,18 @@ Template.ranked_people_list.people_full_ranking = ->
       $not: "count"
   else
     PeopleTopN.find()
+    # skip = Session.get("peopleRankingSkip")
+    # limit = Session.get("peopleRankingLimit")
+    # PeopleTopN.find({}, {sort: {numlangs: -1}, skip: skip, limit: limit})
+
+# Template.ranked_people_list.rendered = ->
+#   skip = Session.get("peopleRankingSkip")
+#   limit = Session.get("peopleRankingLimit")
+#   for person, i in PeopleTopN.find({}, {sort: {numlangs: -1}, skip: skip}).fetch()
+#       d = People.findOne(person._id)
+#       console.log i, skip + i
+#       $("#ranking").dataTable().fnAddData([skip + i + 1, d.name, d.countryName, d.birthyear, d.gender, d.occupation.capitalize(), d.numlangs])
+
 
 Template.ranked_ppl.occupation = ->
   @occupation.capitalize()
@@ -108,25 +126,6 @@ Template.ranked_countries_list.countries_full_ranking = ->
 
 Template.ranked_domains_list.domains_full_ranking = ->
   DomainsRanking.find()
-
-Template.ranked_people_list.person_blob = ->
-  console.log "IN PERSON BLOB"
-  table = ""
-  data = PeopleTopN.find().fetch()
-  _.forEach data, (person) ->
-    table += "<tr class='" + person.domain + "'>"
-    table += "<td>1</td>"
-    table += "<td>" + person.name + "</td>"
-    table += "<td>" + person.countryName + "</td>"
-    table += "<td>" + person.birthyear + "</td>"
-    table += "<td>" + person.gender + "</td>"
-    table += "<td>" + person.occupation + "</td>"
-    table += "<td>" + person.numlangs + "</td>"
-    table += "</tr>"
-
-  console.log "DONE"
-  new Handlebars.SafeString(table)
-
 
 # TODO: do this with CSS instead??
 Template.ranked_domain.occupation = ->

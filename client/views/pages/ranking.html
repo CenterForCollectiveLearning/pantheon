@@ -116,7 +116,7 @@
         <th name="Industry - second level of domain classification">Industry</th>
         <th name="Domain - highest level of domain classification">Domain</th>
         <th name="The number of countries that export the specified domain">Total Exporters</th>
-        <th name= "Percent women">% Women</th>
+        <th name="Percent women">% Women</th>
         <th name="Total individuals in this category">Total People</th>
     </tr>
 </template>
@@ -152,20 +152,19 @@
 </template>
 
 <template name="ranked_people_list">
-    {{!person_blob}}
     {{#each people_full_ranking}}
-    {{> ranked_ppl person_lookup}}
+        {{> ranked_ppl person_lookup}}
     {{/each}}
 </template>
 
 <template name="ranked_countries_list">
     {{#each countries_full_ranking}}
-    {{> ranked_country}}
+        {{> ranked_country}}
     {{/each}}
 </template>
 
 <template name="ranked_domains_list">
     {{#each domains_full_ranking}}
-    {{> ranked_domain}}
+        {{> ranked_domain}}
     {{/each}}
 </template>

@@ -137,6 +137,10 @@ Meteor.startup ->
   Session.setDefault "tooltipCountryCode", "all"
   Session.setDefault "tooltipCountryCodeX", "all"
   Session.setDefault "tooltipCountryCodeY", "all"
+
+  # RANKINGS
+  Session.setDefault "peopleRankingSkip", 0
+  Session.setDefault "peopleRankingLimit", 25
   
   # SPLASH SCREEN
   Session.set "googleAnalytics", false

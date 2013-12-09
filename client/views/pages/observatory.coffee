@@ -342,6 +342,9 @@ Template.tt_table.rendered = ->
 
   #initializations
   $("#tt_table").dataTable
+    bFilter: false
+    bInfo: false
+    bLengthChange: false    
     iDisplayLength: 10
     bDeferRender: true
     fnDrawCallback: (oSettings) ->
