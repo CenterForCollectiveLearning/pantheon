@@ -50,6 +50,7 @@ div.text {
 .sidenav {
 	opacity: 1.0 !important;
 	padding: 2em;
+	background-color: white;
 
 	.spacer { height: 4.0em; }
 	

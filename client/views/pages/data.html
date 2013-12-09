@@ -6,6 +6,14 @@
 
 	<div id="page" class="container-fluid">
 		<div class="row-fluid">
+            <div class="sidenav" style="position:fixed;color=white">
+                <ul>
+                    <li><a href="#general_idea">Introduction</a></li>
+                    <li><a href="#methods">Methods</a></li>
+                    <li><a href="#biases">Biases and Limitations</a></li>
+                    <li><a href="#validation">Validation</a></li>
+                </ul>
+            </div>
 			<div class="page-middle text span6 offset3">
 				<h2 id="general_idea">General Idea</h2>
 
@@ -35,7 +43,7 @@
                 <h3>Contribute</h3>
                 <p>Do you have other data sources that you would like us to visualize? Let us know at culture (at) media.mit.edu.</p>
 
-                <h1 id="validation">Biases, Limitation and Validation of the Wikipedia based dataset</h1>
+                <h1 id="biases">Biases, Limitation and Validation of the Wikipedia based dataset</h1>
                 <h2> General Description </h2>
                 <p>The measures presented in this dataset are based on simple, implementable, quantitative measures of culture. In this dataset, we count measures of the multilingual presence of a historical character in the Wikipedia as a proxy for her global cultural impact--i.e. the global adoption of the cultural information attributed to that character.</p>
                 <p>The simplest of all our measures is the number of Wikipedia language editions that have an article about a historical figure. We consider the presence of a character in many languages to be important because this allows us to separate <em>global culture</em> from <em>local</em> culture. Characters that have contributed to local culture are often highly regarded by people from their own country or language, but are largely unknown to the rest of the world. At The Observatory of Global Culture we are not attempting to capture local culture--at least for now--but instead, we are focusing on the biographies of historical characters that have achieved global cultural notoriety, as expressed in the documentation of these biographies in a large number of languages. Examples of these biographies include characters of enormous historical weight, such as Isaac Newton, Van Gogh and Aristotle, who have articles in more than 150 Wikipedia language editions, but also more recent contributors to global culture such as Gabriel Garcia Marquez, Albert Camus or Pablo Neruda, who have articles in more than 50 Wikipedia language editions. </p>
@@ -115,7 +123,7 @@
 				<h3>5. Other Technical Limitations</h3>
 
 				<p>Other biases and limitations include the volatility of Wikipedia, which makes the results presented here imperfectly reproducible. </p>
-                <h2>Validation</h2>
+                <h2 id="validation">Validation</h2>
                 <p>Is the number of different languages in which a historical figure has a presence in the Wikipedia indicative of individual accomplishment, or is it just a superficial measure of fame? Following an approach similar to that of Murray (2003), we validate our dataset by using external measures of individual accomplishments when these are available. The cases in which these metrics are most widely available is that of sports, where the accomplishment of individuals is expressed in championships, scores made, wins, etc.</p>
                 <p>This validation will help us understand the power of having a unified metric of accomplishment. Consider a Formula-1 racer. Certainly, for a Formula One racer the number of Grand Prix won, or Championships, would be a better metric of accomplishment than the number of languages in the Wikipedia. Yet, since Grand Prix won is a metric that applies only for Formula-1 drivers we cannot use it for Basketball players, swimmers, musicians or scientists. While imperfect, metrics based on the online presence of characters in diverse languages represent metrics of global notoriety that can be used for a wide-range of cultural domains, and hence, can be used to generate datasets that include people from all domains of culture.</p>
                 <p>Below, we present a validation of our dataset, and a characterization of its biases, based on three specific subsets of data. These are Formula-1 drivers, Tennis Players and Olympic Swimmers. </p>

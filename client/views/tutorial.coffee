@@ -6,11 +6,14 @@ Handlebars.registerHelper "withif", (obj, options) ->
 
 renaissanceStory = [
   template: Template.renaissance_step1
+  spot: "#viz"
   onLoad: ->
-    Router.go "/treemap/country_exports/all/all/1400/1600/25/OGC"
+    Router.go "/map/map/all/all/1400/1600/25/OGC"
 ,
   template: Template.renaissance_step2
-  spot: "#cell_Artist"
+  spot: "#viz"
+  onLoad: ->
+    Router.go "/treemap/country_exports/all/all/1400/1600/25/OGC"
 ,
   template: Template.renaissance_step3
   spot: ".ranked_list"

@@ -116,7 +116,6 @@ d3plus.tree_map = function(vars) {
   //-------------------------------------------------------------------
   
   small_tooltip = function(d) {
-    console.log("in small_tooltip")
 
     d3plus.tooltip.remove(vars.type)
     var ex = {}
@@ -157,7 +156,6 @@ d3plus.tree_map = function(vars) {
 
       var vizMode = Session.get("vizMode");
       if (vizMode === "country_exports") {
-        console.log("GETTING TOOLTIPS");
         var countryCode = Session.get("country");
         var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode}).countryName;
         var category = id.replace("_", " ").toUpperCase();
@@ -206,7 +204,6 @@ d3plus.tree_map = function(vars) {
       var dataset = Session.get("dataset");
       var vizMode = Session.get("vizMode");
       if (vizMode === "country_exports") {
-          console.log("GETTING TOOLTIPS");
           var countryCode = Session.get("country");
           var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
           var category = id.replace("_", " ").toUpperCase();

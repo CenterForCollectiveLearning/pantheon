@@ -160,6 +160,13 @@ renderTree = (url) ->
 
 u = "https://docs.google.com/spreadsheet/pub?key=0AgfOXjbH2KOddHR3c0JDbGpLa3E1UkVpUjRhaE5JeEE&single=true&gid=2&range=A1%3AD89&output=csv"
 
+Template.data.events =
+  "click a": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    point = $(srcE).attr("href")
+    window.scrollTo(0, $(point).position().top-120)
+    window.history.pushState(null, null, '/data/'+point)
+
 #d3.select(self.frameElement).style("height", h + "px");
 Template.data.rendered = ->
   renderTree u
