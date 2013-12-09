@@ -17,14 +17,17 @@ Router.map ->
     #   @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
     # ]
 
+  # TODO Remove redundancy on the waiting!
   @route "observatory",
     path: "/observatory"
+    waitOn: -> [Meteor.subscribe("countries_pub"), Meteor.subscribe("languages_pub"), Meteor.subscribe("domains_pub")]
     before: [->
       @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
     ]
 
   @route "observatory",
     path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
+    waitOn: -> [Meteor.subscribe("countries_pub"), Meteor.subscribe("languages_pub"), Meteor.subscribe("domains_pub")]
     data: ->
       vizMode = @params.vizMode
       Session.set "page", @template
@@ -88,18 +91,19 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
-
-  # TODO Route to a random person
-  # @route "people",
+  # @route "timeline",
   #   data: ->
   #     Session.set "page", @template
 
-  @route "timeline",
-    data: ->
-      Session.set "page", @template
+  @route "people",
+    path: "/people"
+    before: [->
+      @redirect "/people/" + defaults.person
+    ]
 
   @route "people",
     path: "/people/:name"
+    waitOn: -> Meteor.subscribe("allpeople")
     data: ->
       Session.set "page", @template
       Session.set "name", @params.name
@@ -108,9 +112,9 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
-  @route "publications",
-    data: ->
-      Session.set "page", @template
+  # @route "publications",
+  #   data: ->
+  #     Session.set "page", @template
 
 
 Router.configure

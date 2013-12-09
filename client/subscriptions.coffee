@@ -40,6 +40,7 @@ Deps.autorun ->
   country = Session.get("country")
   countryX = Session.get("countryX")
   countryY = Session.get("countryY")
+  console.log "IN SUBSCRIPTION", country, countryX, countryY
   language = Session.get("language")
   languageX = Session.get("languageX")
   languageY = Session.get("languageY")

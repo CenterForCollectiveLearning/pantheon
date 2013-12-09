@@ -1787,19 +1787,19 @@ d3plus.viz = function() {
   //-------------------------------------------------------------------
   
   var tick_style = {
-    "stroke": "#ccc",
+    "stroke": "#FFF",
     "stroke-width": 1,
     "shape-rendering": "crispEdges"
   }
   
   var axis_style = {
     "font-size": "12px",
-    "fill": "#888"
+    "fill": "#FFF"
   }
   
   var label_style = {
-    "font-size": "14px",
-    "fill": "#888", // Changed
+    "font-size": "16px",
+    "fill": "#FFF", // Changed
     "text-anchor": "middle"
   }
   

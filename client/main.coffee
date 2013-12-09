@@ -12,7 +12,9 @@
   @toLowerCase().replace /(?:^|\s)\S/g, (a) ->
     a.toUpperCase()
 
+# Functions to return random entities
 @getRandomCountryCode = -> Countries.find({}, {skip: Math.floor(Countries.find().count() * Math.random()), limit: 1}).fetch()[0].countryCode
+@getRandomPerson = -> People.find({}, {skip: Math.floor(Countries.find().count() * Math.random()), limit: 1}).fetch()[0].name
 
 @IOMapping =
   country_exports:
@@ -103,17 +105,36 @@ Meteor.startup ->
     defaults.country = getRandomCountryCode()
     defaults.countryX = getRandomCountryCode()
     defaults.countryY = getRandomCountryCode()
+    Session.setDefault "country", defaults.country
+    Session.setDefault "countryX", defaults.countryX
+    Session.setDefault "countryY", defaults.countryY
+    )
+
+
+  Meteor.subscribe("countries_pub", () ->
+    defaults.country = getRandomCountryCode()
+    defaults.countryX = getRandomCountryCode()
+    defaults.countryY = getRandomCountryCode()
+    Session.setDefault "country", defaults.country
+    Session.setDefault "countryX", defaults.countryX
+    Session.setDefault "countryY", defaults.countryY
+    )
+
+  Meteor.subscribe("allpeople", () ->
+    defaults.person = getRandomPerson()
+    Session.setDefault "person", defaults.person
+    console.log "allpeople loaded", defaults.person, Session.get("person")
     )
 
   Session.setDefault "page", "observatory"
   Session.setDefault "vizType", defaults.vizType
   Session.setDefault "vizMode", defaults.vizMode
-  Session.setDefault "country", defaults.country
-  Session.setDefault "countryX", defaults.countryX
-  Session.setDefault "countryY", defaults.countryY
-  Session.setDefault "language", defaults.language
-  Session.setDefault "languageX", defaults.languageX
-  Session.setDefault "languageY", defaults.languageY
+  # Session.setDefault "country", defaults.country
+  # Session.setDefault "countryX", defaults.countryX
+  # Session.setDefault "countryY", defaults.countryY
+  # Session.setDefault "language", defaults.language
+  # Session.setDefault "languageX", defaults.languageX
+  # Session.setDefault "languageY", defaults.languageY
   Session.setDefault "category", defaults.category
   Session.setDefault "categoryX", defaults.categoryX
   Session.setDefault "categoryY", defaults.categoryY

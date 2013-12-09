@@ -172,7 +172,7 @@ Template.scatterplot_svg.rendered = ->
       .text_format(text_formatting)
       .spotlight(false)
       .active_var("active1")
-      .font_weight(300)
+      .font_weight(400)
       .background("#000000")
       .font("Lato")
       .mirror_axis(mirrorType)
