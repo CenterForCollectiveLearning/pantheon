@@ -1,5 +1,7 @@
 d3plus.error = function(vars) {
-  
+
+  console.log(vars);
+  console.log(this);
   var error = d3.select("g.parent").selectAll("g.d3plus-error")
     .data([vars.error])
     
@@ -11,9 +13,8 @@ d3plus.error = function(vars) {
       .attr("font-size","30px")
       .attr("fill","#888")
       .attr("text-anchor", "middle")
-      .attr("font-family", vars.font)
-      .style("font-weight", vars.font_weight)
-      .style(vars.info_style)
+      .attr("font-family", "Lato")
+      .style("font-weight", "300")
       .each(function(d){
         d3plus.utils.wordwrap({
           "text": d,

@@ -341,9 +341,13 @@ d3plus.viz = function() {
       else if (vars.year) {
         vars.data = data_obj[data_type[vars.type]][vars.year];
       }
-      
-      if (vars.data && (vars.type == "tree_map" && !vars.data.children.length) || (vars.data && vars.data.length == 0)) {
-        vars.data = null
+
+//      if (vars.data && (vars.type == "tree_map" && !vars.data.children.length) || (vars.data && vars.data.length == 0)) {
+//        vars.data = null;
+//      }
+
+      if (vars.data && (vars.type == "tree_map" && vars.data.length == 0)) {
+          vars.data = null;
       }
 
       d3plus.tooltip.remove(vars.type);
@@ -623,7 +627,7 @@ d3plus.viz = function() {
           .text(vars.format("Loading..."))
       
       // vars.loader.select("div#d3plus_loader_text").transition().duration(d3plus.timing)
-      
+
       if (!error && !vars.data) {
         vars.error = vars.format("No Data Available","error")
       }
@@ -648,7 +652,7 @@ d3plus.viz = function() {
       d3plus[vars.type](vars)
       if (vars.dev) console.log("[d3plus] *** End Chart ***")
       
-      d3plus.error(vars)
+      d3plus.error(vars);
       
     });
     

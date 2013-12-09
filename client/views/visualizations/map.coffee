@@ -16,7 +16,7 @@ key_gradient = (rect) ->
     gradient.append("stop").attr("offset", percent + "%").attr("stop-color", color_gradient[i / 20]).attr "stop-opacity", 1
     i = i + 20
   rect.attr(
-    x: 30
+    x: 80
     y: 0
     width: 640
     height: 10
@@ -125,49 +125,62 @@ mapProps =
     bottom: 10
     left: 10
 
-Template.matrix_svg.properties =
-  headerHeight: mapProps.headerHeight
-  fullWidth: mapProps.width + mapProps.margin.left + mapProps.margin.right
-  fullHeight: mapProps.height + mapProps.margin.top + mapProps.margin.bottom
-
 Template.map_svg.properties = mapProps
 color_gradient = ["#f2ecb4", "#f2e671", "#f6d626", "#f9b344", "#eb8c30", "#e84d24"]
 
 Template.map_svg.rendered = ->
   data = WorldMap.find().fetch()
-  value_range = get_range_log(data, 5)
-  value_range_big = get_range_log(data, 10)
-  svg = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).append("svg:g").attr("id", "countries")
+  if data.length is 0 #No data screen
+    vars =
+      svg_height : $(".page-middle").height()
+      svg_width : $(".page-middle").width()
+    error = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).append("svg:g").selectAll("g.d3plus-error").data(["No data available"])
+    error.enter().append("rect").attr("width", vars.svg_width).attr("height", vars.svg_height).attr("fill", "#000000")
+    error.enter().append("g").attr("class", "d3plus-error").attr("opacity", 100).append("text").attr("x", vars.svg_width / 2).attr("font-size", "30px").attr("fill", "#888").attr("text-anchor", "middle").attr("font-family", "Lato").style("font-weight", "300").each((d) ->
+      d3plus.utils.wordwrap
+        text: d
+        parent: this
+        width: vars.svg_width - 20
+        height: vars.svg_height - 20
+        resize: false
 
-  map_projection = d3.geo.equirectangular().scale($(".page-middle").width() * 0.17).translate([$(".page-middle").width() / 2, $(".page-middle").height() / 2])
-  value_color = d3.scale.log().domain(value_range).interpolate(d3.interpolateRgb).range([color_gradient[0], color_gradient[1], color_gradient[2], color_gradient[3], color_gradient[4], color_gradient[5]])
-  svg.selectAll("path").data(d3.values(mapData.features)).enter().append("path").attr("id", (d, i) ->
-    d.id
-  ).attr("stroke", "#fff").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
-  key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(100, 500)").append("rect").call(key_gradient)
-  d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
-    Math.round (50 * Math.pow((590 / 50), i / 10))
-  ).attr("y", 0).attr("width", 2).attr("height", 10).style "fill", "#fff"
-  d3.select(".key").selectAll("text").data(value_range_big).enter().append("text").attr("x", (d, i) ->
-    Math.round (50 * Math.pow((590 / 50), i / 10))
-  ).attr("y", 12).attr("dy", 12).attr("text-anchor", "middle").style "fill", "#fff"
-  svg.selectAll("path").attr("fill", (d) ->
-    doc = WorldMap.findOne(countryCode: d.id)
-    if doc
-      value_color doc.count
-    else
-      "#FFF"
-  ).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
-  d3.select(".key").selectAll("text").text (d, i) ->
-    value_range_big[i].toFixed 0
+    ).attr "y", ->
+      height = d3.select(this).node().getBBox().height
+      vars.svg_height / 2 - height / 2
+  else
+    value_range = get_range_log(data, 5)
+    value_range_big = get_range_log(data, 10)
+    svg = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).append("svg:g").attr("id", "countries")
 
-  # make the treemap zoomable using d3.behavior.zoom()
-  zoom = d3.behavior.zoom()
-  .scaleExtent([1, 5])
-  .on("zoom", ->
-      svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
-    )
-  svg.call(zoom)
+    map_projection = d3.geo.equirectangular().scale($(".page-middle").width() * 0.17).translate([$(".page-middle").width() / 2, $(".page-middle").height() / 2])
+    value_color = d3.scale.log().domain(value_range).interpolate(d3.interpolateRgb).range([color_gradient[0], color_gradient[1], color_gradient[2], color_gradient[3], color_gradient[4], color_gradient[5]])
+    svg.selectAll("path").data(d3.values(mapData.features)).enter().append("path").attr("id", (d, i) ->
+      d.id
+    ).attr("stroke", "#fff").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
+    key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(100, 500)").append("rect").call(key_gradient)
+    d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
+      Math.round (50 * Math.pow((590 / 50), i / 10))
+    ).attr("y", 0).attr("width", 2).attr("height", 10).style "fill", "#fff"
+    d3.select(".key").selectAll("text").data(value_range_big).enter().append("text").attr("x", (d, i) ->
+      Math.round (50 * Math.pow((590 / 50), i / 10))
+    ).attr("y", 12).attr("dy", 12).attr("text-anchor", "middle").style "fill", "#fff"
+    svg.selectAll("path").attr("fill", (d) ->
+      doc = WorldMap.findOne(countryCode: d.id)
+      if doc
+        value_color doc.count
+      else
+        "#FFF"
+    ).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
+    d3.select(".key").selectAll("text").text (d, i) ->
+      value_range_big[i].toFixed 0
+
+    # make the treemap zoomable using d3.behavior.zoom()
+    zoom = d3.behavior.zoom()
+    .scaleExtent([1, 5])
+    .on("zoom", ->
+        svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
+      )
+    svg.call(zoom)
 
 
 mouseoverCell = null
