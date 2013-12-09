@@ -145,16 +145,31 @@ Template.select_dataset.rendered = ->
     Router.go path.join("/"))
 
 Template.select_scale.events =
-  "click button": (d) ->
+  "click div.button": (d) ->
     srcE = (if d.srcElement then d.srcElement else d.target)
-    scaleType = $(srcE).data "scale-type"
-    console.log scaleType
+    $(srcE).addClass("active")
+
+    targetID = $(srcE)[0].id
+    if targetID is "linear-button"
+      $("#log-button").removeClass("active")
+      scaleType = "linear"
+    else if targetID is "log-button"
+      $("#linear-button").removeClass("active")
+      scaleType = "log"
     Session.set "scatterplotScale", scaleType
 
 Template.select_mirror.events =
-  "click button": (d) ->
+  "click div.button": (d) ->
     srcE = (if d.srcElement then d.srcElement else d.target)
-    mirrorType = $(srcE).data "mirror-type"
+    $(srcE).addClass("active")
+
+    targetID = $(srcE)[0].id
+    if targetID is "mirror-true-button"
+      $("#mirror-false-button").removeClass("active")
+      mirrorType = true
+    else if targetID is "mirror-false-button"
+      $("#mirror-true-button").removeClass("active")
+      mirrorType = false
     Session.set "scatterplotMirror", mirrorType
 
 

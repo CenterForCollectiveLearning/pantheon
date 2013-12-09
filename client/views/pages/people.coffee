@@ -40,7 +40,7 @@ Template.people_accordion.events =
 $(window).load( ->
   )
 
-# TODO Why is this calling /so/ many times?
+# # TODO Why is this calling /so/ many times?
 Template.people_accordion.rendered = ->
   accordion = $(".people-accordion")
   accordion.accordion
@@ -50,41 +50,41 @@ Template.people_accordion.rendered = ->
     fillSpace: false
   # accordion.accordion "resize"
 
-  # How to only display after setting?
+#   # How to only display after setting?
 
-  # Maximum width
-  maximumWidth = $('div.person-image-container').first().width()
-  console.log "maximumWidth", maximumWidth
+#   # Maximum width
+#   maximumWidth = $('div.person-image-container').first().width()
+#   console.log "maximumWidth", maximumWidth
 
-  # Resize images intelligently
-  # div.ui-accordion-content-active 
-  finalAspectRatio = 4/3
-  $('img.person-image').each((index) ->
-    image = $(this)
-    imageContainer = $(this).parent().parent()
+#   # Resize images intelligently
+#   # div.ui-accordion-content-active 
+#   finalAspectRatio = 4/3
+#   $('img.person-image').each((index) ->
+#     image = $(this)
+#     imageContainer = $(this).parent().parent()
 
-    width = image.width()
-    height = image.height()
-    aspectRatio = height / width
-    taller = aspectRatio > finalAspectRatio
+#     width = image.width()
+#     height = image.height()
+#     aspectRatio = height / width
+#     taller = aspectRatio > finalAspectRatio
 
-    console.log index, aspectRatio
-    if width
+#     console.log index, aspectRatio
+#     if width
 
-      # TODO Allow some fudge ratio
+#       # TODO Allow some fudge ratio
   
-      # If taller than aspect ratio, then fit width and crop bottom
-      # Test case: http://localhost:3000/people/Paul%20of%20Tarsus
-      if taller
-        imageContainer.css({"max-height": finalAspectRatio * maximumWidth, "overflow": "hidden"})
-        image.css({"width": "100%", "height": "auto"})
-      # If wider than aspect ratio, fit height and crop sides
-      # Test case: http://localhost:3000/people/Bernhard%20Riemann
-      else
-        overflowXAmount = width - maximumWidth
-        imageContainer.css({"height": finalAspectRatio * maximumWidth, "overflow-x": "hidden"})
-        image.css({"width": "auto", "max-width": "none", "height": "100%", "margin-left": -overflowXAmount / 2})
-  )
+#       # If taller than aspect ratio, then fit width and crop bottom
+#       # Test case: http://localhost:3000/people/Paul%20of%20Tarsus
+#       if taller
+#         imageContainer.css({"max-height": finalAspectRatio * maximumWidth, "overflow": "hidden"})
+#         image.css({"width": "100%", "height": "auto"})
+#       # If wider than aspect ratio, fit height and crop sides
+#       # Test case: http://localhost:3000/people/Bernhard%20Riemann
+#       else
+#         overflowXAmount = width - maximumWidth
+#         imageContainer.css({"height": finalAspectRatio * maximumWidth, "overflow-x": "hidden"})
+#         image.css({"width": "auto", "max-width": "none", "height": "100%", "margin-left": -overflowXAmount / 2})
+#   )
 
 Template.people_accordion.helpers
   occupation: -> this.occupation.capitalize() + "s"
@@ -92,7 +92,6 @@ Template.people_accordion.helpers
   # TODO Expose global date mapping, if notable time period or decade then state
   personImports: -> 
     Session.set "personID", this._id
-    console.log "PERSON IMPORTS", Imports.find().fetch()
     Imports.find()
   occupationPeople: -> 
     Session.set "personID", this._id

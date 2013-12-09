@@ -192,9 +192,9 @@
 <template name="select_scale">
     <div class="parameter-selection">
         <label>Scale Type</label>
-        <div class="btn-group">
-            <button id="linear-button" class="btn" data-scale-type="linear">Linear</button>
-            <button id="log-button" class="btn" data-scale-type="log">Logarithmic</button>
+        <div class="buttons">
+            <div id="linear-button" class="button active">Linear</div>
+            <div id="log-button" class="button">Logarithmic</div>
         </div>
     </div>
 </template>
@@ -202,10 +202,10 @@
 
 <template name="select_mirror">
     <div class="parameter-selection">
-        <label>Square Axes</label>
-        <div class="btn-group">
-            <button class="btn" data-mirror-type="true">Yes</button>
-            <button class="btn" data-mirror-type="false">No</button>
+        <label>Mirror Axes</label>
+        <div class="buttons">
+            <div id="mirror-true-button" class="button active">Yes</div>
+            <div id="mirror-false-button" class="button">No</div>
         </div>
     </div>
 </template>

@@ -122,6 +122,8 @@ div.body-padding {
                     div.person-image-container {
                         border: 1px solid black;
                         img.person-image {
+                            width: 100%;
+                            height: auto;
                         }
                     }
     			}
