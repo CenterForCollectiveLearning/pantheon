@@ -220,6 +220,10 @@ Template.tooltip.helpers
     doc = Tooltips.findOne(_id: "count")
     (if (typeof doc isnt "undefined") then doc.count - 5 else 0)
 
+Template.tt_person.birthday = ->
+  birthday = (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
+  birthday
+
 Template.clicktooltip.helpers
   showclicktooltip: ->
     Session.get "clicktooltip"

@@ -6,7 +6,7 @@ Template.ranking_table.rendered = ->
     bDeferRender: true
     fnDrawCallback: (oSettings) ->
       that = this
-      
+
       # Redo for sorted AND filtered...
       # if ( oSettings.bSorted || oSettings.bFiltered )
       # Only redo for sorted, not filtered (ie. you can search/filter and ranking stays stable)

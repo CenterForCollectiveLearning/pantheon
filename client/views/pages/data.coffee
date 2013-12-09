@@ -165,7 +165,8 @@ Template.data.events =
     srcE = (if d.srcElement then d.srcElement else d.target)
     point = $(srcE).attr("href")
     window.scrollTo(0, $(point).position().top-120)
-    window.history.pushState(null, null, '/data/'+point)
+    #TODO: update the address route here, then make the route work to point to a specific position on the data page!
+#    window.history.pushState(null, null, '/data/'+point)
 
 #d3.select(self.frameElement).style("height", h + "px");
 Template.data.rendered = ->
