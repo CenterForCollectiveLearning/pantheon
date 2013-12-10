@@ -64,7 +64,10 @@
         <h3 class="app">People Born in {{countryName}}</h3>
         <div>
             <ul>
+                test
             	{{#each countryPeople}}
+                    person
+		    {{debugContext}}
             	    {{> ranking_person}}
                 {{/each}}
             </ul>
