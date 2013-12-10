@@ -135,23 +135,19 @@ ogcStory = [
 ,
   template: Template.ogc_step12
   onLoad: ->
-    Router.go "/data"
+    Router.go "/rankings/countries/all/all/-3000/1950"
 ,
   template: Template.ogc_step13
-  onLoad: ->
-  Router.go "/data"
+  spot: "#ranking"
 ,
   template: Template.ogc_step14
-  onLoad: ->
-    Router.go "/data"
+  spot: "#ranking"
 ,
   template: Template.ogc_step15
   onLoad: ->
-    Router.go "/data"
+    Router.go "/team"
 ,
   template: Template.ogc_step16
-  onLoad: ->
-    Router.go "/data"
 ]
 
 renaissance =
@@ -171,7 +167,7 @@ Template.tutorial.tutorialOptions = ->
   switch Session.get("tutorialType")
     when "renaissance" then renaissance
     when "moon" then exploration
-    when "ogc" then ogc #next tutorials....
+    when "football" then ogc #next tutorials....
     else null
 
 Template.tutorial.events =

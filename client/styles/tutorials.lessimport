@@ -34,6 +34,18 @@ div.tutorial {
                     border-color: #6499ce transparent;
                 }
             }
+            div.nora-left{
+                border: 5px solid #6b3b7e;
+                &:before{
+                    border-color: transparent #6b3b7e;
+                }
+            }
+            div.nora-bottom{
+                border: 5px solid #6b3b7e;
+                &:before{
+                    border-color: #6b3b7e transparent;
+                }
+            }
 			a.quit {
 				position: absolute;
 				bottom: 15px;
