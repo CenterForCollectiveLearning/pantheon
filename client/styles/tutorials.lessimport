@@ -5,8 +5,35 @@ div.tutorial {
 
 		div.modal-body {
 			border-bottom: 0;
+			padding: 15px 15px 0 15px;
 			background-color: rgba(0, 0, 0, 0.85);
+			div.guide {
+				float: left;
+				img.alfredo {
+	    			width: 130px;
+	    			height: auto;
+	    		}
+			}
+			div.speech {
+				margin: 0;
+				width: 100%; 
+				float: right;
+			}
+
+			a.quit {
+				position: absolute;
+				bottom: 15px;
+				right: 15px;
+
+				color: @color_grey;
+				text-decoration: none;
+
+				&:hover { 
+					color: @color_gold; 
+				}
+			}
 		}
+
 
 		div.modal-footer {
 			border-top: 0;

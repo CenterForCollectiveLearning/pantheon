@@ -152,13 +152,16 @@ Template.scatterplot_svg.rendered = ->
   # console.log("FLAT DATA: ", flatData);
   # console.log("ATTRS: ", attrs);
 
+  width = $(".page-middle").width() - 10
+  height = $(".page-middle").height()
+
   Deps.autorun( ->
     scaleType = Session.get("scatterplotScale")
     mirrorType = Session.get("scatterplotMirror")
-
+    
     viz.type("pie_scatter")
-      .width($(".page-middle").width() - 10)
-      .height($(".page-middle").height())
+      .width(width)
+      .height(height)
       .id_var("id")
       .attrs(attrs)
       .text_var("name")
