@@ -5,7 +5,7 @@
 #clicktooltip{
     position: fixed;
     top: 25%;
-    left: 27%;
+    left: 25%;
 }
 
 div.d3plus_tooltip {

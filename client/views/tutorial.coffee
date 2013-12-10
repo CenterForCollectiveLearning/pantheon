@@ -77,3 +77,7 @@ Template.tutorial.tutorialOptions = ->
     when "football" then football
     when "tutorial3" then tutorial3 #next tutorials....
     else null
+
+Template.tutorial.events =
+  "click a": (d) ->
+    Session.set("tutorialType", null)
