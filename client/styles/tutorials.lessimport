@@ -9,17 +9,31 @@ div.tutorial {
 			background-color: rgba(0, 0, 0, 0.85);
 			div.guide {
 				float: left;
-				img.alfredo {
+				img.cartoon {
 	    			width: 130px;
 	    			height: auto;
 	    		}
+			}
+			div.speech {
+			    font-weight:400;
 			}
 			div.speech-right {
 				margin: 0;
 				width: 70%;
 				float: right;
 			}
-
+			div.diana-left{
+			    border: 5px solid #6499ce;
+			    &:before{
+			        border-color: transparent #6499ce;
+			    }
+			}
+			div.diana-bottom{
+                border: 5px solid #6499ce;
+                &:before{
+                    border-color: #6499ce transparent;
+                }
+            }
 			a.quit {
 				position: absolute;
 				bottom: 15px;
