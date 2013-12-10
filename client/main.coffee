@@ -220,6 +220,36 @@ Template.section.helpers selected: ->
 
 Template.sharing_options.events = 
 
+    "click a.google-plus-icon": ->
+      width  = 575
+      height = 400
+      left   = ($(window).width()  - width)  / 2
+      top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
+      url    = "https://plus.google.com/share?url=" + encodeURIComponent(location.href)
+      opts   = 'status=1' +
+             ',width='  + width  +
+             ',height=' + height +
+             ',top='    + top    +
+             ',left='   + left
+
+      window.open url, 'google', opts
+      false
+
+    "click a.facebook-icon": ->
+      width  = 575
+      height = 400
+      left   = ($(window).width()  - width)  / 2
+      top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
+      url    = "http://facebook.com/share.php?u=" + "Observatory of Global Culture" + "&url=" + encodeURIComponent(location.href)
+      opts   = 'status=1' +
+             ',width='  + width  +
+             ',height=' + height +
+             ',top='    + top    +
+             ',left='   + left
+
+      window.open url, 'google', opts
+      false
+
     "click a.twitter-icon": ->
       width  = 575
       height = 400
@@ -232,7 +262,6 @@ Template.sharing_options.events =
              ',top='    + top    +
              ',left='   + left
 
-      console.log(url)
       window.open url, 'twitter', opts
       false
 
