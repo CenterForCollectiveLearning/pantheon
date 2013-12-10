@@ -44,40 +44,74 @@ renaissanceStory = [
 
 ]
 
-footballStory = [
-  template: Template.football_step1
+explorationStory = [
+  template: Template.explorers_step1
+  spot:".page-middle span8"
   onLoad: ->
-    Router.go "/treemap/domain_exports_to/AMERICAN%20FOOTBALL%20PLAYER/all/-3000/1950/25/OGC"
+    Router.go "/treemap/country_exports/all/all/-3000/1950/25/OGC"
 ,
-  template: Template.football_step2
-  spot: "#viz, .ranked_list"
+  template: Template.explorers_step2
+  spot: ".page-middle span8"
 ,
-  template: Template.football_step3
+  template: Template.explorers_step3
+  spot: "#viz"
+,
+  template: Template.explorers_step4
+  spot: "#viz"
+,
+  template: Template.explorers_step5
+  spot: ".page-middle span8"
   onLoad: ->
-    Router.go "/map/map/SOCCER%20PLAYER/all/-3000/1950/25/OGC"
+    Router.go "/treemap/country_exports/all/all/1000/1700/25/OGC"
 ,
-  template: Template.football_step4
+  template: Template.explorers_step6
+  spot: ".ranked_list"
+,
+  template: Template.explorers_step7
+  spot: "#viz"
+,
+  template: Template.explorers_step8
+  spot: ".wrapper"
+  onLoad: ->
+    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1800/1900/25/OGC"
+,
+  template: Template.explorers_step9
+  spot: "#viz"
+,
+  template: Template.explorers_step10
+  spot: ".wrapper"
+  onLoad: ->
+    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1900/2000/25/OGC"
+,
+  template: Template.explorers_step11
+  spot: ".wrapper"
+,
+  template: Template.explorers_step12
   spot: "#viz"
 ]
+
+#ogcStory = []
 
 renaissance =
   steps: renaissanceStory
   onFinish: -> Session.set("tutorialType", null)
 
-football =
-  steps: footballStory
+exploration =
+  steps: explorationStory
   onFinish: -> Session.set("tutorialType", null)
 
-tutorial3 = {}
+#ogc =
+#  steps: ogcStory
+#  onFinish: -> Session.set("tutorialType", null)
 
 Template.tutorial.tutorialOptions = ->
 #  return null unless Session.get("dataReady")
   switch Session.get("tutorialType")
     when "renaissance" then renaissance
-    when "football" then football
-    when "tutorial3" then tutorial3 #next tutorials....
+    when "moon" then exploration
+#    when "ogc" then ogc #next tutorials....
     else null
 
 Template.tutorial.events =
-  "click a": (d) ->
+  "click .quit": (d) ->
     Session.set("tutorialType", null)

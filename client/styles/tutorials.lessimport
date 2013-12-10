@@ -14,9 +14,9 @@ div.tutorial {
 	    			height: auto;
 	    		}
 			}
-			div.speech {
+			div.speech-right {
 				margin: 0;
-				width: 100%; 
+				width: 70%;
 				float: right;
 			}
 
