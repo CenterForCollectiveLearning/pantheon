@@ -40,7 +40,6 @@ Deps.autorun ->
   country = Session.get("country")
   countryX = Session.get("countryX")
   countryY = Session.get("countryY")
-  console.log "IN SUBSCRIPTION", country, countryX, countryY
   language = Session.get("language")
   languageX = Session.get("languageX")
   languageY = Session.get("languageY")
@@ -99,24 +98,23 @@ Deps.autorun ->
       switch vizType
         # Treemap modes
         when "treemap"
-          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
         when "matrix"
-          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, gender, category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, dataset, onReady)
         # Scatterplot modes
         when "scatterplot"
           dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, dataset, onReady)
         # Map modes
         when "map"
-          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, dataset, onReady)
-#          clicktooltipSub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
         when "histogram"
           dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         when "stacked"
-          top10Sub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         else
           console.log "Unsupported vizType"
@@ -125,7 +123,7 @@ Deps.autorun ->
         when "countries", "people"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, onReady)
 #        when "people"
-#          dataSub = Meteor.subscribe("peopletopN", begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
+#          dataSub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
         when "domains"
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady)
         else

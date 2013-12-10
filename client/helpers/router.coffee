@@ -12,22 +12,15 @@ Router.map ->
     template: "home"
     data: -> 
       Session.set "page", @template
-    # path: "/"
-    # before: [->
-    #   @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
-    # ]
 
-  # TODO Remove redundancy on the waiting!
   @route "observatory",
     path: "/observatory"
-    waitOn: -> [Meteor.subscribe("countries_pub"), Meteor.subscribe("languages_pub"), Meteor.subscribe("domains_pub")]
-    before: [->
+    before: [ ->
       @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
     ]
 
   @route "observatory",
     path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
-    waitOn: -> [Meteor.subscribe("countries_pub"), Meteor.subscribe("languages_pub"), Meteor.subscribe("domains_pub")]
     data: ->
       vizMode = @params.vizMode
       Session.set "page", @template
@@ -49,9 +42,14 @@ Router.map ->
         Session.set "country", defaults.country
         Session.set "category", defaults.category
         Session.set "categoryLevel", defaults.categoryLevel
-      else Session.set "category", defaults.category  if vizMode is "domain_vs_domain"
-      Session.set "categoryLevel", getCategoryLevel(@params.paramOne)  if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"
-      Session.set "categoryLevel", getCategoryLevel(@params.paramTwo)  if IOMapping[vizMode]["in"][1] is "category" or IOMapping[vizMode]["in"][1] is "categoryX" or IOMapping[vizMode]["in"][1] is "categoryY"
+      else if vizMode is "domain_vs_domain"
+        Session.set "category", defaults.category
+
+      # Set category level based on category parameters
+      if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"
+        Session.set "categoryLevel", getCategoryLevel(@params.paramOne)  
+      if IOMapping[vizMode]["in"][1] is "category" or IOMapping[vizMode]["in"][1] is "categoryX" or IOMapping[vizMode]["in"][1] is "categoryY"
+        Session.set "categoryLevel", getCategoryLevel(@params.paramTwo)  
 
   @route "vision",
     data: ->
@@ -91,10 +89,6 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
-  # @route "timeline",
-  #   data: ->
-  #     Session.set "page", @template
-
   @route "people",
     path: "/people"
     before: [->
@@ -112,22 +106,11 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
-  # @route "publications",
-  #   data: ->
-  #     Session.set "page", @template
-
-
 Router.configure
   layoutTemplate: "defaultLayout"
   yieldTemplates:
     nav:
       to: "nav"
 
-    # aside:
-    #   to: "aside"
-
     footer:
       to: "footer"
-
-#    tutorial:
-#      to: "tutorial"

@@ -13,8 +13,7 @@
     a.toUpperCase()
 
 # Functions to return random entities
-@getRandomCountryCode = -> Countries.find({}, {skip: Math.floor(Countries.find().count() * Math.random()), limit: 1}).fetch()[0].countryCode
-@getRandomPerson = -> People.find({}, {skip: Math.floor(Countries.find().count() * Math.random()), limit: 1}).fetch()[0].name
+@getRandomFromArray = (arr) -> arr[Math.floor(arr.length * Math.random())]
 
 @IOMapping =
   country_exports:
@@ -42,7 +41,7 @@
     out: "language"
 
   matrix_exports:
-    in: ["country", "category"]
+    in: ["all", "all"]
     out: "language"
 
   country_vs_country:
@@ -67,26 +66,17 @@
 @indByDom = {}
 @occByInd = {}
 Meteor.startup ->
-  
-  # # Get client location
-  # if navigator.geolocation
-  #   console.log "GEOLOCATION WORKS"
-  #   navigator.geolocation.getCurrentPosition (position) ->
-  #     console.log position
-  #     $.getJSON "http://ws.geonames.org/countryCode",
-  #       lat: position.coords.latitude
-  #       lng: position.coords.longitude
-  #       type: "JSON"
-  #     , (result) ->
-  #       defaults.countryCode = result.countryCode
-  #       Session.set "country", result.countryCode
+  countriesOverTenPeople = ['US', 'GB', 'FR', 'DE', 'IT', 'RU', 'ES', 'TR', 'PL', 'AT', 'GR', 'IN', 'JP', 'SE', 'NL', 'BE', 'CN', 'HU', 'CH', 'CZ', 'UA', 'DK', 'BR', 'PT', 'EG', 'IR', 'CA', 'IE', 'NO', 'IL', 'FI', 'AR', 'RO', 'SA', 'AU', 'MX', 'RS', 'HR', 'ZA', 'LT', 'IQ', 'KR', 'PK', 'AF', 'PE', 'PH', 'DZ', 'GE', 'BG', 'CL', 'SY', 'TN', 'BY', 'LV', 'IS', 'EE', 'SK', 'NZ']
 
   @defaults =
     vizType: "treemap"
     vizMode: "country_exports"
+    country: getRandomFromArray(countriesOverTenPeople)
+    countryX: getRandomFromArray(countriesOverTenPeople)
+    countryY: getRandomFromArray(countriesOverTenPeople)
     language: "all"
-    languageX: "en"
-    languageY: "ru"
+    # languageX: "en"
+    # languageY: "ru"
     category: "all"
     categoryX: "ARTS"
     categoryY: "HUMANITIES"
@@ -100,39 +90,13 @@ Meteor.startup ->
     scatterplotScale: "linear"
     scatterplotMirror: true
 
-  Meteor.subscribe("allpeople", () ->
-    console.log "ALL PEOPLE READY", getRandomCountryCode()
-    defaults.country = getRandomCountryCode()
-    defaults.countryX = getRandomCountryCode()
-    defaults.countryY = getRandomCountryCode()
-    Session.setDefault "country", defaults.country
-    Session.setDefault "countryX", defaults.countryX
-    Session.setDefault "countryY", defaults.countryY
-    )
-
-
-  Meteor.subscribe("countries_pub", () ->
-    defaults.country = getRandomCountryCode()
-    defaults.countryX = getRandomCountryCode()
-    defaults.countryY = getRandomCountryCode()
-    Session.setDefault "country", defaults.country
-    Session.setDefault "countryX", defaults.countryX
-    Session.setDefault "countryY", defaults.countryY
-    )
-
-  Meteor.subscribe("allpeople", () ->
-    defaults.person = getRandomPerson()
-    Session.setDefault "person", defaults.person
-    console.log "allpeople loaded", defaults.person, Session.get("person")
-    )
-
   Session.setDefault "page", "observatory"
   Session.setDefault "vizType", defaults.vizType
   Session.setDefault "vizMode", defaults.vizMode
-  # Session.setDefault "country", defaults.country
-  # Session.setDefault "countryX", defaults.countryX
-  # Session.setDefault "countryY", defaults.countryY
-  # Session.setDefault "language", defaults.language
+  Session.setDefault "country", defaults.country
+  Session.setDefault "countryX", defaults.countryX
+  Session.setDefault "countryY", defaults.countryY
+  Session.setDefault "language", defaults.language
   # Session.setDefault "languageX", defaults.languageX
   # Session.setDefault "languageY", defaults.languageY
   Session.setDefault "category", defaults.category

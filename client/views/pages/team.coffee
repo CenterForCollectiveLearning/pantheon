@@ -7,7 +7,6 @@ teamMembers = [
     personal: "http://chidalgo.com/"
     twitter: "https://twitter.com/cesifoti"
     linkedin: "http://www.linkedin.com/pub/cesar-a-hidalgo/5/30a/a61"
-    email: "mailto:hidalgo@mit.edu"
 ,
   name: "Amy Zhao Yu"
   photo: "images/amy_yu.png"
@@ -17,7 +16,6 @@ teamMembers = [
     personal: "http://www.amyyu.net/"
     twitter: "https://twitter.com/mangomochi86"
     linkedin: "http://www.linkedin.com/in/amyzhaoyu"
-    email: "mailto:amy_yu@mit.edu"
 ,
   name: "Kevin Zeng Hu"
   photo: "images/kevin_hu.png"
@@ -27,7 +25,6 @@ teamMembers = [
     personal: "http://www.kevinzenghu.com"
     twitter: "https://www.twitter.com/kevinzenghu"
     linkedin: "http://www.linkedin.com/pub/kevin-hu/58/9a7/404"
-    email: "mailto:kzh@mit.edu"
 ,
   name: "Ali Almossawi"
   photo: "images/ali_almossawi.jpg"
@@ -37,7 +34,6 @@ teamMembers = [
     personal: "http://almossawi.com/"
     twitter: "https://twitter.com/alialmossawi"
     linkedin: "http://www.linkedin.com/in/almossawi/"
-    email: "almossawi@gmail.com"
 ,
   name: "Shahar Ronen"
   photo: "images/shahar_ronen.png"
@@ -47,7 +43,6 @@ teamMembers = [
     personal: "http://www.shaharronen.com/"
     twitter: "https://twitter.com/ShRonen"
     linkedin: "http://www.linkedin.com/in/shaharronen"
-    email: "mailto:sronen@media.mit.edu"
 ,
   name: "Deepak Jagdish"
   photo: "images/deepak_jagdish.png"
@@ -57,7 +52,6 @@ teamMembers = [
     personal: "http://deepakjagdish.com/"
     twitter: "https://twitter.com/dj247"
     linkedin: "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
-    email: "mailto:defne@mit.edu"
 ,
   name: "Andrew Mao"
   photo: "images/andrew_mao.png"
@@ -67,7 +61,6 @@ teamMembers = [
     personal: "http://www.andrewmao.net/"
     twitter: "https://twitter.com/mizzao"
     linkedin: "www.linkedin.com/pub/andrew-mao/6/6a6/533"
-    email: "mailto:mao@seas.harvard.edu"
 ,
   name: "Defne Gurel"
   photo: "images/defne_gurel.png"
@@ -75,7 +68,13 @@ teamMembers = [
   role: ["Data"]
   media:
     linkedin: "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
-    email: "mailto:defne@mit.edu"
+,
+  name: "Tiffany Lu"
+  photo: "images/tiffany_lu.jpg"
+  description: "Computer Science Undergraduate"
+  role: ["Data"]
+  media:
+    personal: "http://tweilu.scripts.mit.edu/"
 ]
 Template.team.helpers
   first_row_teamMembers: ->
@@ -85,7 +84,7 @@ Template.team.helpers
     teamMembers.slice 3, 6
 
   third_row_teamMembers: ->
-    teamMembers.slice 6, 8
+    teamMembers.slice 6, 9
 
 Template.team.events =
   "mouseenter li.team-member": (d) ->

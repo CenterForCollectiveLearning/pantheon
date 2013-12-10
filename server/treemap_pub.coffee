@@ -39,7 +39,6 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
         count:
           $sum: 1
     ]
-    console.log "COUNTRY_EXPORTS", pipeline
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
@@ -84,7 +83,6 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
           industry: e._id.industry
           occupation: e._id.occupation
           count: e.count
-
 
       sub.ready()
     , (error) ->

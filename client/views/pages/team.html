@@ -4,12 +4,6 @@
 	</li>
 </template>
 
-<template name="thirdRowTeamMember">
-	<li class="span6 team-member">
-		{{>teamMemberInfo}}
-	</li>
-</template>
-
 <template name="teamMemberInfo">
 	<span class="name">{{name}}</span>
 	<div class="photo_container">
@@ -61,7 +55,7 @@
 				<div class="row-fluid">
 					<ul>
 						{{#each third_row_teamMembers}}
-						    {{> thirdRowTeamMember}}
+						    {{> teamMember}}
 						{{/each}}
 					</ul>
 				</div>

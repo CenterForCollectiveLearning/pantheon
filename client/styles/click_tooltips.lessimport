@@ -58,6 +58,8 @@ div.d3plus_tooltip_body {
     }
 
     img {
+      width: 80px;
+      height: 80px;      
       .grayscale(0)
       &:hover {
         .grayscale(1);

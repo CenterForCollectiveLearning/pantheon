@@ -191,10 +191,8 @@ footer {
 
 	div.share {
 		position: absolute;
-		left:30%; 
-		bottom:3px;
-		width:40%;
-		float:left;
+		right: 10px;
+		bottom: 10px;
 		div.sharing-options{
 			text-align: center;
 		}

@@ -50,18 +50,22 @@ Template.accordion.events =
 
     # Parameters depend on vizMode (e.g countries -> languages for exports)
     [paramOne, paramTwo] = IOMapping[vizMode]["in"]
+    unless paramOne is "all"
+      paramOne = Session.get(paramOne)
+    unless paramTwo is "all"
+      paramTwo = Session.get(paramTwo)
 
-    # Reset parameters for a viz type change
+    # Use session variables as parameters for a viz type change
     Router.go "observatory",
       vizType: vizType
       vizMode: vizMode
-      paramOne: defaults[paramOne]
-      paramTwo: defaults[paramTwo]
-      from: defaults.from
-      to: defaults.to
-      langs: defaults.langs
-      gender: defaults.gender
-      dataset: defaults.dataset
+      paramOne: paramOne
+      paramTwo: paramTwo
+      from: Session.get("from")
+      to: Session.get("to")
+      langs: Session.get("langs")
+      gender: Session.get("gender")
+      dataset: Session.get("dataset")
 
 # Global helper for data ready
 Handlebars.registerHelper "dataReady", ->
