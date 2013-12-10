@@ -346,8 +346,8 @@ d3plus.viz = function() {
 //        vars.data = null;
 //      }
 
-      if (vars.data && (vars.type == "tree_map" && vars.data.length == 0)) {
-          vars.data = null;
+      if (vars.data && (vars.type == "tree_map" && vars.data.length == 0) || (vars.data && vars.data.length == 0)) {
+        vars.data = null;
       }
 
       d3plus.tooltip.remove(vars.type);
