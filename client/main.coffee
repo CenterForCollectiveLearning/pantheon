@@ -218,24 +218,28 @@ Template.nav.helpers
 Template.section.helpers selected: ->
   (if Session.equals("page", @template) then "selected_section" else "")
 
-# Template.sharing_options.rendered = ->
+Template.sharing_options.events = 
 
-#     $('.twitter-popup').click ->
-#     width  = 575
-#     height = 400
-#     left   = ($(window).width()  - width)  / 2
-#     top    = ($(window).height() - height) / 2
-#     url    = this.href
-#     opts   = 'status=1' +
-#              ',width='  + width  +
-#              ',height=' + height +
-#              ',top='    + top    +
-#              ',left='   + left
+    "click a.twitter-icon": ->
+      width  = 575
+      height = 400
+      left   = ($(window).width()  - width)  / 2
+      top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
+      url    = "http://www.twitter.com/intent/tweet?text=" + "Observatory of Global Culture" + "&url=" + encodeURIComponent(location.href) + "&hashtags=OGC, culture"
+      opts   = 'status=1' +
+             ',width='  + width  +
+             ',height=' + height +
+             ',top='    + top    +
+             ',left='   + left
 
-#     console.log encodeURIComponent(location.href)
-#     window.open url, 'twitter', opts
-#     return false
+      console.log(url)
+      window.open url, 'twitter', opts
+      false
 
+# https://twitter.com/intent/tweet?
+# original_referer=https%3A%2F%2Fdev.twitter.com%2Fdocs%2Ftweet-button&text=Tweet%20Button%20%7C%20Twitter%20Developers&tw_p=tweetbutton&url=https%3A%2F%2Fdev.twitter.com&via=your_screen_name
+
+# <a href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fdev.twitter.com%2Fdocs%2Ftweet-button&amp;text=Tweet%20Button%20%7C%20Twitter%20Developers&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fdev.twitter.com&amp;via=your_screen_name" class="btn" id="b"><i></i><span class="label" id="l">Tweet</span></a>
 #   # Twitter
 #   d = document
 #   s = "script"

@@ -191,21 +191,24 @@ footer {
 
 	div.share {
 		position: absolute;
-		right: 10px;
+		right: 15px;
 		bottom: 10px;
 		div.sharing-options{
 			text-align: center;
 		}
-		i {
-			color: white;
-			font-size: 1.2rem;
+		a {
+			padding-left: 5px;
+			i {
+				color: white;
+				font-size: 1.75rem;
+				color: @color_grey;
 
-			&:hover {
-				color: @color_gold;
-				text-decoration: none;
+				&:hover {
+					color: @color_gold;
+					text-decoration: none;
+				}
 			}
 		}
-		
 	}
 }
 
