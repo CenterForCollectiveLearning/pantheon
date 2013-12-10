@@ -157,7 +157,7 @@ Template.scatterplot_svg.rendered = ->
     mirrorType = Session.get("scatterplotMirror")
 
     viz.type("pie_scatter")
-      .width($(".page-middle").width())
+      .width($(".page-middle").width() - 10)
       .height($(".page-middle").height())
       .id_var("id")
       .attrs(attrs)
@@ -172,7 +172,7 @@ Template.scatterplot_svg.rendered = ->
       .text_format(text_formatting)
       .spotlight(false)
       .active_var("active1")
-      .font_weight(400)
+      .font_weight(300)
       .background("#000000")
       .font("Lato")
       .mirror_axis(mirrorType)

@@ -1798,7 +1798,7 @@ d3plus.viz = function() {
   }
   
   var label_style = {
-    "font-size": "16px",
+    "font-size": "20px",
     "fill": "#FFF", // Changed
     "text-anchor": "middle"
   }

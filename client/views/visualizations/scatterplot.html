@@ -1,8 +1,10 @@
 <template name="scatterplot">
-	 <div class="page-middle scatter-container span8">
+	 <div class="page-middle span8">
 	    <div id="viz" class="scatterplot">
 	    	{{#if dataReady}}
-	    	    {{> scatterplot_svg}}
+	    	    <div class="scatterplot-container">
+	    	    	{{> scatterplot_svg}}
+	    	    </div>
 	    	    {{> time_slider}} 
 	    	{{else}}
 	    	    {{> spinner}}

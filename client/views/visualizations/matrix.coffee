@@ -37,6 +37,7 @@ Template.matrix_svg.rendered = ->
       svg_width : $(".page-middle").width()
     console.log("NO DATA ERROR!!")
     d3.select(@find("svg.matrix")).remove()
+    $("div.scroll-container").remove()
     error = d3.select(@find("svg.header")).attr("width", vars.svg_width).attr("height", vars.svg_height).append("svg:g").selectAll("g.d3plus-error").data(["No data available"])
 #    error.enter().append("rect").attr("width", vars.svg_width).attr("height", vars.svg_height).attr("fill", "#000000")
     error.enter().append("g").attr("class", "d3plus-error").attr("opacity", 100).append("text").attr("x", vars.svg_width / 2).attr("font-size", "30px").attr("fill", "#888").attr("text-anchor", "middle").attr("font-family", "Lato").style("font-weight", "300").each((d) ->

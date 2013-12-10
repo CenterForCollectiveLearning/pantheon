@@ -252,7 +252,12 @@ div.chosen-container {
 		color: white;
 		font-size: 14px;
 		div.chosen-search {
-
+			input:focus {
+				border-color: @color_gold;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				box-shadow: none;
+			}
 		}
 		div.chosen-results {
 			color: white;
