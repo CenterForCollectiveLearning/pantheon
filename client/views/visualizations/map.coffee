@@ -81,6 +81,7 @@ mouseout = (d) ->
 
 clickevent = (d) ->
   Session.set "hover", false
+  Session.set "showTooltip", false
   dataset = Session.get("dataset")
   countryCode3 = d.id
   countryName = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryName
