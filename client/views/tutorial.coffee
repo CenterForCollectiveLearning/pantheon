@@ -6,29 +6,42 @@ Handlebars.registerHelper "withif", (obj, options) ->
 
 renaissanceStory = [
   template: Template.renaissance_step1
-  spot: "#viz"
+  spot: ".wrapper"
   onLoad: ->
-    Router.go "/map/map/all/all/1400/1600/25/OGC"
+    Router.go "/treemap/country_exports/all/all/1300/1600/25/OGC"
 ,
   template: Template.renaissance_step2
   spot: "#viz"
-  onLoad: ->
-    Router.go "/treemap/country_exports/all/all/1400/1600/25/OGC"
 ,
   template: Template.renaissance_step3
   spot: ".ranked_list"
 ,
   template: Template.renaissance_step4
-  onLoad: ->
-    Router.go "/treemap/domain_exports_to/PAINTER/all/1400/1600/25/OGC"
+  spot: "#viz"
 ,
   template: Template.renaissance_step5
-  spot: "#viz"
+  spot: "#wrapper"
+  onLoad: ->
+    Router.go "/treemap/domain_exports_to/all/all/1300/1600/25/OGC"
 ,
   template: Template.renaissance_step6
+  spot: ".wrapper"
+  onLoad: ->
+    Router.go "/treemap/country_exports/IT/all/1300/1600/25/OGC"
+,
+  template: Template.renaissance_step8
   spot: "#viz"
   onLoad: ->
-    Router.go "/histogram/country_exports/IT/all/1400/1600/25/OGC"
+    Router.go "/scatterplot/country_vs_country/GB/FR/1300/1600/25/OGC"
+,
+  template: Template.renaissance_step9
+  spot: ".viz"
+,
+  template: Template.renaissance_step11
+  spot: ".wrapper"
+  onLoad: ->
+    Router.go "/treemap/country_exports/all/all/1300/1600/25/OGC"
+
 ]
 
 footballStory = [
