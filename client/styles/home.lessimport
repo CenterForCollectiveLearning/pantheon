@@ -137,8 +137,9 @@ section#vision {
 	height: 100%;
 	border: solid @color_gold;
     border-width: 0 0 3px 0;
-	.text {
-		font-size: 1.25em;
+	.vision-text {
+		font-size: 1.25rem;
+		line-height: 1.5rem;
 	}
 }
 

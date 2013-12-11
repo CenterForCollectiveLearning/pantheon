@@ -4,6 +4,7 @@ Template.ranking_table.rendered = ->
   $("#ranking").dataTable
     iDisplayLength: 25
     bDeferRender: true
+    bSortClasses: false
     fnDrawCallback: (oSettings) ->
       that = this
 

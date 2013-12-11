@@ -175,7 +175,6 @@ Template.treemap_svg.rendered = ->
         name: d.lang_name
         num_ppl: d.count
         year: 2000
-    
 
     viz.type("tree_map")
         .width($(".page-middle").width())
