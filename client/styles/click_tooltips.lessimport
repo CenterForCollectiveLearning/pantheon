@@ -54,7 +54,8 @@ div.d3plus_tooltip_body {
       font-size: 1.25em;
       line-height: 1.5em;
       text-align: center;
-      padding: 10px 0
+      padding: 10px 0;
+      font-weight: 300;
     }
 
     img {
