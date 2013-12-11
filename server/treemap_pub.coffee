@@ -8,7 +8,6 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
   matchArgs =
     numlangs:
       $gt: L
-
     birthyear:
       $gte: begin
       $lte: end

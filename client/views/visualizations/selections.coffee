@@ -151,8 +151,8 @@ Template.select_dataset.rendered = ->
     path = window.location.pathname.split("/")
     path[8] = dataset
     if dataset is "murray"
-      path[7] = 1
-      Session.set "langs", 1
+      path[7] = 0
+      Session.set "langs", 0
     Router.go path.join("/"))
 
 Template.select_scale.events =

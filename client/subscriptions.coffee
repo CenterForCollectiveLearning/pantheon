@@ -46,6 +46,9 @@ Deps.autorun ->
   begin = parseInt(Session.get("from"))
   end = parseInt(Session.get("to"))
   L = parseInt(Session.get("langs"))
+  langs = true
+  if L is null
+    langs = false
   category = Session.get("category")
   categoryX = Session.get("categoryX")
   categoryY = Session.get("categoryY")
@@ -73,7 +76,7 @@ Deps.autorun ->
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
   #      
-  unless not country or not begin or not end or not L
+  unless not country or not begin or not end or not langs
     
     #
     #         Do nothing:
