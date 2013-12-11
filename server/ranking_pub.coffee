@@ -21,15 +21,29 @@
 Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel) ->
   sub = this
   collectionName = "countries_ranking"
-  criteria = birthyear:
-    $gte: begin
-    $lte: end
-
+  criteria = 
+    birthyear:
+      $gte: begin
+      $lte: end
+    dataset: "OGC"
   criteria[categoryLevel] = category if category.toLowerCase() isnt "all"
+  console.log(criteria)
   country = {}
-  data = People.find(criteria)
-  countries = _.groupBy(data.fetch(), "countryCode")
+  data = People.find(criteria).fetch()
+  countries = _.groupBy(data, "countryCode")
   finaldata = []
+  hdata = {}
+  for cc of countries #build an object with all of the H-index data
+    countrylangs = _.groupBy(countries[cc], "numlangs")
+    nums = _.sortBy(_.keys(countrylangs), (num) -> parseInt(num)).reverse()
+    sumppl = 0
+    for n in nums
+      sumppl += parseInt(countrylangs[n].length)
+      numlangs = parseInt(n)
+      if sumppl >= numlangs
+        hdata[cc] = numlangs
+        break
+
   for cc of countries
     country = {}
     country["countryCode"] = cc
@@ -39,11 +53,16 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel) ->
     females = _.countBy(countries[cc], (p) ->
       (if p.gender is "Female" then "Female" else "Male")
     ).Female
+    fifties = _.countBy(countries[cc], (p) ->
+      (if p.numlangs >= 50 then "fifty" else "not")
+    ).fifty
     country["numwomen"] = (if females then females else 0)
-    country["i50"] = countries[cc][0]["i50"]
-    country["Hindex"] = countries[cc][0]["Hindex"]
     country["diversity"] = Object.keys(_.groupBy(countries[cc], "occupation")).length
     country["percentwomen"] = (country["numwomen"] / country["numppl"] * 100.0).toFixed(2)
+    country["i50"] = (if fifties then fifties else 0)
+    country["Hindex"] = hdata[cc]
+
+
     finaldata.push country
   finaldata.forEach (person) ->
     sub.added collectionName, Random.id(), person
