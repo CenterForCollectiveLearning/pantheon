@@ -247,15 +247,16 @@ Template.sharing_options.events =
              ',top='    + top    +
              ',left='   + left
 
-      window.open url, 'google', opts
+      window.open url, 'facebook', opts
       false
 
     "click a.twitter-icon": ->
+      question = $("#question").text()
       width  = 575
       height = 400
       left   = ($(window).width()  - width)  / 2
       top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
-      url    = "http://www.twitter.com/intent/tweet?text=" + "Observatory of Global Culture" + "&url=" + encodeURIComponent(location.href) + "&hashtags=OGC, culture"
+      url    = "http://www.twitter.com/intent/tweet?text=" + question + "&url=" + encodeURIComponent(location.href) + "&hashtags=OGC, culture"
       opts   = 'status=1' +
              ',width='  + width  +
              ',height=' + height +

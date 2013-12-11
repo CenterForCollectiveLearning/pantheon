@@ -48,6 +48,8 @@
 		&:hover { .opacity(1.0); }
 	}
 	.page-middle {
+		margin-bottom: 2em;
+		
 		// Visualization
 		svg {
 			.opacity(1.0);  // 0.85
@@ -136,6 +138,27 @@
 	color: #cccccc;
 }
 
+div.ui-slider {
+	.fade;
+	.opacity(0.5);
+	&:hover { .opacity(1.0); }
+	background: black;
+	div.ui-slider-range {
+		
+	}
+
+	span.ui-slider-tic {
+		height: 0.7em;
+	}
+	
+	span.ui-slider-label {
+		font-family: 'Lato';
+		font-weight: 300;
+		font-size: 1em;
+		color: white;
+	}
+}
+
 .accordion {
 	font-family: 'Lato' !important;
     h3.app {
@@ -187,11 +210,6 @@ div.viz-options {
 	&.inline {
 		display: inline;
 		float: left;
-		width: 33.3333%;
-
-		div.chosen-container {
-			width: 33.3333% !important;
-		}
 	}
 }
 
@@ -239,7 +257,6 @@ div.chosen-container {
 		color: white;
 		font-size: 14px;
 		border: 0 !important;
-		// border: 1px solid @color_gold;
 		span {
 			margin-right: 0;
 		}
@@ -262,11 +279,6 @@ div.chosen-container {
 		div.chosen-results {
 			color: white;
 			font-size: 14px;
-			// li.highlighted {
-			// 	background-color: @color_gold;
-			// 	background-image: @color_gold;
-			// 	color: black;
-			// }
 		}
 	}
 }
