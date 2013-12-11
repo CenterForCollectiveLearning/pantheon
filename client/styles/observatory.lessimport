@@ -187,11 +187,6 @@ div.viz-options {
 	&.inline {
 		display: inline;
 		float: left;
-		width: 33.3333%;
-
-		div.chosen-container {
-			width: 33.3333% !important;
-		}
 	}
 }
 
@@ -223,6 +218,8 @@ div.buttons {
 		&:last-child {
 			border-top-right-radius: 2px;
 			border-bottom-right-radius: 2px;		
+		div.chosen-container {
+			width: 33% !important;
 		}
 	}
 }
