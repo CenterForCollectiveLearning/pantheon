@@ -31,9 +31,8 @@ j
 	//handle ID attrs - selects each need IDs for handles to find them
 	var handleIds = (function(){
 		var tempArr = [];
-		selects.each(function(){
-			tempArr.push('handle_'+jQuery(this).attr('id'));
-		});
+		tempArr.push('handle_from');
+		tempArr.push('handle_to');
 		return tempArr;
 	})();
 	
@@ -106,12 +105,16 @@ j
 			    .find('.ui-slider-tooltip .ttContent')
 			    .text( textval );
 
-			//control original select menu
-			var currSelect = jQuery('#' + thisHandle.attr('id').split('handle_')[1]);
+			// Update original select menu
+			var selector = thisHandle.attr('id').split('handle_')[1]
+			if(selector === "from") {
+				var currSelect = jQuery("div#from > select");
+			} else if(selector === "to") {
+				var currSelect = jQuery("div#to > select");
+			}
 
-			// Update dropdown
-			currSelect.val(selectOptions[ui.value].value)
-			$.uniform.update(currSelect);
+			currSelect.val(selectOptions[ui.value].value);
+			currSelect.trigger("chosen:updated");
 
 			// Update date range header
 			$("span.from").text(from_formatted);

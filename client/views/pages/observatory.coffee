@@ -20,7 +20,8 @@ Template.visualization.render_template = ->
       new Handlebars.SafeString(Template.stacked(this))
 
 Template.time_slider.rendered = ->
-  $("select#from, select#to").selectToUISlider
+  # Not sure why this works, but it overcomes the re-styling issue
+  $("div#from > select, div#to > select").selectToUISlider
     labels: 15
     tooltip: false
 

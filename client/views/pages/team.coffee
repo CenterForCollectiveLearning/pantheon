@@ -10,7 +10,7 @@ teamMembers = [
 ,
   name: "Amy Zhao Yu"
   photo: "images/amy_yu.png"
-  description: "Second Year Graduate Student"
+  description: "Graduate Student"
   role: ["Data", "Content", "Development"]
   media:
     personal: "http://www.amyyu.net/"
@@ -19,7 +19,7 @@ teamMembers = [
 ,
   name: "Kevin Zeng Hu"
   photo: "images/kevin_hu.png"
-  description: "First Year Graduate Student"
+  description: "Graduate Student"
   role: ["Development", "Design", "Data"]
   media:
     personal: "http://www.kevinzenghu.com"
@@ -46,7 +46,7 @@ teamMembers = [
 ,
   name: "Deepak Jagdish"
   photo: "images/deepak_jagdish.png"
-  description: "Second Year Graduate Student"
+  description: "Graduate Student"
   role: ["Design", "Content"]
   media:
     personal: "http://deepakjagdish.com/"
@@ -55,7 +55,7 @@ teamMembers = [
 ,
   name: "Andrew Mao"
   photo: "images/andrew_mao.png"
-  description: "Fifth Year Graduate Student at Harvard"
+  description: "Graduate Student at Harvard"
   role: ["Development"]
   media:
     personal: "http://www.andrewmao.net/"

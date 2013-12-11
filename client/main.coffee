@@ -247,7 +247,7 @@ Template.sharing_options.events =
              ',top='    + top    +
              ',left='   + left
 
-      window.open url, 'google', opts
+      window.open url, 'facebook', opts
       false
 
     "click a.twitter-icon": ->

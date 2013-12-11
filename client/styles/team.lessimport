@@ -33,6 +33,10 @@
 					&:hover { 
 						color: @color_gold; 
 					}
+
+					i {
+						font-size: 1.5em;
+					}
 				}
 			}
 
