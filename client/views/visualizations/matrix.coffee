@@ -64,6 +64,7 @@ Template.matrix_svg.rendered = ->
       clickevent = (p) ->
         Session.set "hover", false
         Session.set "showTooltip", false
+        $("#tooltip").empty()
         dataset = Session.get("dataset")
 
         countryCode = countries[p.y]
