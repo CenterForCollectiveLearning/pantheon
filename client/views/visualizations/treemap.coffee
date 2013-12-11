@@ -18,13 +18,14 @@ Template.treemap_svg.rendered = ->
   
   # Don't re-render with the same parameters...?
   context = this
+  dataset = Session.get("dataset")
   viz = d3plus.viz()
   data = Treemap.find().fetch()
 
   attrs = {}
   vizMode = Session.get("vizMode")
   if vizMode is "country_exports" or vizMode is "country_imports" or vizMode is "bilateral_exporters_of"
-    attr = Domains.find().fetch()
+    attr = Domains.find({dataset:dataset}).fetch()
     attr.forEach (a) ->
       dom = a.domain.capitalize()
       ind = a.industry.capitalize()
@@ -87,7 +88,7 @@ Template.treemap_svg.rendered = ->
       .nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color")
     d3.select(context.find("svg")).datum(flat).call viz
   else if vizMode is "domain_exports_to"
-    attr = Countries.find().fetch()
+    attr = Countries.find({dataset:dataset}).fetch()
     attr.forEach (a) ->
       continent = a.continentName
       countryCode = a.countryCode

@@ -94,7 +94,7 @@ d3plus.viz = function() {
     "svg_height": window.innerHeight,
     "svg_width": window.innerWidth,
     "text_format": function(text,name) {
-      return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase() 
+      return text; 
     },
     "text_var": "name",
     "title": null,
