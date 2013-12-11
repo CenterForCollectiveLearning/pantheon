@@ -1819,7 +1819,7 @@ d3plus.viz = function() {
       
         d3.select(this)
           .style(axis_style)
-          .attr("transform","translate(-22,3)rotate(-65)")
+          .attr("transform","translate(-1,-5)") // CHANGED
           .attr("font-family",vars.font)
           .attr("font-weight",vars.font_weight)
           .text(text)
@@ -1945,7 +1945,7 @@ d3plus.viz = function() {
       .attr("fill-opacity",0.03)
       .attr("stroke-width",1)
       .attr("stroke","#ccc")
-      .attr("stroke-dasharray","10,10")
+      .attr("stroke-dasharray","5,5")
       .attr("opacity",0)
 
     // Create X axis
@@ -2021,7 +2021,23 @@ d3plus.viz = function() {
         // TODO Make it work for reversed axes
         // TODO Take buffer into account programmatically
         // TODO Don't make the dotted line collide
-        return "M "+vars.graph.width+" "+vars.graph.height+" L 0 "+vars.graph.height+" L "+vars.xaxis_domain[1]+" 0 L "+vars.graph.width+" 0 Z"
+        if(vars.mirror_axis) {
+          return "M 0 " + vars.graph.height + " L " + vars.graph.width + " 0 Z"
+        }
+        else {
+          x_max = vars.xaxis_domain[1]
+          y_max = vars.yaxis_domain[0]          
+            // Intercept top
+            if(x_max > y_max) {
+              intercept = vars.x_scale(y_max)
+              return "M 0 " + vars.graph.height + " L " + intercept + " 0 Z"
+            } 
+            // Intercept right
+            else {  
+              intercept = vars.y_scale(m_axis)
+              return "M 0 " + vars.graph.height + " L 0 " + intercept + " Z"
+            }
+        }
       })
 
     // Update X axis
@@ -2040,7 +2056,7 @@ d3plus.viz = function() {
       .call(vars.x_axis.scale(vars.x_scale))
     
     d3.select("g.xaxis").selectAll("g.tick").select("text")
-      .style("text-anchor","end")
+      .style("text-anchor", "center")
 
     // Update X axis label
     d3.select(".x_axis_label")
