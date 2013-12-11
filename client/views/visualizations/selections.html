@@ -314,7 +314,11 @@
 
 <template name="select_l">
     <div class="parameter-selection inline">
-        <label>L</label>
+        {{#if murray}}
+            <label>Index</label>
+        {{else}}
+            <label>L</label>
+        {{/if}}
         <select>
             <option value="25">25</option>
             <option value="30">30</option>

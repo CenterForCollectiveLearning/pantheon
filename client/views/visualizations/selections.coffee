@@ -128,6 +128,10 @@ Template.select_l.rendered = ->
     path[7] = $(this).val()
     Router.go path.join("/"))
 
+Template.select_l.murray = ->
+  if Session.get("dataset") is "murray"
+    return true
+
 Template.select_gender.rendered = ->
   $(@find("select")).val(Session.get("gender")).chosen().change( ->
     Session.set "gender", $(this).val())
@@ -141,12 +145,14 @@ Template.select_industry_order.rendered = ->
     Session.set "industryOrder", $(this).val())
 
 Template.select_dataset.rendered = ->
-  console.log "RENDERING DATASET", Session.get("dataset")
   $(@find("select")).val(Session.get("dataset")).chosen().change( ->
     dataset = $(this).val()
     Session.set "dataset", dataset
     path = window.location.pathname.split("/")
     path[8] = dataset
+    if dataset is "murray"
+      path[7] = 1
+      Session.set "langs", 1
     Router.go path.join("/"))
 
 Template.select_scale.events =
