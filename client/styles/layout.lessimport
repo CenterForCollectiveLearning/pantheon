@@ -72,6 +72,7 @@ body {
 	// background: url(/church_2_transparent70.jpg) no-repeat center center fixed;
 	background: url(/church_2.png) no-repeat center center fixed;
 	// background: url(/church_2_transparent70.jpg) no-repeat center center fixed;
+
 	// background-image: url(/florence_smaller.jpg) 
 	// background-repeat: no-repeat;
 	// background-attachment: fixed;

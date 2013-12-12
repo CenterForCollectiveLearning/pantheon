@@ -8,7 +8,7 @@ allpeopleSub = Meteor.subscribe("allpeople")
 
 # Derived Collections -- These are client only collections
 # TODO: Do we need the @ sign here?
-@PeopleTopN = new Meteor.Collection "topNpeople"
+@PeopleTopN = new Meteor.Collection "peopleTopN"
 @Treemap = new Meteor.Collection "treemap"
 @CountriesRanking = new Meteor.Collection "countries_ranking"
 @DomainsRanking = new Meteor.Collection "domains_ranking"
@@ -76,7 +76,8 @@ Deps.autorun ->
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
   #      
-  unless not country or not begin or not end or not langs
+
+  if country and begin and end and L
     
     #
     #         Do nothing:
@@ -101,32 +102,34 @@ Deps.autorun ->
       switch vizType
         # Treemap modes
         when "treemap"
-          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         # Matrix modes
         when "matrix"
-          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("matrix_pub", begin, end, L, gender, dataset, onReady)
         # Scatterplot modes
         when "scatterplot"
           dataSub = Meteor.subscribe("scatterplot_pub", vizMode, begin, end, L, countryX, countryY, languageX, languageY, categoryX, categoryY, categoryLevel, dataset, onReady)
         # Map modes
         when "map"
-          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, dataset, onReady)
         when "histogram"
           dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
         when "stacked"
-          top10Sub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
+          top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
           dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         else
           console.log "Unsupported vizType"
     else if page is "rankings"
+      console.log "PAGE IS RANKINGS"
       switch entity
-        when "countries", "people"
+        when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, onReady)
         when "people"
-          dataSub = Meteor.subscribe("peopletopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
+          console.log "ENTITY IS PEOPLE"
+          dataSub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
         when "domains"
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady)
         else
@@ -196,20 +199,3 @@ Deps.autorun ->
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
   tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, dataset, showclicktooltip, onDataReady)
-
-
-
-
-#Deps.autorun ->
-#  onDataReady = ->
-#    Session.set "tooltipDataReady", true
-#  showclicktooltip = Session.get "clicktooltip"
-#  return unless showclicktooltip
-#  category = Session.get("tooltipCategory")
-#  categoryLevel = Session.get("tooltipCategoryLevel")
-#  country = Session.get("tooltipCountryCode")
-#  begin = parseInt(Session.get("from"))
-#  end = parseInt(Session.get("to"))
-#  L = parseInt(Session.get("langs"))
-#  dataset = Session.get("dataset")
-#  clicktooltipSub = Meteor.subscribe("peopletopN", begin, end, L, country, category, categoryLevel, "all", dataset, onDataReady) #TODO: move this subscription???
