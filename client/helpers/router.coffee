@@ -89,6 +89,10 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
+  @route "references",
+    data: ->
+      Session.set "page", @template
+
   @route "people",
     path: "/people"
     before: [->

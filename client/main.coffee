@@ -203,9 +203,9 @@ rightSections = [
   #     template: "publications",
   #     url: "/publications"
   # },
-  section: "FAQ"
-  template: "faq"
-  url: "/faq"
+  section: "References"
+  template: "references"
+  url: "/references"
 ,
   section: "Team"
   template: "team"
