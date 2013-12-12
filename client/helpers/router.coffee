@@ -115,6 +115,6 @@ Router.configure
   yieldTemplates:
     nav:
       to: "nav"
-
     footer:
       to: "footer"
+  notFoundTemplate: "notFound"
