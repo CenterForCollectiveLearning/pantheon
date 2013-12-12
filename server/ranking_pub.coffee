@@ -46,7 +46,7 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
         hdata[cc] = numlangs
         break
       else
-        hdata[cc] = 0
+        hdata[cc] = sumppl
 
   for cc of countries
     country = {}
