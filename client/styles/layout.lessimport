@@ -199,7 +199,6 @@ footer {
 		a {
 			padding-left: 5px;
 			i {
-				color: white;
 				font-size: 1.75rem;
 				color: @color_grey;
 

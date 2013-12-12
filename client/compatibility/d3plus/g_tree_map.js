@@ -140,7 +140,7 @@ d3plus.tree_map = function(vars) {
   }
   
   cell
-    .on(d3plus.evt.over,function(d){
+    .on(d3plus.evt.move,function(d){
       Session.set("hover", true);
       var id = find_variable(d,vars.id_var).replace(" ", "_"),
           self = d3.select("#cell_"+id).node()
@@ -180,8 +180,6 @@ d3plus.tree_map = function(vars) {
       Session.set("tooltipCountryCode", countryCode);
 
       Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
-      // Template.tooltip.categoryA = countryName;
-      // Template.tooltip.categoryB = category;
 
       Session.set("showTooltip", true);
     })
