@@ -1,52 +1,64 @@
 <!-- Dropdown Menu Container-->
 <template name="select_mode">
-    {{> select_dataset}}
     {{ render_template }}
     {{> select_from}}
     {{> select_to}}
     {{> select_l}}
 </template>
 
+<template name="select_entity">
+    {{> select_entity_dropdown}}
+</template>
+
 <!-- Dropdown Menus -->
 <template name="country_exporters_mode">
+    {{> select_dataset}}
     {{> select_country}}
 </template>
 
 <template name="histogram_country_exporters_mode">
+    {{> select_dataset}}
     {{> select_country}}
     {{> select_industry_order}}
 </template>
 
 <template name="country_importers_mode">
+    {{> select_dataset}}
     {{> select_language}}
 </template>
 
 <template name="histogram_domain_mode">
+    {{> select_dataset}}
     {{> select_category}}
     {{> select_country_order}}
 </template>
 
 <template name="domain_mode">
+    {{> select_dataset}}
     {{> select_category}}
 </template>
 
 <template name="bilateral_exporters_mode">
+    {{> select_dataset}}
     {{> select_country}}
     {{> select_language}}
 </template>
 
 <template name="bilateral_importers_mode">
+    {{> select_dataset}}
     {{> select_country}}
     {{> select_category}}
 </template>
 
 <template name="matrix_exports_mode">
+    {{> select_dataset}}
     {{> select_country_order}}
     {{> select_industry_order}}
     {{> select_gender}}
 </template>
 
 <template name="country_vs_country_mode">
+    {{> select_dataset}}
     {{> select_countryX}}
     {{> select_countryY}}
     {{> select_scale}}
@@ -54,6 +66,7 @@
 </template>
 
 <template name="language_vs_language_mode">
+    {{> select_dataset}}
     {{> select_languageX}}
     {{> select_languageY}}
     {{> select_scale}}
@@ -61,13 +74,29 @@
 </template>
 
 <template name="domain_vs_domain_mode">
+    {{> select_dataset}}
     {{> select_categoryX}}
     {{> select_categoryY}}
     {{> select_scale}}
     {{> select_mirror}}
 </template>
 
+<template name="countries_ranking_mode">
+    {{> select_category}}
+</template>
+
+<template name="people_ranking_mode">
+    {{> select_category}}
+    {{> select_country}}
+</template>
+
+<template name="domains_ranking_mode">
+    {{> select_category}}
+    {{> select_country}}
+</template>
+
 <template name="map_mode">
+    {{> select_dataset}}
     {{> select_category}}
 </template>
 
@@ -207,6 +236,17 @@
             <div id="mirror-true-button" class="button active">Yes</div>
             <div id="mirror-false-button" class="button">No</div>
         </div>
+    </div>
+</template>
+
+<template name="select_entity_dropdown">
+    <div class="parameter-selection">
+        <label>Entity</label>
+        <select>
+            <option value="countries">Countries</option>
+            <option value="people">People</option>
+            <option value="domains">Domains</option>
+        </select
     </div>
 </template>
 

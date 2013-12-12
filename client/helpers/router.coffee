@@ -58,11 +58,11 @@ Router.map ->
   @route "rankings",
     path: "/rankings"
     before: [->
-      @redirect "/rankings/" + defaults.entity + "/" + defaults.country + "/" + defaults.category + "/" + defaults.from + "/" + defaults.to
+      @redirect "/rankings/" + defaults.entity + "/" + defaults.country + "/" + defaults.category + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs
     ]
 
   @route "rankings",
-    path: "/rankings/:entity/:country/:category/:from/:to"
+    path: "/rankings/:entity/:country/:category/:from/:to/:langs"
     data: ->
       Session.set "page", @template
       Session.set "entity", @params.entity
@@ -70,6 +70,7 @@ Router.map ->
       Session.set "category", @params.category
       Session.set "from", @params.from
       Session.set "to", @params.to
+      Session.set "langs", @params.langs      
 
   @route "data",
     path: "/data"

@@ -15,13 +15,7 @@ http://datatables.net/forums/discussion/comment/13044 -->
             <div class="row-fluid">
                 <div class="page-left span2">
                     <div class="viz-selector">
-                        <div class="section-header">
-                            Entities
-                        </div>
-                        <div class="section-header">
-                            Parameters
-                        </div>
-                        {{> ranking_accordion}}
+                        {{> ranking_selections}}
                     </div>
                 </div>
                 <!-- Visualization and Ranked List Container -->
@@ -38,28 +32,15 @@ http://datatables.net/forums/discussion/comment/13044 -->
     </div>
 </template>
 
-<!-- Accordion Selector -->
-<template name="ranking_accordion">
-    <h3 class="app" id ="country_ranking">COUNTRIES</h3>
-    <div>
-        {{> select_category}}
-        {{> select_from}}
-        {{> select_to}}
+<template name="ranking_selections">
+    <div class="section-header">
+        Rankings
     </div>
-    <h3 class="app" id="people_ranking">PEOPLE</h3>
-    <div>
-        {{> select_category}}
-        {{> select_country}}
-        {{> select_from}}
-        {{> select_to}}
+    {{> select_entity}}
+    <div class="section-header">
+        Parameters
     </div>
-    <h3 class="app" id="domains_ranking">DOMAINS</h3>
-    <div>
-        {{> select_category}}
-        {{> select_country}}
-        {{> select_from}}
-        {{> select_to}}
-    </div>
+    {{> select_mode}}
 </template>
 
 <!-- Country Ranking Header-->
@@ -154,22 +135,4 @@ http://datatables.net/forums/discussion/comment/13044 -->
         </tfoot>
     </table>
     {{/constant}}
-</template>
-
-<template name="ranked_people_list">
-    {{! #each people_full_ranking}}
-        {{! > ranked_ppl person_lookup}}
-    {{! /each}}
-</template>
-
-<template name="ranked_countries_list">
-    {{#each countries_full_ranking}}
-        {{> ranked_country}}
-    {{/each}}
-</template>
-
-<template name="ranked_domains_list">
-    {{#each domains_full_ranking}}
-        {{> ranked_domain}}
-    {{/each}}
 </template>

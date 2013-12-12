@@ -18,7 +18,7 @@
 # * on a.countryCode == b.countryCode;
 # *
 # 
-Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel) ->
+Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L) ->
   sub = this
   collectionName = "countries_ranking"
   criteria = 
@@ -26,6 +26,8 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel) ->
       $gte: begin
       $lte: end
     dataset: "OGC"
+    numlangs:
+      $gt: L
   criteria[categoryLevel] = category if category.toLowerCase() isnt "all"
   console.log(criteria)
   country = {}
@@ -43,6 +45,8 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel) ->
       if sumppl >= numlangs
         hdata[cc] = numlangs
         break
+      else
+        hdata[cc] = 0
 
   for cc of countries
     country = {}
@@ -70,12 +74,15 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel) ->
   sub.ready()
   return
 
-Meteor.publish "domains_ranking_pub", (begin, end, country, category, categoryLevel) ->
+Meteor.publish "domains_ranking_pub", (begin, end, country, category, categoryLevel, L) ->
   sub = this
   collectionName = "domains_ranking"
-  criteria = birthyear:
-    $gte: begin
-    $lte: end
+  criteria = 
+    birthyear:
+      $gte: begin
+      $lte: end
+    numlangs:
+      $gt: L
 
   criteria.countryCode = country  if country isnt "all"
   criteria[categoryLevel] = category  if category.toLowerCase() isnt "all"

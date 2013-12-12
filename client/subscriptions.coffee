@@ -123,15 +123,14 @@ Deps.autorun ->
         else
           console.log "Unsupported vizType"
     else if page is "rankings"
-      console.log "PAGE IS RANKINGS"
       switch entity
         when "countries"
-          dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, onReady)
+          dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, L, onReady)
         when "people"
           console.log "ENTITY IS PEOPLE"
           dataSub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
         when "domains"
-          dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, onReady)
+          dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, L, onReady)
         else
           console.log "Invalid ranking entity!"
     else if page is "timeline"

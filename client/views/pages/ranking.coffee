@@ -2,7 +2,23 @@ Template.ranking_table.rendered = ->
   entity = Session.get("entity")
   switch entity
     when "countries"
-      console.log CountriesRanking.find().fetch()
+      data = _.map CountriesRanking.find().fetch(), (c) ->
+        [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex]
+      aoColumns = [
+        sTitle: "Ranking"
+      ,
+        sTitle: "Country"
+      ,
+        sTitle: "Number of People"
+      ,
+        sTitle: "% Women"
+      ,
+        sTitle: "Diversity"
+      ,
+        sTitle: "i50"
+      ,
+        sTitle: "H-index"
+      ]
     when "people"
       data = _.map PeopleTopN.find().fetch(), (d) ->
         p = People.findOne d._id
@@ -24,15 +40,34 @@ Template.ranking_table.rendered = ->
         sTitle: "L"
       ]
     when "domains"
-      console.log DomainsRanking.find().fetch()
+      data = _.map DomainsRanking.find().fetch(), (d) ->
+        [0, d.occupation.capitalize(), d.industry.capitalize(), d.domain.capitalize(), d.ubiquity, d.percentwomen, d.numppl]
+      aoColumns = [
+        sTitle: "Ranking"
+      ,
+        sTitle: "Occupation"
+      ,
+        sTitle: "Industry"
+      ,
+        sTitle: "Domain"
+      ,
+        sTitle: "Total Exporters"
+      ,
+        sTitle: "% Women"
+      ,
+        sTitle: "Total People"
+      ]
 
   #initializations
   $("#ranking").dataTable
-    aaData: data
     aoColumns: aoColumns
+    aaData: data
+    aaSorting: [[6, "desc"], [1, "asc"]]  # Multi-column sort on L then name
     iDisplayLength: 25
-    bDeferRender: true
+    bDeferRender: false
     bSortClasses: false
+    bSorted: false
+    sDom: "Rlfrtip"
     fnDrawCallback: (oSettings) ->
       that = this
 
@@ -45,11 +80,11 @@ Template.ranking_table.rendered = ->
         ).each (i) ->
           that.fnUpdate i + 1, @parentNode, 0, false, false
 
-    # aoColumnDefs: [
-    #   bSortable: false
-    #   aTargets: [0]
-    # ]
-    aaSorting: [[6, "desc"]]
+    aoColumnDefs: [
+      bSortable: false
+      aTargets: [0]
+    ]
+    
 
 #  Render a basic tooltip for the column headers
   $("th").on mousemove: (e) ->
@@ -70,84 +105,7 @@ Template.ranking_table.rendered = ->
     tt.style.fontSize = "10pt"
     tt.style.zIndex = "100"
 
-Template.ranking_accordion.rendered = ->
-  mapping =
-    countries: 0
-    people: 1
-    domains: 2
-
-  accordion = $(".accordion")
-  accordion.accordion
-    active: mapping[Session.get("entity")]
-    collapsible: false
-    heightStyle: "content"
-    fillSpace: false
-
-  # accordion.accordion "resize"
-
-Template.ranking_accordion.events = "click h3": (d) ->
-  srcE = (if d.srcElement then d.srcElement else d.target)
-  option = $(srcE).attr("id")
-  modeToEntity =
-    country_ranking: "countries"
-    people_ranking: "people"
-    domains_ranking: "domains"
-
-  category = defaults.category
-  
-  # Reset parameters for a viz type change
-  category = "EXPLORATION"  if option is "people_ranking" #TODO: all people ranking is SLOW.... default to astronauts now
-  path = "/rankings/" + modeToEntity[option] + "/" + defaults.country + "/" + category + "/" + defaults.from + "/" + defaults.to
-  Router.go path
-
-Template.ranking_table.render_table = ->
-  entity = Session.get("entity")
-  switch entity
-    when "countries"
-      return new Handlebars.SafeString(Template.ranked_countries_list(this))
-    when "people"
-      return new Handlebars.SafeString(Template.ranked_people_list(this))
-    when "domains"
-      return new Handlebars.SafeString(Template.ranked_domains_list(this))
-
-Template.ranking_table.render_cols = ->
-  entity = Session.get("entity")
-  switch entity
-    when "countries"
-      new Handlebars.SafeString(Template.country_cols(this))
-    when "people"
-      new Handlebars.SafeString(Template.ppl_cols(this))
-    when "domains"
-      return new Handlebars.SafeString(Template.dom_cols(this))
-
-Template.ranked_people_list.people_full_ranking = ->
-  console.log "IN People_full_ranking"
-  if(Session.get "clicktooltip")
-    console.log "got clicktooltip"
-    Tooltips.find _id:
-      $not: "count"
-  else
-    console.log "did not get clicktooltip"
-    PeopleTopN.find()
-
-Template.ranked_ppl.occupation = ->
-  @occupation.capitalize()
-
-Template.ranked_countries_list.countries_full_ranking = ->
-  CountriesRanking.find()
-
-Template.ranked_domains_list.domains_full_ranking = ->
-  DomainsRanking.find()
-
-# TODO: do this with CSS instead??
-Template.ranked_domain.occupation = ->
-  @occupation.capitalize()
-
-Template.ranked_domain.industry = ->
-  @industry.capitalize()
-
-Template.ranked_domain.domain = ->
-  @domain.capitalize()
+  $(@find("select")).chosen()
 
 Template.ranking_table.events = "mouseleave th": (d) ->
   document.getElementById("tooltip").className = "invisible"

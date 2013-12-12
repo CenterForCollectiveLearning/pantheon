@@ -1,5 +1,43 @@
 // Table
+div#ranking_wrapper {
+	div.dataTables_length {
+		margin-top: 5px;
+		width: initial;
+
+		div.chosen-container {
+			position: relative;
+		    margin: 0 5px;
+			width: 55px !important;
+		}
+	}
+	div.dataTables_filter {
+		width: initial;
+
+		label {
+			input {
+				margin-top: 5px;
+				border-radius: 1px;
+
+				&:focus {
+					border-color: @color_gold;
+					-webkit-box-shadow: none;
+					-moz-box-shadow: none;
+					box-shadow: none;					
+				}
+			}
+		}
+	}
+	div.dataTables_paginate {
+		a#ranking_next {
+			padding-right: 0
+		}
+	}
+}
+
+
+
 table {
+	background-color: rgba(0, 0, 0, 0.75);;
 	thead {
 	}
 	tfoot {
@@ -16,11 +54,16 @@ table {
 				color: black;
 				font-size: 1rem;
 				padding: 6px 10px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				-o-text-overflow: ellipsis;
 
 				a {
 					color: black;
+					font-weight: 500;
 					&:hover { 
-						color: @color_gold; 
+						color: black;
 					}
 				}
 			}

@@ -40,6 +40,15 @@ Template.select_mode.render_template = ->
         return new Handlebars.SafeString(Template.domain_vs_domain_mode(this))
       when "map"
         return new Handlebars.SafeString(Template.map_mode(this))
+  else if page is "rankings"
+    entity = Session.get("entity")
+    switch entity
+      when "countries"
+        return new Handlebars.SafeString(Template.countries_ranking_mode(this))
+      when "people"
+        return new Handlebars.SafeString(Template.people_ranking_mode(this))      
+      when "domains"
+        return new Handlebars.SafeString(Template.domains_ranking_mode(this))
 
 Template.select_country.rendered = ->
   $(@find("select")).val(Session.get("country")).chosen().change( ->
@@ -120,6 +129,12 @@ Template.select_to.rendered = ->
   $(@find("select")).val(Session.get("to")).chosen().change( ->
     path = window.location.pathname.split("/")
     path[6] = $(this).val()
+    Router.go path.join("/"))
+
+Template.select_entity.rendered = ->
+  $(@find("select")).val(Session.get("entity")).chosen().change( ->
+    path = window.location.pathname.split("/")
+    path[2] = $(this).val()
     Router.go path.join("/"))
 
 Template.select_l.rendered = ->
