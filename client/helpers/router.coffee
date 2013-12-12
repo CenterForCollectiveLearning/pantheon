@@ -117,4 +117,4 @@ Router.configure
       to: "nav"
     footer:
       to: "footer"
-  notFoundTemplate: "notFound"
+  # notFoundTemplate: "notFound"
