@@ -83,6 +83,14 @@ Template.matrix_svg.rendered = ->
       mouseover = (p) ->
         console.log "MOUSEOVER"
         Session.set "hover", true
+
+        # outline cell on mouseover
+        d3.select(@parentNode.appendChild(this)).transition().duration(200).style
+          stroke: "#dc6"
+          "stroke-opacity": 1
+          "stroke-width":2
+          
+
         d3.selectAll(".row text").classed "active", (d, i) ->
           i is p.y
 
@@ -115,6 +123,12 @@ Template.matrix_svg.rendered = ->
       mouseout = (p) ->
         Template.tooltip.top5 = null
         Session.set "hover", false
+
+        # remove outline on mouseout??
+        d3.select(@parentNode.appendChild(this)).transition().duration(200).style
+          "stroke-opacity": 0
+          stroke: "#eee"
+
         Session.set "showTooltip", false
         $("#tooltip").empty()
         d3.selectAll("text").classed "active", false
