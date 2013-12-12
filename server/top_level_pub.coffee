@@ -90,7 +90,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       $gt: begin
       $lte: end
     numlangs:
-      $gt: L
+      $gt: L 
     dataset: dataset
 
   # TODO - this is hardcoded fix for matrix to update tooltip with gender - may want to generalize this

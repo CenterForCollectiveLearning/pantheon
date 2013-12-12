@@ -178,7 +178,7 @@
         <div id = "clicktooltip">
             <div id="d3plus_tooltip_curtain_tree_map" class="d3plus_tooltip_curtain" style="background-color: rgb(255, 255, 255);"></div>
             <div id = "d3plus_tooltip_id_treemap" class="d3plus_tooltip d3plus_tooltip_large">
-                <div class="d3plus_tooltip_container" style="width: 900px;">
+                <div class="d3plus_tooltip_container" style="width: 1000px;">
                     <div class="d3plus_tooltip_top">
                         <div class="d3plus_tooltip_title">{{title}}</div>
                         <div class="d3plus_tooltip_subtitle">{{count}} individuals</div>
@@ -189,8 +189,8 @@
                                 {{ render_links }}
                             </div>
                         </div>
-                        <div class="d3plus_tooltip_html" style="width: 615px;">
-                            {{> tt_table }}
+                        <div class="d3plus_tooltip_html" style="width: 715px;">
+                            {{> ranking_table }}
                         </div>
                     </div>
                 </div>
@@ -270,30 +270,4 @@
         <div class="question">{{> country_exports_question}}</div>
         {{> treemap_country_exports}} 
     </div>
-</template>
-
-<template name="tt_table">
-    {{#constant}}
-    <table cellpadding="0" cellspacing="0" border="0" class="display" id="tt_table">
-        <thead>
-        {{> tt_pp_cols }}
-        </thead>
-        <tbody>
-        {{> ranked_people_list }}
-        </tbody>
-    </table>
-    {{/constant}}
-</template>
-
-<!--Person header template -->
-<template name="tt_pp_cols">
-    <tr>
-        <th name="Rank Index">Ranking</th>
-        <th name="Name of Individual">Name</th>
-        <th name="Country of Birth">Country</th>
-        <th name="Birth year of individual">Birth Year</th>
-        <th name="Gender">Gender</th>
-        <th name="Occupation - lowest level of domain classification">Occupation</th>
-        <th name="Number of Wikipedia language editions">L</th>
-    </tr>
 </template>

@@ -1,5 +1,7 @@
 Template.ranking_table.rendered = ->
+  clickTooltip = Session.get("clicktooltip")
   entity = Session.get("entity")
+  
   switch entity
     when "countries"
       data = _.map CountriesRanking.find().fetch(), (c) ->
@@ -19,10 +21,14 @@ Template.ranking_table.rendered = ->
       ,
         sTitle: "H-index"
       ]
-    when "people"
-      data = _.map PeopleTopN.find().fetch(), (d) ->
+    when "people", clickTooltip
+      if clickTooltip then collection = Tooltips.find({_id: {$not: "count"}}).fetch()
+      else collection = PeopleTopN.find().fetch()
+
+      data = _.map collection, (d) ->
         p = People.findOne d._id
         [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
+
       aoColumns = [
         sTitle: "Ranking"
       ,
@@ -58,12 +64,15 @@ Template.ranking_table.rendered = ->
         sTitle: "Total People"
       ]
 
+  if clickTooltip then displayLength = 10
+  else displayLength = 25
+
   #initializations
   $("#ranking").dataTable
     aoColumns: aoColumns
     aaData: data
     aaSorting: [[6, "desc"], [1, "asc"]]  # Multi-column sort on L then name
-    iDisplayLength: 25
+    iDisplayLength: displayLength
     bDeferRender: false
     bSortClasses: false
     bSorted: false
@@ -84,26 +93,27 @@ Template.ranking_table.rendered = ->
       aTargets: [0]
     ]
 
-#  Render a basic tooltip for the column headers
-  $("th").on mousemove: (e) ->
-    x = e.pageX
-    y = e.pageY
-    se = e.srcElement or e.target
-    content = e.srcElement.getAttribute("name")
-    document.getElementById("tooltip").innerHTML = content
-    window.lastX = e.pageX
-    window.lastY = e.pageY
-    ttOffset = 10
-    lastX = window.lastX + ttOffset
-    lastY = window.lastY + ttOffset
-    tt = document.getElementById("tooltip")
-    tt.className = "visible"
-    tt.style.left = lastX + "px"
-    tt.style.top = lastY + "px"
-    tt.style.fontSize = "10pt"
-    tt.style.zIndex = "100"
+# #  Render a basic tooltip for the column headers
+#   $("th").on mousemove: (e) ->
+#     x = e.pageX
+#     y = e.pageY
+#     se = e.srcElement or e.target
+#     content = e.srcElement.getAttribute("name")
+#     console.log document.getElementById("tooltip").innerHTML
+#     document.getElementById("tooltip").innerHTML = content
+#     window.lastX = e.pageX
+#     window.lastY = e.pageY
+#     ttOffset = 10
+#     lastX = window.lastX + ttOffset
+#     lastY = window.lastY + ttOffset
+#     tt = document.getElementById("tooltip")
+#     tt.className = "visible"
+#     tt.style.left = lastX + "px"
+#     tt.style.top = lastY + "px"
+#     tt.style.fontSize = "10pt"
+#     tt.style.zIndex = "100"
 
   $(@find("select")).chosen()
 
-Template.ranking_table.events = "mouseleave th": (d) ->
-  document.getElementById("tooltip").className = "invisible"
+# Template.ranking_table.events = "mouseleave th": (d) ->
+#   document.getElementById("tooltip").className = "invisible"
