@@ -50,7 +50,12 @@ mapData = `{"type": "FeatureCollection", "features": {"2": {"geometry": {"type":
 mouseover = (d) ->
   Session.set "hover", true
   
-  # TODO optional: highlight selected country
+  # change outline of selected country on mouseover
+  d3.select(@parentNode.appendChild(this)).transition().duration(200).style
+    "stroke-opacity": 1
+    "stroke-width":2
+    stroke: "#F00"
+
   dataset = Session.get("dataset")
   countryCode3 = d.id
   countryName = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryName
@@ -78,6 +83,10 @@ mouseout = (d) ->
   Session.set "hover", false
   Session.set "showTooltip", false
   mouseoverCell = null
+  # remove the outline on mouseout
+  d3.select(@parentNode.appendChild(this)).transition().duration(200).style
+    "stroke-opacity": 0.4
+    stroke: "#eee"
 
 clickevent = (d) ->
   Session.set "hover", false
