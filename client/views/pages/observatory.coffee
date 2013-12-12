@@ -280,64 +280,39 @@ Template.domain_advantage_question.categoryName = ->
   Session.get("bigtooltipCategory").capitalize()
 
 Template.treemap_domain_exports_to.helpers
-  category : ->
-    Session.get("bigtooltipCategory")
-  from : ->
-    Session.get("from")
-  to : ->
-    Session.get("to")
-  L : ->
-    Session.get("langs")
-  dataset : ->
-    Session.get("dataset")
+  category : -> Session.get("bigtooltipCategory")
+  from : -> Session.get("from")
+  to : -> Session.get("to")
+  L : -> Session.get("langs")
+  dataset : -> Session.get("dataset")
 
 Template.treemap_country_exports.helpers
-  country : ->
-    Session.get("bigtooltipCountryCode")
-  from : ->
-    Session.get("from")
-  to : ->
-    Session.get("to")
-  L : ->
-    Session.get("langs")
-  dataset : ->
-    Session.get("dataset")
+  country : -> Session.get("bigtooltipCountryCode")
+  from : -> Session.get("from")
+  to : -> Session.get("to")
+  L : -> Session.get("langs")
+  dataset : -> Session.get("dataset")
 
 Template.map_global_exports.helpers
-  category : ->
-    Session.get("bigtooltipCategory")
-  from : ->
-    Session.get("from")
-  to : ->
-    Session.get("to")
-  L : ->
-    Session.get("langs")
-  dataset : ->
-    Session.get("dataset")
+  category : -> Session.get("bigtooltipCategory")
+  from : -> Session.get("from")
+  to : -> Session.get("to")
+  L : -> Session.get("langs")
+  dataset : -> Session.get("dataset")
 
 Template.histogram_domain_exports_to.helpers
-  category : ->
-    Session.get("bigtooltipCategory")
-  from : ->
-    Session.get("from")
-  to : ->
-    Session.get("to")
-  L : ->
-    Session.get("langs")
-  dataset : ->
-    Session.get("dataset")
+  category : -> Session.get("bigtooltipCategory")
+  from : -> Session.get("from")
+  to : -> Session.get("to")
+  L : -> Session.get("langs")
+  dataset : -> Session.get("dataset")
 
 Template.histogram_country_exports.helpers
-  country : ->
-    Session.get("bigtooltipCountryCode")
-  from : ->
-    Session.get("from")
-  to : ->
-    Session.get("to")
-  L : ->
-    Session.get("langs")
-  dataset : ->
-    Session.get("dataset")
+  country : -> Session.get("bigtooltipCountryCode")
+  from : -> Session.get("from")
+  to : -> Session.get("to")
+  L : -> Session.get("langs")
+  dataset : -> Session.get("dataset")
 
 Template.clicktooltip.events =
   "click .d3plus_tooltip_close,.d3plus_tooltip_curtain": (d) ->
@@ -347,41 +322,41 @@ Template.clicktooltip.events =
     $("#clicktooltip").fadeOut()
     Session.set "clicktooltip", false
 
-Template.tt_table.rendered = ->
-  data = _.map Tooltips.find({_id:{$not:"count"}}).fetch(), (d) ->
-        p = People.findOne d._id
-        [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
-      aoColumns = [
-        sTitle: "Ranking"
-      ,
-        sTitle: "Name"
-        fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
-      ,
-        sTitle: "Country"
-      ,
-        sTitle: "Birth Year"
-      ,
-        sTitle: "Gender"
-      ,
-        sTitle: "Occupation"
-      ,
-        sTitle: "L"
-      ]
-  #initializations
-  $("#tt_table").dataTable
-    aaData: data
-    aoColumns: aoColumns
-    iDisplayLength: 10
-    bDeferRender: true
-    bSortClasses: false
-    fnDrawCallback: (oSettings) ->
-      that = this
-      if oSettings.bSorted
-        @$("td:first-child",
-          filter: "applied"
-        ).each (i) ->
-          that.fnUpdate i + 1, @parentNode, 0, false, false
-    aaSorting: [[6, "desc"]]
+# Template.tt_table.rendered = ->
+#   data = _.map Tooltips.find({_id:{$not:"count"}}).fetch(), (d) ->
+#         p = People.findOne d._id
+#         [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
+#       aoColumns = [
+#         sTitle: "Ranking"
+#       ,
+#         sTitle: "Name"
+#         fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
+#       ,
+#         sTitle: "Country"
+#       ,
+#         sTitle: "Birth Year"
+#       ,
+#         sTitle: "Gender"
+#       ,
+#         sTitle: "Occupation"
+#       ,
+#         sTitle: "L"
+#       ]
+#   #initializations
+#   $("#tt_table").dataTable
+#     aaData: data
+#     aoColumns: aoColumns
+#     iDisplayLength: 10
+#     bDeferRender: true
+#     bSortClasses: false
+#     fnDrawCallback: (oSettings) ->
+#       that = this
+#       if oSettings.bSorted
+#         @$("td:first-child",
+#           filter: "applied"
+#         ).each (i) ->
+#           that.fnUpdate i + 1, @parentNode, 0, false, false
+#     aaSorting: [[6, "desc"]]
 
   # $("#tt_table").dataTable
   #   bFilter: false

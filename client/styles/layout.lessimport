@@ -96,6 +96,7 @@ header {
 	    background: @color_almost_black;
     
 	    .nav > li > a {
+	    	.no-select;
 	    	color: @color_grey;
 	    	text-decoration: none;
 	    	text-shadow: none;

@@ -34,8 +34,6 @@ div#ranking_wrapper {
 	}
 }
 
-
-
 table {
 	background-color: rgba(0, 0, 0, 0.75);;
 	tbody {
@@ -60,6 +58,7 @@ table {
 					color: black;
 					font-weight: 500;
 					&:hover { 
+						color: black;
 					}
 				}
 			}
