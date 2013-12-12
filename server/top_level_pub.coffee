@@ -26,9 +26,10 @@ Meteor.publish "languages_pub", ->
 # Publish the top N people for the current query
 # Push the ids here as well since people will be in the client side
 #
-Meteor.publish "peopletopN", (vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, N, dataset) ->
+Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, N, dataset) ->
+  console.log "peopleTopN publication"
   sub = this
-  collectionName = "topNpeople"
+  collectionName = "peopleTopN"
 
   args =
     birthyear:

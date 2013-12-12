@@ -1,4 +1,29 @@
 // Table
-table.display td {
-	color: black;
+table {
+	thead {
+	}
+	tfoot {
+	}
+	tbody {
+		tr {
+			&.odd {
+				background-color: #DDD;
+			}
+			&.even {
+				background-color: #FFF;
+			}
+			td {
+				color: black;
+				font-size: 1rem;
+				padding: 6px 10px;
+
+				a {
+					color: black;
+					&:hover { 
+						color: @color_gold; 
+					}
+				}
+			}
+		}
+	}
 }

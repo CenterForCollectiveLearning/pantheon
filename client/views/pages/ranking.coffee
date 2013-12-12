@@ -1,7 +1,35 @@
 Template.ranking_table.rendered = ->
+  entity = Session.get("entity")
+  switch entity
+    when "countries"
+      console.log CountriesRanking.find().fetch()
+    when "people"
+      data = _.map PeopleTopN.find().fetch(), (d) ->
+        p = People.findOne d._id
+        [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
+      aoColumns = [
+        sTitle: "Ranking"
+      ,
+        sTitle: "Name"
+        fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
+      ,
+        sTitle: "Country"
+      ,
+        sTitle: "Birth Year"
+      ,
+        sTitle: "Gender"
+      ,
+        sTitle: "Occupation"
+      ,
+        sTitle: "L"
+      ]
+    when "domains"
+      console.log DomainsRanking.find().fetch()
 
   #initializations
   $("#ranking").dataTable
+    aaData: data
+    aoColumns: aoColumns
     iDisplayLength: 25
     bDeferRender: true
     bSortClasses: false
@@ -17,10 +45,10 @@ Template.ranking_table.rendered = ->
         ).each (i) ->
           that.fnUpdate i + 1, @parentNode, 0, false, false
 
-    aoColumnDefs: [
-      bSortable: false
-      aTargets: [0]
-    ]
+    # aoColumnDefs: [
+    #   bSortable: false
+    #   aTargets: [0]
+    # ]
     aaSorting: [[6, "desc"]]
 
 #  Render a basic tooltip for the column headers
@@ -41,14 +69,6 @@ Template.ranking_table.rendered = ->
     tt.style.top = lastY + "px"
     tt.style.fontSize = "10pt"
     tt.style.zIndex = "100"
-
-
-Template.rankings.events = 
-  "click a": (e) ->
-    e.preventDefault()
-    console.log "Pressing next"
-    Session.set("peopleRankingSkip", Session.get("peopleRankingSkip") + Session.get("peopleRankingLimit"))
-
 
 Template.ranking_accordion.rendered = ->
   mapping =
@@ -101,23 +121,14 @@ Template.ranking_table.render_cols = ->
       return new Handlebars.SafeString(Template.dom_cols(this))
 
 Template.ranked_people_list.people_full_ranking = ->
+  console.log "IN People_full_ranking"
   if(Session.get "clicktooltip")
+    console.log "got clicktooltip"
     Tooltips.find _id:
       $not: "count"
   else
+    console.log "did not get clicktooltip"
     PeopleTopN.find()
-    # skip = Session.get("peopleRankingSkip")
-    # limit = Session.get("peopleRankingLimit")
-    # PeopleTopN.find({}, {sort: {numlangs: -1}, skip: skip, limit: limit})
-
-# Template.ranked_people_list.rendered = ->
-#   skip = Session.get("peopleRankingSkip")
-#   limit = Session.get("peopleRankingLimit")
-#   for person, i in PeopleTopN.find({}, {sort: {numlangs: -1}, skip: skip}).fetch()
-#       d = People.findOne(person._id)
-#       console.log i, skip + i
-#       $("#ranking").dataTable().fnAddData([skip + i + 1, d.name, d.countryName, d.birthyear, d.gender, d.occupation.capitalize(), d.numlangs])
-
 
 Template.ranked_ppl.occupation = ->
   @occupation.capitalize()
