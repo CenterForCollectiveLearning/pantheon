@@ -38,10 +38,6 @@ div#ranking_wrapper {
 
 table {
 	background-color: rgba(0, 0, 0, 0.75);;
-	thead {
-	}
-	tfoot {
-	}
 	tbody {
 		tr {
 			&.odd {
@@ -54,6 +50,7 @@ table {
 				color: black;
 				font-size: 1rem;
 				padding: 6px 10px;
+
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
@@ -63,7 +60,6 @@ table {
 					color: black;
 					font-weight: 500;
 					&:hover { 
-						color: black;
 					}
 				}
 			}

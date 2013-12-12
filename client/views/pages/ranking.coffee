@@ -79,12 +79,10 @@ Template.ranking_table.rendered = ->
           filter: "applied"
         ).each (i) ->
           that.fnUpdate i + 1, @parentNode, 0, false, false
-
     aoColumnDefs: [
       bSortable: false
       aTargets: [0]
     ]
-    
 
 #  Render a basic tooltip for the column headers
   $("th").on mousemove: (e) ->

@@ -76,8 +76,7 @@ Deps.autorun ->
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
   #      
-
-  if country and begin and end and langs
+  if country and begin and end and L
     
     #
     #         Do nothing:
@@ -89,7 +88,6 @@ Deps.autorun ->
     #         We verified this by going from map to treemap back to map while checking
     #          the PeopleTop10 collection on the client. it goes from 0 -> 10 -> 0.
     #         
-    console.log "SUBSCRIBING"
     Session.set "dataReady", false
     
     # This gets passed to the subscriptions to indicate when data is ready
@@ -123,6 +121,7 @@ Deps.autorun ->
         else
           console.log "Unsupported vizType"
     else if page is "rankings"
+      console.log "PAGE IS RANKINGS"
       switch entity
         when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, L, onReady)
