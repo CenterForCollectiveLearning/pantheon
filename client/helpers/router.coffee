@@ -109,6 +109,9 @@ Router.map ->
   @route "team",
     data: ->
       Session.set "page", @template
+  
+  @route "notFound",
+    path: "*"
 
 Router.configure
   layoutTemplate: "defaultLayout"
@@ -117,4 +120,4 @@ Router.configure
       to: "nav"
     footer:
       to: "footer"
-  # notFoundTemplate: "notFound"
+

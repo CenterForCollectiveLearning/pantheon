@@ -120,36 +120,19 @@
 </template>
 
 <template name="notFound">
-    <div class="wrapper">
-        <!-- Header -->
-        <header class="navbar navbar-fixed-top">
-            <nav class="navbar-inner">
-                {{> nav}}
-            </nav>
-            <div class="logo center">
-                <a href='/'>
-                    <img class="logo-img" src="/images/dark_theme_logo.png" />
-                </a>
-            </div>
-        </header>
-
-        <!-- Body -->
-        <div class="page-top">
-            <div class="primary-text">
-                Page Not Found!
-            </div>
-        </div>
-
-        <div id="page" class="container-fluid">
-            <div class="row-fluid">
-                <div class="page-middle text span6 offset3">
-                    <h2 id="some_references">Page Not Found Yo</h2>
+    <div class="page-top">  
+        <div class="primary-text">
+            Page Not Found!
+        </div>    
+    </div>  
+    <div id="page" class="container-fluid">
+        <div class="row-fluid">
+            <div class="page-middle span6 offset3">
+                <div class="speech triangle-border nora-bottom">
+                    Hi there! Looking for your way around? Try going <a href="/observatory">here</a>, or clicking on the logo above!
                 </div>
+                <div class="guide"><img class="cartoon" src="/nora.png" alt="nora"></div>
             </div>
         </div>
-        <!-- render to the footer yield -->
     </div>
-    <footer>
-        {{> footer}}
-    </footer>
 </template>
