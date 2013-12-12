@@ -348,14 +348,32 @@ Template.clicktooltip.events =
     Session.set "clicktooltip", false
 
 Template.tt_table.rendered = ->
-
+  data = _.map Tooltips.find({_id:{$not:"count"}}).fetch(), (d) ->
+        p = People.findOne d._id
+        [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
+      aoColumns = [
+        sTitle: "Ranking"
+      ,
+        sTitle: "Name"
+        fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
+      ,
+        sTitle: "Country"
+      ,
+        sTitle: "Birth Year"
+      ,
+        sTitle: "Gender"
+      ,
+        sTitle: "Occupation"
+      ,
+        sTitle: "L"
+      ]
   #initializations
   $("#tt_table").dataTable
-    bFilter: false
-    bInfo: false
-    bLengthChange: false    
+    aaData: data
+    aoColumns: aoColumns
     iDisplayLength: 10
     bDeferRender: true
+    bSortClasses: false
     fnDrawCallback: (oSettings) ->
       that = this
       if oSettings.bSorted
@@ -363,8 +381,23 @@ Template.tt_table.rendered = ->
           filter: "applied"
         ).each (i) ->
           that.fnUpdate i + 1, @parentNode, 0, false, false
-    aoColumnDefs: [
-      bSortable: false
-      aTargets: [0]
-    ]
     aaSorting: [[6, "desc"]]
+
+  # $("#tt_table").dataTable
+  #   bFilter: false
+  #   bInfo: false
+  #   bLengthChange: false    
+  #   iDisplayLength: 10
+  #   bDeferRender: true
+  #   fnDrawCallback: (oSettings) ->
+  #     that = this
+  #     if oSettings.bSorted
+  #       @$("td:first-child",
+  #         filter: "applied"
+  #       ).each (i) ->
+  #         that.fnUpdate i + 1, @parentNode, 0, false, false
+  #   aoColumnDefs: [
+  #     bSortable: false
+  #     aTargets: [0]
+  #   ]
+  #   aaSorting: [[6, "desc"]]
