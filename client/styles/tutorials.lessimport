@@ -58,6 +58,19 @@ div.tutorial {
 					color: @color_gold; 
 				}
 			}
+			div#goFurther{
+				position: absolute;
+				bottom: 15px;
+				right: 15px;
+				a {
+					color: @color_grey;
+					text-decoration: none;
+
+					&:hover { 
+						color: @color_gold; 
+					}
+				}
+			}
 		}
 
 

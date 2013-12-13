@@ -139,7 +139,7 @@ ogcStory = [
 ,
   template: Template.ogc_step12
   onLoad: ->
-    Router.go "/rankings/countries/all/all/-3000/1950"
+    Router.go "/rankings/countries/all/all/-3000/1950/25"
 ,
   template: Template.ogc_step13
   spot: "#ranking"
@@ -177,3 +177,10 @@ Template.tutorial.tutorialOptions = ->
 Template.tutorial.events =
   "click .quit": (d) ->
     Session.set("tutorialType", null)
+  "click #goToAlfredo" : (d) ->
+    Session.set("tutorialType", "renaissance")
+  "click #goToNora" : (d) ->
+    Session.set("tutorialType", "ogc")
+  "click #goToDiana" : (d) ->
+    Session.set("tutorialType", "moon")
+
