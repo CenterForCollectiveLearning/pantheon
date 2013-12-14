@@ -3,6 +3,7 @@
     <div class="page-top">   
         {{> question}}
         {{> date_header}}
+        {{> share_this_view}}
     </div>
 
     <!-- Hack to bypass order of templating (not found when changing viz -->
@@ -20,6 +21,13 @@
                 {{> clicktooltip }}
             </div>
         </div>
+    </div>
+</template>
+
+<template name="share_this_view">
+    <div class="share-this-view">
+        <a href="#">Share This View</a>
+        {{> sharing_options}}
     </div>
 </template>
 

@@ -1,15 +1,15 @@
 narratives = [
+    domain: "ABOUT"
+    title: "Visualizing Culture"
+    description: "A Guided Tour of the Observatory"
+    image: "observatory_script.jpg"
+    tutorialType: "ogc"
+,
     domain: "ARTS"
     title: "Explore the Renaissance"
     description: "Discover where great artists made their cultural impact."
     image: "florence.jpg"
     tutorialType: "renaissance"
-,
-    domain: "SPORTS"
-    title: "A History of Football"
-    description: "Explore the defining moments of football, and the connections between players, teams, and nations."
-    image: "soccer.jpg"
-    tutorialType: "football"
 ,
     domain: "EXPLORATION"
     title: "Leaps for Humankind"

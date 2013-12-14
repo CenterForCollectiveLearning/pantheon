@@ -35,7 +35,6 @@ Template.matrix_svg.rendered = ->
     vars =
       svg_height : $(".page-middle").height()
       svg_width : $(".page-middle").width()
-    console.log("NO DATA ERROR!!")
     d3.select(@find("svg.matrix")).remove()
     $("div.scroll-container").remove()
     error = d3.select(@find("svg.header")).attr("width", vars.svg_width).attr("height", vars.svg_height).append("svg:g").selectAll("g.d3plus-error").data(["No data available"])
@@ -81,7 +80,6 @@ Template.matrix_svg.rendered = ->
         Session.set "clicktooltip", true
 
       mouseover = (p) ->
-        console.log "MOUSEOVER"
         Session.set "hover", true
 
         # outline cell on mouseover
@@ -89,14 +87,16 @@ Template.matrix_svg.rendered = ->
           stroke: "#dc6"
           "stroke-opacity": 1
           "stroke-width":2
+        
+        d3.selectAll(".row text").classed "active", (d, i) -> i is p.y
+        d3.selectAll(".column-title").classed "active", (d, i) -> i is p.x
+
+        # outline cell on mouseover
+        d3.select(@parentNode.appendChild(this)).transition().duration(200).style
+          stroke: "#dc6"
+          "stroke-opacity": 1
+          "stroke-width":2
           
-
-        d3.selectAll(".row text").classed "active", (d, i) ->
-          i is p.y
-
-        d3.selectAll(".column-title").classed "active", (d, i) ->
-          i is p.x
-
         # Positioning
         position =
           left: (d3.event.pageX + 40)
@@ -106,7 +106,6 @@ Template.matrix_svg.rendered = ->
         countryCode = countries[p.y]
         countryName = Countries.findOne(countryCode: countryCode).countryName
 
-        console.log countryCode, countryName
         industry = industries[p.x]
         categoryLevel = "industry"
 
@@ -172,19 +171,32 @@ Template.matrix_svg.rendered = ->
           ).attr("width", (Math.round(matrixScales.x.rangeBand() * 10) / 10) - 0.1).attr("height", (Math.round(matrixScales.y.rangeBand() * 10) / 10) - 0.5).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
 
           # ENTER + UPDATE
-          rect.style "fill", (d) ->
-            fill d.z
+          rect.style "fill", (d) -> fill d.z
 
           # EXIT
           cell.exit().attr("class", "exit").transition().duration(750).attr("y", 60).remove()
 
         columns = svg.selectAll(".column").data(invMatrix)
         columnTitles = header_svg.selectAll(".column-title").data(invMatrix)
+
         g = columns.enter().append("g").attr("class", "column")
-        text = columnTitles.enter().append("text").attr("class", "column-title").attr("dy", ".32em").attr("text-anchor", "start").attr("font-family", "Lato").attr("font-size", "1.2em").attr("fill", "#ffffff").attr("font-weight", "lighter").attr("x", 6).attr("y", matrixScales.y.rangeBand() / 2)
+
         g.attr("transform", (d, i) ->
           "translate(" + matrixScales.y(i) + ")rotate(-90)"
         ).each column
+
+        gColumnTitles = columnTitles.enter().append("g").attr("class", "column-title")
+
+        text = gColumnTitles.append("text")
+          .attr("dy", ".32em")
+          .attr("text-anchor", "start")
+          .attr("font-family", "Lato")
+          .attr("font-size", "1.2em")
+          .attr("fill", "#ffffff")
+          .attr("font-weight", "lighter")
+          .attr("x", 6)
+          .attr("y", matrixScales.y.rangeBand() / 2)
+
         text.text (d, i) ->
           industries[i].capitalize()
 
@@ -275,6 +287,8 @@ Template.matrix_svg.rendered = ->
 
       industryOrder = (value) ->
         matrixScales.y.domain industryOrders[value]
+        console.log industryOrders[value]
+        console.log matrixScales.y.domain()
         t = svg.transition().duration(300)
         t.selectAll(".row").delay((d, i) ->
           matrixScales.x(i) * 1
@@ -290,6 +304,13 @@ Template.matrix_svg.rendered = ->
         ).attr "x", (d) ->
           -matrixScales.x(d.y) - matrixScales.x.rangeBand()
 
+        t_header = header_svg.transition().duration(300)
+
+        t_header.selectAll(".column-title").delay((d, i) ->
+          matrixScales.x(i) * 1
+        ).attr("transform", (d, i) ->
+          "translate(" + matrixScales.y(i) + ")"
+        )
 
       countryOrder Session.get "countryOrder"
       industryOrder Session.get "industryOrder"

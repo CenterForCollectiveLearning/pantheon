@@ -160,7 +160,7 @@ Template.map_svg.rendered = ->
   else
     value_range = get_range_log(data, 5)
     value_range_big = get_range_log(data, 10)
-    background = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).append("svg:g").attr("id", "background").append("rect").attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).attr("fill", "#000000")
+    background = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).append("svg:g").attr("id", "background").append("rect").attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).attr("fill", "#000").attr("fill-opacity", 0.5)
     svg = d3.select(@firstNode).attr("width", $(".page-middle").width()).attr("height", $(".page-middle").height()).append("svg:g").attr("id", "countries")
     map_projection = d3.geo.equirectangular().scale($(".page-middle").width() * 0.17).translate([$(".page-middle").width() / 2, $(".page-middle").height() / 2])
     value_color = d3.scale.log().domain(value_range).interpolate(d3.interpolateRgb).range([color_gradient[0], color_gradient[1], color_gradient[2], color_gradient[3], color_gradient[4], color_gradient[5]])

@@ -1,3 +1,9 @@
+Template.data.rendered = ->
+  $(":header").each((i, e) -> $(".page-left").append(e))
+
+# Template.data.rendered = ->
+  # renderTree u
+
 calcSize = (n) ->
   if n.values[0].hasOwnProperty("count")
     n.size = parseInt(n.values[0].count)
@@ -169,5 +175,3 @@ Template.data.events =
 #    window.history.pushState(null, null, '/data/'+point)
 
 #d3.select(self.frameElement).style("height", h + "px");
-Template.data.rendered = ->
-  renderTree u

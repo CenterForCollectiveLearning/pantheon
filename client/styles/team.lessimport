@@ -49,7 +49,7 @@
 						padding-right: 2px;
 						display: inline;
 						list-style-type: none;
-						border-left: 1px solid #FFF
+						border-left: 1px solid #FFF;
 					}
 					li:first-child {
 						border-left: none;

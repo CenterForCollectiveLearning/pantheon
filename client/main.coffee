@@ -67,6 +67,7 @@
 @occByInd = {}
 Meteor.startup ->
   countriesOverTenPeople = ['US', 'GB', 'FR', 'DE', 'IT', 'RU', 'ES', 'TR', 'PL', 'AT', 'GR', 'IN', 'JP', 'SE', 'NL', 'BE', 'CN', 'HU', 'CH', 'CZ', 'UA', 'DK', 'BR', 'PT', 'EG', 'IR', 'CA', 'IE', 'NO', 'IL', 'FI', 'AR', 'RO', 'SA', 'AU', 'MX', 'RS', 'HR', 'ZA', 'LT', 'IQ', 'KR', 'PK', 'AF', 'PE', 'PH', 'DZ', 'GE', 'BG', 'CL', 'SY', 'TN', 'BY', 'LV', 'IS', 'EE', 'SK', 'NZ']
+  topHundredPeople = ['Jesus Christ', 'Confucius', 'Isaac Newton', 'Wolfgang Amadeus Mozart', 'Leonardo Da Vinci', 'Adolf Hitler', 'Albert Einstein', 'Mustafa Kemal Atatürk', 'William Shakespeare', 'Michelangelo', 'Hebe Camargo', 'Vincent van Gogh', 'Christopher Columbus', 'Ludwig van Beethoven', 'Aristotle', 'Muhammad', 'Charles Darwin', 'Karl Marx', 'Galileo Galilei', 'Charlie Chaplin', 'Napoleon Bonaparte', 'Johann Sebastian Bach', 'Qin Shi Huang', 'George Bush', 'Pablo Picasso', 'Plato', 'Homer', 'Alexander the Great', 'Mahatma Gandhi', 'Dante', 'Socrates', 'Vladimir Lenin', 'Lech Wałęsa  Poland', 'George Washington', 'Joseph Stalin', 'Sigmund Freud', 'Nelson Mandela', 'Johann Wolfgang von Goethe', 'Abraham Lincoln', 'Marie Curie', 'Archimedes', 'Che Guevara', 'Julius Caesar', 'Miguel de Cervantes', 'Nicolaus Copernicus', 'Elizabeth II of the United Kingdom', 'Marco Polo', 'Thomas Edison', 'Immanuel Kant', 'Martin Luther', 'Rembrandt', 'Gautama Buddha', 'Carl Linnaeus', 'Leo Tolstoy', 'Pope Benedict', 'Victor Hugo', 'Mao Zedong', 'Salvador Dalí', 'Genghis Khan', 'Neil Armstrong', 'Ferdinand Magellan', 'Franz Kafka', 'René Descartes', 'Vasco da Gama', 'Yuri Gagarin', 'Bill Clinton', 'Elvis Presley', 'Roald Amundsen', 'Augustus', 'Euclid', 'Friedrich Nietzsche', 'Octave Mirbeau', 'Aleksandr Pushkin', 'Charlemagne  Belgium', 'Francisco Goya', 'John F. Kennedy', 'Louis Pasteur', 'Martin Luther King, Jr.', 'Richard Wagner', 'Charles Dickens', 'Fidel Castro', 'James Cook', 'James Joyce', 'Jean Auguste Dominique Ingres', 'Marlene Dietrich', 'Pythagoras', 'Virgil', 'Winston Churchill', 'Franklin D. Roosevelt', 'Fyodor Dostoyevsky', 'Thomas Jefferson', 'Walt Disney', 'Albrecht Dürer', 'Frida Kahlo', 'Raphael', 'Sarah Bernhardt', 'Simón Bolívar', 'Voltaire', 'Adam Smith']
 
   @defaults =
     vizType: "treemap"
@@ -87,6 +88,7 @@ Meteor.startup ->
     entity: "countries"
     gender: "both"
     dataset: "OGC"
+    person: getRandomFromArray(topHundredPeople)
     scatterplotScale: "linear"
     scatterplotMirror: true
 
@@ -130,9 +132,8 @@ Meteor.startup ->
   # RANKINGS
   Session.setDefault "entity", "people"
   
-  # SPLASH SCREEN
-  Session.set "googleAnalytics", false
-  Session.set "showSpinner", false
+  # PEOPLE
+  Session.setDefault "person", defaults.person
 
   # Set session variable if window resized (throttled rate)
   throttledResize = _.throttle(->

@@ -151,9 +151,33 @@ Template.select_gender.rendered = ->
   $(@find("select")).val(Session.get("gender")).chosen().change( ->
     Session.set "gender", $(this).val())
 
-Template.select_country_order.rendered = ->
-  $(@find("select")).val(Session.get("countryOrder")).chosen().change( ->
-    Session.set "countryOrder", $(this).val())
+Template.select_country_order.events = 
+  "click div.button": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    $(srcE).addClass("active")
+
+    targetID = $(srcE)[0].id
+    if targetID is "country-count-button"
+      $("#country-name-button").removeClass("active")
+      order = "count"
+    else if targetID is "country-name-button"
+      $("#country-count-button").removeClass("active")
+      order = "name"
+    Session.set "countryOrder", order
+
+Template.select_industry_order.events = 
+  "click div.button": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    $(srcE).addClass("active")
+
+    targetID = $(srcE)[0].id
+    if targetID is "industry-count-button"
+      $("#industry-name-button").removeClass("active")
+      order = "count"
+    else if targetID is "industry-name-button"
+      $("#industry-count-button").removeClass("active")
+      order = "name"
+    Session.set "industryOrder", order
 
 Template.select_industry_order.rendered = ->
   $(@find("select")).val(Session.get("industryOrder")).chosen().change( ->

@@ -4,11 +4,17 @@ div.text {
 	border-radius: 3px;
 	color: #121212;
 	border: 3px solid black;
-	min-width: 645px !important;
 
-	font: 17px/26px georgia, "times new roman", times, serif;
+	// TODO Do this better
+	&.page-middle {
+		min-width: 645px !important;		
+	}
 
-	background-color: white;
+	// font: 17px/26px georgia, "times new roman", times, serif;
+
+	background-color: #eed;
+	text-align: justify;
+	// font-family: "Helvetica";
 
 	h2 {
 		margin-top: 0;

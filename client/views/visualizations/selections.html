@@ -251,7 +251,7 @@
 </template>
 
 <template name="select_from">
-    <div id="from" class="parameter-selection inline">
+    <div id="from" class="parameter-selection inline first">
         <label>From</label>
         <select>
             <option value="-3000">3000 B.C.</option>
@@ -353,7 +353,7 @@
 </template>
 
 <template name="select_l">
-    <div class="parameter-selection inline">
+    <div class="parameter-selection inline last">
         {{#if murray}}
             <label>Index</label>
         {{else}}
@@ -384,20 +384,20 @@
 <template name="select_country_order">
     <div class="parameter-selection">
         <label>Country Order</label>
-        <select>
-            <option value="name">Name</option>
-            <option value="count">Count</option>
-        </select>
+        <div class="buttons">
+            <div id="country-count-button" class="button active">Count</div>
+            <div id="country-name-button" class="button">Name</div>
+        </div>
     </div>
 </template>
 
 <template name="select_industry_order">
     <div class="parameter-selection">
         <label>Industry Order</label>
-        <select>
-            <option value="name">Name</option>
-            <option value="count">Count</option>
-        </select>
+        <div class="buttons">
+            <div id="industry-count-button" class="button active">Count</div>
+            <div id="industry-name-button" class="button">Name</div>
+        </div>
     </div>
 </template>
 

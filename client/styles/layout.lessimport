@@ -28,8 +28,8 @@
 }
 
 *, *:before, *:after {
-  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
- }
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
 
 html, body { height: 100%; }
 
@@ -188,24 +188,28 @@ footer {
 		}
 	}
 
-
 	div.share {
 		position: absolute;
 		right: 15px;
 		bottom: 10px;
-		div.sharing-options{
-			text-align: center;
-		}
-		a {
-			padding-left: 5px;
-			i {
-				font-size: 1.75rem;
-				color: @color_grey;
+	}
+}
 
-				&:hover {
-					color: @color_gold;
-					text-decoration: none;
-				}
+div.sharing-options{
+	text-align: center;
+	a {
+		padding-left: 5px;
+
+		&:first-child {
+			padding-left: 0;
+		}
+		i {
+			font-size: 1.75rem;
+			color: @color_grey;
+
+			&:hover {
+				color: @color_gold;
+				text-decoration: none;
 			}
 		}
 	}

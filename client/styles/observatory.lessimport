@@ -30,6 +30,32 @@
     	margin-top: -1.5em;
     }
 
+    .share-this-view {
+    	padding-bottom: 1em;
+    	margin-top: -3.0em;
+    	text-align: center;
+    	height: 30px;
+    	overflow: hidden;
+    	
+    	a {
+    		.fade;
+    	    .opacity(0.5);
+    
+    	    cursor: pointer;
+    	    &:hover { 
+    	    	text-decoration: none;
+    	    	.opacity(1.0); 
+    	    }
+    
+    	    color: white;
+    	    font-size: 0.8em; // 32px / 1px
+    	    line-height: 30px;
+    	 
+    	    text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
+    	    text-transform: uppercase;
+    	}
+    }
+
     .name {
     	text-transform: capitalize;
     }
@@ -209,7 +235,19 @@ div.viz-options {
 
 	&.inline {
 		display: inline;
+		width: 33%;
 		float: left;
+
+		&.first {
+			margin-right: 0.5%;
+		}
+		&.last {
+			margin-left: 0.5%;
+		}
+
+		div.chosen-container {
+			width: 33% !important;
+		}
 	}
 }
 
