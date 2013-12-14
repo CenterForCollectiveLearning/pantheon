@@ -142,7 +142,7 @@ renderTree = (url) ->
     for i of subkeys
       command += ".key(function(d){return d." + subkeys[i] + "})"
     command += ".entries(data);"
-    nestedData = eval_(command)
+    nestedData = eval(command)
     allData =
       key: "occupations"
       values: nestedData
