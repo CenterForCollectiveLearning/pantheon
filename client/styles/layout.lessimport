@@ -31,6 +31,17 @@
 	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
 
+.transition(@property, @duration, @timing-function) {
+	-webkit-transition: @property @duration @timing-function;
+	-moz-transition: @property @duration @timing-function;
+	-o-transition: @property @duration @timing-function;
+	transition: @property @duration @timing-function;
+}
+
+.color-transition {
+	.transition(color, 0.2s, ease-in);
+}
+
 html, body { height: 100%; }
 
 body { overflow-y: hidden; }

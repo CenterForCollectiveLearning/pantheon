@@ -1,6 +1,5 @@
 @media only screen and (min-width : 1824px) {
 	.page-top .secondary-text {
-		padding-bottom: 4em;
 	}
 	.page-bottom {
 		position: absolute;

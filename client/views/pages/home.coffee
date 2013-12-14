@@ -37,14 +37,22 @@ Template.home.destroyed = ->
 
 Template.narratives.narratives = narratives
 
-Template.narrative.events = 
+Template.narratives.events = 
     "click .learn-more": (d) ->
         srcE = (if d.srcElement then d.srcElement else d.target)
         dataTutorialType = $(srcE).data "tutorial-type"
         console.log dataTutorialType
         Session.set("tutorialType", dataTutorialType)
 
-Template.visualizations.events = 
+Template.pages.events = 
+    "mouseenter div.page": (d) ->
+        srcE = (if d.srcElement then d.srcElement else d.target)
+        $(srcE).find("a.word").addClass("highlight")
+
+    "mouseleave div.page": (d) ->
+        srcE = (if d.srcElement then d.srcElement else d.target)
+        $(srcE).find("a.word").removeClass("highlight")
+
     "click li a": (d) ->
         srcE = (if d.srcElement then d.srcElement else d.target)  
         vizType = $(srcE).parent().data "viz-type"  # Need parent() since img is target

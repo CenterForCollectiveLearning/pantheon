@@ -18,6 +18,16 @@ Template.visualization.render_template = ->
       new Handlebars.SafeString(Template.histogram(this))
     when "stacked"
       new Handlebars.SafeString(Template.stacked(this))
+      
+Template.share_view.events =
+  "mouseenter div.share-view": (d) ->
+    console.log "MOUSING OVER SHARE VIEW"
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    $(srcE).find("a").animate({top: "-30px"}, 300)
+
+  "mouseleave div.share-view": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    $(srcE).find("a").animate({top: "0"}, 300)
 
 Template.time_slider.rendered = ->
   # Not sure why this works, but it overcomes the re-styling issue

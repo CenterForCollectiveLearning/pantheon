@@ -3,7 +3,7 @@
     <div class="page-top">   
         {{> question}}
         {{> date_header}}
-        {{> share_this_view}}
+        {{> share_view}}
     </div>
 
     <!-- Hack to bypass order of templating (not found when changing viz -->
@@ -24,8 +24,8 @@
     </div>
 </template>
 
-<template name="share_this_view">
-    <div class="share-this-view">
+<template name="share_view">
+    <div class="share-view">
         <a href="#">Share This View</a>
         {{> sharing_options}}
     </div>
