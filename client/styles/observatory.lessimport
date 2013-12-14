@@ -30,22 +30,17 @@
     	margin-top: -1.5em;
     }
 
-    .share-this-view {
-    	padding-bottom: 1em;
-    	margin-top: -3.0em;
+    .share-view {
     	text-align: center;
     	height: 30px;
     	overflow: hidden;
+    	width: 100px;
+    	margin: 0 auto;
     	
     	a {
-    		.fade;
     	    .opacity(0.5);
-    
+    	    position: relative;
     	    cursor: pointer;
-    	    &:hover { 
-    	    	text-decoration: none;
-    	    	.opacity(1.0); 
-    	    }
     
     	    color: white;
     	    font-size: 0.8em; // 32px / 1px

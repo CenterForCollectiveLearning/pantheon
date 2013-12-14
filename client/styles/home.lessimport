@@ -6,22 +6,31 @@
 
 section#narratives {
 	margin-top:65px;
-	div.container {
-		z-index: 10;
-		// width: 940px;
-		width: 100%;
-		padding-top: 5%;
-		padding: 1em;
+	height: 700px;
+	div.flexslider {
 		height: 700px;
-		margin: 0 auto;
+	}
+	ul.slides {
+		max-height: 700px;
+		height: 700px;
+
+		li {
+			max-height: 700px;
+			height: 700px;
+		}
+	}
+
+	div.narrative-container {
+		z-index: 10;
 		position: relative;
 
 		div.content-container {
+			border-radius: 2px;
 			background-color: rgba(0, 0, 0, 0.75);
-			height: 50%;
-			width: 60%;
-			margin: 8% 20%;
-			padding: 3em;
+			height: 300px;
+			width: 940px;
+			margin: 200px auto 0 auto;
+			padding: 60px 40px 40px;
 			div.content-container-left {
 				width: 70%;
 				float: left;
@@ -38,13 +47,15 @@ section#narratives {
 		}
 
 		div.learn-more {
+			border-radius: 2px;
 			cursor: pointer;
 			text-transform: uppercase;
 			font-size: 1.5em;
 			padding: 10px;
 			float: right;
-			height: 16%;
-			margin-top: 32%;
+			height: 40px;
+			margin-top: 65px;
+			background-color: #343434;
 
 			&:hover {
 				background-color: black;
@@ -65,7 +76,9 @@ section#narratives {
 	}
 
 	div.background {
-		background-position: center top;
+		background-repeat: no-repeat !important;
+		background-size: cover !important;
+		background-position: center !important;
 		position: absolute;
 		top: 0;
 		border: 0;
@@ -74,11 +87,8 @@ section#narratives {
 	}
 
 	ol.flex-control-nav {
-		position: absolute;
 		z-index: 100;
-		width: 100%;
-		bottom: 30%;
-		text-align: center;
+		bottom: 210px;
 
 		li {
 			&:hover {
@@ -94,15 +104,15 @@ section#narratives {
 				filter: alpha(opacity=100);
 			}
 
-			border-radius: 6px;
-			-webkit-border-radius: 6px;
-			-moz-border-radius: 6px;
-			-o-border-radius: 6px;
+			border-radius: 7px;
+			-webkit-border-radius: 7px;
+			-moz-border-radius: 7px;
+			-o-border-radius: 7px;
 			display: block;
 			background: @color_gold;
 			margin: 0 3px;
-			height: 6px;
-			width: 6px;
+			height: 7px;
+			width: 7px;
 			text-indent: -9999px;
 			cursor: pointer;
 			zoom: 1;
@@ -138,21 +148,20 @@ section#narratives {
 }
 
 section {
-	div.title {
-		font-size: 3em;
-		font-weight: 200;
-    	line-height: 1em;
-    	padding: 1em 0;
-    	color: white;
-	}
 	div.domain {
 		color: white;
-		margin-top: 3em;
+	}
+	div.title {
+		font-size: 3em;
+		font-weight: 300;
+    	line-height: 1em;
+    	padding: 40px 0;
+    	color: white;
 	}
 }
 
 section#vision {
-	font-weight:lighter;
+	font-weight: 300;
 	background-color: black;
 	padding-top: 2em;
 	height: 100%;
@@ -162,14 +171,19 @@ section#vision {
 		line-height: 1.5rem;
 
 		span.large-y {
-			font-size: 2em;
+			font-size: 2rem;
 		}
 		span.large-ogc {
-			font-size: 2em;
+			font-size: 2rem;
 			color: @color_gold;
 		}
-		p.dive{
+		p.dive-in {
+			padding-top: 2rem;
 			text-align: center;
+			span.large-dive-in {
+				font-size: 2rem;
+				color: @color_gold;
+			}			
 		}
 	}
 }
@@ -205,13 +219,20 @@ section#pages {
 	}
  
 	div.page-title {		
-		font-size: 2em;
-		font-weight: 200;
+		font-size: 2rem;
+		font-weight: 300;
     	line-height: 1em;
     	padding-bottom: 0.5em;
     	a{
     		color: @color_gold;
     	}
+	}
+
+	a.word {
+		.color-transition;
+		&.highlight {
+			color: @color_gold;
+		}
 	}
 
 	div.description {
