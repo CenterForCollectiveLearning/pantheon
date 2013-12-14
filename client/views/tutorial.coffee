@@ -171,7 +171,7 @@ Template.tutorial.tutorialOptions = ->
   switch Session.get("tutorialType")
     when "renaissance" then renaissance
     when "moon" then exploration
-    when "football" then ogc #next tutorials....
+    when "ogc" then ogc #next tutorials....
     else null
 
 Template.tutorial.events =
