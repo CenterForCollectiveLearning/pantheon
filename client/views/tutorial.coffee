@@ -20,7 +20,7 @@ renaissanceStory = [
   spot: "#cell_Painter rect"
 ,
   template: Template.renaissance_step5
-  spot: "#wrapper"
+  spot: ".wrapper"
   onLoad: ->
     Router.go "/treemap/domain_exports_to/all/all/1300/1600/25/OGC"
 ,
@@ -29,15 +29,15 @@ renaissanceStory = [
   onLoad: ->
     Router.go "/treemap/country_exports/IT/all/1300/1600/25/OGC"
 ,
-  template: Template.renaissance_step8
+  template: Template.renaissance_step7
   spot: "#wrapper"
   onLoad: ->
     Router.go "/scatterplot/country_vs_country/GB/FR/1300/1600/25/OGC"
 ,
-  template: Template.renaissance_step9
-  spot: ".viz"
+  template: Template.renaissance_step8
+  spot: "#viz"
 ,
-  template: Template.renaissance_step11
+  template: Template.renaissance_step9
   spot: ".wrapper"
   onLoad: ->
     Router.go "/treemap/country_exports/all/all/1300/1600/25/OGC"
@@ -59,12 +59,12 @@ explorationStory = [
     Router.go "/treemap/country_exports/all/all/-3000/1000/25/OGC"
 ,
   template: Template.explorers_step4
-  spot: "#ranked_list"
+  spot: "#cell_Explorer rect"
   onLoad: ->
     "/treemap/country_exports/IS/all/-3000/1000/25/OGC"
 ,
   template: Template.explorers_step5
-  spot: ".page-middle span8"
+  spot: "#viz"
   onLoad: ->
     Router.go "/treemap/domain_exports_to/EXPLORATION/all/1000/1700/25/OGC"
 ,
@@ -97,8 +97,6 @@ explorationStory = [
 ogcStory = [
   template: Template.ogc_step1
 ,
-  template: Template.ogc_step2
-,
   template: Template.ogc_step3
   spot: ".logo"
 ,
@@ -108,7 +106,7 @@ ogcStory = [
     Router.go "/treemap/country_exports/all/all/-3000/1950/25/OGC"
 ,
   template: Template.ogc_step5
-  spot: ".wrapper"
+  spot: ".page-left"
 ,
   template: Template.ogc_step6
   spot: ".wrapper"
@@ -116,17 +114,17 @@ ogcStory = [
     Router.go "/treemap/domain_exports_to/all/all/-3000/1950/25/OGC"
 ,
   template: Template.ogc_step7
-  spot: ".page-middle span8"
+  spot: ".wrapper"
   onLoad: ->
     Router.go "/matrix/matrix_exports/all/all/-3000/1950/25/OGC"
 ,
   template: Template.ogc_step8
-  spot: ".page-middle span8"
+  spot: ".wrapper"
   onLoad: ->
     Router.go "/scatterplot/country_vs_country/US/RU/-3000/1950/25/OGC"
 ,
   template: Template.ogc_step9
-  spot: ".page-middle span8"
+  spot: ".wrapper"
   onLoad: ->
     Router.go "/map/map/all/all/-3000/1950/25/OGC"
 ,
@@ -145,13 +143,13 @@ ogcStory = [
   spot: "#ranking"
 ,
   template: Template.ogc_step14
-  spot: "#ranking"
+  spot: "#wrapper"
+  onLoad: ->
+    Router.go "/rankings/people/all/all/-3000/1950/25"
 ,
   template: Template.ogc_step15
   onLoad: ->
     Router.go "/team"
-,
-  template: Template.ogc_step16
 ]
 
 renaissance =

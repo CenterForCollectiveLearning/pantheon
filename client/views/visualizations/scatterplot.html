@@ -11,6 +11,11 @@
 	    	{{/if}}
 	    </div>
 	</div>
+	<div class="page-right span2">
+        {{#if initialDataReady}}
+        {{> ranked_list }}
+        {{/if}}
+    </div>
 </template>
 
 <template name="scatterplot_svg">
