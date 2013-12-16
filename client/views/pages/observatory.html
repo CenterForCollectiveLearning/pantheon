@@ -140,16 +140,16 @@
 
 <!-- Person in Ranked List -->
 <template name="ranked_person">
-    <li>
-        {{! insert thumbnail here}}
-        <a href="{{pathFor 'people'}}">
+    <a href="{{pathFor 'people'}}">
+        <li>
+            {{! insert thumbnail here}}
             {{name}}
             <br>
             <span>
                 {{occupation}}, born {{birthday}} ({{numlangs}})
-        </span>
-        </a>
-    </li>
+            </span>
+        </li>
+    </a>
 </template>
 
 <!-- Tooltips -->
@@ -184,25 +184,25 @@
     {{#if showclicktooltip}}
         {{#if tooltipDataReady}}
         <div id = "clicktooltip">
-            <div id="d3plus_tooltip_curtain_tree_map" class="d3plus_tooltip_curtain" style="background-color: rgb(255, 255, 255);"></div>
+            <div id="d3plus_tooltip_curtain_tree_map" class="d3plus_tooltip_curtain"></div>
             <div id = "d3plus_tooltip_id_treemap" class="d3plus_tooltip d3plus_tooltip_large">
-                <div class="d3plus_tooltip_container" style="width: 1000px;">
+                <div class="d3plus_tooltip_container">
                     <div class="d3plus_tooltip_top">
                         <div class="d3plus_tooltip_title">{{title}}</div>
                         <div class="d3plus_tooltip_subtitle">{{count}} individuals</div>
                     </div>
                     <div class="d3plus_tooltip_bottom">
-                        <div class="d3plus_tooltip_body" style="width: 250px;">
+                        <div class="d3plus_tooltip_body">
                             <div>
                                 {{ render_links }}
                             </div>
                         </div>
-                        <div class="d3plus_tooltip_html" style="width: 715px;">
+                        <div class="d3plus_tooltip_html">
                             {{> ranking_table }}
                         </div>
                     </div>
                 </div>
-                <div class="d3plus_tooltip_close" style="background-color: rgb(216, 197, 104);">×</div>
+                <div class="d3plus_tooltip_close" style="">×</div>
             </div>
         </div>
         {{/if}}

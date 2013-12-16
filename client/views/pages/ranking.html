@@ -1,8 +1,3 @@
-<!-- Optimization:
-http://madebyknight.com/optimizing-datatables-performance/
-http://datatables.net/plug-ins/#api_fnSetFilteringDelay
-http://datatables.net/forums/discussion/comment/13044 -->
-
 <template name="rankings">
     <div class="page-top">
         <div class="primary-text">
@@ -27,6 +22,12 @@ http://datatables.net/forums/discussion/comment/13044 -->
                         {{> spinner}}
                     {{/if}}
                 </div>
+                <div class="column-descriptions page-right span2">
+                    <div class="section-header">
+                        Definitions
+                    </div>
+                    {{columnDescriptions}}
+                </div>
             </div>
         </div>
     </div>
@@ -41,6 +42,36 @@ http://datatables.net/forums/discussion/comment/13044 -->
         Parameters
     </div>
     {{> select_mode}}
+</template>
+
+<template name="countries_columns">
+    <div class="term">Ranking</div><div class="definition">Rank Index</div>
+    <div class="term">Country</div><div class="definition">Country of Birth</div>
+    <div class="term">Number of people</div><div class="definition">Total number of people exported</div>
+    <div class="term">% Women</div><div class="definition">Percent women</div>
+    <div class="term">Diversity</div><div class="definition">The number of unique cultural domains exported by a country</div>
+    <div class="term">i50</div><div class="definition">The total number of individuals present in at least 50 Wikipedia languages</div>
+    <div class="term">H-index</div><div class="definition">Similar to the H-index measure for publications - a country has index h if h individuals from that country have presence in at least h Wikipedia languages.</div>
+</template>
+
+<template name="people_columns">
+    <div class="term">Ranking</div><div class="definition">Rank Index</div>
+    <div class="term">Name</div><div class="definition">Name of Individual</div>
+    <div class="term">Country</div><div class="definition">Country of Birth</div>
+    <div class="term">Birth Year</div><div class="definition">Birth year of individual</div>
+    <div class="term">Gender</div><div class="definition">Gender</div>
+    <div class="term">Occupation</div><div class="definition">lowest level of domain classification</div>
+    <div class="term">L</div><div class="definition">Number of Wikipedia language editions</div>
+</template>
+
+<template name="domains_columns">
+    <div class="term">Ranking</div><div class="definition">Rank Index</div>
+    <div class="term">Occupation</div><div class="definition">Lowest level of domain classification</div>
+    <div class="term">Industry</div><div class="definition">Second level of domain classification</div>
+    <div class="term">Domain</div><div class="definition">Highest level of domain classification</div>
+    <div class="term">Total Exporters</div><div class="definition">The number of countries that export the specified domain</div>
+    <div class="term">% Women</div><div class="definition">Percent women</div>
+    <div class="term">Total People</div><div class="definition">Total individuals in this category</div>
 </template>
 
 <template name="ranking_table">

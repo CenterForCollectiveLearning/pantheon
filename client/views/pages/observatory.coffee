@@ -21,7 +21,6 @@ Template.visualization.render_template = ->
       
 Template.share_view.events =
   "mouseenter div.share-view": (d) ->
-    console.log "MOUSING OVER SHARE VIEW"
     srcE = (if d.srcElement then d.srcElement else d.target)
     $(srcE).find("a").animate({top: "-30px"}, 300)
 

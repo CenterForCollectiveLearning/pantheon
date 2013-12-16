@@ -1,3 +1,13 @@
+Template.rankings.columnDescriptions = ->
+  entity = Session.get "entity"
+  switch entity
+    when "countries"
+      new Handlebars.SafeString(Template.countries_columns(this))
+    when "people"
+      new Handlebars.SafeString(Template.people_columns(this))
+    when "domains"
+      new Handlebars.SafeString(Template.domains_columns(this))
+
 Template.ranking_table.rendered = ->
   clickTooltip = Session.get("clicktooltip")
   entity = Session.get("entity")

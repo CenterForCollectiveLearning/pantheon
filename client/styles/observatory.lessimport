@@ -3,7 +3,7 @@
 //
 
 .page-top {
-	padding-top: 10%;
+	padding-top: 150px;
 	color: @color_gold;
     .bold {
     	font-weight: 500;
@@ -38,9 +38,14 @@
     	margin: 0 auto;
     	
     	a {
+    		.fade;
     	    .opacity(0.5);
     	    position: relative;
+    
     	    cursor: pointer;
+    	    &:hover { 
+    	    	text-decoration: none;
+    	    }
     
     	    color: white;
     	    font-size: 0.8em; // 32px / 1px
@@ -125,22 +130,21 @@
 	overflow:hidden;
 	line-height: 18px;
 	max-height: 100%;
-
-	li {
-		padding-bottom: 0.75em;
-		a {
-			color: @color_grey;
-			text-decoration: none;
-
-			&:hover { 
-	    		color: @color_gold !important; 
-	    	}
-
-			span {
-				padding-left: 1.5em;
-				font-size: 70%;
-			}
+	a {
+		color: @color_grey;
+		text-decoration: none;
+    
+		&:hover { 
+			color: @color_gold !important; 
 		}
+
+	    li {
+	    	padding-bottom: 0.75em;
+	    	span {
+	    		padding-left: 1.5em;
+	    		font-size: 70%;
+	    	}
+	    }
 	}
 
 	ol {
@@ -197,8 +201,21 @@ div.ui-slider {
     	}
     }
 
+    div.ui-accordion-content {
+    	padding: 1em 0;
+    }
+
     // Tidy up this CSS!
     div {
+    	@media (max-width: 979px) {
+    		ul {
+    			list-style-type: none;
+    			li {
+    				list-style-type: none;
+    				margin-left: 0 !important;
+    			}
+    		}
+    	}
     	ul {
     		margin-left: 0;
     		padding-left: 0;
@@ -228,20 +245,33 @@ div.viz-options {
 	height: 50px;
 	width: 100%;
 
-	&.inline {
-		display: inline;
-		width: 33%;
-		float: left;
+	@media (min-width: 980px) {
+	    &.inline {
+	    	display: inline;
+	    	width: 33%;
+	    	float: left;
+    
+	    	&.first {
+	    		margin-right: 0.5%;
+	    	}
+	    	&.last {
+	    		margin-left: 0.5%;
+	    	}
+    
+	    	div.chosen-container {
+	    		width: 33% !important;
+	    	}
+	    }
+	}
 
-		&.first {
-			margin-right: 0.5%;
-		}
-		&.last {
-			margin-left: 0.5%;
+	@media (max-width: 979px) {
+		&.inline {
+			display: block;		
+			width: 100%;
 		}
 
 		div.chosen-container {
-			width: 33% !important;
+			width: 100% !important;
 		}
 	}
 }

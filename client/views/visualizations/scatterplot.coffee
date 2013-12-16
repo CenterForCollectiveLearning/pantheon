@@ -153,7 +153,7 @@ Template.scatterplot_svg.rendered = ->
   # console.log("ATTRS: ", attrs);
 
   width = $(".page-middle").width() - 10
-  height = $(".page-middle").height()
+  height = $(".page-middle").height() - 80
 
   Deps.autorun( ->
     scaleType = Session.get("scatterplotScale")

@@ -34,7 +34,7 @@ Template.matrix_svg.rendered = ->
   if data.length is 0 #No data screen
     vars =
       svg_height : $(".page-middle").height()
-      svg_width : $(".page-middle").width()
+      svg_width : $(".page-middle").width() - 80
     d3.select(@find("svg.matrix")).remove()
     $("div.scroll-container").remove()
     error = d3.select(@find("svg.header")).attr("width", vars.svg_width).attr("height", vars.svg_height).append("svg:g").selectAll("g.d3plus-error").data(["No data available"])

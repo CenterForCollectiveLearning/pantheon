@@ -21,6 +21,9 @@ Template.treemap_svg.rendered = ->
   dataset = Session.get("dataset")
   viz = d3plus.viz()
   data = Treemap.find().fetch()
+  width = $(".page-middle").width()
+  height = $(".page-middle").height() - 80
+  console.log "WIDTH", "HEIGHT", width, height
 
   attrs = {}
   vizMode = Session.get("vizMode")
@@ -75,8 +78,8 @@ Template.treemap_svg.rendered = ->
     
 
     viz.type("tree_map")
-      .width($(".page-middle").width())
-      .height($(".page-middle").height())
+      .width(width)
+      .height(height)
       .id_var("id")
       .attrs(attrs)
       .text_var("name")
@@ -177,9 +180,11 @@ Template.treemap_svg.rendered = ->
         num_ppl: d.count
         year: 2000
 
+    
+
     viz.type("tree_map")
-        .width($(".page-middle").width())
-        .height($(".page-middle").height())
+        .width(width)
+        .height(height)
         .id_var("id")
         .attrs(attrs)
         .text_var("name")

@@ -42,12 +42,26 @@
 	.transition(color, 0.2s, ease-in);
 }
 
+.border-transition {
+	.transition(border, 0.2s, ease-in);
+}
+
 html, body { height: 100%; }
 
 body { overflow-y: hidden; }
 
 // Necessary for the footer
-.wrapper { min-height: 100%; }
+div.wrapper { 
+	min-height: 100%; 
+
+	&#background-wrapper {
+		background: url(/church_2.png) no-repeat center center fixed;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+}
 
 .fade {
 	transition: opacity .15s ease-in-out;
@@ -80,20 +94,6 @@ body { overflow-y: hidden; }
 }
 
 body {
-	// background: url(/church_2_transparent70.jpg) no-repeat center center fixed;
-	background: url(/church_2.png) no-repeat center center fixed;
-	// background: url(/church_2_transparent70.jpg) no-repeat center center fixed;
-
-	// background-image: url(/florence_smaller.jpg) 
-	// background-repeat: no-repeat;
-	// background-attachment: fixed;
-	// background-position: center;
-
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-
 	font-family: 'Lato';
 	font-weight: 300;
 	color: @color_grey;
@@ -101,13 +101,30 @@ body {
 
 header {
 	border-bottom: 3px solid @color_gold;
+	position: absolute !important;
 
 	.navbar-inner {
 	    border: 0;
+	    padding: 0;
 	    background: @color_almost_black;
+
+	    @media (max-width: 1000px) {
+	        ul.nav {
+	        	li.main_nav {
+	        		float: none;
+	        	}
+	        }
+	    }
+
+	    @media (max-width: 1000px) {
+	    	.nav > li > a {
+	    		line-height: 0.5em !important;
+	    	}
+	    }
     
 	    .nav > li > a {
 	    	.no-select;
+	    	cursor: pointer;
 	    	color: @color_grey;
 	    	text-decoration: none;
 	    	text-shadow: none;
@@ -129,16 +146,22 @@ header {
 	    	}
 	    }
     
+
 	    .pull-right {
 	    	padding-right: 40px;
 	    	li {
 	    		padding-left: 1.5em;
 	    	}
+	    	@media (max-width: 1000px) {
+	    		li {
+	    			text-align: right;
+	    		}
+	    	}
 	    }
     }
 
     // TODO Redo this
-    .logo {
+    div.logo {
     	border: solid transparent;
     	border-width: 0px 3px 3px 3px;
     	z-index: 10000;
@@ -170,6 +193,15 @@ header {
         	border: solid @color_gold;
         	border-width: 0px 3px 3px 3px;
         }
+    }
+
+    @media (max-width: 1000px) {
+    	div.logo {
+    		width: 220px;
+    		margin-top: 8px;
+    		margin-left: -110px;
+    		padding: 0;
+    	}
     }
 }
 
