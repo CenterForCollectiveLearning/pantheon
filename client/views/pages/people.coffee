@@ -105,4 +105,5 @@ Template.people_accordion.helpers
   countryPeople: -> 
     Session.set "personID", this._id
     Session.set "personCountry", this.countryName
+    console.log CountryPeople.find().fetch()
     CountryPeople.find()
