@@ -30,15 +30,16 @@ d3plus.pie_scatter = function(vars) {
   // Graph setup
   //-------------------------------------------------------------------
   
-  console.log("X DOMAIN", vars.xaxis_domain)
   // Create Axes
   vars.x_scale = d3.scale[vars.xscale_type]()
-    .domain(vars.xaxis_domain)
+    .clamp(true)
+    .domain([0.1, vars.xaxis_domain[1]])
     .range([0, vars.graph.width])
     .nice()
   
   vars.y_scale = d3.scale[vars.yscale_type]()
-    .domain(vars.yaxis_domain)
+    .clamp(true)
+    .domain([vars.yaxis_domain[0], 0.1])
     .range([0, vars.graph.height])
     .nice()
 

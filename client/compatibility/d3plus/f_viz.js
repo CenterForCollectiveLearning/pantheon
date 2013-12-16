@@ -182,7 +182,6 @@ d3plus.viz = function() {
         }
         
         data_obj.filtered = filter_check(data_obj.raw,changed)
-        console.log("DATA_OBJ_FILTERED", data_obj.filtered)
         vars.parent = d3.select(this)
         
         filter_change = false
@@ -403,13 +402,11 @@ d3plus.viz = function() {
         if (vars.dev) console.log("[d3plus] Setting Axes Domains")
         if (xaxis_domain instanceof Array) vars.xaxis_domain = xaxis_domain
         else if (!static_axes) {
-          console.log("NOT STATIC AXES")
           vars.xaxis_domain = d3.extent(data_obj[data_type[vars.type]][vars.depth][vars.spotlight][vars.year],function(d){
             return d[vars.xaxis_var]
           })
         }
         else {
-          console.log("STATIC AXES", data_obj[data_type[vars.type]][vars.depth][vars.spotlight].all)
           vars.xaxis_domain = d3.extent(data_obj[data_type[vars.type]][vars.depth][vars.spotlight].all,function(d){
             return d[vars.xaxis_var]
           })
@@ -680,6 +677,7 @@ d3plus.viz = function() {
           }
           else if (key != vars.value_var || vars.type != "rings") {
             var value = find_variable(d,key)
+            // CHANGED
             if (value !== 0 && !value) ret = false
           }
         }
