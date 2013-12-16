@@ -10,10 +10,6 @@
     margin-top: -225px;
 }
 
-div.d3plus_tooltip_curtain_tree_map {
-  background-color: rgb(255, 255, 255)
-}
-
 div.d3plus_tooltip {
   color: #333;
   font-size: 12px;
