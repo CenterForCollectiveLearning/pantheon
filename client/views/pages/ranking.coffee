@@ -11,6 +11,7 @@ Template.rankings.columnDescriptions = ->
 Template.ranking_table.rendered = ->
   clickTooltip = Session.get("clicktooltip")
   entity = Session.get("entity")
+  dataset = Session.get("dataset")
   
   switch entity
     when "countries"
@@ -38,23 +39,40 @@ Template.ranking_table.rendered = ->
       data = _.map collection, (d) ->
         p = People.findOne d._id
         [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
-
-      aoColumns = [
-        sTitle: "Ranking"
-      ,
-        sTitle: "Name"
-        fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
-      ,
-        sTitle: "Country"
-      ,
-        sTitle: "Birth Year"
-      ,
-        sTitle: "Gender"
-      ,
-        sTitle: "Occupation"
-      ,
-        sTitle: "L"
-      ]
+      if dataset == "murray"
+        aoColumns = [
+          sTitle: "Ranking"
+        ,
+          sTitle: "Name"
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
+        ,
+          sTitle: "Country"
+        ,
+          sTitle: "Birth Year"
+        ,
+          sTitle: "Gender"
+        ,
+          sTitle: "Occupation"
+        ,
+          sTitle: "Index"
+        ]
+      else
+        aoColumns = [
+          sTitle: "Ranking"
+        ,
+          sTitle: "Name"
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
+        ,
+          sTitle: "Country"
+        ,
+          sTitle: "Birth Year"
+        ,
+          sTitle: "Gender"
+        ,
+          sTitle: "Occupation"
+        ,
+          sTitle: "L"
+        ]
     when "domains"
       data = _.map DomainsRanking.find().fetch(), (d) ->
         [0, d.occupation.capitalize(), d.industry.capitalize(), d.domain.capitalize(), d.ubiquity, d.percentwomen, d.numppl]
