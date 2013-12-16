@@ -44,7 +44,6 @@ Template.ranking_table.rendered = ->
           sTitle: "Ranking"
         ,
           sTitle: "Name"
-          fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
           sTitle: "Country"
         ,
