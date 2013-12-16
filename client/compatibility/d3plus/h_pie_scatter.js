@@ -30,6 +30,7 @@ d3plus.pie_scatter = function(vars) {
   // Graph setup
   //-------------------------------------------------------------------
   
+  console.log("X DOMAIN", vars.xaxis_domain)
   // Create Axes
   vars.x_scale = d3.scale[vars.xscale_type]()
     .domain(vars.xaxis_domain)

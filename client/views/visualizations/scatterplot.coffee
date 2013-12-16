@@ -149,8 +149,8 @@ Template.scatterplot_svg.rendered = ->
 
   # console.log("orignal data", data);
   # console.log("aggregated", aggregated);
-  # console.log("FLAT DATA: ", flatData);
-  # console.log("ATTRS: ", attrs);
+  console.log("FLAT DATA: ", flatData);
+  console.log("ATTRS: ", attrs);
 
   width = $(".page-middle").width() - 10
   height = $(".page-middle").height() - 80
@@ -160,6 +160,7 @@ Template.scatterplot_svg.rendered = ->
     mirrorType = Session.get("scatterplotMirror")
     
     viz.type("pie_scatter")
+      .dev(true)
       .width(width)
       .height(height)
       .id_var("id")
