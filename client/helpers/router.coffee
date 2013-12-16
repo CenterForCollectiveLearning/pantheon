@@ -70,7 +70,8 @@ Router.map ->
       Session.set "category", @params.category
       Session.set "from", @params.from
       Session.set "to", @params.to
-      Session.set "langs", @params.langs      
+      Session.set "langs", @params.langs  
+      Session.set "dataset", "OGC"    
 
   @route "data",
     path: "/data"
