@@ -127,9 +127,9 @@ Template.question.question = ->
     # s_domain = "in the area of " + s_domain.substring(1);
     boldify = (s) ->
       "<b>" + s + "</b>"
-    s_countries = (if (Session.get("country") is "all") then "the world" else Countries.findOne(countryCode: Session.get("country")).countryName)
-    s_countryX = (if (Session.get("countryX") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryX")).countryName)
-    s_countryY = (if (Session.get("countryY") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryY")).countryName)
+    s_countries = (if (Session.get("country") is "all") then "the world" else Countries.findOne(countryCode: Session.get("country"), dataset: Session.get("dataset")).countryName)
+    s_countryX = (if (Session.get("countryX") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryX"), dataset: Session.get("dataset")).countryName)
+    s_countryY = (if (Session.get("countryY") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryY"), dataset: Session.get("dataset")).countryName)
     s_domains = (if (Session.get("category") is "all") then "all domains" else decodeURIComponent(Session.get("category")))
     s_domainX = (if (Session.get("categoryX") is "all") then "all domains" else decodeURIComponent(Session.get("categoryX")))
     s_domainY = (if (Session.get("categoryY") is "all") then "all domains" else decodeURIComponent(Session.get("categoryY")))
@@ -279,7 +279,12 @@ Template.domain_exporter_question.categoryName = ->
 
 Template.country_exports_question.countryName = ->
   countryCode = Session.get("tooltipCountryCode")
-  return (Countries.findOne({$or: [{countryCode: countryCode}, {countryCode3: countryCode}]}).countryName).capitalize()
+  dataset = Session.get("dataset")
+  vizMode = Session.get("vizMode")
+  if vizMode is "map" and dataset is "murray"
+    return (Countries.findOne({countryCode3: countryCode}).countryName).capitalize()
+  else
+    return (Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName).capitalize() 
 
 Template.country_advantage_question.countryName = ->
   countryCode = Session.get("tooltipCountryCode")
@@ -297,8 +302,13 @@ Template.treemap_domain_exports_to.helpers
 
 Template.treemap_country_exports.helpers
   country : -> 
+    dataset = Session.get("dataset")
+    vizMode = Session.get("vizMode")
     countryCode = Session.get("bigtooltipCountryCode")
-    return Countries.findOne({$or: [{countryCode: countryCode}, {countryCode3: countryCode}]}).countryCode
+    if vizMode is "map" and dataset is "murray"
+      return Countries.findOne({countryCode3: countryCode}).countryCode
+    else
+      return countryCode
   from : -> Session.get("from")
   to : -> Session.get("to")
   L : -> Session.get("langs")
