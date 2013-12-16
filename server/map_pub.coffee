@@ -12,14 +12,14 @@ Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
   matchArgs =
     numlangs:
       $gt: L
-
     birthyear:
       $gte: begin
       $lte: end
-
     dataset: dataset
 
   matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
+  console.log(matchArgs)
+  
   pipeline = []
   pipeline = [
     $match: matchArgs

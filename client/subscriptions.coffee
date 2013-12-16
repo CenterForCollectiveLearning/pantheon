@@ -71,12 +71,30 @@ Deps.autorun ->
   personOccupation = Session.get("personOccupation")
   personBirthyear = Session.get("personBirthyear")
   personCountry = Session.get("personCountry")
+
+  console.log "vizType: " + vizType
+  console.log "vizMode: " + vizMode
+  console.log "begin: " + begin
+  console.log "end: " + end
+  console.log "L: " + L
+  console.log "country: " + country
+  console.log "countryX: " + countryX
+  console.log "countryY: " + countryY
+  console.log "languageX: " + languageX
+  console.log "languageY: " + languageY
+  console.log "language: " + language
+  console.log "category: " + category
+  console.log "categoryLevel: " + categoryLevel
+  console.log "gender: " + gender
+  console.log "entity: " + entity
+  console.log "page: " + page
+  console.log "dataset: " + dataset
   
   #
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
   #      
-  if country and begin and end and L
+  if country and begin and end and langs
     
     #
     #         Do nothing:
@@ -140,23 +158,6 @@ Deps.autorun ->
         birthyearDataSub = Meteor.subscribe("birthyear_pub", personID, personBirthyear, onReady)
         countryDataSub = Meteor.subscribe("country_pub", personID, personCountry, onReady)
 
-    console.log "vizType: " + vizType
-    console.log "vizMode: " + vizMode
-    console.log "begin: " + begin
-    console.log "end: " + end
-    console.log "L: " + L
-    console.log "country: " + country
-    console.log "countryX: " + countryX
-    console.log "countryY: " + countryY
-    console.log "languageX: " + languageX
-    console.log "languageY: " + languageY
-    console.log "language: " + language
-    console.log "category: " + category
-    console.log "categoryLevel: " + categoryLevel
-    console.log "gender: " + gender
-    console.log "entity: " + entity
-    console.log "page: " + page
-    console.log "dataset: " + dataset
 #
 # Subscription for tooltips on hover
 #  

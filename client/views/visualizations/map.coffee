@@ -55,7 +55,8 @@ mouseover = (d) ->
 
   dataset = Session.get("dataset")
   countryCode3 = d.id
-  countryName = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryName
+  # change this so only use dataset: OGC for the countryNames 
+  countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
   countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
   category = Session.get("category")
   categoryAggregation = Session.get("categoryLevel")
