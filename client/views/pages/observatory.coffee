@@ -279,11 +279,11 @@ Template.domain_exporter_question.categoryName = ->
 
 Template.country_exports_question.countryName = ->
   countryCode = Session.get("tooltipCountryCode")
-  return (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
+  return (Countries.findOne({$or: [{countryCode: countryCode}, {countryCode3: countryCode}]}).countryName).capitalize()
 
 Template.country_advantage_question.countryName = ->
   countryCode = Session.get("tooltipCountryCode")
-  return (Countries.findOne({countryCode: countryCode}).countryName).capitalize()
+  return (Countries.findOne({$or: [{countryCode: countryCode}, {countryCode3: countryCode}]}).countryName).capitalize()
 
 Template.domain_advantage_question.categoryName = ->
   Session.get("bigtooltipCategory").capitalize()
@@ -296,7 +296,9 @@ Template.treemap_domain_exports_to.helpers
   dataset : -> Session.get("dataset")
 
 Template.treemap_country_exports.helpers
-  country : -> Session.get("bigtooltipCountryCode")
+  country : -> 
+    countryCode = Session.get("bigtooltipCountryCode")
+    return Countries.findOne({$or: [{countryCode: countryCode}, {countryCode3: countryCode}]}).countryCode
   from : -> Session.get("from")
   to : -> Session.get("to")
   L : -> Session.get("langs")

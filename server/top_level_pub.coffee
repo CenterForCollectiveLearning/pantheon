@@ -99,8 +99,14 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     if vizMode is "matrix_exports"
       args.gender = genderField
 
-  if vizMode is "country_exports" or vizMode is "matrix_exports" or vizMode is "domain_exports_to" or vizMode is "map"
+  if vizMode is "country_exports" or vizMode is "matrix_exports" or vizMode is "domain_exports_to"
     args.countryCode = country  if country isnt "all"
+    args[categoryLevel] = category  if category.toLowerCase() isnt "all"
+  else if vizMode is "map"
+    if dataset is "murray"
+      args.countryCode3 = country if country isnt "all"
+    else
+      args.countryCode = country  if country isnt "all"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
   else if vizMode is "country_vs_country"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"

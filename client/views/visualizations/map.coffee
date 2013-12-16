@@ -57,7 +57,10 @@ mouseover = (d) ->
   countryCode3 = d.id
   # change this so only use dataset: OGC for the countryNames 
   countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
-  countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
+  if(dataset is "murray")
+    countryCode = countryCode3
+  else
+    countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
   category = Session.get("category")
   categoryAggregation = Session.get("categoryLevel")
   position =
@@ -91,8 +94,11 @@ clickevent = (d) ->
   Session.set "showTooltip", false
   dataset = Session.get("dataset")
   countryCode3 = d.id
-  countryName = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryName
-  countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
+  countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
+  if dataset is "murray"
+    countryCode = countryCode3
+  else
+    countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
   category = Session.get("category")
   categoryAggregation = Session.get("categoryLevel")
   # Subscription Parameters
