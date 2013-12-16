@@ -1,5 +1,14 @@
 Template.data.rendered = ->
-  $(":header").each((i, e) -> $(".page-left").append(e))
+  w = $(window)
+  b = $(document.body)
+
+  b.scrollspy(
+    target: '#table-of-contents'
+    offset: $('.page-middle').offset().top + w.height()/4
+    )
+
+  w.on('load', -> b.scrollspy('refresh'))
+#   $(":header").each((i, e) -> $(".page-left").append(e))
 
 # Template.data.rendered = ->
   # renderTree u

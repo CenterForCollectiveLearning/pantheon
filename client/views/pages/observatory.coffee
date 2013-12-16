@@ -114,95 +114,65 @@ Template.date_header.helpers
     (if (to < 0) then (to * -1) + " B.C." else to)
 
 
+
+
 # Generate question given viz type
 Template.question.question = ->
-  try
-    
-    # TODO Make this not suck
-    
-    # s_domains = "in the area of " + s_domains.substring(1);
-    
-    # s_domain = "in the area of " + s_domain.substring(1);
-    
-    # s_domain = "in the area of " + s_domain.substring(1);
-    boldify = (s) ->
-      "<b>" + s + "</b>"
-    s_countries = (if (Session.get("country") is "all") then "the world" else Countries.findOne(countryCode: Session.get("country"), dataset: Session.get("dataset")).countryName)
-    s_countryX = (if (Session.get("countryX") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryX"), dataset: Session.get("dataset")).countryName)
-    s_countryY = (if (Session.get("countryY") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryY"), dataset: Session.get("dataset")).countryName)
-    s_domains = (if (Session.get("category") is "all") then "all domains" else decodeURIComponent(Session.get("category")))
-    s_domainX = (if (Session.get("categoryX") is "all") then "all domains" else decodeURIComponent(Session.get("categoryX")))
-    s_domainY = (if (Session.get("categoryY") is "all") then "all domains" else decodeURIComponent(Session.get("categoryY")))
-    s_regions = (if (Session.get("language") is "all") then "the world" else Languages.findOne(lang: Session.get("language")))
-    s_languageX = Languages.findOne(lang: Session.get("languageX"))
-    s_languageY = Languages.findOne(lang: Session.get("languageY"))
-    does_or_do = (if (Session.get("country") is "all") then "do" else "does")
-    s_or_no_s_c = (if (Session.get("country") is "all") then "'" else "'s")
-    s_or_no_s_r = (if (Session.get("language") is "all") then "'" else "'s")
-    speakers_or_no_speakers = (if (Session.get("language") is "all") then "" else " speakers")
-    gender = undefined
-    gender_var = Session.get("gender")
-    switch gender_var
-      when "both"
-        gender = "men and women"
-      when "male"
-        gender = "men"
-      when "female"
-        gender = "women"
-      when "ratio"
-        gender = "women vs. men"
-    if s_domains.charAt(0) is "-"
-      console.log s_domains.charAt(s_domains.length - 1)
-      if s_domains.charAt(s_domains.length - 1) is "y"
-        s_domains = s_domains.substring(1, s_domains.length - 1) + "ies"
-      else
-        s_domains = s_domains.substring(1) + "s"
-    else s_domains = s_domains.substring(1)  if s_domains.charAt(0) is "+"
-    if s_domainX.charAt(0) is "-"
-      console.log s_domainX.charAt(s_domainX.length - 1)
-      if s_domainX.charAt(s_domainX.length - 1) is "y"
-        s_domainX = s_domainX.substring(1, s_domainX.length - 1) + "ies"
-      else
-        s_domainX = s_domainX.substring(1) + "s"
-    if s_domainY.charAt(0) is "-"
-      console.log s_domainY.charAt(s_domainY.length - 1)
-      if s_domainY.charAt(s_domainY.length - 1) is "y"
-        s_domainY = s_domainY.substring(1, s_domainY.length - 1) + "ies"
-      else
-        s_domainY = s_domainY.substring(1) + "s"
-    s_domainX = s_domainX.substring(1)  if s_domainX.charAt(0) is "+"
-    s_domainY = s_domainY.substring(1)  if s_domainY.charAt(0) is "+"
-    type = Session.get("vizType")
-    mode = Session.get("vizMode")
-    switch mode
-      when "country_exports"
-        if type is "treemap"
-          return new Handlebars.SafeString("Who are the globally known people born in " + boldify(s_countries) + "?")
-        # else if type is "histogram"
-        #   return new Handlebars.SafeString("What is the comparative advantage of " + boldify(s_countries) + "?")
-      when "country_imports"
-        return new Handlebars.SafeString((if (Session.get("language") is "all") then "Who does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
-      when "domain_exports_to"
-        if type is "treemap"
-          return new Handlebars.SafeString("Where are the globally known " + boldify(s_domains) + " born?")
-        # else if type is "histogram"
-        #   return new Handlebars.SafeString("Who has comparative advantage in " + boldify(s_domains) + "?")
-      # when "domain_imports_from"
-      #   return new Handlebars.SafeString("Who imports " + boldify(s_domains) + "?")
-      # when "bilateral_exporters_of"
-      #   return new Handlebars.SafeString("Who does " + boldify(s_countries) + " export to " + boldify(s_regions + speakers_or_no_speakers) + "?")
-      # when "bilateral_importers_of"
-      #   return new Handlebars.SafeString("Where does " + boldify(s_countries) + " export " + boldify(s_domains) + " to?")
-      when "matrix_exports"
-        return new Handlebars.SafeString("How are globally known " + boldify(gender) + " distributed?")
-      when "country_vs_country"
-        return new Handlebars.SafeString("What globally known people were born in " + boldify(s_countryX) + " vs. " + boldify(s_countryY) + "?")
-      when "lang_vs_lang"
-        return new Handlebars.SafeString("Who do " + boldify(s_languageX) + " speakers know compared to " + boldify(s_languageY) + " speakers?")
-      # when "domain_vs_domain"
-      #   return new Handlebars.SafeString("Who exports " + boldify(s_domainX) + " compared to " + boldify(s_domainY) + "?")
-      when "map"
-        return new Handlebars.SafeString("Where are globally known " + boldify(s_domains) + " born?")
+  getQuestion()
+
+@getQuestion = -> 
+  boldify = (s) -> "<b>" + s + "</b>"
+  s_countries = (if (Session.get("country") is "all") then "the world" else Countries.findOne(countryCode: Session.get("country")).countryName)
+  s_countryX = (if (Session.get("countryX") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryX")).countryName)
+  s_countryY = (if (Session.get("countryY") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryY")).countryName)
+  s_domains = (if (Session.get("category") is "all") then "all domains" else decodeURIComponent(Session.get("category"))).capitalize()
+  s_domainX = (if (Session.get("categoryX") is "all") then "all domains" else decodeURIComponent(Session.get("categoryX"))).capitalize()
+  s_domainY = (if (Session.get("categoryY") is "all") then "all domains" else decodeURIComponent(Session.get("categoryY"))).capitalize()
+
+  gender_var = Session.get("gender")
+  switch gender_var
+    when "both"
+      gender = "men and women"
+    when "male"
+      gender = "men"
+    when "female"
+      gender = "women"
+    when "ratio"
+      gender = "women to men"
+
+  # Switch based on categoryLevel: occupations are singular
+  categoryLevel = Session.get("categoryLevel")
+  if categoryLevel
+    switch categoryLevel
+      when "domain"
+        category_prefix = " individuals in "
+      when "industry"
+        category_prefix = " individuals in "      
+      when "occupation"
+        category_prefix = ""
+        if s_domains is "Martial Arts" then s_domains = "Martial Artists"
+        else s_domains = s_domains + "s"
+  else
+    category_prefix = " individuals in "
+
+  type = Session.get("vizType")
+  mode = Session.get("vizMode")
+  switch mode
+    when "country_exports"
+      if type is "treemap"
+        return new Handlebars.SafeString("Who are the globally known people born in " + boldify(s_countries) + "?")
+    when "country_imports"
+      return new Handlebars.SafeString((if (Session.get("language") is "all") then "Who does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
+    when "domain_exports_to", "map"
+      return new Handlebars.SafeString("Where are the globally known " + category_prefix + boldify(s_domains) + " born?")
+    when "matrix_exports"
+      if gender_var then result = "How is the ratio of " + boldify("women to men") + " distributed globally?"
+      else result = "How are globally known " + boldify(gender) + " distributed?"
+      return new Handlebars.SafeString(result)
+    when "country_vs_country"
+      return new Handlebars.SafeString("What globally known people were born in " + boldify(s_countryX) + " vs. " + boldify(s_countryY) + "?")
+    when "domain_vs_domain"
+      return new Handlebars.SafeString("How many globally known individuals are in the area of " + boldify(s_domainX) + " vs. " + boldify(s_domainY))
 
 #
 # TOOLTIPS

@@ -1,3 +1,36 @@
+div#table-of-contents {
+	position: fixed !important;
+	ul {
+		li {
+			text-align: left !important;
+			
+			a {
+				&.h1 {
+				}
+				&.h2 {
+					margin: 4px 0;
+					padding-left: 15px;
+				}
+				&.h3 {
+					font-size: 0.8em;
+					margin: 4px 0;
+					padding-left: 30px;
+				}
+
+				color: black;
+				&:hover {
+					text-decoration: underline;
+					background-color: #eed;
+				}
+			}
+
+			&.active > a {
+				background-color: @color_gold;
+			}
+		}
+	}
+}
+
 div.text {
 	margin: 0 auto;
 	padding: 2em;
@@ -6,21 +39,38 @@ div.text {
 	border: 3px solid black;
 
 	// TODO Do this better
-	&.page-middle {
-		min-width: 645px !important;		
+	&.text-page-middle {
+		min-width: 645px !important;	
+		ul {
+			list-style-type: none;
+			width: 645px;
+			margin: 0 auto 24px auto;
+			li {
+				list-style-type: none;
+				text-align: left !important;
+			}
+		}	
 	}
 
+	font: 17px/26px Verdana, Geneva, sans-serif;
 	// font: 17px/26px georgia, "times new roman", times, serif;
 
 	background-color: #eed;
 	text-align: justify;
-	// font-family: "Helvetica";
+
+	h1 {
+		font-size: 1.5rem;
+		text-align: center;		
+	}
 
 	h2 {
-		margin-top: 0;
-		margin-bottom: 1em;
-		line-height: 1em;
-		text-align: center
+		font-size: 1.25rem;
+		text-align: center;
+	}
+
+	h3 {
+		font-size: 1rem;
+		text-align: center;		
 	}
 
 	max-height: 65%;
@@ -47,46 +97,11 @@ div.text {
 	}
 
 	a {
+		color: black;
 		text-decoration: none;
-		color: @color_gold;
-		&:hover { text-decoration: underline; }
-	}
-}
-
-.sidenav {
-	opacity: 1.0 !important;
-	padding: 2em;
-	background-color: white;
-
-	.spacer { height: 4.0em; }
-	
-	a {
-		text-decoration: none;
-		color: @color_grey;
-		&:hover { color: @color_gold; }
-	}
-
-	h1 {
-		font-size: 1.0em;
-		margin: 1.2em 0 .2em 0;
-	}
-
-	h2 {
-		font-size: 1.0em;
-		font-weight: normal;
-		margin: .6em 0 .3em 0;
-	}
-
-	h3 {
-		font-size: .8em;
-		font-weight: normal;
-		margin: 4px 0px 4px 0px;
-		padding-left: 10px;
-		color: #333333;
-		letter-spacing: 0px;
-	}
-
-	h4 {
-		margin: 0 0;
+		&:hover { 
+			color: black;
+			text-decoration: underline; 
+		}
 	}
 }

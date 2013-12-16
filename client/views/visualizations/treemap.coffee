@@ -20,15 +20,14 @@ Template.treemap_svg.rendered = ->
   context = this
   dataset = Session.get("dataset")
   viz = d3plus.viz()
+  width = $(".page-middle").width()
+  height = $(".page-middle").height() - 80
   Deps.autorun ->
     data = Treemap.find().fetch()
-    width = $(".page-middle").width()
-    height = $(".page-middle").height() - 80
-  
     attrs = {}
     vizMode = Session.get("vizMode")
     if vizMode is "country_exports" or vizMode is "country_imports" or vizMode is "bilateral_exporters_of"
-      attr = Domains.find({dataset:dataset}).fetch()
+      attr = Domains.find({dataset: dataset}).fetch()
       attr.forEach (a) ->
         dom = a.domain.capitalize()
         ind = a.industry.capitalize()

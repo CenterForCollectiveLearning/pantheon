@@ -101,7 +101,7 @@ body {
 
 header {
 	border-bottom: 3px solid @color_gold;
-	position: absolute !important;
+	position: fixed !important;
 
 	.navbar-inner {
 	    border: 0;
