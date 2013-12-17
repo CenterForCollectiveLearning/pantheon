@@ -3,11 +3,12 @@
  ********************/
 
 #clicktooltip{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -500px;
-    margin-top: -225px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -500px;
+  margin-top: -225px;
+  z-index: 10;
 }
 
 div.d3plus_tooltip {

@@ -12,8 +12,6 @@ Template.data.rendered = ->
     offset: offset
     )
 
-  window.scrollTo(0, $(pageScrollID).position().top - offset)
-
   w.on('load', -> b.scrollspy('refresh'))
 #   $(":header").each((i, e) -> $(".page-left").append(e))
   renderTree u

@@ -108,6 +108,8 @@ Template.date_header.helpers
     (if (to < 0) then (to * -1) + " B.C." else to)
 
 
+
+
 # Generate question given viz type
 Template.question.question = -> 
   dataset = Session.get("dataset")
