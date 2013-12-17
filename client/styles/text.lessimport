@@ -3,6 +3,28 @@ div.wrapper-left {
 	float: left;
 }
 
+div#image-fullscreen {
+	position: fixed;
+	z-index: 10;
+    top: 50%;
+    left: 50%;
+    margin-left: -400px;
+    margin-top: -250px;
+
+    div.d3plus_tooltip_container {
+    	background-color: #FFF;
+    	width: 800px;
+    	height: 100%;
+    	padding: 15px;
+    	border-radius: 3px;
+    	border: 1px solid black;
+    }
+
+    div.d3plus_tooltip_body {
+    	width: 100%;
+    }
+}
+
 div#table-of-contents {
 	position: fixed !important;
 	width: 330px;
@@ -94,9 +116,10 @@ div.text {
 
 	figure {
 		img {
-			width: 70%;
+			width: 100%;
 			margin: 0 auto;
 			display: block;
+			cursor: pointer;
 		}
 
 		figcaption {

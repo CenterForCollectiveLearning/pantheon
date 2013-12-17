@@ -178,14 +178,21 @@ renderTree = (url) ->
     root.children.forEach toggleAll
     update root
 
-
-
 Template.data.events =
-  "click a": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    point = $(srcE).attr("href")
-    window.scrollTo(0, $(point).position().top-120)
-    #TODO: update the address route here, then make the route work to point to a specific position on the data page!
-#    window.history.pushState(null, null, '/data/'+point)
+  "click img": (d) ->
+     srcE = (if d.srcElement then d.srcElement else d.target)
+     console.log "CLICKING IMAGE"
+     Session.set "showImageFullscreen", true
+     Session.set "imageShownFullscreen", $(srcE).attr("src")
 
-#d3.select(self.frameElement).style("height", h + "px");
+Template.image_fullscreen.helpers
+  showImageFullscreen: -> Session.get "showImageFullscreen"
+  imageShownFullscreen: -> Session.get "imageShownFullscreen"
+
+Template.image_fullscreen.events = 
+  "click .d3plus_tooltip_close,.d3plus_tooltip_curtain": (d) ->
+    $("#image-fullscreen").fadeOut()
+    Session.set "showImageFullscreen", false
+  "click .closeclicktooltip": (d) ->
+    $("#image-fullscreen").fadeOut()
+    Session.set "showImageFullscreen", false

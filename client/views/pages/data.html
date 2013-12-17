@@ -1,4 +1,23 @@
+<template name="image_fullscreen">
+	{{#if showImageFullscreen}}
+	    <div id="image-fullscreen">
+	    	<div id="d3plus_tooltip_curtain_tree_map" class="d3plus_tooltip_curtain" style="background-color: rgb(255, 255, 255);"></div>
+	    	<div id = "d3plus_tooltip_id_treemap" class="d3plus_tooltip d3plus_tooltip_large">
+	    		<div class="d3plus_tooltip_container">
+	    			<div class="d3plus_tooltip_bottom">
+	    				<div class="d3plus_tooltip_body">
+	    					<img src="{{imageShownFullscreen}}"/>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="d3plus_tooltip_close" style="">×</div>
+	    	</div>
+	    </div>
+	{{/if}}
+</template>
+
 <template name="data">
+	{{> image_fullscreen}}
 	<div class="page-top">
 		<div class="primary-text">
 		</div>
