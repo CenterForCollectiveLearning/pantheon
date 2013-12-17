@@ -149,7 +149,11 @@ Template.select_l.murray = ->
 
 Template.select_gender.rendered = ->
   $(@find("select")).val(Session.get("gender")).chosen().change( ->
-    Session.set "gender", $(this).val())
+    # Session.set "gender", $(this).val())
+    # TODO: For now, we're assuming that only matrices have gender enabled
+    path = window.location.pathname.split("/")
+    path[4] = $(this).val()
+    Router.go path.join("/"))
 
 Template.select_country_order.events = 
   "click div.button": (d) ->

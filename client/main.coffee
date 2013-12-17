@@ -41,7 +41,7 @@
     out: "language"
 
   matrix_exports:
-    in: ["all", "all"]
+    in: ["all", "gender"]
     out: "language"
 
   country_vs_country:
