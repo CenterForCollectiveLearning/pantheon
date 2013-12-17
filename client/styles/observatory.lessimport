@@ -377,3 +377,7 @@ label {
 rect.bar, rect.cell {
 	cursor: pointer;
 }
+
+g#countries > path {
+	cursor: pointer;
+}

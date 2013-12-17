@@ -6,18 +6,12 @@ Template.visualization.resize = ->
 Template.visualization.render_template = ->
   type = Session.get "vizType"
   switch type
-    when "treemap"
-      new Handlebars.SafeString(Template.treemap(this))
-    when "matrix"
-      new Handlebars.SafeString(Template.matrix(this))
-    when "scatterplot"
-      new Handlebars.SafeString(Template.scatterplot(this))
-    when "map"
-      new Handlebars.SafeString(Template.map(this))
-    when "histogram"
-      new Handlebars.SafeString(Template.histogram(this))
-    when "stacked"
-      new Handlebars.SafeString(Template.stacked(this))
+    when "treemap" then new Handlebars.SafeString(Template.treemap(this))
+    when "matrix" then new Handlebars.SafeString(Template.matrix(this))
+    when "scatterplot" then new Handlebars.SafeString(Template.scatterplot(this))
+    when "map" then new Handlebars.SafeString(Template.map(this))
+    when "histogram" then new Handlebars.SafeString(Template.histogram(this))
+    when "stacked" then new Handlebars.SafeString(Template.stacked(this))
       
 Template.share_view.events =
   "mouseenter div.share-view": (d) ->
@@ -114,65 +108,51 @@ Template.date_header.helpers
     (if (to < 0) then (to * -1) + " B.C." else to)
 
 
-
-
 # Generate question given viz type
-Template.question.question = ->
-  getQuestion()
+Template.question.question = -> 
+  try
+    vars = 
+      country: if Session.get("country") is "all" then "the world" else Countries.findOne(countryCode: Session.get("country")).countryName
+      countryX: if Session.get("countryX") is "all" then "the world" else Countries.findOne(countryCode: Session.get("countryX")).countryName
+      countryY: if Session.get("countryY") is "all" then "the world" else Countries.findOne(countryCode: Session.get("countryY")).countryName
+      category: if Session.get("category") is "all" then "all domains" else Session.get("category").capitalize()
+      categoryX: if Session.get("categoryX") is "all" then "all domains" else Session.get("categoryX").capitalize()
+      categoryY: if Session.get("categoryY") is "all" then "all domains" else Session.get("categoryY").capitalize()
+      gender_var: Session.get("gender")
+      categoryLevel: Session.get("categoryLevel")
+    mode = Session.get("vizMode")
+    getQuestion(mode, vars)
 
-@getQuestion = -> 
-  boldify = (s) -> "<b>" + s + "</b>"
-  s_countries = (if (Session.get("country") is "all") then "the world" else Countries.findOne(countryCode: Session.get("country")).countryName)
-  s_countryX = (if (Session.get("countryX") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryX")).countryName)
-  s_countryY = (if (Session.get("countryY") is "all") then "the world" else Countries.findOne(countryCode: Session.get("countryY")).countryName)
-  s_domains = (if (Session.get("category") is "all") then "all domains" else decodeURIComponent(Session.get("category"))).capitalize()
-  s_domainX = (if (Session.get("categoryX") is "all") then "all domains" else decodeURIComponent(Session.get("categoryX"))).capitalize()
-  s_domainY = (if (Session.get("categoryY") is "all") then "all domains" else decodeURIComponent(Session.get("categoryY"))).capitalize()
+@boldify = (str) -> "<b>" + str + "</b>"
+@getQuestion = (mode, vars) ->
+  console.log mode, vars
+  # If mode requires a category, switch based on categoryLevel because occupations are singular
+  if mode in ["domain_exports_to", "map", "domain_vs_domain"]
+    # Default to empty
+    category_prefix = ""
+    unless vars.category is "all domains"
+      switch vars.categoryLevel
+        when "domain", "industry" then category_prefix = " individuals in "
+        when "occupation"
+          if vars.category is "Martial Arts" then vars.category = "Martial Artists" else vars.category = vars.category + "s"
+    else category_prefix = " individuals in "
 
-  gender_var = Session.get("gender")
-  switch gender_var
-    when "both"
-      gender = "men and women"
-    when "male"
-      gender = "men"
-    when "female"
-      gender = "women"
-    when "ratio"
-      gender = "women to men"
+  # If mode requires gender, then change subject
+  if mode in ["matrix_exports"]
+      switch vars.gender_var
+        when "both" then vars.gender_var = "men and women"
+        when "male" then vars.gender_var = "men"
+        when "female" then vars.gender_var = "women"
 
-  # Switch based on categoryLevel: occupations are singular
-  categoryLevel = Session.get("categoryLevel")
-  if categoryLevel
-    switch categoryLevel
-      when "domain"
-        category_prefix = " individuals in "
-      when "industry"
-        category_prefix = " individuals in "      
-      when "occupation"
-        category_prefix = ""
-        if s_domains is "Martial Arts" then s_domains = "Martial Artists"
-        else s_domains = s_domains + "s"
-  else
-    category_prefix = " individuals in "
-
-  type = Session.get("vizType")
-  mode = Session.get("vizMode")
+  # Actually construct the question
   switch mode
-    when "country_exports"
-      if type is "treemap"
-        return new Handlebars.SafeString("Who are the globally known people born in " + boldify(s_countries) + "?")
-    when "country_imports"
-      return new Handlebars.SafeString((if (Session.get("language") is "all") then "Who does " + boldify("the world") + " import?" else "What do " + boldify(s_regions) + " speakers import?"))
-    when "domain_exports_to", "map"
-      return new Handlebars.SafeString("Where are the globally known " + category_prefix + boldify(s_domains) + " born?")
+    when "country_exports" then return new Handlebars.SafeString("Who are the globally known people born in " + boldify(vars.country) + "?")
+    when "domain_exports_to", "map" then return new Handlebars.SafeString("Where are the globally known " + category_prefix + boldify(vars.category) + " born?")
     when "matrix_exports"
-      if gender_var then result = "How is the ratio of " + boldify("women to men") + " distributed globally?"
-      else result = "How are globally known " + boldify(gender) + " distributed?"
-      return new Handlebars.SafeString(result)
-    when "country_vs_country"
-      return new Handlebars.SafeString("What globally known people were born in " + boldify(s_countryX) + " vs. " + boldify(s_countryY) + "?")
-    when "domain_vs_domain"
-      return new Handlebars.SafeString("How many globally known individuals are in the area of " + boldify(s_domainX) + " vs. " + boldify(s_domainY))
+      if vars.gender_var is "ratio" then return new Handlebars.SafeString("How is the ratio of " + boldify("women to men") + " distributed globally?")
+      else return new Handlebars.SafeString("How are globally known " + boldify(vars.gender_var) + " distributed?")
+    when "country_vs_country" then return new Handlebars.SafeString("What globally known people were born in " + boldify(vars.countryX) + " vs. " + boldify(vars.countryY) + "?")
+    when "domain_vs_domain" then return new Handlebars.SafeString("How many globally known people are in the area of " + boldify(vars.categoryX) + " vs. " + boldify(vars.categoryY))
 
 #
 # TOOLTIPS
@@ -244,17 +224,21 @@ Template.clicktooltip.render_links = ->
       else if vizMode is "domain_exports_to"
         return new Handlebars.SafeString(Template.tt_histogram_domain_exports_to(this))
 
-Template.domain_exporter_question.categoryName = ->
-    Session.get("bigtooltipCategory").capitalize()
-
-Template.country_exports_question.countryName = ->
+Template.domain_exporter_question.question = -> 
+  category = Session.get("bigtooltipCategory")
+  categoryLevel = getCategoryLevel(category)
+  if category is "all" then category = "all domains" else category = category.capitalize()
+  getQuestion("domain_exports_to", {category: category, categoryLevel: categoryLevel})
+Template.country_exports_question.question = -> 
   countryCode = Session.get("tooltipCountryCode")
   dataset = Session.get("dataset")
   vizMode = Session.get("vizMode")
   if vizMode is "map" and dataset is "murray"
-    return (Countries.findOne({countryCode3: countryCode}).countryName).capitalize()
-  else
-    return (Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName).capitalize() 
+    country = (Countries.findOne({countryCode3: countryCode}).countryName).capitalize()
+  else 
+    country = (Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName).capitalize() 
+  console.log "in helper: country_exports". country
+  getQuestion("country_exports", {country: country})
 
 Template.country_advantage_question.countryName = ->
   countryCode = Session.get("tooltipCountryCode")
@@ -312,58 +296,3 @@ Template.clicktooltip.events =
   "click .closeclicktooltip": (d) ->
     $("#clicktooltip").fadeOut()
     Session.set "clicktooltip", false
-
-# Template.tt_table.rendered = ->
-#   data = _.map Tooltips.find({_id:{$not:"count"}}).fetch(), (d) ->
-#         p = People.findOne d._id
-#         [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
-#       aoColumns = [
-#         sTitle: "Ranking"
-#       ,
-#         sTitle: "Name"
-#         fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
-#       ,
-#         sTitle: "Country"
-#       ,
-#         sTitle: "Birth Year"
-#       ,
-#         sTitle: "Gender"
-#       ,
-#         sTitle: "Occupation"
-#       ,
-#         sTitle: "L"
-#       ]
-#   #initializations
-#   $("#tt_table").dataTable
-#     aaData: data
-#     aoColumns: aoColumns
-#     iDisplayLength: 10
-#     bDeferRender: true
-#     bSortClasses: false
-#     fnDrawCallback: (oSettings) ->
-#       that = this
-#       if oSettings.bSorted
-#         @$("td:first-child",
-#           filter: "applied"
-#         ).each (i) ->
-#           that.fnUpdate i + 1, @parentNode, 0, false, false
-#     aaSorting: [[6, "desc"]]
-
-  # $("#tt_table").dataTable
-  #   bFilter: false
-  #   bInfo: false
-  #   bLengthChange: false    
-  #   iDisplayLength: 10
-  #   bDeferRender: true
-  #   fnDrawCallback: (oSettings) ->
-  #     that = this
-  #     if oSettings.bSorted
-  #       @$("td:first-child",
-  #         filter: "applied"
-  #       ).each (i) ->
-  #         that.fnUpdate i + 1, @parentNode, 0, false, false
-  #   aoColumnDefs: [
-  #     bSortable: false
-  #     aTargets: [0]
-  #   ]
-  #   aaSorting: [[6, "desc"]]
