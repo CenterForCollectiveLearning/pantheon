@@ -1,3 +1,23 @@
+Template.observatory.events =
+  "click #download": (d) ->
+    svg = $("svg")[0]
+    serializer = new XMLSerializer()
+    str = serializer.serializeToString(svg)
+    canvas = document.querySelector("canvas")
+    context = canvas.getContext("2d")
+    image = new Image
+    canvg(canvas, str)
+    $("#canvas").attr("style", "display:none")
+    img = canvas.toDataURL("image/png")
+    # write the picture to the webpage...
+    # document.write "<img src=\"" + img + "\"/>"
+    
+    # download the picture as viz.png...
+    a = document.createElement("a")
+    a.download = "viz.png"
+    a.href = img
+    a.click()
+
 # Re-render visualization template on window resize
 Template.visualization.resize = ->
   if Session.get "resize" then return
@@ -110,11 +130,12 @@ Template.date_header.helpers
 
 # Generate question given viz type
 Template.question.question = -> 
+  dataset = Session.get("dataset")
   try
     vars = 
-      country: if Session.get("country") is "all" then "the world" else Countries.findOne(countryCode: Session.get("country")).countryName
-      countryX: if Session.get("countryX") is "all" then "the world" else Countries.findOne(countryCode: Session.get("countryX")).countryName
-      countryY: if Session.get("countryY") is "all" then "the world" else Countries.findOne(countryCode: Session.get("countryY")).countryName
+      country: if Session.get("country") is "all" then "the world" else Countries.findOne({countryCode: Session.get("country"), dataset:dataset}).countryName
+      countryX: if Session.get("countryX") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryX"), dataset:dataset}).countryName
+      countryY: if Session.get("countryY") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryY"), dataset:dataset}).countryName
       category: if Session.get("category") is "all" then "all domains" else Session.get("category").capitalize()
       categoryX: if Session.get("categoryX") is "all" then "all domains" else Session.get("categoryX").capitalize()
       categoryY: if Session.get("categoryY") is "all" then "all domains" else Session.get("categoryY").capitalize()
