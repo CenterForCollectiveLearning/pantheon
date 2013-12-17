@@ -1,3 +1,5 @@
+u = "https://docs.google.com/spreadsheet/pub?key=0AgfOXjbH2KOddHR3c0JDbGpLa3E1UkVpUjRhaE5JeEE&single=true&gid=2&range=A1%3AD89&output=csv"
+
 Template.data.rendered = ->
   w = $(window)
   b = $(document.body)
@@ -9,9 +11,7 @@ Template.data.rendered = ->
 
   w.on('load', -> b.scrollspy('refresh'))
 #   $(":header").each((i, e) -> $(".page-left").append(e))
-
-# Template.data.rendered = ->
-  # renderTree u
+  renderTree u
 
 calcSize = (n) ->
   if n.values[0].hasOwnProperty("count")
@@ -173,7 +173,7 @@ renderTree = (url) ->
     root.children.forEach toggleAll
     update root
 
-u = "https://docs.google.com/spreadsheet/pub?key=0AgfOXjbH2KOddHR3c0JDbGpLa3E1UkVpUjRhaE5JeEE&single=true&gid=2&range=A1%3AD89&output=csv"
+
 
 Template.data.events =
   "click a": (d) ->
