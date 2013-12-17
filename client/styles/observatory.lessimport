@@ -34,7 +34,7 @@
     	text-align: center;
     	height: 30px;
     	overflow: hidden;
-    	width: 100px;
+    	width: 130px;
     	margin: 0 auto;
     	
     	a {

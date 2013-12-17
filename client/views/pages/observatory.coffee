@@ -1,23 +1,3 @@
-Template.observatory.events =
-  "click #download": (d) ->
-    svg = $("svg")[0]
-    serializer = new XMLSerializer()
-    str = serializer.serializeToString(svg)
-    canvas = document.querySelector("canvas")
-    context = canvas.getContext("2d")
-    image = new Image
-    canvg(canvas, str)
-    $("#canvas").attr("style", "display:none")
-    img = canvas.toDataURL("image/png")
-    # write the picture to the webpage...
-    # document.write "<img src=\"" + img + "\"/>"
-    
-    # download the picture as viz.png...
-    a = document.createElement("a")
-    a.download = "viz.png"
-    a.href = img
-    a.click()
-
 # Re-render visualization template on window resize
 Template.visualization.resize = ->
   if Session.get "resize" then return
