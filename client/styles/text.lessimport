@@ -1,5 +1,13 @@
+div.wrapper-left {
+	width: 355px;
+	float: left;
+}
+
 div#table-of-contents {
 	position: fixed !important;
+	width: 330px;
+	min-width: 330px;
+	margin-left: 25px;
 	ul {
 		li {
 			text-align: left !important;
@@ -40,10 +48,11 @@ div.text {
 
 	// TODO Do this better
 	&.text-page-middle {
-		min-width: 645px !important;	
+		width: 675px !important;	
+		min-width: 675px !important;	
 		ul {
 			list-style-type: none;
-			width: 645px;
+			width: 675px;
 			margin: 0 auto 24px auto;
 			li {
 				list-style-type: none;
@@ -77,7 +86,8 @@ div.text {
 	overflow-y: auto;
 
 	p {
-		width: 645px;
+		width: 600px;
+		min-width: 600px;
 		margin: 0 auto 24px auto;
 		color: #121212;
 	}

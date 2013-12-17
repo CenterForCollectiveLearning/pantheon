@@ -2,10 +2,15 @@ Template.data.rendered = ->
   w = $(window)
   b = $(document.body)
 
+  pageScrollID = Session.get("pageScrollID")
+  offset = $('.page-middle').offset().top + w.height()/4
+
   b.scrollspy(
     target: '#table-of-contents'
-    offset: $('.page-middle').offset().top + w.height()/4
+    offset: offset
     )
+
+  window.scrollTo(0, $(pageScrollID).position().top - offset)
 
   w.on('load', -> b.scrollspy('refresh'))
 #   $(":header").each((i, e) -> $(".page-left").append(e))
