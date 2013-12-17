@@ -227,10 +227,14 @@ Template.select_mirror.events =
 
 
 Template.country_dropdown.countries = ->
+  dataset = Session.get("dataset")
   # TODO: correct country dropdown list for murray countries!
-  Countries.find {dataset: Session.get("dataset"), countryCode: {$ne:"UNK"}},
+  Countries.find {dataset: dataset, countryCode: {$ne:"UNK"}},
     sort:
       countryName: 1
+  if dataset is "murray"
+    console.log("murray")
+
 
 
 Template.language_dropdown.languages = ->
@@ -247,7 +251,6 @@ Template.category_dropdown.domains = ->
     if uniqueDomains.indexOf(domain) is -1
       uniqueDomains.push domain
       res.push domain: domain
-
   res
 
 Template.category_dropdown_only_domain.domains = ->
@@ -258,7 +261,6 @@ Template.category_dropdown_only_domain.domains = ->
     if uniqueDomains.indexOf(domain) is -1
       uniqueDomains.push domain
       res.push domain: domain
-
   res
 
 Template.category_dropdown.industries = ->
