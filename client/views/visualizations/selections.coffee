@@ -227,6 +227,7 @@ Template.select_mirror.events =
 
 
 Template.country_dropdown.countries = ->
+  # TODO: correct country dropdown list for murray countries!
   Countries.find {dataset: Session.get("dataset"), countryCode: {$ne:"UNK"}},
     sort:
       countryName: 1

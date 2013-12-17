@@ -11,6 +11,9 @@
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="page-left span2">
+                    <!--download the viz as a png-->
+                    <div style="text-align:center;"><a id="download" href="#"><img src="/download.png" style="width:10px"> PNG</a></div>
+                    <canvas id="canvas" style="width:0;height:0;"></canvas>
                     {{#if initialDataReady}}
                         {{> observatory_options}} 
                     {{/if}}
