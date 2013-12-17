@@ -113,18 +113,22 @@ Template.date_header.helpers
 # Generate question given viz type
 Template.question.question = -> 
   dataset = Session.get("dataset")
+  console.log dataset, Session.get("country")
   try
-    vars = 
-      country: if Session.get("country") is "all" then "the world" else Countries.findOne({countryCode: Session.get("country"), dataset:dataset}).countryName
-      countryX: if Session.get("countryX") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryX"), dataset:dataset}).countryName
-      countryY: if Session.get("countryY") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryY"), dataset:dataset}).countryName
-      category: if Session.get("category") is "all" then "all domains" else Session.get("category").capitalize()
-      categoryX: if Session.get("categoryX") is "all" then "all domains" else Session.get("categoryX").capitalize()
-      categoryY: if Session.get("categoryY") is "all" then "all domains" else Session.get("categoryY").capitalize()
-      gender_var: Session.get("gender")
-      categoryLevel: Session.get("categoryLevel")
-    mode = Session.get("vizMode")
-    getQuestion(mode, vars)
+    country = if Session.get("country") is "all" then "the world" else Countries.findOne({countryCode: Session.get("country"), dataset: dataset}).countryName
+    countryX = if Session.get("countryX") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryX"), dataset: dataset}).countryName
+    countryY = if Session.get("countryY") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryY"), dataset: dataset}).countryName
+  vars = 
+    country: country
+    countryX: countryX
+    countryY: countryY
+    category: if Session.get("category") is "all" then "all domains" else Session.get("category").capitalize()
+    categoryX: if Session.get("categoryX") is "all" then "all domains" else Session.get("categoryX").capitalize()
+    categoryY: if Session.get("categoryY") is "all" then "all domains" else Session.get("categoryY").capitalize()
+    gender_var: Session.get("gender")
+    categoryLevel: Session.get("categoryLevel")
+  mode = Session.get("vizMode")
+  getQuestion(mode, vars)
 
 @boldify = (str) -> "<b>" + str + "</b>"
 @getQuestion = (mode, vars) ->

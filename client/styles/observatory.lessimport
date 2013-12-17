@@ -308,6 +308,16 @@ div.buttons {
 	}
 }
 
+// Left-align category selections
+div#category-selection {
+	ul.chosen-results {
+		li {
+			text-align: left;
+			padding-left: 15px;
+		}
+	}
+}
+
 // Select Styling
 div.chosen-container {
 	width: 100% !important;
