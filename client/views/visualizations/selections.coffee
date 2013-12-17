@@ -229,11 +229,21 @@ Template.select_mirror.events =
 Template.country_dropdown.countries = ->
   dataset = Session.get("dataset")
   # TODO: correct country dropdown list for murray countries!
-  Countries.find {dataset: dataset, countryCode: {$ne:"UNK"}},
+  murray_countries = []
+  data = Countries.find {dataset: dataset, countryCode: {$ne:"UNK"}},
     sort:
       countryName: 1
+  grouped = _.groupBy data.fetch(), (d) ->
+    d.countryCode
   if dataset is "murray"
-    console.log("murray")
+    for k,v of grouped
+      country = {}
+      country.countryCode = k
+      country.countryName = v[0].countryName
+      murray_countries.push country
+    return murray_countries
+  else
+    return data
 
 
 
