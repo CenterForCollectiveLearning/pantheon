@@ -26,8 +26,8 @@ Meteor.publish "languages_pub", ->
 # Publish the top N people for the current query
 # Push the ids here as well since people will be in the client side
 #
-Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, N, dataset) ->
-  console.log "peopleTopN publication"
+# Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, N, dataset) ->
+Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, N, dataset) ->
   sub = this
   collectionName = "peopleTopN"
 
@@ -42,10 +42,25 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, gender, 
   args.dataset = dataset
   args.countryCode = country if country isnt "all" and vizMode is "country_exports"
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
-
   if gender is "male" or gender is "female"
     genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
     args.gender = genderField
+
+  if vizMode is "country_vs_country"
+    args[categoryLevel] = category  if category.toLowerCase() isnt "all"
+    args.$or = [
+      countryCode: countryX
+    ,
+      countryCode: countryY
+    ]
+  else if vizMode is "domain_vs_domain"
+    or1 = {}
+    or2 = {}
+    or1["domain"] = categoryX
+    or2["domain"] = categoryY
+    args.$or = [or1, or2]
+
+
   projection =
     fields:
       _id: 1
@@ -122,6 +137,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     or1[categoryLevel] = categoryX
     or2[categoryLevel] = categoryY
     args.$or = [or1, or2]
+  
   projection =
     fields:
       _id: 1
