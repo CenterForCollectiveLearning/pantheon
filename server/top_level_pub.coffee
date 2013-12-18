@@ -26,7 +26,6 @@ Meteor.publish "languages_pub", ->
 # Publish the top N people for the current query
 # Push the ids here as well since people will be in the client side
 #
-# Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, gender, category, categoryLevel, N, dataset) ->
 Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, N, dataset) ->
   sub = this
   collectionName = "peopleTopN"
@@ -42,6 +41,7 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   args.dataset = dataset
   args.countryCode = country if country isnt "all" and vizMode is "country_exports"
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
+  
   if gender is "male" or gender is "female"
     genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
     args.gender = genderField
@@ -60,6 +60,8 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
     or2["domain"] = categoryY
     args.$or = [or1, or2]
 
+  console.log("PeopleTopN pub")
+  console.log(args)
 
   projection =
     fields:
