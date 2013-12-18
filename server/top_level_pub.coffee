@@ -47,7 +47,6 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
     args.gender = genderField
 
   if vizMode is "country_vs_country"
-    args[categoryLevel] = category  if category.toLowerCase() isnt "all"
     args.$or = [
       countryCode: countryX
     ,

@@ -12,6 +12,8 @@ Template.ranking_table.rendered = ->
   clickTooltip = Session.get("clicktooltip")
   entity = Session.get("entity")
   dataset = Session.get("dataset")
+
+  console.log "IN RANKING_TABLE TEMPLATE", clickTooltip, entity, dataset
   
   switch entity
     when "countries"
@@ -33,8 +35,10 @@ Template.ranking_table.rendered = ->
         sTitle: "H-index"
       ]
     when "people", clickTooltip
+      console.log "IN PEOPLE, clickTooltip: ", clickTooltip
       if clickTooltip then collection = Tooltips.find({_id: {$not: "count"}}).fetch()
       else collection = PeopleTopN.find().fetch()
+      console.log "COLLECTION", collection
 
       data = _.map collection, (d) ->
         p = People.findOne d._id

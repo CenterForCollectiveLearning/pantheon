@@ -144,8 +144,7 @@ Deps.autorun ->
         when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, L, onReady)
         when "people"
-          dataSub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, "all", dataset)
-          # dataSub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, "all", dataset, onReady)
+          dataSub = Meteor.subscribe("peopleTopN", "treemap", "country_exports", begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, "all", dataset, onReady)
         when "domains"
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, L, onReady)
         else
