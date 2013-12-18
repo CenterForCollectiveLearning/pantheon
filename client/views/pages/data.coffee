@@ -4,16 +4,19 @@ Template.data.rendered = ->
   w = $(window)
   b = $(document.body)
 
-  pageScrollID = Session.get("pageScrollID")
-  offset = $('.page-middle').offset().top + w.height()/4
+  offset = $(".logo").outerHeight() # 0 # $('.page-middle').offset().top + w.height()/4
 
   b.scrollspy(
     target: '#table-of-contents'
-    offset: offset
+    offset: offset + 10
     )
 
+  Deps.autorun( ->
+    pageScrollID = Session.get("pageScrollID")
+    window.scrollTo(0, $(pageScrollID).position().top - offset)
+  )
+
   w.on('load', -> b.scrollspy('refresh'))
-#   $(":header").each((i, e) -> $(".page-left").append(e))
   renderTree u
 
 calcSize = (n) ->
@@ -47,8 +50,6 @@ renderTree = (url) ->
         toggle d
     
     # Initialize the display to show a few nodes.
-    
-    #toggle(root.children[1]);
     update = (source) ->
       duration = (if d3.event and d3.event.altKey then 5000 else 500)
       
@@ -57,8 +58,9 @@ renderTree = (url) ->
       
       # Normalize for fixed-depth.
       nodes.forEach (d) ->
-        d.y = d.depth * 180
-
+        dist = 145
+        if d.depth is 3 then d.y = (d.depth - 1) * dist + (dist/4)
+        else d.y = d.depth * dist
       
       # Update the nodes…
       node = vis.selectAll("g.node").data(nodes, (d) ->
@@ -73,14 +75,14 @@ renderTree = (url) ->
         update d
       )
       nodeEnter.append("svg:circle").attr("r", 1e-6).style "fill", (d) ->
-        (if d._children then "lightsteelblue" else "#fff")
+        (if d._children then "#D8C568" else "#fff")
 
       nodeEnter.append("svg:text").attr("x", (d) ->
         (if d.children or d._children then -10 else 10)
       ).attr("dy", ".35em").attr("text-anchor", (d) ->
         (if d.children or d._children then "end" else "start")
-      ).style("fill", "#FFFFFF").text((d) ->
-        d.name + " (" + d.size.toString() + ")"
+      ).style("fill", "#000").text((d) ->
+        d.name.capitalize() + " (" + d.size.toString() + ")"
       ).style "fill-opacity", 1e-6
       
       # Transition nodes to their new position.
@@ -89,8 +91,8 @@ renderTree = (url) ->
       )
       
       #.attr("r", function(d){ return d.size ? Math.sqrt(d.size/1000) : 4.5; } )
-      nodeUpdate.select("circle").attr("r", 4.5).style "fill", (d) ->
-        (if d._children then "lightsteelblue" else "#fff")
+      nodeUpdate.select("circle").attr("r", 4.5).style("fill", (d) ->
+        (if d._children then "#D8C568" else "#fff")).style("stroke", "#000")
 
       nodeUpdate.select("text").style "fill-opacity", 1
       
@@ -160,8 +162,8 @@ renderTree = (url) ->
       values: nestedData
 
     calcSize allData
-    m = [20, 120, 20, 120]
-    w = 800 - m[1] - m[3]
+    m = [40, 120, 40, 140]
+    w = $(".page-middle").width() - m[1] - m[3]
     h = 400 - m[0] - m[2]
     i = 0
     root = undefined
@@ -179,7 +181,6 @@ renderTree = (url) ->
 Template.data.events =
   "click img": (d) ->
      srcE = (if d.srcElement then d.srcElement else d.target)
-     console.log "CLICKING IMAGE"
      Session.set "showImageFullscreen", true
      Session.set "imageShownFullscreen", $(srcE).attr("src")
 

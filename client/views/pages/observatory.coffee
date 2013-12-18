@@ -1,6 +1,8 @@
 # Re-render visualization template on window resize
 Template.visualization.resize = ->
-  if Session.get "resize" then return
+  if Session.get "resize"
+    console.log "RESIZING"
+    return
 
 # Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = ->
@@ -106,9 +108,6 @@ Template.date_header.helpers
     to = Session.get("to")
     return "1 A.D."  if to is "1"
     (if (to < 0) then (to * -1) + " B.C." else to)
-
-
-
 
 # Generate question given viz type
 Template.question.question = -> 

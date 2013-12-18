@@ -1,7 +1,6 @@
 //
 // Universal elements on Observatory page (not visualization-specific)
 //
-
 .page-top {
 	padding-top: 150px;
 	color: @color_gold;

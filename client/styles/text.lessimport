@@ -29,13 +29,25 @@ div#table-of-contents {
 	position: fixed !important;
 	width: 330px;
 	min-width: 330px;
-	margin-left: 25px;
+	top: 0;
+	margin-top: 70px;
+	min-height: 100%;
+	padding-top: 1em;
+	color: #eee;
+
+	div.section-header {
+		text-align: left;
+		padding-top: 1em;
+		color: black;
+	}
+
 	ul {
 		li {
 			text-align: left !important;
 			
 			a {
 				&.h1 {
+					// text-transform: uppercase;
 				}
 				&.h2 {
 					margin: 4px 0;
@@ -49,8 +61,8 @@ div#table-of-contents {
 
 				color: black;
 				&:hover {
+				    background-color: transparent;
 					text-decoration: underline;
-					background-color: #eed;
 				}
 			}
 
@@ -67,11 +79,13 @@ div.text {
 	border-radius: 3px;
 	color: #121212;
 	border: 3px solid black;
+	background-image: url(/paper_background.png);
 
 	// TODO Do this better
 	&.text-page-middle {
-		width: 675px !important;	
-		min-width: 675px !important;	
+		width: 700px !important;	
+		min-width: 700px !important;
+		overflow-x: hidden;	
 		ul {
 			list-style-type: none;
 			width: 675px;
@@ -83,15 +97,21 @@ div.text {
 		}	
 	}
 
-	font: 17px/26px Verdana, Geneva, sans-serif;
+    font: 17px/26px 'Lato';
+	// font: 17px/26px Verdana, Geneva, sans-serif;
 	// font: 17px/26px georgia, "times new roman", times, serif;
 
-	background-color: #eed;
+	// background-color: #eed;
 	text-align: justify;
 
+	h1, h2, h3, h4 {
+		color: #121212;
+	}
+
 	h1 {
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		text-align: center;		
+		text-transform: uppercase;
 	}
 
 	h2 {

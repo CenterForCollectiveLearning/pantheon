@@ -12,6 +12,7 @@
 
 			span {
 				color: @color_gold;
+				margin: 0 4px;
 			}
 
 			div.photo_container {

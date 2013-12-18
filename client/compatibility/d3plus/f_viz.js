@@ -1829,7 +1829,7 @@ d3plus.viz = function() {
         if (height > vars.graph.yoffset && !vars.small) vars.graph.yoffset = height
         
         var tick_offset = 10
-        var tick_opacity = 1
+        var tick_opacity = 0.1 // 1
       }
       else {
         var text = null
@@ -1889,7 +1889,7 @@ d3plus.viz = function() {
         if (width > vars.graph.offset && !vars.small) vars.graph.offset = width
         
         var tick_offset = -10
-        var tick_opacity = 1
+        var tick_opacity = 0.1 // 1
       }
       else {
         var text = null
@@ -2035,7 +2035,7 @@ d3plus.viz = function() {
             } 
             // Intercept right
             else {  
-              intercept = vars.y_scale(m_axis)
+              intercept = vars.y_scale(x_max)
               return "M 0 " + vars.graph.height + " L 0 " + intercept + " Z"
             }
         }

@@ -4,21 +4,26 @@
 		circle {
 			cursor: pointer;
 			fill: #fff;
+			stroke: #000;
 			stroke: @color_gold;
-			stroke-width: 2.0px;
+			stroke-width: 1.0px;
 		}
 
 		text {
-			font-size: 11px;
+			font-size: 12px;
 			fill: none;
-			stroke: #ccc;
-			stroke-width: 1.0px;
-			opacity: 0.6;
+			// stroke: #000;
+			// stroke-width: 1.0px;
+			// opacity: 0.6;
 		}
 	}
 
-	path.link {}
-
+	path.link {
+		fill: none;
+		stroke: #000;
+		opacity: 0.5;
+	}
+-
 	#chart, #header{
 		position: absolute;
 		top: 0;
