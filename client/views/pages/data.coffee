@@ -1,6 +1,7 @@
 u = "https://docs.google.com/spreadsheet/pub?key=0AgfOXjbH2KOddHR3c0JDbGpLa3E1UkVpUjRhaE5JeEE&single=true&gid=2&range=A1%3AD89&output=csv"
 
 Template.data.rendered = ->
+  renderTree u
   w = $(window)
   b = $(document.body)
 
@@ -12,12 +13,12 @@ Template.data.rendered = ->
     )
 
   Deps.autorun( ->
-    pageScrollID = Session.get("pageScrollID")
-    window.scrollTo(0, $(pageScrollID).position().top - offset)
+    scrollPosition = $(Session.get("pageScrollID")).position().top
+    if scrollPosition then window.scrollTo(0, scrollPosition - offset)
   )
 
   w.on('load', -> b.scrollspy('refresh'))
-  renderTree u
+  
 
 calcSize = (n) ->
   if n.values[0].hasOwnProperty("count")
