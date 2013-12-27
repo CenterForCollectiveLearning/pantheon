@@ -269,6 +269,47 @@ Template.sharing_options.events =
       window.open url, 'twitter', opts
       false
 
+    "click #download": (d) ->
+      svg = $("svg")[0]
+      serializer = new XMLSerializer()
+      str = serializer.serializeToString(svg)
+      canvas = document.querySelector("canvas")
+      context = canvas.getContext("2d")
+      # convert the canvas to an image
+      canvg canvas, str,
+        log: true
+        # offsetY: 20 #need to resize the canvas properly
+        ignoreClear: true
+        # renderCallback: ->
+        #   $("#canvas").attr("style", "display:none")
+        #   img = canvas.toDataURL("image/png")
+      
+      # add text to the canvas
+      text = $("#question").text()
+      context.font = "bold 16px Lato"
+      context.textAlign = "left"
+      context.textBaseline = "top"
+      context.fillStyle = "yellow"
+      context.fillText text, 0, 0
+      
+      # add logo to the image
+      base_image = new Image
+      base_image.src = "/images/dark_theme_logo.png"
+      base_image.onload = ->
+        context.drawImage base_image, 0, 0
+        
+      $("#canvas").attr("style", "display:none")
+      img = canvas.toDataURL("image/png")
+
+      # write the picture to the webpage...
+      # document.write "<img src=\"" + img + "\"/>"
+      
+      # download the picture as viz.png...
+      a = document.createElement("a")
+      a.download = "viz.png"
+      a.href = img
+      a.click()
+
 # https://twitter.com/intent/tweet?
 # original_referer=https%3A%2F%2Fdev.twitter.com%2Fdocs%2Ftweet-button&text=Tweet%20Button%20%7C%20Twitter%20Developers&tw_p=tweetbutton&url=https%3A%2F%2Fdev.twitter.com&via=your_screen_name
 
@@ -302,46 +343,5 @@ Template.spinner.destroyed = ->
   NProgress.done()
   $("header").css "border-bottom-width", "3px"
   Session.set "showSpinner", false
-
-Template.sharing_options.events =
-  "click #download": (d) ->
-    svg = $("svg")[0]
-    serializer = new XMLSerializer()
-    str = serializer.serializeToString(svg)
-    canvas = document.querySelector("canvas")
-    context = canvas.getContext("2d")
-    # convert the canvas to an image
-    canvg canvas, str,
-      log: true
-      # offsetY: 20 #need to resize the canvas properly
-      ignoreClear: true
-      # renderCallback: ->
-      #   $("#canvas").attr("style", "display:none")
-      #   img = canvas.toDataURL("image/png")
-    
-    # add text to the canvas
-    text = $("#question").text()
-    context.font = "bold 16px Lato"
-    context.textAlign = "left"
-    context.textBaseline = "top"
-    context.fillStyle = "yellow"
-    context.fillText text, 0, 0
-    
-    # add logo to the image
-    base_image = new Image
-    base_image.src = "/images/dark_theme_logo.png"
-    base_image.onload = ->
-      context.drawImage base_image, 0, 0
-      
-    $("#canvas").attr("style", "display:none")
-    img = canvas.toDataURL("image/png")
-
-    # write the picture to the webpage...
-    # document.write "<img src=\"" + img + "\"/>"
-    
-    # download the picture as viz.png...
-    a = document.createElement("a")
-    a.download = "viz.png"
-    a.href = img
-    a.click()
+  
     
