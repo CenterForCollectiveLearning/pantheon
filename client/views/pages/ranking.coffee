@@ -96,7 +96,7 @@ Template.ranking_table.rendered = ->
       ]
 
   if clickTooltip then displayLength = 10
-  else displayLength = 25
+  else displayLength = 100
 
   #initializations
   $("#ranking").dataTable
