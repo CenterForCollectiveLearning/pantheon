@@ -310,10 +310,32 @@ Template.sharing_options.events =
     str = serializer.serializeToString(svg)
     canvas = document.querySelector("canvas")
     context = canvas.getContext("2d")
-    image = new Image
-    canvg(canvas, str)
+    # convert the canvas to an image
+    canvg canvas, str,
+      log: true
+      # offsetY: 20 #need to resize the canvas properly
+      ignoreClear: true
+      # renderCallback: ->
+      #   $("#canvas").attr("style", "display:none")
+      #   img = canvas.toDataURL("image/png")
+    
+    # add text to the canvas
+    text = $("#question").text()
+    context.font = "bold 16px Lato"
+    context.textAlign = "left"
+    context.textBaseline = "top"
+    context.fillStyle = "yellow"
+    context.fillText text, 0, 0
+    
+    # add logo to the image
+    base_image = new Image
+    base_image.src = "/images/dark_theme_logo.png"
+    base_image.onload = ->
+      context.drawImage base_image, 0, 0
+      
     $("#canvas").attr("style", "display:none")
     img = canvas.toDataURL("image/png")
+
     # write the picture to the webpage...
     # document.write "<img src=\"" + img + "\"/>"
     
@@ -322,3 +344,4 @@ Template.sharing_options.events =
     a.download = "viz.png"
     a.href = img
     a.click()
+    
