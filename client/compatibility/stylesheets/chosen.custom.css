@@ -170,7 +170,6 @@
   background-image: -moz-linear-gradient(#D8C568 20%, #D8C568 90%);
   background-image: -o-linear-gradient(#D8C568 20%, #D8C568 90%);
   background-image: linear-gradient(#D8C568 20%, #D8C568 90%);
-  font-weight: bold;
   color: black;
 }
 .chosen-container .chosen-results li.no-results {

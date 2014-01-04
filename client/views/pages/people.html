@@ -14,10 +14,6 @@
 	<div id="page" class="container-fluid person-page">
 		<div class="row-fluid">
 			<div class="page-middle trans-bg body-padding span8 offset2">
-<!-- 				<section class="picture">
-					<img class="photo" src="/images/people/{{en_curid}}.jpg">
-					{{! Why doesn't people_images work?}}
-				</section> -->
 				<section class="description">
 					<b class="name">{{name}}</b> was a <b class="occupation">{{occupation}}</b> born in <b class="birthcity">{{birthcity}}</b>, <b class="country-name">{{countryName}}</b> in <b class="birthyear">{{birthyear}}</b>. <b class="gender">{{gender}}</b> is featured in <b class="numlangs">{{numlangs}}</b> language editions.
 				</section>
@@ -41,9 +37,6 @@
 
 <!-- Accordion Selector -->
 <template name="people_accordion">
-	{{!#each personImports}}
-	    {{!lang_name}}
-	{{!/each}}
     <div class="people-accordion">
         <h3 class="app">{{occupation}}</h3>
         <div>
@@ -64,22 +57,18 @@
         <h3 class="app">People Born in {{countryName}}</h3>
         <div>
             <ul>
-                test
             	{{#each countryPeople}}
-                    person
-		    {{debugContext}}
             	    {{> ranking_person}}
                 {{/each}}
             </ul>
         </div>
-        {{! TODO Add gender category}}
     </div>
 </template>
 
 <template name="ranking_person">
 	<li class="person">
 		<a href="{{pathFor 'people'}}">
-			<div class="person-container">
+			<div class="person-container{{#if currentPerson}} center-person{{/if}}">
 				<div class="top-info"><div class="rank">Rank: {{rank}}</div><div class="numlangs">Languages: {{numlangs}}</div></div>
 				<div class="person-image-container">
 					<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/></a>

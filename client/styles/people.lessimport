@@ -70,6 +70,10 @@ div.body-padding {
     				position: relative;
     				font-size: 1.0em;
 
+                    &.center-person {
+                        border: 2px solid red;
+                    }
+
     				div.top-info {
     					.opacity(0.7);
     					color: white;

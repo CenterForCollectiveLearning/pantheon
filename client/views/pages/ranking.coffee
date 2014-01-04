@@ -126,27 +126,4 @@ Template.ranking_table.rendered = ->
       aTargets: [0]
     ]
 
-# #  Render a basic tooltip for the column headers
-#   $("th").on mousemove: (e) ->
-#     x = e.pageX
-#     y = e.pageY
-#     se = e.srcElement or e.target
-#     content = e.srcElement.getAttribute("name")
-#     console.log document.getElementById("tooltip").innerHTML
-#     document.getElementById("tooltip").innerHTML = content
-#     window.lastX = e.pageX
-#     window.lastY = e.pageY
-#     ttOffset = 10
-#     lastX = window.lastX + ttOffset
-#     lastY = window.lastY + ttOffset
-#     tt = document.getElementById("tooltip")
-#     tt.className = "visible"
-#     tt.style.left = lastX + "px"
-#     tt.style.top = lastY + "px"
-#     tt.style.fontSize = "10pt"
-#     tt.style.zIndex = "100"
-
   $(@find("select")).chosen()
-
-# Template.ranking_table.events = "mouseleave th": (d) ->
-#   document.getElementById("tooltip").className = "invisible"
