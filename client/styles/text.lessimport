@@ -1,3 +1,8 @@
+div.wrapper-left {
+	width: 355px;
+	float: left;
+}
+
 div#image-fullscreen {
 	position: fixed;
 	z-index: 10;
@@ -41,6 +46,9 @@ div#table-of-contents {
 			text-align: left !important;
 			
 			a {
+				&.h1 {
+					// text-transform: uppercase;
+				}
 				&.h2 {
 					margin: 4px 0;
 					padding-left: 15px;
@@ -90,6 +98,10 @@ div.text {
 	}
 
     font: 17px/26px 'Lato';
+	// font: 17px/26px Verdana, Geneva, sans-serif;
+	// font: 17px/26px georgia, "times new roman", times, serif;
+
+	// background-color: #eed;
 	text-align: justify;
 
 	h1, h2, h3, h4 {
