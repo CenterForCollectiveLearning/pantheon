@@ -159,7 +159,6 @@ Template.question.question = ->
       else return new Handlebars.SafeString("How are globally known " + boldify(vars.gender_var) + " distributed?")
     when "country_vs_country" then return new Handlebars.SafeString("What globally known people were born in " + boldify(vars.countryX) + " vs. " + boldify(vars.countryY) + "?")
     when "domain_vs_domain" then return new Handlebars.SafeString("How many globally known people are in the area of " + boldify(vars.categoryX) + " vs. " + boldify(vars.categoryY))
-
 #
 # TOOLTIPS
 # 
