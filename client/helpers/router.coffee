@@ -121,6 +121,15 @@ Router.map ->
   @route "notFound",
     path: "*"
 
+  @route "saveImage",
+    where: "server"
+    path: "/image/:imagename"
+    action: ->
+      imagename = @params.imagename
+      console.log "IN ROUTER, imagename:", imagename
+      @response.writeHead(200, {'Content-Type': 'text/html'});
+      @response.end('hello from server');
+
 Router.configure
   layoutTemplate: "defaultLayout"
   yieldTemplates:

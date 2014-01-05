@@ -96,7 +96,9 @@ Template.ranking_table.rendered = ->
       ]
 
   if clickTooltip then displayLength = 10
-  else displayLength = 100
+  else 
+    if entity is "countries" then displayLength = 100
+    else displayLength = 25
 
   #initializations
   $("#ranking").dataTable
