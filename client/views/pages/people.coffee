@@ -96,6 +96,7 @@ Template.people_accordion.helpers
   occupationPeople: -> 
     Session.set "personID", this._id
     Session.set "personOccupation", this.occupation
+    console.log "occupation", OccupationPeople.find().count()
     OccupationPeople.find()
   birthyearPeople: -> 
     Session.set "personID", this._id
@@ -105,5 +106,4 @@ Template.people_accordion.helpers
   countryPeople: -> 
     Session.set "personID", this._id
     Session.set "personCountry", this.countryName
-    console.log CountryPeople.find().fetch()
     CountryPeople.find()

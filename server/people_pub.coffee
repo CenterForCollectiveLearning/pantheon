@@ -35,9 +35,6 @@ Meteor.publish "occupation_pub", (id, occupation) ->
     for d, i in people 
         d.rank = i + 1
         if d._id.equals(id) then centerIndex = i
-    # TODO Exit out of this if not found
-
-    # Add ranks dynamically
 
     # If in first two, just return first five
     if centerIndex < 2 then result = people.slice(0, 5)
@@ -47,10 +44,11 @@ Meteor.publish "occupation_pub", (id, occupation) ->
 
     else result = people.slice(centerIndex - 2, centerIndex + 3)
 
+    console.log "OCCUPATION RESULT:", result
     _.each result, (person) -> 
         sub.added collectionName, person._id, person
-
     sub.ready()
+    return
 
 # Return five people from similar birthyears
 Meteor.publish "birthyear_pub", (id, birthyear) ->
@@ -76,7 +74,6 @@ Meteor.publish "birthyear_pub", (id, birthyear) ->
 
     # If in last two, just return last five
     else if centerIndex > (peopleCount - 3) then result = people.slice(peopleCount - 5, peopleCount)
-
     else result = people.slice(centerIndex - 2, centerIndex + 3)
 
     _.each result, (person) -> 
