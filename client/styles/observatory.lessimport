@@ -391,3 +391,16 @@ rect.bar, rect.cell {
 g#countries > path {
 	cursor: pointer;
 }
+
+.one {
+    width: 45%;
+    float: left;
+    text-align: left;
+    margin-bottom: 5px;
+}
+.two {
+    margin-left: 10%;
+    float: right;
+    width: 45%;
+    margin-bottom: 5px;
+}

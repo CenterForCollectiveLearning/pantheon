@@ -56,12 +56,10 @@ explorationStory = [
   template: Template.explorers_step3
   spot: "#viz"
   onLoad: ->
-    Router.go "/treemap/country_exports/all/all/-3000/1000/25/OGC"
+    Router.go "/treemap/country_exports/IS/all/-3000/1000/25/OGC"
 ,
   template: Template.explorers_step4
-  spot: "#cell_Explorer rect"
-  onLoad: ->
-    "/treemap/country_exports/IS/all/-3000/1000/25/OGC"
+  spot: ".ranked_list"
 ,
   template: Template.explorers_step5
   spot: "#viz"

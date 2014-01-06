@@ -1,6 +1,9 @@
 <!-- Dropdown Menu Container-->
 <template name="select_mode">
     {{ render_template }}
+</template>
+
+<template name="select_time">
     {{> select_from}}
     {{> select_to}}
     {{> select_l}}
@@ -14,53 +17,62 @@
 <template name="country_exporters_mode">
     {{> select_dataset}}
     {{> select_country}}
+    {{> select_time }}
 </template>
 
 <template name="histogram_country_exporters_mode">
     {{> select_dataset}}
     {{> select_country}}
     {{> select_industry_order}}
+    {{> select_time }}
 </template>
 
 <template name="country_importers_mode">
     {{> select_dataset}}
     {{> select_language}}
+    {{> select_time }}
 </template>
 
 <template name="histogram_domain_mode">
     {{> select_dataset}}
     {{> select_category}}
     {{> select_country_order}}
+    {{> select_time }}
 </template>
 
 <template name="domain_mode">
     {{> select_dataset}}
     {{> select_category}}
+    {{> select_time }}
 </template>
 
 <template name="bilateral_exporters_mode">
     {{> select_dataset}}
     {{> select_country}}
     {{> select_language}}
+    {{> select_time }}
 </template>
 
 <template name="bilateral_importers_mode">
     {{> select_dataset}}
     {{> select_country}}
     {{> select_category}}
+    {{> select_time }}
 </template>
 
 <template name="matrix_exports_mode">
     {{> select_dataset}}
+    {{> select_time }}
+    {{> select_gender}}
     {{> select_country_order}}
     {{> select_industry_order}}
-    {{> select_gender}}
 </template>
 
 <template name="country_vs_country_mode">
     {{> select_dataset}}
     {{> select_countryX}}
     {{> select_countryY}}
+    {{> select_time }}
     {{> select_scale}}
     {{> select_mirror}}
 </template>
@@ -69,6 +81,7 @@
     {{> select_dataset}}
     {{> select_languageX}}
     {{> select_languageY}}
+    {{> select_time }}
     {{> select_scale}}
     {{> select_mirror}}
 </template>
@@ -77,27 +90,32 @@
     {{> select_dataset}}
     {{> select_categoryX}}
     {{> select_categoryY}}
+    {{> select_time }}
     {{> select_scale}}
     {{> select_mirror}}
 </template>
 
 <template name="countries_ranking_mode">
     {{> select_category}}
+    {{> select_time }}
 </template>
 
 <template name="people_ranking_mode">
     {{> select_category}}
     {{> select_country}}
+    {{> select_time }}
 </template>
 
 <template name="domains_ranking_mode">
     {{> select_category}}
     {{> select_country}}
+    {{> select_time }}
 </template>
 
 <template name="map_mode">
     {{> select_dataset}}
     {{> select_category}}
+    {{> select_time }}
 </template>
 
 <template name="select_country">
@@ -114,7 +132,7 @@
 
 <template name="country_dropdown">
     <div class="parameter-selection">
-        <label>Exporter</label>
+        <label>Country</label>
         <select>
             <option value="all">All</option>
             {{#each countries}}
@@ -142,7 +160,7 @@
 
 <template name="language_dropdown">
     <div class="parameter-selection">
-        <label>Importer</label>
+        <label>Languager</label>
         <select>
             <option value="all">All</option>
             {{#each languages}}
@@ -184,7 +202,7 @@
 </template>
 
 <template name="domain_item_end">
-    <option class="domain" value="{{domain}}">{{domain}}</option>
+    <option class="domain" value="{{domain}}">{{capitalize domain}}</option>
 </template>
 
 
@@ -201,29 +219,29 @@
 </template>
 
 <template name="domain_item">
-    <option class="domain" value="{{domain}}">{{domain}}</option>
+    <option class="domain" value="{{domain}}">{{capitalize domain}}</option>
     {{#each industries_given_domain}}
         {{> industry_item}}
     {{/each}}
 </template>
 
 <template name="industry_item">
-    <option class="industry" value="{{industry}}">&nbsp;&nbsp;&nbsp;&nbsp;{{industry}}</option>
+    <option class="industry" value="{{industry}}">&nbsp;&nbsp;&nbsp;&nbsp;{{capitalize industry}}</option>
     {{#each occupations_given_industry}}
         {{> occupation_item}}
     {{/each}}
 </template>
 
 <template name="occupation_item">
-    <option class="occupation" value="{{occupation}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{occupation}}</option>
+    <option class="occupation" value="{{occupation}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{capitalize occupation}}</option>
 </template>
 
 <template name="select_scale">
     <div class="parameter-selection">
-        <label>Scale Type</label>
-        <div class="buttons">
-            <div id="linear-button" class="button active">Linear</div>
-            <div id="log-button" class="button">Logarithmic</div>
+        <label class = "one">Axes Scale</label>
+        <div class="two buttons">
+            <div id="linear-button" class="button active">Lin</div>
+            <div id="log-button" class="button">Log</div>
         </div>
     </div>
 </template>
@@ -231,8 +249,8 @@
 
 <template name="select_mirror">
     <div class="parameter-selection">
-        <label>Mirror Axes</label>
-        <div class="buttons">
+        <label class="one">Mirror Axes</label>
+        <div class="two buttons">
             <div id="mirror-true-button" class="button active">Yes</div>
             <div id="mirror-false-button" class="button">No</div>
         </div>
@@ -382,9 +400,9 @@
 </template>
 
 <template name="select_country_order">
-    <div class="parameter-selection">
-        <label>Country Order</label>
-        <div class="buttons">
+    <div class="parameter-selection" style="height:20px">
+        <label class = "one">Order Rows</label>
+        <div class="two buttons">
             <div id="country-count-button" class="button active">Count</div>
             <div id="country-name-button" class="button">Name</div>
         </div>
@@ -392,9 +410,9 @@
 </template>
 
 <template name="select_industry_order">
-    <div class="parameter-selection">
-        <label>Industry Order</label>
-        <div class="buttons">
+    <div class="parameter-selection" style="height:20px">
+        <label class = "one">Order Columns</label>
+        <div class="two buttons">
             <div id="industry-count-button" class="button active">Count</div>
             <div id="industry-name-button" class="button">Name</div>
         </div>
@@ -402,20 +420,20 @@
 </template>
 
 <template name="select_gender">
-    <div class="parameter-selection">
+    <div class="parameter-selection" style="margin-bottom:50px">
         <label>Gender</label>
         <select>
             <option value="both">Both</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="ratio">Ratio</option>
+            <option value="male">M</option>
+            <option value="female">F</option>
+            <option value="ratio">M/F</option>
         </select>
     </div>
 </template>
 
 <template name="select_dataset">
     <div class="parameter-selection">
-        <label>Dataset</label>
+        <label>Data</label>
         <select>
             <option value="OGC">Observatory of Global Culture</option>
             <option value="murray">Human Accomplishments</option>

@@ -309,3 +309,7 @@ Template.domain_item.industries_given_domain = ->
       res.push industry: industry
 
   res
+
+# Declare a helper to capitalize the domain names in the UI 
+Handlebars.registerHelper "capitalize", (str) ->
+  str.capitalize()

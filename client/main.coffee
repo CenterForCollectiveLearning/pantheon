@@ -344,29 +344,29 @@ Template.spinner.destroyed = ->
   $("header").css "border-bottom-width", "3px"
   Session.set "showSpinner", false
 
-Template.sharing_options.events =
-  "click #download": (d) ->
-    svg = $("svg")[0]
-    serializer = new XMLSerializer()
-    str = serializer.serializeToString(svg)
-    canvas = document.querySelector("canvas")
-    context = canvas.getContext("2d")
-    image = new Image
-    canvg(canvas, str)
-    $("#canvas").attr("style", "display:none")
-    img = canvas.toDataURL("image/png")
-    # write the picture to the webpage...
-    # document.write "<img src=\"" + img + "\"/>"
+# Template.sharing_options.events =
+#   "click #download": (d) ->
+#     svg = $("svg")[0]
+#     serializer = new XMLSerializer()
+#     str = serializer.serializeToString(svg)
+#     canvas = document.querySelector("canvas")
+#     context = canvas.getContext("2d")
+#     image = new Image
+#     canvg(canvas, str)
+#     $("#canvas").attr("style", "display:none")
+#     img = canvas.toDataURL("image/png")
+#     # write the picture to the webpage...
+#     # document.write "<img src=\"" + img + "\"/>"
 
-    url = "image/hello"
-    $.ajax(
-      type: "POST"
-      , url: url
-      , data: {imgBase64: img}
-      ).done((o) -> console.log "saved", url)
+#     url = "image/hello"
+#     $.ajax(
+#       type: "POST"
+#       , url: url
+#       , data: {imgBase64: img}
+#       ).done((o) -> console.log "saved", url)
     
-    # download the picture as viz.png...
-    a = document.createElement("a")
-    a.download = "viz.png"
-    a.href = img
-    a.click()
+#     # download the picture as viz.png...
+#     a = document.createElement("a")
+#     a.download = "viz.png"
+#     a.href = img
+#     a.click()

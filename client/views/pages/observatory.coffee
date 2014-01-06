@@ -153,12 +153,12 @@ Template.question.question = ->
   # Actually construct the question
   switch mode
     when "country_exports" then return new Handlebars.SafeString("Who are the globally known people born in " + boldify(vars.country) + "?")
-    when "domain_exports_to", "map" then return new Handlebars.SafeString("Where are the globally known " + category_prefix + boldify(vars.category) + " born?")
+    when "domain_exports_to", "map" then return new Handlebars.SafeString("Where were globally known " + category_prefix + boldify(vars.category) + " born?")
     when "matrix_exports"
-      if vars.gender_var is "ratio" then return new Handlebars.SafeString("How is the ratio of " + boldify("women to men") + " distributed globally?")
-      else return new Handlebars.SafeString("How are globally known " + boldify(vars.gender_var) + " distributed?")
-    when "country_vs_country" then return new Handlebars.SafeString("What globally known people were born in " + boldify(vars.countryX) + " vs. " + boldify(vars.countryY) + "?")
-    when "domain_vs_domain" then return new Handlebars.SafeString("How many globally known people are in the area of " + boldify(vars.categoryX) + " vs. " + boldify(vars.categoryY))
+      if vars.gender_var is "ratio" then return new Handlebars.SafeString("What's the " + boldify("female to male") + " ratio for each country and cultural domain?")
+      else return new Handlebars.SafeString("How many globally known " + boldify(vars.gender_var) + " are associated with each country and cultural domain?")
+    when "country_vs_country" then return new Handlebars.SafeString("How does " + boldify(vars.countryX) + " and " + boldify(vars.countryY) + " compare in terms of number of globally known people?")
+    when "domain_vs_domain" then return new Handlebars.SafeString("What countries have produced globally known people in " + boldify(vars.categoryX) + " and " + boldify(vars.categoryY))
 #
 # TOOLTIPS
 # 

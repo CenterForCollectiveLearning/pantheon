@@ -47,7 +47,7 @@ teamMembers = [
   name: "Deepak Jagdish"
   photo: "images/deepak_jagdish.png"
   description: "Graduate Student"
-  role: ["Design", "Content"]
+  role: ["Design", "Video"]
   media:
     personal: "http://deepakjagdish.com/"
     twitter: "https://twitter.com/dj247"
