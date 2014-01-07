@@ -226,14 +226,14 @@
 </template>
 
 <template name="industry_item">
-    <option class="industry" value="{{industry}}">&nbsp;&nbsp;&nbsp;&nbsp;{{capitalize industry}}</option>
+    <option class="industry" value="{{industry}}">{{capitalize industry}}</option>
     {{#each occupations_given_industry}}
         {{> occupation_item}}
     {{/each}}
 </template>
 
 <template name="occupation_item">
-    <option class="occupation" value="{{occupation}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{capitalize occupation}}</option>
+    <option class="occupation" value="{{occupation}}">{{capitalize occupation}}</option>
 </template>
 
 <template name="select_scale">
@@ -420,7 +420,18 @@
 </template>
 
 <template name="select_gender">
-    <div class="parameter-selection" style="margin-bottom:50px">
+    <div class="parameter-selection" style="height:20px">
+        <label class = "one" style="width:15%">Gender</label>
+        <div class="two buttons" style="width:75%">
+            <div id = "both-button" class="button active" style="width:25%">Both</div>
+            <div id = "male-button" class="button" style="width:25%">M</div>
+            <div id = "female-button" class="button" style="width:25%">F</div>
+            <div id = "ratio-button" class="button" style="width:25%">F/M</div>
+        </div>
+    </div>
+</template>
+
+<!--     <div class="parameter-selection" style="margin-bottom:50px">
         <label>Gender</label>
         <select>
             <option value="both">Both</option>
@@ -428,8 +439,7 @@
             <option value="female">F</option>
             <option value="ratio">M/F</option>
         </select>
-    </div>
-</template>
+    </div> -->
 
 <template name="select_dataset">
     <div class="parameter-selection">

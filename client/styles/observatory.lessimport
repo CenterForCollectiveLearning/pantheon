@@ -315,6 +315,12 @@ div#category-selection {
 			text-align: left;
 			padding-left: 15px;
 		}
+		li.occupation{
+			padding-left: 60px;
+		}
+		li.industry{
+			padding-left: 30px;
+		}
 	}
 }
 
@@ -334,7 +340,6 @@ div.chosen-container {
 			margin-right: 0;
 		}
 	}
-
 	div.chosen-drop {
 		background: rgba(0, 0, 0, 0.75);
 		box-shadow: none;

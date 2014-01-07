@@ -147,13 +147,25 @@ Template.select_l.murray = ->
   if Session.get("dataset") is "murray"
     return true
 
-Template.select_gender.rendered = ->
-  $(@find("select")).val(Session.get("gender")).chosen().change( ->
-    # Session.set "gender", $(this).val())
-    # TODO: For now, we're assuming that only matrices have gender enabled
+Template.select_gender.events = # TODO: For now, we're assuming that only matrices have gender enabled
+  "click div.button": (d) ->
+    srcE = (if d.srcElement then d.srcElement else d.target)
+    console.log(srcE)
+    $("#both-button").removeClass("active")
+    $("#male-button").removeClass("active")
+    $("#female-button").removeClass("active")
+    $("#ratio-button").removeClass("active")
+    $(srcE).addClass("active")
+    targetID = $(srcE)[0].id
+    switch targetID
+      when "both-button" then gender = "both"
+      when "male-button" then gender = "male"
+      when "female-button" then gender = "female"
+      when "ratio-button" then gender = "ratio"
     path = window.location.pathname.split("/")
-    path[4] = $(this).val()
-    Router.go path.join("/"))
+    path[4] = gender
+    Router.go path.join("/")
+
 
 Template.select_country_order.events = 
   "click div.button": (d) ->
@@ -232,7 +244,6 @@ Template.select_mirror.events =
 
 Template.country_dropdown.countries = ->
   dataset = Session.get("dataset")
-  # TODO: correct country dropdown list for murray countries!
   murray_countries = []
   data = Countries.find {dataset: dataset, countryCode: {$ne:"UNK"}},
     sort:
