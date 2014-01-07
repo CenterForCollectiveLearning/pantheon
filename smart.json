@@ -4,7 +4,10 @@
   },
   "packages": {
     "jquery-ui": {},
-    "iron-router": {},
+    "iron-router": {
+      "git": "https://github.com/EventedMind/iron-router.git",
+      "commit": "ff274326a8dd75292e69977ae6e32c786d50746e"
+    },
     "scss": {},
     "autocomplete": {},
     "font-awesome": {},
