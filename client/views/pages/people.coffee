@@ -44,6 +44,10 @@ Template.people_accordion.rendered = ->
 Template.ranking_person.helpers
   currentPerson: -> this._id.equals(People.findOne({"name": Session.get("name")})._id)
 
+Template.person.birthday = ->
+  birthday = (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
+  birthday
+
 Template.people_accordion.helpers
   occupation: -> this.occupation.capitalize() + "s"
   time_period: -> this.birthyear
