@@ -1,17 +1,23 @@
 <!-- Non-visualization specific Observatory elements (e.g. accordion, menu) -->
 <template name="observatory">
-    <div class="page-top">   
-        {{> question}}
-        {{> date_header}}
-        {{> share_view}}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="page-top span8 offset2">   
+                {{> question}}
+                {{> date_header}}
+            </div>
+            <div class="page-top span2">
+                {{> sharing_options}}
+            </div>
+        </div>
     </div>
 
-    <!-- Hack to bypass order of templating (not found when changing viz -->
+    <!-- Hack to bypass order of templating (not found when changing viz) -->
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="page-left span2">
-                    <canvas id="canvas" width="0" height="0"></canvas>
+                    <canvas id="canvas" width="0" height="0" style="display: none"></canvas>
                     {{#if initialDataReady}}
                         {{> observatory_options}} 
                     {{/if}}
@@ -19,16 +25,9 @@
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
                 {{> tooltip}}
-                {{> clicktooltip }}
+                {{> clicktooltip}}
             </div>
         </div>
-    </div>
-</template>
-
-<template name="share_view">
-    <div class="share-view">
-        <a href="#">Share This View</a>
-        {{> sharing_options}}
     </div>
 </template>
 
@@ -64,16 +63,9 @@
         <h3 class="app">TREEMAPS</h3>
         <div>
             <ul>
-                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="country_exports">by Country</a></span></li>
-                <!--li><span><a href="#" data-viz-mode="country_imports">Imports</a></span></li-->
-                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="domain_exports_to">by Domain</a></span></li>
-                <!--li><span><a href="#" data-viz-mode="domain_imports_from">Importers from</a></span></li-->
+                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="country_exports">By Country</a></span></li>
+                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="domain_exports_to">By Domain</a></span></li>
             </ul>
-            <!--span class="app_subtitle">Bilateral</span>
-            <ul>
-                <li><span><a href="#" data-viz-mode="bilateral_exporters_of">Exports to</a></span></li>
-                <li><span><a href="#" data-viz-mode="bilateral_importers_of">Exporters of</a></span></li>
-            </ul-->
         </div>
         <h3 class="app">MATRICES</h3>
         <div>
@@ -85,7 +77,6 @@
         <div>
             <ul>
                 <li><span><a href="#" data-viz-type="scatterplot" data-viz-mode="country_vs_country">Country vs. Country</a></span></li>
-                <!-- <li><span><a href="#" data-viz-mode="lang_vs_lang">Language vs. Language</a></span></li> -->
                 <li><span><a href="#" data-viz-type="scatterplot" data-viz-mode="domain_vs_domain">Domain vs. Domain</a></span></li>
             </ul>
         </div>
@@ -95,20 +86,6 @@
                 <li><span><a href="#" data-viz-type="map" data-viz-mode="map">Global Exports</a></span></li>
             </ul>
         </div>
-<!--         <h3 class="app">HISTOGRAMS</h3>
-        <div>
-            <ul>
-                <li><span><a href="#" data-viz-type="histogram" data-viz-mode="country_exports">Exports by Country</a></span></li>
-                <li><span><a href="#" data-viz-type="histogram" data-viz-mode="domain_exports_to">Exports of Domain</a></span></li>
-            </ul>
-        </div> -->
-<!--         <h3 class="app">STACKED AREA CHARTS</h3>
-        <div>
-            <ul>
-                <li><span><a href="#" data-viz-type="stacked" data-viz-mode="country_exports">Exports by Country</a></span></li>
-                <li><span><a href="#" data-viz-type="stacked" data-viz-mode="domain_exports_to">Exporters of Domain</a></span></li>
-            </ul>
-        </div>  -->
     </div>
 </template>
 
@@ -147,7 +124,7 @@
             {{name}}
             <br>
             <span>
-                {{occupation}}, born {{birthday}} ({{numlangs}})
+                {{occupation}}, b. {{birthday}} ({{numlangs}})
             </span>
         </li>
     </a>

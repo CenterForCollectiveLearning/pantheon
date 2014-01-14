@@ -14,15 +14,6 @@ Template.visualization.render_template = ->
     when "map" then new Handlebars.SafeString(Template.map(this))
     when "histogram" then new Handlebars.SafeString(Template.histogram(this))
     when "stacked" then new Handlebars.SafeString(Template.stacked(this))
-      
-Template.share_view.events =
-  "mouseenter div.share-view": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    $(srcE).find("a").animate({top: "-30px"}, 300)
-
-  "mouseleave div.share-view": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    $(srcE).find("a").animate({top: "0"}, 300)
 
 Template.time_slider.rendered = ->
   # Not sure why this works, but it overcomes the re-styling issue
@@ -45,7 +36,6 @@ Template.accordion.rendered = ->
     collapsible: false
     heightStyle: "content"
     fillSpace: false
-
   # accordion.accordion "resize"
 
 Template.accordion.events = 

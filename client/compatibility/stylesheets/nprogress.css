@@ -1,5 +1,5 @@
 /* Make clicks pass-through */
-#nprogress {
+/*#nprogress {
   pointer-events: none;
   -webkit-pointer-events: none;
 }
@@ -20,4 +20,4 @@
 	#nprogress .bar {
 		top: 94px;
 	}
-}
+}*/

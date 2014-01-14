@@ -3,7 +3,7 @@
 //
 .page-top {
 	padding-top: 150px;
-	color: @color_gold;
+	color: black;
     .bold {
     	font-weight: 500;
     }
@@ -13,7 +13,6 @@
     	line-height: 1em;
     	padding-bottom: 1em;
     	text-align: center;
-    	text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
 
     	b {
     		font-weight: 500;
@@ -25,20 +24,16 @@
     	line-height: 1em;
     	padding-bottom: 1em;
     	text-align: center;
-    	text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
     	margin-top: -1.5em;
     }
 
     .share-view {
     	text-align: center;
-    	height: 30px;
-    	overflow: hidden;
     	width: 130px;
     	margin: 0 auto;
     	
     	a {
     		.fade;
-    	    .opacity(0.5);
     	    position: relative;
     
     	    cursor: pointer;
@@ -66,11 +61,9 @@
 	.page-left {
 		.no-select;
 		.fade;
-		.opacity(0.5);
 		position: relative;
 		float: left;
 		.spacer { height: 3.0em; }
-		&:hover { .opacity(1.0); }
 	}
 	.page-middle {
 		margin-bottom: 2em;
@@ -106,10 +99,8 @@
 
 	.page-right {
 		.fade;
-		.opacity(0.5);
 		.no-select;
 		float: right;
-		&:hover { .opacity(1.0); }
 	}
 
     .justified{
@@ -130,11 +121,12 @@
 	line-height: 18px;
 	max-height: 100%;
 	a {
-		color: @color_grey;
+		color: black;
 		text-decoration: none;
     
 		&:hover { 
-			color: @color_gold !important; 
+			font-weight: bold;
+			// color: @color_gold !important; 
 		}
 
 	    li {
@@ -156,19 +148,21 @@
 .section-header {
 	text-align: center;
 	text-transform: uppercase;
-	padding-bottom: 14px;
-	// color: @color_gold;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	color: black;
 	letter-spacing: 1px;
-	color: #cccccc;
+	font-weight: bold;
+	border-bottom: 1px solid black;
 }
 
 div.ui-slider {
-	.fade;
-	.opacity(0.5);
-	&:hover { .opacity(1.0); }
-	background: black;
+	// .fade;
+	// .opacity(0.5);
+	// &:hover { .opacity(1.0); }
+	background: transparent;
 	div.ui-slider-range {
-		
+		background: black;
 	}
 
 	span.ui-slider-tic {
@@ -179,21 +173,26 @@ div.ui-slider {
 		font-family: 'Lato';
 		font-weight: 300;
 		font-size: 1em;
-		color: white;
+		color: black;
+	}
+
+	.ui-slider-handle {
+		width: 10px;
+		background-color: black;
+		border: none;
+		border-radius: 0;
 	}
 }
 
 .accordion {
 	font-family: 'Lato' !important;
     h3.app {
-    	// background-color: #2b2b2b;
-    	background-color: rgba(0, 0, 0, 0.75);
     	border-radius: 2px;
     	padding: 5px;
     	font-weight: 300;
-    	text-align: center;
-    	color: white;
-    	font-size: 0.75em;
+    	text-align: left;
+    	color: black;
+    	font-size: 1em;
     	letter-spacing: 1px;
 
     	span {
@@ -202,7 +201,14 @@ div.ui-slider {
     }
 
     div.ui-accordion-content {
-    	padding: 1em 0;
+    	padding: 0;
+    	ul {
+    		margin: 3px 0;
+    		margin-left: 20%;
+    		li {
+    			text-align: left !important;
+    		}
+    	}
     }
 
     // Tidy up this CSS!
@@ -210,6 +216,7 @@ div.ui-slider {
     	@media (max-width: 979px) {
     		ul {
     			list-style-type: none;
+    			margin: 0;
     			li {
     				list-style-type: none;
     				margin-left: 0 !important;
@@ -220,14 +227,15 @@ div.ui-slider {
     		margin-left: 0;
     		padding-left: 0;
     		margin-top: 2px;
+    		list-style-type: none;
     		li {
-    			margin-left: 20px;
     			padding-left: 0;
-    			color: @color_grey;
+    			color: black;
+    			list-style-type: none;
     			a {
     				text-decoration: none;
-    				color: @color_grey;
-    				&:hover { color: @color_gold; }
+    				color: black;
+    				&:hover { font-weight: bold }
 
     			}  
     		}
@@ -244,6 +252,17 @@ div.viz-options {
 .parameter-selection {
 	height: 50px;
 	width: 100%;
+	color: black;
+	label {
+    	font-weight: 300;
+    	text-align: left;
+    	color: black;
+    	font-size: 1em;
+    	letter-spacing: 1px;
+    	text-transform: uppercase;
+    	margin-top: 8px;
+    	margin-bottom: 5px;
+	}
 
 	@media (min-width: 980px) {
 	    &.inline {
@@ -327,13 +346,14 @@ div#category-selection {
 // Select Styling
 div.chosen-container {
 	width: 100% !important;
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: transparent; // rgba(0, 0, 0, 0.75);
 	border-radius: 2px;
+	border: 1px solid black;
 	a.chosen-single {
 		box-shadow: none;
 		background: none;
 		text-align: center;
-		color: white;
+		color: black;
 		font-size: 14px;
 		border: 0 !important;
 		span {
@@ -341,21 +361,21 @@ div.chosen-container {
 		}
 	}
 	div.chosen-drop {
-		background: rgba(0, 0, 0, 0.75);
+		background-color: @color_beige; // rgba(0, 0, 0, 0.75);
 		box-shadow: none;
 		border: none;
-		color: white;
+		color: black;
 		font-size: 14px;
 		div.chosen-search {
 			input:focus {
-				border-color: @color_gold;
+				border-color: black;
 				-webkit-box-shadow: none;
 				-moz-box-shadow: none;
 				box-shadow: none;
 			}
 		}
 		div.chosen-results {
-			color: white;
+			color: black;
 			font-size: 14px;
 		}
 	}

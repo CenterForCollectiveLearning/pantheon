@@ -1,10 +1,12 @@
 /*
  * Parameters
  */
+@color_beige: #f9f6e1;
 @color_gold: #D8C568;
 @color_grey: #CCCCCC;
 @color_fairly_black: #2C2C2C;
 @color_almost_black: #010101;
+@color_pantheon_black: #222222;
 @color_black_1: rgba(0, 0, 0, 1.0);
 @color_black_trans: rgba(0, 0, 0, 0.5);
 
@@ -60,11 +62,12 @@ div.wrapper {
 	min-height: 100%; 
 
 	&#background-wrapper {
-		background: url(/church_2.png) no-repeat center center fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
+		background-color: @color_beige;
+		// background: url(/church_2.png) no-repeat center center fixed;
+		// -webkit-background-size: cover;
+		// -moz-background-size: cover;
+		// -o-background-size: cover;
+		// background-size: cover;
 	}
 }
 
@@ -101,11 +104,11 @@ div.wrapper {
 body {
 	font-family: 'Lato';
 	font-weight: 300;
-	color: @color_grey;
+	color: black;
 }
 
 header {
-	border-bottom: 3px solid @color_gold;
+	// border-bottom: 3px solid @color_gold;
 	position: fixed !important;
 
 	@media (max-width: 1000px) {
@@ -117,7 +120,11 @@ header {
 	.navbar-inner {
 	    border: 0;
 	    padding: 0;
-	    background: @color_almost_black;
+	    background: transparent;
+	    // TODO Change box shadows in bootstrap source
+	    -webkit-box-shadow: none !important;
+	    -moz-box-shadow: none !important;	    
+	    box-shadow: none !important;
 
 	    @media (max-width: 1000px) {
 	        ul.nav {
@@ -136,22 +143,25 @@ header {
 	    .nav > li > a {
 	    	.no-select;
 	    	cursor: pointer;
-	    	color: @color_grey;
+	    	color: black;
 	    	text-decoration: none;
 	    	text-shadow: none;
-	    	font-size: 1.25em;
+	    	font-size: 1em;
 	    	line-height: 2.5em;
+	    	text-transform: uppercase;
     
 	    	&:hover { 
-	    		color: @color_gold !important; 
+	    		font-weight: bold;
 	    	}
 	    }
     
 	    .selected_section a {
-	    	color: @color_gold !important;
+	    	font-weight: bold;
+	    	// color: black !important;
 	    }
 
 	    .pull-left {
+	    	padding-left: 100px;
 	    	li {
 	    		padding-right: 1.5em;
 	    	}
@@ -159,7 +169,7 @@ header {
     
 
 	    .pull-right {
-	    	padding-right: 40px;
+	    	padding-right: 140px;
 	    	li {
 	    		padding-left: 1.5em;
 	    	}
@@ -173,23 +183,22 @@ header {
 
     // TODO Redo this
     div.logo {
-    	border: solid transparent;
-    	border-width: 0px 3px 3px 3px;
     	z-index: 10000;
     	position: absolute;
     	top: 0;
-    	width: 250px;
+    	width: 350px;
+    	margin-top: 10px;
+    	margin-bottom: 10px;
     
-    	margin-left: -125px;
+    	margin-left: -175px;
         left: 50%;
-        padding: 15px;
-        background-color: @color_black_1;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
+        // background-color: @color_black_1;
+        // border-bottom-left-radius: 3px;
+        // border-bottom-right-radius: 3px;
         float: none;
-        -webkit-box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
-        -moz-box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
-        box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
+        // -webkit-box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
+        // -moz-box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
+        // box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
         a {
         	margin: 0 auto;
         }
@@ -219,6 +228,7 @@ header {
 footer {
 	.fade;
 	.no-select;
+	background: @color_beige;
 
 	position: relative;
 	bottom: 0;
@@ -226,18 +236,15 @@ footer {
 	line-height: 1.5em;
 	padding: 0.3em 0;
 
-	background: @color_almost_black;
-	border-top: 3px solid @color_gold;
-
 	div.footer-license {
 		text-align: center;
 		margin: 0 auto;
 
 		a {
 			text-decoration: none;
-			color: @color_grey;
+			color: black;
 			&:hover { 
-				color: @color_gold; 
+				font-weight: bold;
 			}
 		}
 	}
@@ -259,10 +266,10 @@ div.sharing-options{
 		}
 		i {
 			font-size: 1.75rem;
-			color: @color_grey;
+			color: black;
 
 			&:hover {
-				color: @color_gold;
+				color: black;
 				text-decoration: none;
 			}
 		}

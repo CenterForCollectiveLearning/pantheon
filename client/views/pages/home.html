@@ -1,124 +1,34 @@
-<!-- Landing page -->
 <template name="home">
-    <div id="home-wrapper" class="wrapper">
-        <section id="narratives">
-           {{>narratives}}
-        </section>
-        <section id="pages">
-            {{>pages}}
-        </section>
-        <section id="vision">
-            {{>vision}}
-        </section>
-        <section id="video">
-            {{>video}}
-        </section>
-    </div>
-</template>
-
-<template name="narratives">	
-    <div class="flexslider">
-        <ul class="slides">
-            {{#each narratives}}
-                {{>narrative}}
-            {{/each}}
-        </ul>
-    </div>
-</template>
-
-<template name="narrative">
-    <li>
-        <div class="narrative-container">
-            <div class="content-container">
-                <div class="content-container-left">
-                    <div class="domain">{{domain}}</div>
-                    <div class="title">{{title}}</div>
-                    <div class="description">{{description}}</div>
-                </div>
-                <div class="content-container-right">
-                    <div data-tutorial-type="{{tutorialType}}" class="learn-more trans-bg">Dive In</div>
-                </div>
-            </div>
-        </div>
-        <div class="background" style="background: url(/{{image}})" />
-    </li>
-</template>
-
-<template name="pages">
+    <div class="page-top"></div>
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="page span2 offset3">
-                <div class="page-title"><a href="/observatory">Visualizations</a></div>
-                <div class="description">Dive into global culture with <a class="word" href="/treemap/country_exports/all/all/-3000/1950/25/OGC">treemaps</a>, <a class="word" href="/matrix/matrix_exports/all/all/-3000/1950/25/OGC">matrices</a>, <a class="word" href="/scatterplot/country_vs_country/MX/PE/-3000/1950/25/OGC">scatterplots</a>, and <a class="word" href="/map/map/all/all/-3000/1950/25/OGC">maps</a>. </div>
+            <div class="span4">   
+                <div class="page-title">Guided Tour</div>
+                <div class="description">Get a tour of the features of Pantheon from one of our helpful characters</div>
             </div>
-            <div class="page span2">
-                <div class="page-title"><a href="/rankings/countries/all/all/-3000/1950/25">Rankings</a></div>
-                <div class="description">Explore the rankings of <a class="word" href="/rankings/countries/all/all/-3000/1950/25">countries</a>, <a class="word" href="/rankings/people/all/all/-3000/1950/25">people</a>, and <a class="word" href="/rankings/domains/all/all/-3000/1950/25">domains</a> over time.</div>
-            </div>
-            <div class="page span2">
-                <div class="page-title"><a href="/data">Data</a></div>
+            <div class="span4">   
+                <div class="page-title">Featured Narratives</div>
                 <div class="description">Learn about how we <a class="word" href="/data">collected</a>, <a class="word" href="/data">organized</a>, and <a class="word" href="/data">validated</a> our data.</div>
             </div>
-        </div>
-    </div>
-
-    <!-- <div class="container">
-        <ul>
-            <li>
-                <div class="viz-label">Treemaps</div>
-                <a href="#" data-viz-type="treemap" data-viz-mode="country_exports">
-                    <img src="treemap_icon.png" />
-                </a>
-            </li>
-            <li>
-                <div class="viz-label">Matrices</div>
-                <a href="#" data-viz-type="matrix" data-viz-mode="matrix_exports">
-                    <img src="matrix_icon.png" />
-                </a>
-            </li>
-            <li>
-                <div class="viz-label">Scatterplots</div>
-                <a href="#" data-viz-type="scatterplot" data-viz-mode="country_vs_country">
-                    <img src="scatterplot_icon.png" />
-                </a>
-            </li>
-            <li>
-                <div class="viz-label">Histograms</div>
-                <a href="#" data-viz-type="histogram" data-viz-mode="country_exports">
-                    <img src="histogram_icon.png" />
-                </a>
-            </li>
-            <li>
-                <div class="viz-label">Maps</div>
-                <a href="#" data-viz-type="map" data-viz-mode="map">
-                    <img src="map_icon.png" />
-                </a>
-            </li>
-        </ul>
-    </div> -->
-</template>
-
-<template name="vision">
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="page-middle trans-bg vision-text span6 offset3">
-                <div class="content">
-                    <p><span class="large-y">Y</span>ou were not born with the ability to fly, cure disease or communicate at long distances, but you were born in a society that endows you with these capacities. These capacities are the result of information that has been generated by humans and that humans have been able to embed in tangible and digital objects.</p>
-
-                    <p>The Observatory of Global Culture is a project celebrating the cultural information that endows our species with these fantastic capacities. To celebrate our global cultural heritage we are compiling, analyzing and visualizing datasets that can help us understand the process of global cultural development.</p>
-
-                    <p class="dive-in"><span class="large-dive-in">Dive in, visualize and enjoy.</span></p>
-                </div>
+            <div class="span4">   
+                <div class="page-title">Explore On My Own</div>
+                <div class="description">Dive in immediately and explore the different dimensions of Pantheon by yourself!</div>
             </div>
         </div>
     </div>
-</template>
-
-<template name="video"> 
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="page-middle trans-bg vision-text span6 offset3">
-                <iframe src="//player.vimeo.com/video/78195602?byline=0&portrait=0&badge=0&title=0&color=D8C568" width="100%" height="55%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <div class="span4">   
+                <div class="page-title">Visualizations</div>
+                <div class="description">Learn about how we <a class="word" href="/data">collected</a>, <a class="word" href="/data">organized</a>, and <a class="word" href="/data">validated</a> our data.</div>
+            </div>
+            <div class="span4">   
+                <div class="page-title">Rankings</div>
+                <div class="description">Learn about how we <a class="word" href="/data">collected</a>, <a class="word" href="/data">organized</a>, and <a class="word" href="/data">validated</a> our data.</div>
+            </div>
+            <div class="span4">   
+                <div class="page-title">Data</div>
+                <div class="description">Learn about how we <a class="word" href="/data">collected</a>, <a class="word" href="/data">organized</a>, and <a class="word" href="/data">validated</a> our data.</div>
             </div>
         </div>
     </div>

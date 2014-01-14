@@ -19,21 +19,21 @@ narratives = [
 ,
 ]
 
-Template.home.rendered = ->
-    # TODO Change boxslider!
-    $(".logo").addClass "gold-border"
-    $(".flexslider").flexslider(
-        namespace: "flex-"
-        eventNamespace: ".flexslider"
-        selector: ".slides > li"
-        animation: "fade"
-        easing: "swing"
-        prevText: "Previous"
-        nextText: "Next"
-        )
+# Template.home.rendered = ->
+#     # TODO Change boxslider!
+#     $(".logo").addClass "gold-border"
+#     $(".flexslider").flexslider(
+#         namespace: "flex-"
+#         eventNamespace: ".flexslider"
+#         selector: ".slides > li"
+#         animation: "fade"
+#         easing: "swing"
+#         prevText: "Previous"
+#         nextText: "Next"
+#         )
 
-Template.home.destroyed = ->
-    $(".logo").removeClass "gold-border"
+# Template.home.destroyed = ->
+#     $(".logo").removeClass "gold-border"
 
 Template.narratives.narratives = narratives
 
