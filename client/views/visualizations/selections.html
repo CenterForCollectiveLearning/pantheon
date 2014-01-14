@@ -270,7 +270,7 @@
 
 <template name="select_from">
     <div id="from" class="parameter-selection inline first">
-        <label>Start Year</label>
+        <label>From</label>
         <select>
             <option value="-3000">3000 B.C.</option>
             <option value="-2000">2000 B.C.</option>
@@ -321,7 +321,7 @@
 
 <template name="select_to">
     <div id="to" class="parameter-selection inline">
-        <label>End Year</label>
+        <label>To</label>
         <select>
             <option value="-3000">3000 B.C.</option>
             <option value="-2000">2000 B.C.</option>
@@ -373,9 +373,9 @@
 <template name="select_l">
     <div class="parameter-selection inline last">
         {{#if murray}}
-            <label>Minimum Index</label>
+            <label>Index</label>
         {{else}}
-            <label>Minimum L</label>
+            <label>L</label>
         {{/if}}
         <select>
         {{#if murray}}
@@ -431,21 +431,11 @@
     </div>
 </template>
 
-<!--     <div class="parameter-selection" style="margin-bottom:50px">
-        <label>Gender</label>
-        <select>
-            <option value="both">Both</option>
-            <option value="male">M</option>
-            <option value="female">F</option>
-            <option value="ratio">M/F</option>
-        </select>
-    </div> -->
-
 <template name="select_dataset">
     <div class="parameter-selection">
-        <label>Data Source</label>
+        <label>Data</label>
         <select>
-            <option value="OGC">Pantheon 1.0</option>
+            <option value="OGC">Observatory of Global Culture</option>
             <option value="murray">Human Accomplishments</option>
         </select>
     </div>
