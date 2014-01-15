@@ -362,8 +362,8 @@ div.chosen-container {
 	}
 	div.chosen-drop {
 		background-color: @color_beige; // rgba(0, 0, 0, 0.75);
+		border: 1px solid black;
 		box-shadow: none;
-		border: none;
 		color: black;
 		font-size: 14px;
 		div.chosen-search {

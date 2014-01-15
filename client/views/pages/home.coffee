@@ -1,10 +1,10 @@
 narratives = [
-    domain: "ABOUT"
-    title: "Visualizing Culture"
-    description: "A Guided Tour of the Observatory"
-    image: "observatory_script.jpg"
-    tutorialType: "ogc"
-,
+#     domain: "ABOUT"
+#     title: "Visualizing Culture"
+#     description: "A Guided Tour of the Observatory"
+#     image: "observatory_script.jpg"
+#     tutorialType: "ogc"
+# ,
     domain: "ARTS"
     title: "Explore the Renaissance"
     description: "Discover where great artists made their cultural impact."
@@ -19,18 +19,16 @@ narratives = [
 ,
 ]
 
-# Template.home.rendered = ->
-#     # TODO Change boxslider!
-#     $(".logo").addClass "gold-border"
-#     $(".flexslider").flexslider(
-#         namespace: "flex-"
-#         eventNamespace: ".flexslider"
-#         selector: ".slides > li"
-#         animation: "fade"
-#         easing: "swing"
-#         prevText: "Previous"
-#         nextText: "Next"
-#         )
+Template.home.rendered = ->
+    $(".flexslider").flexslider(
+        namespace: "flex-"
+        eventNamespace: ".flexslider"
+        selector: ".slides > li"
+        animation: "fade"
+        easing: "swing"
+        prevText: "Previous"
+        nextText: "Next"
+        )
 
 # Template.home.destroyed = ->
 #     $(".logo").removeClass "gold-border"
@@ -44,30 +42,30 @@ Template.narratives.events =
         console.log dataTutorialType
         Session.set("tutorialType", dataTutorialType)
 
-Template.pages.events = 
-    "mouseenter div.page": (d) ->
-        srcE = (if d.srcElement then d.srcElement else d.target)
-        $(srcE).find("a.word").addClass("highlight")
+# Template.pages.events = 
+#     "mouseenter div.page": (d) ->
+#         srcE = (if d.srcElement then d.srcElement else d.target)
+#         $(srcE).find("a.word").addClass("highlight")
 
-    "mouseleave div.page": (d) ->
-        srcE = (if d.srcElement then d.srcElement else d.target)
-        $(srcE).find("a.word").removeClass("highlight")
+#     "mouseleave div.page": (d) ->
+#         srcE = (if d.srcElement then d.srcElement else d.target)
+#         $(srcE).find("a.word").removeClass("highlight")
 
-    "click li a": (d) ->
-        srcE = (if d.srcElement then d.srcElement else d.target)  
-        vizType = $(srcE).parent().data "viz-type"  # Need parent() since img is target
-        vizMode = $(srcE).parent().data "viz-mode"
+#     "click li a": (d) ->
+#         srcE = (if d.srcElement then d.srcElement else d.target)  
+#         vizType = $(srcE).parent().data "viz-type"  # Need parent() since img is target
+#         vizMode = $(srcE).parent().data "viz-mode"
 
-        # Parameters depend on vizMode (e.g countries -> languages for exports)
-        [paramOne, paramTwo] = IOMapping[vizMode]["in"]
+#         # Parameters depend on vizMode (e.g countries -> languages for exports)
+#         [paramOne, paramTwo] = IOMapping[vizMode]["in"]
     
-        # Reset parameters for a viz type change
-        Router.go "observatory",
-        vizType: vizType
-        vizMode: vizMode
-        paramOne: defaults[paramOne]
-        paramTwo: defaults[paramTwo]
-        from: defaults.from
-        to: defaults.to
-        langs: defaults.langs
-        dataset: defaults.dataset
+#         # Reset parameters for a viz type change
+#         Router.go "observatory",
+#         vizType: vizType
+#         vizMode: vizMode
+#         paramOne: defaults[paramOne]
+#         paramTwo: defaults[paramTwo]
+#         from: defaults.from
+#         to: defaults.to
+#         langs: defaults.langs
+#         dataset: defaults.dataset

@@ -8,6 +8,75 @@ div.page-title {
 	padding-left: 6px;
 }
 
+div.description {
+	padding: 10px 8px;
+	font-size: 16px;
+	a {
+		font-weight: bold;
+		text-decoration: none;
+		color: black;
+	}
+
+	&.black-border-bottom {
+		border-bottom: 1px solid black;
+	}
+}
+
+div.landing-section-button {
+	background-color: white;
+	color: @color_pantheon_black;
+	text-transform: uppercase;
+	height: 50px;
+	line-height: 50px;
+	font-size: 18px;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+div.section-guide {
+	img {
+		position: relative;
+		width: 300px;
+		left: 50%;
+		margin-left: -150px;
+	}
+}
+
+div.flexslider {
+	height: 250px;
+}
+ul.slides {
+	max-height: 250px;
+	height: 250px;
+
+	li {
+		max-height: 250px;
+		height: 250px;
+	}
+}
+
+// div.narrative-container {
+// 	z-index: 10;
+// 	position: relative;
+
+// 	div.content-container {
+// 		border-radius: 2px;
+// 		background-color: rgba(0, 0, 0, 0.75);
+// 		height: 300px;
+// 		width: 940px;
+// 		margin: 200px auto 0 auto;
+// 		padding: 60px 40px 40px;
+// 		div.content-container-left {
+// 			width: 70%;
+// 			float: left;
+// 		}
+// 		div.content-container-right {
+// 			width: 30%;
+// 			float: right;
+// 		}
+// 	}
+// }
+
 // section#narratives {
 // 	margin-top:65px;
 // 	height: 700px;
@@ -74,82 +143,77 @@ div.page-title {
 // 		}
 // 	}
 
-// 	div.flexslider {
-// 		border: 0;
-// 		margin: 0;
-// 	}
-
-// 	div.background {
-// 		background-repeat: no-repeat !important;
-// 		background-size: cover !important;
-// 		background-position: center !important;
-// 		position: absolute;
-// 		top: 0;
-// 		border: 0;
-// 		width: 100%;
-// 		height: 100%;
-// 	}
-
-// 	ol.flex-control-nav {
-// 		z-index: 100;
-// 		bottom: 210px;
-
-// 		li {
-// 			&:hover {
-// 				color: @color_gold;
-// 			}
-// 		}
-
-// 		li a {
-// 			&.flex-active {
-// 				zoom: 1;
-// 				opacity: 1;
-// 				-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-// 				filter: alpha(opacity=100);
-// 			}
-
-// 			border-radius: 7px;
-// 			-webkit-border-radius: 7px;
-// 			-moz-border-radius: 7px;
-// 			-o-border-radius: 7px;
-// 			display: block;
-// 			background: @color_gold;
-// 			margin: 0 3px;
-// 			height: 7px;
-// 			width: 7px;
-// 			text-indent: -9999px;
-// 			cursor: pointer;
-// 			zoom: 1;
-// 			opacity: 0.5;
-// 			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-// 			filter: alpha(opacity=50);
-// 			transition: opacity 200ms ease-out;
-// 			-webkit-transition: opacity 200ms ease-out;
-// 			-moz-transition: opacity 200ms ease-out;
-// 			-o-transition: opacity 200ms ease-out;
-// 			-ms-transition: opacity 200ms ease-out;
-// 		}
-// 	}
-
-// 	ul.flex-direction-nav {
-// 		a {
-// 			position: absolute;
-// 			top: 0;
-// 			height: 100%;
-// 			background: transparent;
-// 			z-index: 10;
-// 			width: 12%;
-// 			text-indent: 100%;
-// 			overflow: hidden;
-// 			white-space: nowrap;
-// 			color: transparent;
-// 			outline: 0;
-
-// 			&.flex-prev { left: 0 }
-// 			&.flex-next { right: 0 }
-// 		}
-// 	}
+// div.flexslider {
+// 	border: 0;
+// 	margin: 0;
 // }
+
+// div.background {
+// 	background-repeat: no-repeat !important;
+// 	background-size: cover !important;
+// 	background-position: center !important;
+// 	position: absolute;
+// 	top: 0;
+// 	border: 0;
+// 	width: 100%;
+// 	height: 100%;
+// }
+
+ol.flex-control-nav {
+	z-index: 100;
+	bottom: 250px;
+	text-align: right;
+	padding-right: 4px;
+
+	li {
+		&:hover {
+			color: @color_gold;
+		}
+
+		a {
+			color: transparent
+		}
+	}
+
+	li a {
+		&.flex-active {
+			zoom: 1;
+			background-color: @color_beige;
+		}
+
+		border-radius: 7px;
+		-webkit-border-radius: 7px;
+		-moz-border-radius: 7px;
+		-o-border-radius: 7px;
+		display: block;
+		border: 1px solid @color_beige;
+		margin: 0 2px;
+		height: 10px;
+		width: 10px;
+		text-indent: -9999px;
+		cursor: pointer;
+		zoom: 1;
+	}
+}
+
+ul.flex-direction-nav {
+	a {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		background: transparent;
+		z-index: 10;
+		width: 12%;
+		text-indent: 100%;
+		overflow: hidden;
+		white-space: nowrap;
+		color: transparent;
+		outline: 0;
+
+		&.flex-prev { left: 0 }
+		&.flex-next { right: 0 }
+	}
+}
 
 // section {
 // 	div.domain {

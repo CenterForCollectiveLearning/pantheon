@@ -139,7 +139,8 @@ header {
 	    		line-height: 0.5em !important;
 	    	}
 	    }
-    
+
+        // TODO Deal with shifts due to font-weight changes	    
 	    .nav > li > a {
 	    	.no-select;
 	    	cursor: pointer;
@@ -147,7 +148,7 @@ header {
 	    	text-decoration: none;
 	    	text-shadow: none;
 	    	font-size: 1em;
-	    	line-height: 2.5em;
+	    	line-height: 3.6em;
 	    	text-transform: uppercase;
     
 	    	&:hover { 
@@ -157,7 +158,6 @@ header {
     
 	    .selected_section a {
 	    	font-weight: bold;
-	    	// color: black !important;
 	    }
 
 	    .pull-left {
