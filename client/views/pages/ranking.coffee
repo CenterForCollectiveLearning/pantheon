@@ -22,7 +22,7 @@ Template.ranking_table.rendered = ->
       data = _.map CountriesRanking.find().fetch(), (c) ->
         [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, c.HCPI.toFixed(2)]
       aoColumns = [
-        sTitle: "Ranking"
+        sTitle: "Rank"
       ,
         sTitle: "Country"
       ,
@@ -53,11 +53,11 @@ Template.ranking_table.rendered = ->
 
       if dataset is "murray"
         aoColumns = [
-          sTitle: "Ranking"
+          sTitle: "Rank"
         ,
           sTitle: "Name"
         ,
-          sTitle: "Country"
+          sTitle: "Country of Birth"
         ,
           sTitle: "Birth Year"
         ,
@@ -69,12 +69,12 @@ Template.ranking_table.rendered = ->
         ]
       else
         aoColumns = [
-          sTitle: "Ranking"
+          sTitle: "Rank"
         ,
           sTitle: "Name"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
-          sTitle: "Country"
+          sTitle: "Country of Birth"
         ,
           sTitle: "Birth Year"
         ,
@@ -100,7 +100,7 @@ Template.ranking_table.rendered = ->
       data = _.map DomainsRanking.find().fetch(), (d) ->
         [0, d.occupation.capitalize(), d.industry.capitalize(), d.domain.capitalize(), d.ubiquity, d.percentwomen, d.numppl]
       aoColumns = [
-        sTitle: "Ranking"
+        sTitle: "Rank"
       ,
         sTitle: "Occupation"
       ,
@@ -117,8 +117,7 @@ Template.ranking_table.rendered = ->
 
   if clickTooltip then displayLength = 10
   else 
-    if entity is "countries" then displayLength = 100
-    else displayLength = 25
+    displayLength = 100
 
   #initializations
   sorting = switch
