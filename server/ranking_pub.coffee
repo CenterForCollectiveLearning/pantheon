@@ -1,27 +1,13 @@
 #
 # * Static query that pushes the countries ranking table
 # *
-# * this is the equivalent SQL query:
-# * SELECT a.*, b.numwomen, (b.numwomen*1.0/numppl)*100.0 as percent_female
-# * FROM
-# * (select countryName, countryCode,  count(distinct en_curid) as numppl, count(distinct occupation) numoccs, i50, Hindex
-# * from culture3
-# * where occupation == "ASTRONAUT"
-# * group by countryCode limit 30)
-# * AS a
-# * left join
-# * (select countryCode, count(distinct en_curid) as numwomen
-# * from culture3
-# * where gender == 'Female' and occupation == "ASTRONAUT"
-# * group by countryCode)
-# * as b
-# * on a.countryCode == b.countryCode;
-# *
 # 
 Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L) ->
   sub = this
   collectionName = "countries_ranking"
   criteria = 
+    countryCode: 
+      $ne: "UNK"
     birthyear:
       $gte: begin
       $lte: end
@@ -53,6 +39,7 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
     country["countryCode"] = cc
     country["countryName"] = countries[cc][0].countryName
     country["continentName"] = countries[cc][0].continentName
+    country["HCPI"] = countries[cc][0].HCPI
     country["numppl"] = countries[cc].length
     females = _.countBy(countries[cc], (p) ->
       (if p.gender is "Female" then "Female" else "Male")
