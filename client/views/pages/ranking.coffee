@@ -126,6 +126,7 @@ Template.ranking_table.rendered = ->
     else [[6, "desc"], [1, "asc"]]  # Multi-column sort on L then name
 
   $("#ranking").dataTable
+    sScrollY: "600px"
     aoColumns: aoColumns
     aaData: data
     aaSorting: sorting
