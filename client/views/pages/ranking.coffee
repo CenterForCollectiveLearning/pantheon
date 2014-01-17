@@ -20,7 +20,7 @@ Template.ranking_table.rendered = ->
   switch entity
     when "countries"
       data = _.map CountriesRanking.find().fetch(), (c) ->
-        [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, c.HCPI]
+        [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, c.HCPI.toFixed(2)]
       aoColumns = [
         sTitle: "Ranking"
       ,
