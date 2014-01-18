@@ -253,6 +253,8 @@ div.viz-options {
 	height: 50px;
 	width: 100%;
 	color: black;
+	display: inline-block;
+	margin-top: 10px;
 	label {
     	font-weight: 300;
     	text-align: left;
@@ -296,7 +298,6 @@ div.viz-options {
 }
 
 div.buttons {
-
 	div.button:first-child {
 		border-top-left-radius: 2px;
 		border-bottom-left-radius: 2px;
@@ -404,11 +405,6 @@ div.selector {
 	}
 }
 
-label {
-	text-align: center;
-	margin-bottom: 0px;
-}
-
 rect.bar, rect.cell {
 	cursor: pointer;
 }
@@ -417,15 +413,17 @@ g#countries > path {
 	cursor: pointer;
 }
 
-.one {
-    width: 45%;
+.one{
+	width: 45%;
     float: left;
     text-align: left;
     margin-bottom: 5px;
 }
-.two {
-    margin-left: 10%;
+
+.two{
+	margin-left: 10%;
     float: right;
     width: 45%;
     margin-bottom: 5px;
 }
+

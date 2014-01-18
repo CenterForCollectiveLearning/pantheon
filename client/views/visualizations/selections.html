@@ -238,7 +238,7 @@
 
 <template name="select_scale">
     <div class="parameter-selection">
-        <label class = "one">Axes Scale</label>
+        <label class="one">Axes Scale</label>
         <div class="two buttons">
             <div id="linear-button" class="button active">Lin</div>
             <div id="log-button" class="button">Log</div>
@@ -249,7 +249,7 @@
 
 <template name="select_mirror">
     <div class="parameter-selection">
-        <label class="one">Mirror Axes</label>
+        <label class = "one">Mirror Axes</label>
         <div class="two buttons">
             <div id="mirror-true-button" class="button active">Yes</div>
             <div id="mirror-false-button" class="button">No</div>
@@ -370,32 +370,54 @@
     </div>
 </template>
 
+<template name="options0_40">
+    <option value="0">0</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="15">15</option>
+    <option value="20">20</option>
+    <option value="25">25</option>
+    <option value="30">30</option>
+    <option value="35">35</option>
+    <option value="40">40</option>
+</template>
+
 <template name="select_l">
-    <div class="parameter-selection inline last">
+    <div class="parameter-selection">
         {{#if murray}}
             <label>Index</label>
         {{else}}
-            <label>L</label>
+            <label>Index</label>
+            <div class="one buttons">
+            <div id="L-button" class="button {{L_active}}">L</div>
+            <div id="HPI-button" class="button {{HPI_active}}">HPI</div>
+            </div>
         {{/if}}
-        <select>
-        {{#if murray}}
-            <option value="1">0</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-        {{/if}}
-            <option value="25">25</option>
-            <option value="30">30</option>
-            <option value="35">35</option>
-            <option value="40">40</option>
-            <option value="45">45</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="150">150</option>
-            <option value="200">200</option>
-            <option value="214">214</option>
-        </select>
+        <div class="two">
+            <select>
+            {{#if HPI}}
+                {{>options0_40}}
+            {{else}}
+                {{#if murray}}
+                    <option value="0">0</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                {{/if}}
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="214">214</option>
+            {{/if}}
+            </select>
+        </div>
     </div>
 </template>
 
@@ -423,10 +445,10 @@
     <div class="parameter-selection" style="height:20px">
         <label class = "one" style="width:15%">Gender</label>
         <div class="two buttons" style="width:75%">
-            <div id = "both-button" class="button active" style="width:25%">Both</div>
-            <div id = "male-button" class="button" style="width:25%">M</div>
-            <div id = "female-button" class="button" style="width:25%">F</div>
-            <div id = "ratio-button" class="button" style="width:25%">F/M</div>
+            <div id = "both-button" class="button {{both_active}}" style="width:25%">Both</div>
+            <div id = "male-button" class="button {{male_active}}" style="width:25%">M</div>
+            <div id = "female-button" class="button {{female_active}}" style="width:25%">F</div>
+            <div id = "ratio-button" class="button {{ratio_active}}" style="width:25%">F/M</div>
         </div>
     </div>
 </template>

@@ -143,27 +143,37 @@ Template.select_l.rendered = ->
     path[7] = $(this).val()
     Router.go path.join("/"))
 
-Template.select_l.murray = ->
-  if Session.get("dataset") is "murray"
-    return true
+Template.select_l.murray = -> Session.equals("dataset", "murray")
+Template.select_l.HPI = -> Session.equals("indexType", "HPI")    
+Template.select_l.L_active = -> if Session.equals("indexType", "L") then "active" else ""
+Template.select_l.HPI_active = -> if Session.equals("indexType", "HPI") then "active" else ""
+
+Template.select_l.events = 
+  "click #L-button": (d) -> Session.set "indexType", "L"
+  "click #HPI-button": (d) -> Session.set "indexType", "HPI"     
+
+Template.select_gender.female_active = -> if Session.equals("gender", "female") then "active" else ""
+Template.select_gender.male_active = -> if Session.equals("gender", "male") then "active" else ""
+Template.select_gender.ratio_active = -> if Session.equals("gender", "ratio") then "active" else ""
+Template.select_gender.both_active = -> if Session.equals("gender", "both") then "active" else ""
+
 
 Template.select_gender.events = # TODO: For now, we're assuming that only matrices have gender enabled
-  "click div.button": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    console.log(srcE)
-    $("#both-button").removeClass("active")
-    $("#male-button").removeClass("active")
-    $("#female-button").removeClass("active")
-    $("#ratio-button").removeClass("active")
-    $(srcE).addClass("active")
-    targetID = $(srcE)[0].id
-    switch targetID
-      when "both-button" then gender = "both"
-      when "male-button" then gender = "male"
-      when "female-button" then gender = "female"
-      when "ratio-button" then gender = "ratio"
+  "click #both-button": (d) -> 
     path = window.location.pathname.split("/")
-    path[4] = gender
+    path[4] = "both"
+    Router.go path.join("/")
+  "click #male-button": (d) -> 
+    path = window.location.pathname.split("/")
+    path[4] = "male"
+    Router.go path.join("/")
+  "click #female-button": (d) -> 
+    path = window.location.pathname.split("/")
+    path[4] = "female"
+    Router.go path.join("/")
+  "click #ratio-button": (d) -> 
+    path = window.location.pathname.split("/")
+    path[4] = "ratio"
     Router.go path.join("/")
 
 
