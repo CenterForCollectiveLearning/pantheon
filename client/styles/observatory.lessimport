@@ -292,7 +292,7 @@ div.viz-options {
 		}
 
 		div.chosen-container {
-			width: 100% !important;
+			width: inherit !important;
 		}
 	}
 }
@@ -346,7 +346,7 @@ div#category-selection {
 
 // Select Styling
 div.chosen-container {
-	width: 100% !important;
+	width: inherit !important;
 	background-color: transparent; // rgba(0, 0, 0, 0.75);
 	border-radius: 2px;
 	border: 1px solid black;

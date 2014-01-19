@@ -144,7 +144,8 @@ Template.select_l.rendered = ->
     Router.go path.join("/"))
 
 Template.select_l.murray = -> Session.equals("dataset", "murray")
-Template.select_l.HPI = -> Session.equals("indexType", "HPI")    
+Template.select_l.HPI = -> Session.equals("indexType", "HPI")   
+ 
 Template.select_l.L_active = -> if Session.equals("indexType", "L") then "active" else ""
 Template.select_l.HPI_active = -> if Session.equals("indexType", "HPI") then "active" else ""
 

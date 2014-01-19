@@ -124,7 +124,7 @@
             {{name}}
             <br>
             <span>
-                {{occupation}}, b. {{birthday}} ({{numlangs}})
+                {{occupation}}, b. {{birthday}} ({{index}})
             </span>
         </li>
     </a>
@@ -153,7 +153,7 @@
 
 <!-- Person in tooltip list-->
 <template name = "tt_person">
-    {{name}}<span class="birthplace"> born {{birthday}}, {{countryName}} ({{numlangs}})</span><br />
+    {{name}}<span class="birthplace"> born {{birthday}}, {{countryName}} ({{index}})</span><br />
 </template>
 
 <!-- Big Tooltip (Overlay for visualization click events -->

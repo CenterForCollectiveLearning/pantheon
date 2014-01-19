@@ -370,41 +370,44 @@
     </div>
 </template>
 
-<template name="options0_40">
+<template name="optionsH0_H40">
+    <option value="H0">0</option>
+    <option value="H5">5</option>
+    <option value="H10">10</option>
+    <option value="H15">15</option>
+    <option value="H20">20</option>
+    <option value="H25">25</option>
+    <option value="H30">30</option>
+    <option value="H35">35</option>
+    <option value="H40">40</option>
+</template>
+
+<template name="options0_20">  
     <option value="0">0</option>
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="15">15</option>
     <option value="20">20</option>
-    <option value="25">25</option>
-    <option value="30">30</option>
-    <option value="35">35</option>
-    <option value="40">40</option>
 </template>
 
 <template name="select_l">
     <div class="parameter-selection">
         {{#if murray}}
             <label>Index</label>
+            <select>
+                {{>options0_20}}
+            </select>
         {{else}}
             <label>Index</label>
             <div class="one buttons">
             <div id="L-button" class="button {{L_active}}">L</div>
             <div id="HPI-button" class="button {{HPI_active}}">HPI</div>
             </div>
-        {{/if}}
-        <div class="two">
+            <div class="two">
             <select>
             {{#if HPI}}
-                {{>options0_40}}
+                {{>optionsH0_H40}}
             {{else}}
-                {{#if murray}}
-                    <option value="0">0</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                {{/if}}
                     <option value="25">25</option>
                     <option value="30">30</option>
                     <option value="35">35</option>
@@ -417,6 +420,7 @@
                     <option value="214">214</option>
             {{/if}}
             </select>
+        {{/if}}
         </div>
     </div>
 </template>

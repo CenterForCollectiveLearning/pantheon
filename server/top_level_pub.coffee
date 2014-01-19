@@ -1,18 +1,3 @@
-getCountryExportArgs = (begin, end, L, country, category, categoryLevel, dataset) ->
-  args =
-    birthyear:
-      $gt: begin
-      $lte: end
-
-    numlangs:
-      $gt: L
-
-  args.dataset = dataset
-  args.countryCode = country  if country isnt "all"
-  args[categoryLevel] = category  if category.toLowerCase() isnt "all"
-#  args[categoryLevel] = category  if category isnt `undefined` and occ isnt "all"
-  args
-
 Meteor.publish "countries_pub", ->
   Countries.find()
 
@@ -34,7 +19,6 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
     birthyear:
       $gt: begin
       $lte: end
-
     numlangs:
       $gt: L
 
@@ -98,7 +82,6 @@ Meteor.publish "allpeople", ->
 #because the whole set of people already exists client side
 #
 
-# TODO Combine with TOP N query?
 Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, dataset, click) ->
   sub = this
   args =
