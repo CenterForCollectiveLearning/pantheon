@@ -391,23 +391,25 @@
 </template>
 
 <template name="select_l">
+{{#if murray}}
+    <div class="parameter-selection inline last">
+        <label>Index</label>
+        <select>
+            {{>options0_20}}
+        </select>
+    </div>
+{{else}}
     <div class="parameter-selection">
-        {{#if murray}}
-            <label>Index</label>
+        <label>Index</label>
+        <div class="one buttons">
+        <div id="L-button" class="button {{L_active}}">L</div>
+        <div id="HPI-button" class="button {{HPI_active}}">HPI</div>
+        </div>
+        <div class="two">
             <select>
-                {{>options0_20}}
-            </select>
-        {{else}}
-            <label>Index</label>
-            <div class="one buttons">
-            <div id="L-button" class="button {{L_active}}">L</div>
-            <div id="HPI-button" class="button {{HPI_active}}">HPI</div>
-            </div>
-            <div class="two">
-            <select>
-            {{#if HPI}}
-                {{>optionsH0_H40}}
-            {{else}}
+                {{#if HPI}}
+                    {{>optionsH0_H40}}
+                {{else}}
                     <option value="25">25</option>
                     <option value="30">30</option>
                     <option value="35">35</option>
@@ -418,11 +420,11 @@
                     <option value="150">150</option>
                     <option value="200">200</option>
                     <option value="214">214</option>
-            {{/if}}
+                {{/if}}
             </select>
-        {{/if}}
-        </div>
+        </div>    
     </div>
+{{/if}}
 </template>
 
 <template name="select_country_order">
