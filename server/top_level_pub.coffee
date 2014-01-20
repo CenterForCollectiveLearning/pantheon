@@ -14,17 +14,15 @@ Meteor.publish "languages_pub", ->
 Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, N, dataset) ->
   sub = this
   collectionName = "peopleTopN"
-
   args =
     birthyear:
       $gt: begin
       $lte: end
-    numlangs:
-      $gt: L
 
   args.dataset = dataset
   args.countryCode = country if country isnt "all" and vizMode is "country_exports"
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
+  if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
   
   if gender is "male" or gender is "female"
     genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
@@ -46,13 +44,20 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   console.log("PeopleTopN pub")
   console.log(args)
 
-  projection =
-    fields:
-      _id: 1
-      numlangs: 1
-    sort:
-      numlangs: -1
+  if L[0] is "H"
+    projection =
+      fields:
+        _id: 1
+        HPI: 1
+  else
+    projection =
+      fields:
+        _id: 1
+        numlangs: 1
   projection.limit = N if N isnt "all"
+
+  console.log(projection)
+
   People.find(args, projection).forEach (person) ->
     sub.added collectionName, person._id, person
   sub.ready()
@@ -88,10 +93,9 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     birthyear:
       $gt: begin
       $lte: end
-    numlangs:
-      $gt: L 
     dataset: dataset
 
+  if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
   # TODO - this is hardcoded fix for matrix to update tooltip with gender - may want to generalize this
   if gender is "male" or gender is "female"
     genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
@@ -122,12 +126,16 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     or2[categoryLevel] = categoryY
     args.$or = [or1, or2]
   
-  projection =
-    fields:
-      _id: 1
-    sort:
-      numlangs: -1
-    hint: occupation_countryCode
+  if L[0] is "H"
+    projection =
+      fields:
+        _id: 1
+        HPI: 1
+  else
+    projection =
+      fields:
+        _id: 1
+        numlangs: 1
 
   projection.limit = 5  if not click
 

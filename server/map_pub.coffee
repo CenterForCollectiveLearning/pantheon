@@ -10,14 +10,13 @@ Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
   
   # TODO modify this query to be more general
   matchArgs =
-    numlangs:
-      $gt: L
     birthyear:
       $gte: begin
       $lte: end
     dataset: dataset
 
   matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
+  if L[0] is "H" then matchArgs.HPI = {$gt:parseInt(L.slice(1,L.length))} else matchArgs.numlangs = {$gt: parseInt(L)}
   console.log(matchArgs)
   
   pipeline = []

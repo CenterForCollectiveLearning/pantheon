@@ -12,9 +12,8 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
       $gte: begin
       $lte: end
     dataset: "OGC"
-    numlangs:
-      $gt: L
   criteria[categoryLevel] = category if category.toLowerCase() isnt "all"
+  if L[0] is "H" then criteria.HPI = {$gt:parseInt(L.slice(1,L.length))} else criteria.numlangs = {$gt: parseInt(L)}
   console.log(criteria)
   country = {}
   data = People.find(criteria).fetch()
@@ -68,9 +67,7 @@ Meteor.publish "domains_ranking_pub", (begin, end, country, category, categoryLe
     birthyear:
       $gte: begin
       $lte: end
-    numlangs:
-      $gt: L
-
+  if L[0] is "H" then criteria.HPI = {$gt:parseInt(L.slice(1,L.length))} else criteria.numlangs = {$gt: parseInt(L)}
   criteria.countryCode = country  if country isnt "all"
   criteria[categoryLevel] = category  if category.toLowerCase() isnt "all"
   domain = {}

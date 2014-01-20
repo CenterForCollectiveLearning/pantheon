@@ -79,7 +79,9 @@ Handlebars.registerHelper "person_lookup", ->
   People.findOne @_id
 
 Template.ranked_list.top10 = ->
-  PeopleTopN.find()
+  if Session.get("indexType") is "HPI" then order = {HPI:-1}
+  else order = {numlangs:-1}
+  PeopleTopN.find({}, {sort:order})
 
 Template.ranked_list.empty = ->
   PeopleTopN.find().count() is 0
@@ -163,8 +165,9 @@ Template.tooltip.helpers
     Session.get "tooltipPosition"
 
   top5: -> # Total count is also passed
-    Tooltips.find _id:
-      $not: "count"
+    if Session.get("indexType") is "HPI" then order = {HPI:-1}
+    else order = {numlangs:-1}
+    Tooltips.find({_id:{$not: "count"}}, {sort:order})
 
   count: ->
     doc = Tooltips.findOne(_id: "count")

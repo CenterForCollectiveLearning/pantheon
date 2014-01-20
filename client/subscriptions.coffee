@@ -45,7 +45,7 @@ Deps.autorun ->
   languageY = Session.get("languageY")
   begin = parseInt(Session.get("from"))
   end = parseInt(Session.get("to"))
-  L = parseInt(Session.get("langs"))
+  L = Session.get("langs")
   langs = true
   if L is null
     langs = false

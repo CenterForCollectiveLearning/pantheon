@@ -2,15 +2,12 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, l
   sub = this
   driver = MongoInternals.defaultRemoteCollectionDriver()
   matchArgs =
-    numlangs:
-      $gt: L
-
     birthyear:
       $gte: begin
       $lte: end
-
     dataset: dataset
-
+  if L[0] is "H" then matchArgs.HPI = {$gt:parseInt(L.slice(1,L.length))} else matchArgs.numlangs = {$gt: parseInt(L)}
+  
   pipeline = []
   if vizMode is "country_vs_country"
     matchArgs.$or = [
