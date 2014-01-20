@@ -31,6 +31,7 @@ Router.map ->
       Session.set "from", @params.from
       Session.set "to", @params.to
       Session.set "langs", @params.langs
+      if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L"
       Session.set "dataset", @params.dataset
 
       # Reset defaults based on vizmode
