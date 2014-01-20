@@ -49,11 +49,15 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
       fields:
         _id: 1
         HPI: 1
+      sort:
+        HPI: -1
   else
     projection =
       fields:
         _id: 1
         numlangs: 1
+      sort: 
+        numlangs: -1
   projection.limit = N if N isnt "all"
 
   console.log(projection)
@@ -131,11 +135,15 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       fields:
         _id: 1
         HPI: 1
+      sort:
+        HPI: -1
   else
     projection =
       fields:
         _id: 1
         numlangs: 1
+      sort:
+        numlangs: -1
 
   projection.limit = 5  if not click
 

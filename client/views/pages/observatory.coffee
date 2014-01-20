@@ -81,6 +81,7 @@ Handlebars.registerHelper "person_lookup", ->
 Template.ranked_list.top10 = ->
   if Session.get("indexType") is "HPI" then order = {HPI:-1}
   else order = {numlangs:-1}
+  console.log(order)
   PeopleTopN.find({}, {sort:order})
 
 Template.ranked_list.empty = ->
