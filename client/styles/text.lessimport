@@ -78,8 +78,8 @@ div.text {
 	padding: 2em;
 	border-radius: 3px;
 	color: #121212;
-	border: 3px solid black;
-	background-image: url(/paper_background.png);
+	// border: 3px solid black;
+	// background-image: url(/paper_background.png);
 
 	// TODO Do this better
 	&.text-page-middle {

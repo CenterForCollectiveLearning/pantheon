@@ -4,7 +4,8 @@
 	position: absolute;
 	border-radius: 2px;
 	z-index: 1000;
-
+	color: @color_beige;
+	
 	#tooltip-inner {
 		margin: 0.5em;
 		span.category {
@@ -20,7 +21,6 @@
 			width: 100%;
 			border-top: 1px solid @color_gold;
 			margin-top:3px;
-
 			span.birthplace {
 				font-size: 70%;
 			}
