@@ -140,18 +140,31 @@ Template.select_entity.rendered = ->
 Template.select_l.rendered = ->
   $(@find("select")).val(Session.get("langs")).chosen().change( ->
     path = window.location.pathname.split("/")
-    path[7] = $(this).val()
+    L = $(this).val()
+    if L[0] is "H" 
+      Session.set "indexType", "H" 
+    else if Session.equals("dataset", "OGC") 
+      Session.set "indexType", "L"
+    path[7] = L
     Router.go path.join("/"))
 
 Template.select_l.murray = -> Session.equals("dataset", "murray")
 Template.select_l.HPI = -> Session.equals("indexType", "HPI")   
- 
+
 Template.select_l.L_active = -> if Session.equals("indexType", "L") then "active" else ""
 Template.select_l.HPI_active = -> if Session.equals("indexType", "HPI") then "active" else ""
 
 Template.select_l.events = 
-  "click #L-button": (d) -> Session.set "indexType", "L"
-  "click #HPI-button": (d) -> Session.set "indexType", "HPI"     
+  "click #L-button": (d) -> 
+    # Session.set "indexType", "L"
+    path = window.location.pathname.split("/")
+    path[7] = "25"
+    Router.go path.join("/")
+  "click #HPI-button": (d) -> 
+    path = window.location.pathname.split("/")
+    path[7] = "H0"
+    Router.go path.join("/")
+    # Session.set "indexType", "HPI"     
 
 Template.select_gender.female_active = -> if Session.equals("gender", "female") then "active" else ""
 Template.select_gender.male_active = -> if Session.equals("gender", "male") then "active" else ""
