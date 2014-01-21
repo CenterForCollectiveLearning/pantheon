@@ -59,7 +59,7 @@ Router.map ->
   @route "rankings",
     path: "/rankings"
     before: [->
-      @redirect "/rankings/" + defaults.entity + "/" + defaults.country + "/" + defaults.category + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs
+      @redirect "/rankings/" + defaults.entity + "/all/" + defaults.category + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs
     ]
 
   @route "rankings",
@@ -72,7 +72,8 @@ Router.map ->
       Session.set "from", @params.from
       Session.set "to", @params.to
       Session.set "langs", @params.langs  
-      Session.set "dataset", "OGC"    
+      Session.set "dataset", "OGC"
+      if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L" 
 
   @route "data",
     path: "/data"

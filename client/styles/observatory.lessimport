@@ -313,7 +313,7 @@ div.buttons {
 		border: 1px solid rgba(0, 0, 0, 0.75);			
 
 		&.active {
-			background-color: rgba(0, 0, 0, 0.75);			
+			background-color: @color_gold;			
 		}
 
 		&:first-child {
