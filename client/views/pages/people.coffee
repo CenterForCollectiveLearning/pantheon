@@ -1,18 +1,24 @@
+numberWithCommas = (x) ->
+  parts = x.toString().split(".")
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  parts.join "."
+
 Template.people.helpers 
   name: -> 
   	name = People.findOne name: Session.get("name")
 
 Template.person.helpers
   gender: ->
-  	if this.gender is "Male" then "He" else "She"
-  occupation: -> this.occupation.capitalize()
+  	if @gender is "Male" then "He" else "She"
+  occupation: -> @occupation.capitalize()
+  pageviews: ->
+    numberWithCommas(@TotalPageViews)
 
 
 Template.person.events
   "mouseenter .country-name": -> $(".people-accordion").accordion('activate', 2)
   "mouseenter .occupation": -> $(".people-accordion").accordion('activate', 0)
   "mouseenter .birthyear": -> $(".people-accordion").accordion('activate', 1)
-
 
 Template.person_name.settings = ->
   position: "bottom"
