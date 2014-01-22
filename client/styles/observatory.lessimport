@@ -427,3 +427,6 @@ g#countries > path {
     margin-bottom: 5px;
 }
 
+#viz{
+	text-align:center;
+}

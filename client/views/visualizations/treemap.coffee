@@ -3,16 +3,28 @@ treeProps =
   height: 560
 
 Template.treemap_svg.properties = treeProps
-# Green, red, brown, yellow, beige, pink, blue, orange
+
+#colors
+red = "#EB7151"
+seafoam = "#1AD6D6"
+limegreen = "#9AC22B"
+lightpine = "#63C189"
+pink = "#EB6D8D"
+purple = "#9F51EB"
+manila = "#E0D160"
+blue = "#6B77F2"
+
 color_domains = d3.scale.ordinal()
-  .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS"])
-  .range(["#468966", "#8e2800", "#864926", "#ffb038", "#fff0a5", "#bc4d96", "#1be6ef", "#ff5800"])
+  .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS", "Art", "Lit", "Music", "Phil", "Science"])
+  .range([red, lightpine, blue, manila, purple, pink, seafoam, limegreen, lightpine, blue, limegreen, manila, seafoam])
+  # .range(["#468966", "#8e2800", "#864926", "#ffb038", "#fff0a5", "#bc4d96", "#1be6ef", "#ff5800"])
 color_languages = d3.scale.ordinal()
   .domain(["Afro-Asiatic", "Altaic", "Austro-Asiatic", "Austronesian", "Basque", "Caucasian", "Creoles and pidgins", "Dravidian", "Eskimo-Aleut", "Indo-European", "Niger-Kordofanian", "North American Indian", "Sino-Tibetan", "South American Indian", "Tai", "Uralic"])
   .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#53a9f1", "#79BD9A", "#A69E80", "#ECD078", "#D28574", "#E7EDEA", "#CEECEF", "#912D1D", "#DE7838", "#59AB6D"])
 color_countries = d3.scale.ordinal()
   .domain(["Africa", "Asia", "Europe", "North America", "South America", "Oceania", "Unknown"])
-  .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#D1BB5A"])
+  .range(["#EB7151", "#63C189", "#6B77F2", "#E0D160", "#9F51EB", "#EB6D8D", "#1AD6D6", "#9AC22B"])
+  # .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#D1BB5A"])
 
 Template.treemap_svg.rendered = ->
   
