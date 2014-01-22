@@ -2,7 +2,7 @@ teamMembers = [
   name: "César A. Hidalgo"
   photo: "images/cesar_hidalgo.png"
   description: "Principal Investigator"
-  role: ["Content", "Data", "Design"]
+  role: ["Concept", "Data", "Design"]
   media:
     personal: "http://chidalgo.com/"
     twitter: "https://twitter.com/cesifoti"
