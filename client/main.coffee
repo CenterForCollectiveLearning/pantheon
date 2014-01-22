@@ -329,18 +329,16 @@ Template.sharing_options.events =
 
 Template.spinner.rendered = ->
   unless Session.get("showSpinner")
-    console.log "RENDERING SPINNER"
-    # $("header").css "border-bottom-width", "0px"
-    # NProgress.configure
-    #   minimum: 0.2
-    #   trickleRate: 0.1
-    #   trickleSpeed: 500
-    # NProgress.start()
+    NProgress.configure
+      minimum: 0.2
+      trickleRate: 0.1
+      trickleSpeed: 500
+
+    NProgress.start()
   Session.set "showSpinner", true
 
 Template.spinner.destroyed = ->
-  # NProgress.done()
-  # $("header").css "border-bottom-width", "3px"
+  NProgress.done()
   Session.set "showSpinner", false
 
 # Template.sharing_options.events =
