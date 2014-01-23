@@ -153,11 +153,15 @@ header {
     
 	    	&:hover { 
 	    		font-weight: bold;
+	    		background: @color_grey;
+	    		color: @color_pantheon_black;
 	    	}
 	    }
     
 	    .selected_section a {
 	    	font-weight: bold;
+	    	background: @color_pantheon_black;
+	    	color: @color_beige !important;
 	    }
 
 	    .pull-left {

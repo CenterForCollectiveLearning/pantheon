@@ -313,7 +313,8 @@ div.buttons {
 		border: 1px solid rgba(0, 0, 0, 0.75);			
 
 		&.active {
-			background-color: @color_gold;			
+			background-color: @color_pantheon_black;
+			color: @color_beige;			
 		}
 
 		&:first-child {

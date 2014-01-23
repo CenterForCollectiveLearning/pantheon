@@ -51,7 +51,7 @@ teamMembers = [
   media:
     personal: "http://deepakjagdish.com/"
     twitter: "https://twitter.com/dj247"
-    linkedin: "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
+    linkedin: "http://www.linkedin.com/pub/deepak-jagdish/5/7a/a20"
 ,
   name: "Andrew Mao"
   photo: "images/andrew_mao.png"
