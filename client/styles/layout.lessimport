@@ -107,6 +107,10 @@ body {
 	color: black;
 }
 
+header.navbar-fixed-top{
+	z-index:10;
+}
+
 header {
 	// border-bottom: 3px solid @color_gold;
 	position: fixed !important;

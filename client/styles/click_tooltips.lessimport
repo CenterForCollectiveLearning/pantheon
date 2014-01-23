@@ -19,7 +19,7 @@ div.d3plus_tooltip {
 }
 
 div.d3plus_tooltip_container {
-  background-color: #000;
+  background-color: @color_beige;
   width: 1000px;
   height: 450px;
   padding: 15px;
@@ -37,12 +37,10 @@ div.d3plus_tooltip_curtain {
   position: fixed;
   color: white;
   top: 0px;
-  right: 0px;
-  bottom: 0px;
   left: 0px;
   height: 100%;
   width: 100%;
-  opacity: 0.5;
+  opacity: 0.9;
   z-index: 499;
 }
 
@@ -62,6 +60,7 @@ div.d3plus_tooltip_body {
       text-align: center;
       padding: 10px 0;
       font-weight: 300;
+      color: @color_pantheon_black;
     }
 
     img {
@@ -103,11 +102,10 @@ div.d3plus_tooltip_small div.d3plus_tooltip_title {
 div.d3plus_tooltip_large div.d3plus_tooltip_title {
   font-size: 2em;
   line-height: 1em;
-  font-weight: 300;
+  font-weight: bold;
   padding-bottom: 1em;
   text-align: center;
-  text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
-  color: @color_gold;
+  color: @color_pantheon_black;
   border-bottom: 1px solid @color_gold;
 }
 
@@ -117,9 +115,8 @@ div.d3plus_tooltip_large div.d3plus_tooltip_subtitle {
   font-weight: 300;
   padding-bottom: 1em;
   text-align: center;
-  text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
   margin-top: -1.5em;
-  color: @color_gold;
+  color: @color_pantheon_black;
 }
 
 div.d3plus_tooltip_icon {
