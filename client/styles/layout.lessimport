@@ -124,6 +124,7 @@ header {
 	.navbar-inner {
 	    border: 0;
 	    padding: 0;
+	    padding-bottom: 30px;
 	    background: @color_beige;
 	    // TODO Change box shadows in bootstrap source
 	    -webkit-box-shadow: none !important;
