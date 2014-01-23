@@ -430,3 +430,34 @@ g#countries > path {
 #viz{
 	text-align:center;
 }
+
+.spinner{
+	font-size: 4em;
+}
+
+.onedot {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.0s;
+}
+
+.twodot {
+	padding-left: 10px;
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.2s;
+}
+
+.threedot {
+	padding-left: 10px;
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.3s;
+}
+
+@-webkit-keyframes dot {
+      0% { opacity: 0; }
+     50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
