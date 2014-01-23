@@ -162,7 +162,7 @@ div.ui-slider {
 	// &:hover { .opacity(1.0); }
 	background: transparent;
 	div.ui-slider-range {
-		background: black;
+		background: @color_pantheon_black;
 	}
 
 	span.ui-slider-tic {
@@ -436,29 +436,11 @@ g#countries > path {
 	font-size: 4em;
 }
 
-.onedot {
-    opacity: 0;
-    -webkit-animation: dot 1.3s infinite;
-    -webkit-animation-delay: 0.0s;
+// Custom treemap styling
+rect#svgbg{
+	fill:@color_pantheon_black;
 }
 
-.twodot {
-	padding-left: 10px;
-    opacity: 0;
-    -webkit-animation: dot 1.3s infinite;
-    -webkit-animation-delay: 0.2s;
+g text{
+	fill:white;
 }
-
-.threedot {
-	padding-left: 10px;
-    opacity: 0;
-    -webkit-animation: dot 1.3s infinite;
-    -webkit-animation-delay: 0.3s;
-}
-
-@-webkit-keyframes dot {
-      0% { opacity: 0; }
-     50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
