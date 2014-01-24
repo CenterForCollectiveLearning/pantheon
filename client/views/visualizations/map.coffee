@@ -172,8 +172,8 @@ Template.map_svg.rendered = ->
       .append("rect")
         .attr("width", vars.svg_width)
         .attr("height", vars.svg_height)
-        .attr("fill", "#9EAEB3")
-        .attr("fill-opacity", 0.5)
+        .attr("fill", "#f9f6e1")
+        .attr("fill-opacity", 0)
 
     svg = d3.select(@firstNode)
         .attr("width", vars.svg_width)

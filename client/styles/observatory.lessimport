@@ -441,6 +441,6 @@ rect#svgbg{
 	fill:@color_pantheon_black;
 }
 
-g text{
+.treemap g text{
 	fill:white;
 }
