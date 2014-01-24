@@ -17,6 +17,14 @@ People._ensureIndex
   industry: 1
   occupation: 1
 
+People._ensureIndex
+  HPI: 1
+  birthyear: 1
+  countryCode: 1
+  domain: 1
+  industry: 1
+  occupation: 1
+
 # Domain Exports
 # Checked: db.people.find({ numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, domain: 'ARTS' }, {_id: 0, countryCode: 1, countryName: 1, continent: 1}).explain()
 People._ensureIndex
@@ -43,6 +51,31 @@ People._ensureIndex
   countryName: 1
   continent: 1
 
+People._ensureIndex
+  HPI: 1
+  birthyear: 1
+  domain: 1
+  countryCode: 1
+  countryName: 1
+  continent: 1
+
+People._ensureIndex
+  HPI: 1
+  birthyear: 1
+  industry: 1
+  countryCode: 1
+  countryName: 1
+  continent: 1
+
+People._ensureIndex
+  HPI: 1
+  birthyear: 1
+  occupation: 1
+  countryCode: 1
+  countryName: 1
+  continent: 1
+
+
 
 # 
 # MATRICES
@@ -53,6 +86,14 @@ People._ensureIndex
 # Checked: db.people.find({ numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, gender: 'Female' }, {_id: 0, countryCode: 1, industry: 1}).explain()
 People._ensureIndex
   numlangs: 1
+  birthyear: 1
+  gender: 1
+  countryCode: 1
+  industry: 1
+  _id: 1
+
+People._ensureIndex
+  HPI: 1
   birthyear: 1
   gender: 1
   countryCode: 1
@@ -82,6 +123,27 @@ People._ensureIndex
   _id: 1
   birthyear: 1
   numlangs: 1
+  occupation: 1
+  countryCode: 1
+
+@domain_countryCode =
+  _id: 1
+  birthyear: 1
+  HPI: 1
+  domain: 1
+  countryCode: 1
+
+@industry_countryCode =
+  _id: 1
+  birthyear: 1
+  HPI: 1
+  industry: 1
+  countryCode: 1
+
+@occupation_countryCode =
+  _id: 1
+  birthyear: 1
+  HPI: 1
   occupation: 1
   countryCode: 1
 
