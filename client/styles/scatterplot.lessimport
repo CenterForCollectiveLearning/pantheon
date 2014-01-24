@@ -1,6 +1,6 @@
 div.scatterplot-container {
 	padding: 0.5em 0.5em 0 0.5em;
-	background-color: black;
+	background-color: @color_beige;
 }
 
 path.circle {

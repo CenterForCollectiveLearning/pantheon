@@ -125,7 +125,7 @@ Template.ranking_table.rendered = ->
     when entity is "people" and dataset is "OGC" then [[12, "desc"], [1, "asc"]] 
     else [[6, "desc"], [1, "asc"]]  # Multi-column sort on L then name
 
-  $("#ranking").dataTable
+  oTable = $("#ranking").dataTable
     sScrollY: "600px"
     aoColumns: aoColumns
     aaData: data
@@ -150,5 +150,8 @@ Template.ranking_table.rendered = ->
       bSortable: false
       aTargets: [0]
     ]
+
+  $(window).bind "resize", ->
+    oTable.fnAdjustColumnSizing()
 
   $(@find("select")).chosen()
