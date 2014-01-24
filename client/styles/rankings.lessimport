@@ -46,15 +46,17 @@ div.column-descriptions {
 }
 
 table {
-	width: 100%;
-	background-color: rgba(0, 0, 0, 0.75);;
+	background-color: rgba(0, 0, 0, 0.75);
+	thead{
+		background-color: @color_beige;
+	}
 	tbody {
 		tr {
 			&.odd {
-				background-color: #DDD;
+				background-color: #F9F2C2;
 			}
 			&.even {
-				background-color: #FFF;
+				background-color: @color_beige;
 			}
 			td {
 				color: black;

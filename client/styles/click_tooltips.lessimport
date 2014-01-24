@@ -276,5 +276,4 @@ div.d3plus_tooltip_html {
   vertical-align: top;
   overflow-y: auto;
   padding: 0px 12px;
-  color: #FFF;
 }

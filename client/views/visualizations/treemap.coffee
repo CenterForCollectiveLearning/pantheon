@@ -14,9 +14,18 @@ purple = "#9F51EB"
 manila = "#E0D160"
 blue = "#6B77F2"
 
+boilingOrange = "#F29A2E"
+chiliRed = "#C14925"
+sapGreen = "#587507"
+brickBrown = "#72291D"
+seaGreen = "#46AF69"
+salmon = "#EB7151"
+manganeseBlue = "#129B97"
+magenta = "#822B4C"
+
 color_domains = d3.scale.ordinal()
   .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS", "Art", "Lit", "Music", "Phil", "Science"])
-  .range([red, lightpine, blue, manila, purple, pink, seafoam, limegreen, lightpine, blue, limegreen, manila, seafoam])
+  .range([salmon, boilingOrange, brickBrown, sapGreen, chiliRed, seaGreen, manganeseBlue, magenta, limegreen, lightpine, blue, limegreen, manila, seafoam])
   # .range(["#468966", "#8e2800", "#864926", "#ffb038", "#fff0a5", "#bc4d96", "#1be6ef", "#ff5800"])
 color_languages = d3.scale.ordinal()
   .domain(["Afro-Asiatic", "Altaic", "Austro-Asiatic", "Austronesian", "Basque", "Caucasian", "Creoles and pidgins", "Dravidian", "Eskimo-Aleut", "Indo-European", "Niger-Kordofanian", "North American Indian", "Sino-Tibetan", "South American Indian", "Tai", "Uralic"])
