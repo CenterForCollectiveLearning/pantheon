@@ -4,74 +4,32 @@ numberWithCommas = (x) ->
   parts.join "."
 
 Template.people.helpers 
-  name: -> 
-  	name = People.findOne name: Session.get("name")
+  name: -> People.findOne name: Session.get("name")
 
 Template.person.helpers
-  gender: ->
-  	if @gender is "Male" then "He" else "She"
+  gender: -> if @gender is "Male" then "He" else "She"
+  L_star: -> @L_star.toFixed(2)
+  hpi: -> @HPI.toFixed(2)
+  stdDevPageViews: -> (@StdDevPageViews / @TotalPageViews).toFixed(2)
   occupation: -> @occupation.capitalize()
   pageviews: ->
     numberWithCommas(@TotalPageViews)
-
-
-Template.person.events
-  "mouseenter .country-name": -> $(".people-accordion").accordion('activate', 2)
-  "mouseenter .occupation": -> $(".people-accordion").accordion('activate', 0)
-  "mouseenter .birthyear": -> $(".people-accordion").accordion('activate', 1)
-
-Template.person_name.settings = ->
-  position: "bottom"
-  limit: 5
-  rules: [
-    token: ""  # No token (TODO if not provided, assume none)
-    collection: People
-    field: "name"
-    template: Template.user_pill
-  ]
-
-Template.people_accordion.events = 
-  "mouseenter li.person": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    $(srcE).find("div.top-info, div.bottom-info").addClass("hovered")
-
-  "mouseleave li.person": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    $(srcE).find("div.top-info, div.bottom-info").removeClass("hovered")
-
-Template.people_accordion.rendered = ->
-  accordion = $(".people-accordion")
-  accordion.accordion
-    active: 0
-    collapsible: false
-    heightStyle: "content"
-    fillSpace: false
-
-Template.ranking_person.helpers
-  currentPerson: -> this._id.equals(People.findOne({"name": Session.get("name")})._id)
-
-Template.person.birthday = ->
-  birthday = (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
-  birthday
-
-Template.people_accordion.helpers
-  occupation: -> this.occupation.capitalize() + "s"
-  time_period: -> this.birthyear
-  # TODO Expose global date mapping, if notable time period or decade then state
-  personImports: -> 
-    Session.set "personID", this._id
-    Imports.find()
+  birthday: -> (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
   occupationPeople: -> 
-    Session.set "personID", this._id
-    Session.set "personOccupation", this.occupation
-    console.log "occupation", OccupationPeople.find().count()
+    Session.set "personID", @_id
+    Session.set "personOccupation", @occupation
     OccupationPeople.find()
   birthyearPeople: -> 
-    Session.set "personID", this._id
-    Session.set "personBirthyear", this.birthyear
+    Session.set "personID", @_id
+    Session.set "personBirthyear", @birthyear
     BirthyearPeople.find()
-    # People.find({birthyear: this.birthyear}, {limit: 5})
   countryPeople: -> 
-    Session.set "personID", this._id
-    Session.set "personCountry", this.countryName
+    Session.set "personID", @_id
+    Session.set "personCountry", @countryName
     CountryPeople.find()
+  occupationPeopleCount: -> People.find(occupation: @occupation).count()  # TODO extract all counts into one publication
+  birthyearPeopleCount: -> People.find(birthyear: @birthyear).count()
+  countryPeopleCount: -> People.find(countryName: @countryName).count()
+
+Template.ranking_person.helpers
+  currentPerson: -> @_id.equals(People.findOne({"name": Session.get("name")})._id)

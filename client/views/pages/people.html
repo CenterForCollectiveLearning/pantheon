@@ -6,20 +6,77 @@
 
 <template name="person">
 	<div class="page-top">
-		<div class="primary-text name">
-			{{name}} </br>
-			{{>person_name}}
-		</div>
 	</div>
 	<div id="page" class="container-fluid person-page">
 		<div class="row-fluid">
-			<div class="page-middle trans-bg body-padding span8 offset2">
-				<section class="description">
-					<b class="name">{{name}}</b> was a <b class="occupation">{{occupation}}</b> born in <b class="birthcity">{{birthcity}}</b>, <b class="country-name">{{countryName}}</b> in <b class="birthyear">{{birthday}}</b>. <b class="gender">{{gender}}</b> is featured in <b class="numlangs">{{numlangs}}</b> different language editions of Wikipedia and has received <b>{{pageviews}}</b> combined Pageviews since 2008. 
-				</section>
-				<section class="ranking">
-					{{> people_accordion}}
-				</section>
+			<div class="page-left span2 offset1">
+			</div>
+			<div class="page-middle span6">
+				<div class="person-top">
+					<span class="person-name">
+						{{name}}
+					</span>
+					<span class="person-hpi">
+						HDI = {{hpi}}
+					</span>
+				</div>
+				<div class="person-body">
+					<div class="person-body-left">
+						<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/>
+					</div>
+					<div class="person-body-right">
+						<div class="person-description">
+							<p>{{name}} was a <b class="occupation">{{occupation}}</b> born in <b class="birthcity">{{birthcity}}</b>, <b class="country-name">{{countryName}}</b> in <b class="birthyear">{{birthday}}</b>.</p>
+
+							<p><b class="gender">{{gender}}</b> is featured in <b class="numlangs">{{numlangs}}</b> different language editions of Wikipedia and has received <b>{{pageviews}}</b> combined Pageviews since 2008.</p>
+						</div>
+						<div class="person-metrics">
+							<div class="person-metrics-title">Pantheon Metrics</div>
+							<div class="person-metrics-body">
+								<div class="person-metrics-body-left">
+									<ul>
+									    <li>L (language editions):</li>
+									    <li>PV (page views):</li>
+									    <li>CV (coeff. of variation):</li>
+									    <li>L* (effective L):</li>
+								    </ul>
+								</div>
+								<div class="person-metrics-body-right">
+    								<ul>
+									    <li>{{numlangs}}</li>
+									    <li>{{pageviews}}</li>
+									    <li>{{stdDevPageViews}}</li>
+									    <li>{{L_star}}</li>
+								    </ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="person-bottom">
+					<div class="person-ranking-title">
+						Ranking Among...
+					</div>
+					<div class="person-ranking-cards">
+						<div class="card shared-occupation">
+							{{occupation}}
+							<div class="count">{{occupationPeopleCount}}</div>
+						</div>
+						<div class="card shared-birthyear">
+							People b. {{birthyear}}
+							<div class="count">{{birthyearPeopleCount}}</div>
+						</div>
+						<div class="card shared-birthplace">
+							People b. {{countryName}}
+							<div class="count">{{countryPeopleCount}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="page-right span2">
+				{{#each comparedRankingPeople}}
+				  {{> ranking_person}}
+				{{/each}}
 			</div>
 		</div>
 	</div>

@@ -2,6 +2,95 @@
 // People page
 //
 
+div.person-top {
+    background-color: @color_pantheon_black;
+    color: @color_beige;
+    text-transform: uppercase;
+    height: 50px;
+    line-height: 70px;
+    font-size: 18px;
+    padding-left: 6px;
+
+    span.person-name {
+    }
+
+    span.person-hpi {
+        float: right;
+    }
+}
+
+div.person-body {
+    font-size: 14px;
+    // border: 1px solid black;
+    div.person-body-left {
+        float: left;
+        width: 40%;
+    }
+    div.person-body-right {
+        float: right;
+        width: 60%;
+        padding: 5px;
+        border-right: 1px solid black;
+        div.person-description {
+        }
+        div.person-metrics {
+            div.person-metrics-title {
+                text-transform: uppercase;
+                font-weight: bold;
+                border-bottom: 1px solid @color_pantheon_black;
+            }
+            div.person-metrics-body {
+                div {
+                    float: left;
+                }
+                ul {
+                    list-style-type: none;
+                    li {
+                        list-style-type: none;
+                        text-align: left !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+div.person-bottom {
+    clear: both;
+    div.person-ranking-title {
+        text-align: center;
+        text-transform: uppercase;
+        background-color: @color_pantheon_black;
+        color: @color_beige;
+    }
+    div.person-ranking-cards {
+        div.card {
+            width: 33.333333%;
+            height: 125px;
+            text-align: center;
+            text-transform: uppercase;
+            float: left;
+            padding: 20px 30px;
+            font-weight: bold;
+            border-bottom: 8px solid @color_beige;
+
+            &:hover {
+                border-bottom: 8px solid @color_pantheon_black;
+            }
+        }
+
+        div.shared-occupation {
+            background-color: #4ede8a;
+        }
+        div.shared-birthyear {
+            background-color: #8ccdf4;
+        }
+        div.shared-birthplace {
+            background-color: #f7b18b;
+        }
+    }
+}
+
 .name {
     input {
         background-color: transparent;
