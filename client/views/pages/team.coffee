@@ -27,7 +27,7 @@ teamMembers = [
     personal: "http://www.kevinzenghu.com"
     twitter: "https://www.twitter.com/kevinzenghu"
     linkedin: "http://www.linkedin.com/pub/kevin-hu/58/9a7/404"
-  dates: "Fall 2013 - present"
+  dates: "2013 - present"
 ,
   name: "Ali Almossawi"
   photo: "images/ali_almossawi.jpg"
