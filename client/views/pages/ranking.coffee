@@ -1,3 +1,15 @@
+toMillions = (x) ->
+  String((x/1000000).toFixed(0)) + " M"
+
+toThousands = (x) ->
+  String((x/1000).toFixed(0)) + " K"
+
+fnShowHide = (iCol) ->  
+  # Get the DataTables object again - this is not a recreation, just a get of the object 
+  oTable = $("#ranking").dataTable()
+  bVis = oTable.fnSettings().aoColumns[iCol].bVisible
+  oTable.fnSetColumnVis iCol, (if bVis then false else true)
+
 Template.rankings.columnDescriptions = ->
   entity = Session.get "entity"
   switch entity
@@ -20,7 +32,7 @@ Template.ranking_table.rendered = ->
   switch entity
     when "countries"
       data = _.map CountriesRanking.find().fetch(), (c) ->
-        [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, c.HCPI.toFixed(2)]
+        [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, c.HCPI.toFixed(0)]
       aoColumns = [
         sTitle: "Rank"
       ,
@@ -47,7 +59,7 @@ Template.ranking_table.rendered = ->
       data = _.map collection, (d) ->
         p = People.findOne d._id
         if dataset is "OGC"
-          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(2), p.TotalPageViews, p.PageViewsEnglish, p.PageViewsNonEnglish, p.StdDevPageViews.toFixed(2), p.HPI.toFixed(2)]
+          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(0)]
         else
           [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
 
