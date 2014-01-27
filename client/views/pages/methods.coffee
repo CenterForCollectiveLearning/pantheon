@@ -1,6 +1,6 @@
 u = "https://docs.google.com/spreadsheet/pub?key=0AgfOXjbH2KOddHR3c0JDbGpLa3E1UkVpUjRhaE5JeEE&single=true&gid=2&range=A1%3AD89&output=csv"
 
-Template.data.rendered = ->
+Template.methods.rendered = ->
   renderTree u
   w = $(window)
   b = $(document.body)
@@ -179,7 +179,7 @@ renderTree = (url) ->
     root.children.forEach toggleAll
     update root
 
-Template.data.events =
+Template.methods.events =
   "click img": (d) ->
      srcE = (if d.srcElement then d.srcElement else d.target)
      Session.set "showImageFullscreen", true

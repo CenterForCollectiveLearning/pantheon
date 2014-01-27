@@ -196,9 +196,9 @@ leftSections = [
 ]
 
 rightSections = [
-  section: "Data"
-  template: "data"
-  url: "/data"
+  section: "Methods"
+  template: "methods"
+  url: "/methods"
 ,
   
   # {
@@ -206,9 +206,9 @@ rightSections = [
   #     template: "publications",
   #     url: "/publications"
   # },
-  section: "References"
-  template: "references"
-  url: "/references"
+  section: "Vision"
+  template: "vision"
+  url: "/vision"
 ,
   section: "Team"
   template: "team"

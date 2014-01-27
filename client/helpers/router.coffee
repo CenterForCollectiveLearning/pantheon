@@ -75,8 +75,8 @@ Router.map ->
       Session.set "dataset", "OGC"
       if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L" 
 
-  @route "data",
-    path: "/data"
+  @route "methods",
+    path: "/methods"
     data: ->
       Session.set "page", @template
     action: ->
@@ -95,7 +95,7 @@ Router.map ->
   #     window.scrollTo(0, $('#'+point).position().top-120)
   #     window.history.pushState(null, null, '/data/#'+point)
 
-  @route "faq",
+  @route "vision",
     data: ->
       Session.set "page", @template
 
