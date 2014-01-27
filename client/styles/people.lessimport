@@ -120,7 +120,8 @@ div.body-padding {
 
     a {
         text-decoration: none;
-        color: @color_gold;
+        color: @color_pantheon_black;
+        font-weight: bold;
         &:hover { text-decoration: underline; }
     }
 }
