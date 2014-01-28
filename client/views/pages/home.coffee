@@ -1,10 +1,10 @@
 narratives = [
-#     domain: "ABOUT"
-#     title: "Visualizing Culture"
-#     description: "A Guided Tour of the Observatory"
-#     image: "observatory_script.jpg"
-#     tutorialType: "ogc"
-# ,
+    domain: "ABOUT"
+    title: "Visualizing Culture"
+    description: "A Guided Tour of the Observatory"
+    image: "pantheon-blur.jpg"
+    tutorialType: "ogc"
+,
     domain: "ARTS"
     title: "Explore the Renaissance"
     description: "Discover where great artists made their cultural impact."
@@ -29,6 +29,10 @@ Template.home.rendered = ->
         prevText: "Previous"
         nextText: "Next"
         )
+
+Template.home.events = 
+    "click #divein": (d) ->
+        Router.go "/explore"
 
 # Template.home.destroyed = ->
 #     $(".logo").removeClass "gold-border"

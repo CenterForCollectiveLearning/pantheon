@@ -11,11 +11,11 @@
             <div class="span8">   
                 <div class="page-title">Featured Narratives</div>
                 {{>narratives}}
-                <div class="landing-section-button">Launch Narrative</div>
             </div>
-            <div class="span4">   
+            <div id="divein" class="span4">   
                 <div class="page-title">Explore On My Own</div>
-                <div class="description">Dive in immediately and explore the different dimensions of Pantheon by yourself!</div>
+                <!-- <div class="description">Dive in immediately and start exploring Pantheon!</div> -->
+                <img class="narrative-image" src="/treemap.jpg"/>
                 <div class="landing-section-button">Dive In</div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             </div>
             <div class="span4">   
                 <div class="page-title">Data</div>
-                <div class="description black-border-bottom">Learn about how we <a class="word" href="/data">collected</a>, <a class="word" href="/data">organized</a>, and <a class="word" href="/data">validated</a> our data.</div>
+                <div class="description black-border-bottom">Learn about how we <a class="word" href="/methods#methods">collected</a>, <a class="word" href="/methods#data_source_1">organized</a>, and <a class="word" href="/methods#validation">validated</a> our data.</div>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 
 <template name="narrative">
     <li>
-        <div class="description">{{description}}</div>
         <img class="narrative-image" src="/{{image}}"/>
+        <div data-tutorial-type="{{tutorialType}}" class="landing-section-button learn-more">Launch Narrative</div>
     </li>
 </template>

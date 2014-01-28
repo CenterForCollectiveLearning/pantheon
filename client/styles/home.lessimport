@@ -15,11 +15,18 @@ div.description {
 		font-weight: bold;
 		text-decoration: none;
 		color: black;
+		&:hover {
+ 			text-decoration:underline;
+ 		}
 	}
 
 	&.black-border-bottom {
 		border-bottom: 1px solid black;
 	}
+}
+
+#divein{
+	cursor: pointer;
 }
 
 div.landing-section-button {
@@ -31,6 +38,7 @@ div.landing-section-button {
 	font-size: 18px;
 	text-align: center;
 	margin-bottom: 40px;
+	cursor: pointer;
 }
 
 div.section-guide {
