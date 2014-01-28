@@ -186,6 +186,9 @@ div.ui-slider {
 
 .accordion {
 	font-family: 'Lato' !important;
+	a.active{
+		font-weight:bold;
+	}
     h3.app {
     	border-radius: 2px;
     	padding: 5px;

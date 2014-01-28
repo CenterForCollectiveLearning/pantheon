@@ -38,18 +38,27 @@ Template.accordion.rendered = ->
     fillSpace: false
   # accordion.accordion "resize"
 
+Template.accordion.country_treemap_active = -> if Session.equals("vizMode", "country_exports") then "active" else ""
+Template.accordion.domain_treemap_active = -> if Session.equals("vizMode", "domain_exports_to") then "active" else ""
+Template.accordion.matrix_active = -> if Session.equals("vizMode", "matrix_exports") then "active" else ""
+Template.accordion.cvc_active = -> if Session.equals("vizMode", "country_vs_country") then "active" else ""
+Template.accordion.dvd_active = -> if Session.equals("vizMode", "domain_vs_domain") then "active" else ""
+Template.accordion.map_active = -> if Session.equals("vizMode", "map") then "active" else ""
+
 Template.accordion.events = 
   "click li a": (d) ->
+    culturalDomains = ['ARTS', 'HUMANITIES', 'BUSINESS & LAW', 'EXPLORATION', 'INSTITUTIONS', 'PUBLIC FIGURE', 'SCIENCE & TECHNOLOGY', 'SPORTS']
     srcE = (if d.srcElement then d.srcElement else d.target)
     vizType = $(srcE).data "viz-type"
     vizMode = $(srcE).data "viz-mode"
-
     # Parameters depend on vizMode (e.g countries -> languages for exports)
     [paramOne, paramTwo] = IOMapping[vizMode]["in"]
     unless paramOne is "all"
       paramOne = Session.get(paramOne)
     unless paramTwo is "all"
       paramTwo = Session.get(paramTwo)
+    if vizMode in ["domain_exports_to","map"] # to randomize the domain when you click on domains
+      paramOne = getRandomFromArray(culturalDomains)
 
     # Use session variables as parameters for a viz type change
     Router.go "explore",
