@@ -86,15 +86,6 @@ Router.map ->
       id = "#" + hash
       Session.set("pageScrollID", id)
 
-  # @route "data",
-  #   path: "/data/:header"
-  #   template: 'data'
-  #   after: ->
-  #     Session.set "page", @template
-  #     point = @params.header
-  #     window.scrollTo(0, $('#'+point).position().top-120)
-  #     window.history.pushState(null, null, '/data/#'+point)
-
   @route "faq",
     data: ->
       Session.set "page", @template

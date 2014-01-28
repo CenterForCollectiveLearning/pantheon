@@ -89,6 +89,8 @@ Deps.autorun ->
   console.log "entity: " + entity
   console.log "page: " + page
   console.log "dataset: " + dataset
+  console.log "similar people ranking property: ", + 
+  console.log "similar people ranking value: ", + 
   
   #
   #        TODO this is probably not the right way to check if no data should be loaded.
@@ -154,11 +156,10 @@ Deps.autorun ->
     else if page is "people"
       console.log personOccupation, personBirthyear, personCountry
       if personID and personOccupation and personBirthyear and personCountry
-        Meteor.subscribe("person_imports", personID)
+         Meteor.subscribe("person_imports", personID)
         occDataSub = Meteor.subscribe("occupation_pub", personID, personOccupation, onReady)
         birthyearDataSub = Meteor.subscribe("birthyear_pub", personID, personBirthyear, onReady)
         countryDataSub = Meteor.subscribe("country_pub", personID, personCountry, onReady)
-
 #
 # Subscription for tooltips on hover
 #  

@@ -1,137 +1,135 @@
+<!-- TODO: Include loader -->
+
+
 <template name="people">
-	{{#with name}}
-  	    {{> person}}
+	{{#with person}}
+	{{> person}}
 	{{/with}}
 </template>
 
 <template name="person">
 	<div class="page-top">
 	</div>
-	<div id="page" class="container-fluid person-page">
-		<div class="row-fluid">
-			<div class="page-left span2 offset1">
+	<div id="page" class="person-page">
+		<div class="page-left">
+		</div>
+		<div class="page-middle">
+			<div class="person-top">
+				<span class="person-name">
+					{{name}}
+				</span>
+				<span class="person-hpi">
+					HDI = {{hpi}}
+				</span>
 			</div>
-			<div class="page-middle span6">
-				<div class="person-top">
-					<span class="person-name">
-						{{name}}
-					</span>
-					<span class="person-hpi">
-						HDI = {{hpi}}
-					</span>
+			<div class="person-body">
+				<div class="person-body-left">
+					<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/>
 				</div>
-				<div class="person-body">
-					<div class="person-body-left">
-						<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/>
-					</div>
-					<div class="person-body-right">
-						<div class="person-description">
-							<p>{{name}} was a <b class="occupation">{{occupation}}</b> born in <b class="birthcity">{{birthcity}}</b>, <b class="country-name">{{countryName}}</b> in <b class="birthyear">{{birthday}}</b>.</p>
+				<div class="person-body-right">
+					<div class="person-description">
+						<p>{{name}} was a <b class="occupation">{{occupation}}</b> born in <b class="birthcity">{{birthcity}}</b>, <b class="country-name">{{countryName}}</b> in <b class="birthyear">{{birthday}}</b>.</p>
 
-							<p><b class="gender">{{gender}}</b> is featured in <b class="numlangs">{{numlangs}}</b> different language editions of Wikipedia and has received <b>{{pageviews}}</b> combined Pageviews since 2008.</p>
-						</div>
-						<div class="person-metrics">
-							<div class="person-metrics-title">Pantheon Metrics</div>
-							<div class="person-metrics-body">
-								<div class="person-metrics-body-left">
-									<ul>
-									    <li>L (language editions):</li>
-									    <li>PV (page views):</li>
-									    <li>CV (coeff. of variation):</li>
-									    <li>L* (effective L):</li>
-								    </ul>
-								</div>
-								<div class="person-metrics-body-right">
-    								<ul>
-									    <li>{{numlangs}}</li>
-									    <li>{{pageviews}}</li>
-									    <li>{{stdDevPageViews}}</li>
-									    <li>{{L_star}}</li>
-								    </ul>
-								</div>
+						<p><b class="gender">{{gender}}</b> is featured in <b class="numlangs">{{numlangs}}</b> different language editions of Wikipedia and has received <b>{{pageviews}}</b> combined Pageviews since 2008.</p>
+					</div>
+					<div class="person-metrics">
+						<div class="person-metrics-title">Pantheon Metrics</div>
+						<div class="person-metrics-body">
+							<div class="person-metrics-body-left">
+								<ul>
+									<li>L (language editions):</li>
+									<li>PV (page views):</li>
+									<li>CV (coeff. of variation):</li>
+									<li>L* (effective L):</li>
+								</ul>
+							</div>
+							<div class="person-metrics-body-right">
+								<ul>
+									<li>{{numlangs}}</li>
+									<li>{{pageviews}}</li>
+									<li>{{stdDevPageViews}}</li>
+									<li>{{L_star}}</li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="person-bottom">
-					<div class="person-ranking-title">
-						Ranking Among...
+			</div>
+			<div class="person-bottom">
+				<div class="person-ranking-title">
+					Ranking Among...
+				</div>
+				<div class="person-ranking-cards">
+					<div class="card shared-occupation" data-ranking-property="occupation">
+						{{occupation}}
+						<div class="count">{{occupationPeopleCount}}</div>
 					</div>
-					<div class="person-ranking-cards">
-						<div class="card shared-occupation">
-							{{occupation}}
-							<div class="count">{{occupationPeopleCount}}</div>
-						</div>
-						<div class="card shared-birthyear">
-							People b. {{birthyear}}
-							<div class="count">{{birthyearPeopleCount}}</div>
-						</div>
-						<div class="card shared-birthplace">
-							People b. {{countryName}}
-							<div class="count">{{countryPeopleCount}}</div>
-						</div>
+					<div class="card shared-birthyear" data-ranking-property="birthyear">
+						People b. {{birthyear}}
+						<div class="count">{{birthyearPeopleCount}}</div>
+					</div>
+					<div class="card shared-birthplace" data-ranking-property="birthplace">
+						People b. {{countryName}}
+						<div class="count">{{countryPeopleCount}}</div>
 					</div>
 				</div>
 			</div>
-			<div class="page-right span2">
-				{{#each comparedRankingPeople}}
-				  {{> ranking_person}}
-				{{/each}}
-			</div>
+		</div>
+		<div class="page-right">
 		</div>
 	</div>
 </template>
 
-<template name="person_name">
-	{{!inputAutocomplete settings id="msg" class="primary-text input-xlarge" placeholder="Chat..."}}
-</template>
+	<template name="person_name">
+		{{!inputAutocomplete settings id="msg" class="primary-text input-xlarge" placeholder="Chat..."}}
+	</template>
 
-<template name="user_pill">
-	<div class="primary-text name">
-	    {{name}}
-	</div>
-</template>
+	<template name="user_pill">
+		<div class="primary-text name">
+			{{name}}
+		</div>
+	</template>
 
-<!-- Accordion Selector -->
-<template name="people_accordion">
-    <div class="people-accordion">
-        <h3 class="app">{{occupation}}</h3>
-        <div>
-            <ul>
-            	{{#each occupationPeople}}
-            	    {{> ranking_person}}
-                {{/each}}
-            </ul>
-        </div>
-        <h3 class="app">People Born in {{time_period}}</h3>
-        <div>
-            <ul>
-            	{{#each birthyearPeople}}
-            	    {{> ranking_person}}
-                {{/each}}
-            </ul>
-        </div>
-        <h3 class="app">People Born in {{countryName}}</h3>
-        <div>
-            <ul>
-            	{{#each countryPeople}}
-            	    {{> ranking_person}}
-                {{/each}}
-            </ul>
-        </div>
-    </div>
-</template>
-
-<template name="ranking_person">
-	<li class="person">
-		<a href="{{pathFor 'people'}}">
-			<div class="person-container{{#if currentPerson}} center-person{{/if}}">
-				<div class="top-info"><div class="rank">Rank: {{rank}}</div><div class="numlangs">Languages: {{numlangs}}</div></div>
-				<div class="person-image-container">
-					<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/></a>
-				</div>
-				<div class="bottom-info">{{name}}</div>
+	<!-- Accordion Selector -->
+	<template name="people_accordion">
+		<div class="people-accordion">
+			<h3 class="app">{{occupation}}</h3>
+			<div>
+				<ul>
+					{{#each occupationPeople}}
+					{{> ranking_person}}
+					{{/each}}
+				</ul>
 			</div>
-		</a>
-	</li>
-</template>
+			<h3 class="app">People Born in {{time_period}}</h3>
+			<div>
+				<ul>
+					{{#each birthyearPeople}}
+					{{> ranking_person}}
+					{{/each}}
+				</ul>
+			</div>
+			<h3 class="app">People Born in {{countryName}}</h3>
+			<div>
+				<ul>
+					{{#each countryPeople}}
+					{{> ranking_person}}
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+	</template>
+
+	<template name="ranking_person">
+		<li class="person">
+			<a href="{{pathFor 'people'}}">
+				<div class="person-container{{#if currentPerson}} center-person{{/if}}">
+					<div class="top-info"><div class="rank">Rank: {{rank}}</div><div class="numlangs">Languages: {{numlangs}}</div></div>
+					<div class="person-image-container">
+						<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/></a>
+					</div>
+					<div class="bottom-info">{{name}}</div>
+				</div>
+			</a>
+		</li>
+	</template>
