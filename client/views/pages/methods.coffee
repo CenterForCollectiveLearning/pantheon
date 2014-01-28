@@ -9,12 +9,12 @@ Template.methods.rendered = ->
 
   b.scrollspy(
     target: '#table-of-contents'
-    offset: offset + 10
+    offset: offset + 60
     )
 
   Deps.autorun( ->
     scrollPosition = $(Session.get("pageScrollID")).position()?.top
-    if scrollPosition then window.scrollTo(0, scrollPosition - offset)
+    if scrollPosition then window.scrollTo(0, scrollPosition - offset - 50)
   )
 
   w.on('load', -> b.scrollspy('refresh'))
