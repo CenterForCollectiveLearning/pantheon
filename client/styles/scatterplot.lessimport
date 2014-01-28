@@ -6,3 +6,21 @@ div.scatterplot-container {
 path.circle {
 	cursor: pointer;
 }
+
+.scatterplot{
+	text {
+		fill: @color_pantheon_black !important;
+	}
+	.xaxis line{
+		stroke: @color_pantheon_black !important;
+	}
+	.yaxis line{
+		stroke: @color_pantheon_black !important;
+	}
+	.chart{
+		rect#background{
+			fill: @color_beige;
+			stroke: @color_pantheon_black;
+		}
+	}
+}
