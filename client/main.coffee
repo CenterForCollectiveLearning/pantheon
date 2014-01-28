@@ -71,6 +71,7 @@
 Meteor.startup ->
   countriesOverTenPeople = ['US', 'GB', 'FR', 'DE', 'IT', 'RU', 'ES', 'TR', 'PL', 'AT', 'GR', 'IN', 'JP', 'SE', 'NL', 'BE', 'CN', 'HU', 'CH', 'CZ', 'UA', 'DK', 'BR', 'PT', 'EG', 'IR', 'CA', 'IE', 'NO', 'IL', 'FI', 'AR', 'RO', 'SA', 'AU', 'MX', 'RS', 'HR', 'ZA', 'LT', 'IQ', 'KR', 'PK', 'AF', 'PE', 'PH', 'DZ', 'GE', 'BG', 'CL', 'SY', 'TN', 'BY', 'LV', 'IS', 'EE', 'SK', 'NZ']
   topHundredPeople = ['Jesus Christ', 'Confucius', 'Isaac Newton', 'Wolfgang Amadeus Mozart', 'Leonardo Da Vinci', 'Adolf Hitler', 'Albert Einstein', 'Mustafa Kemal Atatürk', 'William Shakespeare', 'Michelangelo', 'Hebe Camargo', 'Vincent van Gogh', 'Christopher Columbus', 'Ludwig van Beethoven', 'Aristotle', 'Muhammad', 'Charles Darwin', 'Karl Marx', 'Galileo Galilei', 'Charlie Chaplin', 'Napoleon Bonaparte', 'Johann Sebastian Bach', 'Qin Shi Huang', 'George Bush', 'Pablo Picasso', 'Plato', 'Homer', 'Alexander the Great', 'Mahatma Gandhi', 'Dante', 'Socrates', 'Vladimir Lenin', 'Lech Wałęsa  Poland', 'George Washington', 'Joseph Stalin', 'Sigmund Freud', 'Nelson Mandela', 'Johann Wolfgang von Goethe', 'Abraham Lincoln', 'Marie Curie', 'Archimedes', 'Che Guevara', 'Julius Caesar', 'Miguel de Cervantes', 'Nicolaus Copernicus', 'Elizabeth II of the United Kingdom', 'Marco Polo', 'Thomas Edison', 'Immanuel Kant', 'Martin Luther', 'Rembrandt', 'Gautama Buddha', 'Carl Linnaeus', 'Leo Tolstoy', 'Pope Benedict', 'Victor Hugo', 'Mao Zedong', 'Salvador Dalí', 'Genghis Khan', 'Neil Armstrong', 'Ferdinand Magellan', 'Franz Kafka', 'René Descartes', 'Vasco da Gama', 'Yuri Gagarin', 'Bill Clinton', 'Elvis Presley', 'Roald Amundsen', 'Augustus', 'Euclid', 'Friedrich Nietzsche', 'Octave Mirbeau', 'Aleksandr Pushkin', 'Charlemagne  Belgium', 'Francisco Goya', 'John F. Kennedy', 'Louis Pasteur', 'Martin Luther King, Jr.', 'Richard Wagner', 'Charles Dickens', 'Fidel Castro', 'James Cook', 'James Joyce', 'Jean Auguste Dominique Ingres', 'Marlene Dietrich', 'Pythagoras', 'Virgil', 'Winston Churchill', 'Franklin D. Roosevelt', 'Fyodor Dostoyevsky', 'Thomas Jefferson', 'Walt Disney', 'Albrecht Dürer', 'Frida Kahlo', 'Raphael', 'Sarah Bernhardt', 'Simón Bolívar', 'Voltaire', 'Adam Smith']
+  culturalDomains = ['ARTS', 'HUMANITIES', 'BUSINESS & LAW', 'EXPLORATION', 'INSTITUTIONS', 'PUBLIC FIGURE', 'SCIENCE & TECHNOLOGY', 'SPORTS']
 
   @defaults =
     vizType: "treemap"
@@ -81,12 +82,12 @@ Meteor.startup ->
     language: "all"
     # languageX: "en"
     # languageY: "ru"
-    category: "all"
+    category: getRandomFromArray(culturalDomains)
     categoryX: "ARTS"
     categoryY: "HUMANITIES"
     categoryLevel: "domain"
     from: "-3000"
-    to: "1950"
+    to: "2000"
     langs: "H0"
     entity: "countries"
     gender: "both"
@@ -174,7 +175,7 @@ Template.google_analytics.destroyed = ->
 # Section Navigation
 # TODO Is this repetitiveness necessary for correct formatting?
 leftSections = [
-  section: "Observatory"
+  section: "Explore"
   template: "observatory"
   url: "/observatory"
 ,
