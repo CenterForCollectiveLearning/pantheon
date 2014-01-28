@@ -13,9 +13,14 @@ div.person-top {
     color: @color_beige;
     text-transform: uppercase;
     height: 50px;
-    line-height: 70px;
+    line-height: 50px;
     font-size: 18px;
     padding-left: 6px;
+
+    span {
+        position: relative;
+        top: 10px;
+    }
 
     span.person-name {
     }
@@ -32,12 +37,14 @@ div.person-body {
 
     div.person-body-left {
         float: left;
+        clear: right;
         width: 250px;
     }
     div.person-body-right {
         float: right;
-        width: 350px;
-        padding: 20px;
+        width: 390px;
+        height: 333px;
+        padding: 0px 20px;
         border-right: 1px solid black;
         div.person-description {
         }
@@ -77,7 +84,7 @@ div.person-bottom {
     div.person-ranking-cards {
         div.card {
             cursor: pointer;
-            width: 200px;
+            width: 33.3333333%;
             height: 125px;
             text-align: center;
             text-transform: uppercase;
@@ -137,7 +144,8 @@ div.body-padding {
 
     a {
         text-decoration: none;
-        color: @color_gold;
+        color: @color_pantheon_black;
+        font-weight: bold;
         &:hover { text-decoration: underline; }
     }
 }

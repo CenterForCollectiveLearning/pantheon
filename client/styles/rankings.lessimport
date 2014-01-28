@@ -53,14 +53,14 @@ table {
 	tbody {
 		tr {
 			&.odd {
-				background-color: #F9F2C2;
+				background-color: #F9F2C2; // slightly more saturated, same beige
 			}
 			&.even {
 				background-color: @color_beige;
 			}
 			td {
 				color: black;
-				font-size: 1rem;
+				font-size: 0.7rem;
 				padding: 6px 10px;
 
 				overflow: hidden;

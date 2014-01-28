@@ -16,11 +16,14 @@
 	{{/if}}
 </template>
 
-<template name="data">
-	{{> image_fullscreen}}
+<head>
 	<script type="text/javascript"
       src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
+</head>
+
+<template name="methods">
+	{{> image_fullscreen}}
 	<div class="page-top">
 		<div class="primary-text">
 		</div>
@@ -32,35 +35,34 @@
 				Index
 			</div>
 			<ul class="nav nav-list">
-				<li><a class="h1" href="#data">Data</a></li>
+				<li><a class="h1" href="#methods">Methods</a></li>
 				<li><a class="h2" href="#data_source_1">Data Source 1</a></li>
 				<li><a class="h2" href="#data_source_2">Data Source 2</a></li>
 				<li><a class="h2" href="#future_datasets">Future Datasets</a></li>
-				<li><a class="h2" href="#connected_history">Connected History</a></li>
-				<li><a class="h2" href="#contribute">Contribute</a></li>
 				<li><a class="h1" href="#biases_limitations_validation">Biases, Limitation & Validation</a></li>
 				<li><a class="h2" href="#general_description">General Description</a></li>
-				<li><a class="h2" href="#methods">Methods</a></li>
-				<li><a class="h3" href="#individuals_considered">Individuals Considered</a></li>
+				<li><a class="h2" href="#bias_methods">Methods</a></li>
+<!-- 				<li><a class="h3" href="#individuals_considered">Individuals Considered</a></li>
 				<li><a class="h3" href="#domain_categorization">Domain Categorization</a></li>
-				<li><a class="h3" href="#location_assignment">Location assignment</a></li>				        
+				<li><a class="h3" href="#location_assignment">Location assignment</a></li>	 -->			        
 				<li><a class="h2" href="#biases_and_limitations">Biases and Limitations</a></li>
-				<li><a class="h3" href="#use_of_wikipedia">1. The use of Wikipedia as a data source</a></li>
+<!-- 				<li><a class="h3" href="#use_of_wikipedia">1. The use of Wikipedia as a data source</a></li>
 				<li><a class="h3" href="#use_of_place_of_birth">2. The use of place of birth to assign locations</a></li>
 				<li><a class="h3" href="#use_of_biographies">3. The use of biographies as proxies for culture</a></li>
 				<li><a class="h3" href="#temporal_biases">4. Temporal biases</a></li>
-				<li><a class="h3" href="#other_technical_limitations">5. Other Technical Limitations</a></li>
+				<li><a class="h3" href="#other_technical_limitations">5. Other Technical Limitations</a></li> -->
 				<li><a class="h2" href="#validation">Validation</a></li>
-				<li><a class="h3" href="#validation_with_formula_one">Validation with Formula 1 drivers</a></li>
+<!-- 				<li><a class="h3" href="#validation_with_formula_one">Validation with Formula 1 drivers</a></li>
 				<li><a class="h3" href="#validation_with_tennis">Validation with Tennis Players</a></li>
 				<li><a class="h3" href="#validation_with_swimmers">Validation with Swimmers</a></li>				        
-				<li><a class="h3" href="#discussion">Discussion</a></li>				    				    				    
-				<li><a class="h1" href="#endnotes">Endnotes</a></li>				     
+				<li><a class="h3" href="#discussion">Discussion</a></li>	 -->			    				    				   
+				<li><a class="h1" href="#references">Additional References</a></li>				      
+				<li><a class="h1" href="#endnotes">Endnotes</a></li>
 			</ul>
 		</div>
 		<div class="wrapper-left"></div>
 		<div class="text-page-middle page-middle text" data-spy="scroll" data-target="#table-of-contents">
-			<h1 id="data">Data</h1>
+			<h1 id="methods">Methods</h1>
 
 			<p>Pantheon is a project developed by the Macro Connection's group at The MIT Media Lab that's collecting, analyzing, and visualizing data on historical cultural popularity and production.</p>
 
@@ -68,7 +70,7 @@
 
 			<p>To make our efforts tractable, Pantheon will not focus on culture, as it is understood in its broadest sense, but on cultural production. In a broad sense, culture can be understood as all of the information that humans—or animals [1]—generate and transmit through non-genetic means [2]. At Pantheon, however, we do not focus on the entire range of cultural information, but in a subset of this information that we define narrowly as cultural production. That is, we do not focus on cultural information such as passed on family values or societal trust [3], but on cultural production as proxied by the biographies of notable historical characters. Moreover, we focus on the subset of cultural production that we can identify as <strong>global</strong> culture, meaning the subset of cultural production that has broken the barriers of space, time and language. By focusing on global culture we do not deny the existence of importance of local culture, but simply, choose to focus on global culture because it is a subset of the world’s cultural production that is relatively small, easy to map and of clear importance. </p>
 
-			<p>The version 1.0 of the Observatory of Global Culture—available starting January 2014—builds on two data sources, but was constructed to accommodate future data sources. The two data sources included in this first version are:</p>
+			<p>The version 1.0 Pantheon—available starting January 2014—builds on two data sources, but was constructed to accommodate future data sources. The two data sources included in this first version are:</p>
 
 			<p><h2 id="data_source_1">Data Source 1:</h3> The Pantheon Multilingual Wikipedia Expression Dataset (or Pantheon Data 1.0) by Amy Yu, Kevin Hu, Shahar Ronen, Defne Gurel and Cesar A. Hidalgo (2013)</p>
 
@@ -120,10 +122,11 @@
 			<p>$${HCPI}_c = \sum_{i \in c} {HPI}_i$$</p>
 			<p>Where the summation is over all of the characters \(i\) associated with location \(c\).</p>
 			<p>The historical HCPI is cumulative, so the value for any period can be taken as the difference between the beginning and the end points of the period. The figure below shows the HCPI for countries over time.</p>
+			<p><b>Figure 1: Historical Cultural Production Index over time</b></p>
 			<figure><img src="images/CivChart_Pantheon.png"></figure>
 			<!-- ADD UPDATES -->
-			<h2 id="methods">Methods</h2>
-			<p>This Observatory was constructed from data that we curated and collected from Freebase and Wikipedia. Both of these sources are open-source, collaborative knowledge bases that are freely available to the general public. </p>
+			<h2 id="bias_methods">Methods</h2>
+			<p>Pantheon was constructed from data that we curated and collected from Freebase and Wikipedia. Both of these sources are open-source, collaborative knowledge bases that are freely available to the general public. </p>
 
 			<p>Our dataset is centered on historical characters. Characters are annotated with a unique location—their place of birth—time period—date of birth—cultural domain, and notoriety metrics (L, HPI, etc.).</p>
 
@@ -138,7 +141,7 @@
 			<p>To create this classification we used the occupation data available in Freebase, which is based on an uncontrolled vocabulary (a biography for a film director could be annotated as a “Film Director”, “Movie director”, “Director of Films” or any other natural language way of referring to that occupation). This uncontrolled vocabulary of more than 2,200 categories was mapped into a controlled vocabulary that we grouped and regrouped iteratively to create a controlled categorization containing 95 different categories. This required us to assign each individual to a single category, a task that was easy in some cases, but limiting in others. For example, Margaret Thatcher, who appears as a “chemist” and a “politician”, was assigned “politician” as her primary category. This was an easy call to make. We listed Isaac Newton, on the other hand,  as a “physicist”, although a mathematician category would also be correct for many of his important contributions. This is a limitation given the large number of polymaths in the data. Yet, we decided to avoid using a polymath category because it represents a “slippery slope”. By a slippery slope we mean that one could almost always draw the polymath line a bit further and include more biographies in the polymath category, making the boundary of such a mixed category unclear. The use of a primary cultural domain for each individual also helps avoid double counting. Using multiple categories for an individual is something we will reconsider in the future, but that is not part of this first dataset. </p>
 
 			<p>The interactive figure below shows the three levels of cultural classifications as well as the number of individuals within each category.</p>
-
+			<p><b>Figure 2: Historical Cultural Production Index over time</b></p>
 			<div id="classtree"></div>
 
 			<p>Since we are introducing a new categorization of cultural domains (which you can refer to as the Pantheon 1.0 nomenclature), it is important to highlight some conventions that are not necessarily self-explanatory. The most important of these is the “Politician” category, which we used to include all individuals that had power over policies, whether these were presidents, pharaohs, emperors, ministers or state governors. We chose the word politician, in relation to policies, rather than the word leader because there are leaders that do not have direct influence or power on policy (i.e. leaders of an artistic movement). Going forward, we are open to continue to revise this categorization system to help improve the quality of the data and the results obtained from it.</p>
@@ -188,9 +191,11 @@
 			<p>The dataset has an important recency bias (a bias towards more recent characters). To illustrate and document this recency bias we show three datasets in which we consider individuals with a “similar” level of accomplishment. These are Chilean president, “pichicis”—top scorers of the Spanish Liga, and the winners of the best actress award at the Oscars. All three data series demonstrate a positive correlation between the number of languages where these individuals have a presence and the year of their birth, indicating that the dataset is biased in favor of more recent individuals. More details about the recency bias can be found in the validation section below. We note that the HPI and HCPI metrics include the age of historical characters as a mean to control for this recency bias. </p>
 
 			<p>The recency bias is interesting in the sense that it represents a bias of the Internet as new media. Certainly, people whose fame coincided with the existence of the Internet will be overrepresented in the Wikipedia. Hence, the bias can be understood as a combination of both, a bias for recency, but also, a bias of the media available at the time in which the individual became notorious for a contribution (if the Wikipedia had existed in the early eighties probably Cindi Lauper would have a higher presence).</p>
-
+			<p><b>Figure 3: Chilean Presidents</b></p>
 			<figure><img src="images/chart-cp.png"></figure>
+			<p><b>Figure 4: Academy Award Winners for Best Actress</b></p>
 			<figure><img src="images/chart-ba.png"></figure>
+			<p><b>Figure 5: Top Scorers of the Spanish Liga</b></p>
 			<figure><img src="images/chart-liga.png"></figure>
 
 			<h3 id="other_technical_limitations">5. Other Technical Limitations</h3>
@@ -202,22 +207,50 @@
 			<p>Below, we present a validation of our dataset, and a characterization of its biases, based on three specific subsets of data. These are Formula-1 drivers, Tennis Players and Olympic Swimmers. </p>
 			<h3 id="validation_with_formula_one">Validation with Formula 1 drivers</h3>
 			<p>First we consider the subset of our dataset containing the top 25 Formula-1 drivers according to the number of languages in which they have a presence in the Wikipedia. For each of these drivers we created an additional dataset with the number of Grand Prix Wins, Championships Won, Podiums (number of times in the top 3), Starts, a dummy for Killed in Action, and the Time since the last F1-race. We used these variables to construct a statistical model that explained the number of languages in which each driver has a presence in the Wikipedia. Since Grand Prix Wins, Championships and Podiums are highly collinear—and hence not statistically significant when used together—we use only one of them in the final model (Podiums). Finally, we choose an exponential function linking our accomplishment variables to the number of languages in the Wikipedia L. We choose an exponential since we look for a function that is always positive (since L cannot be negative).</p>
-			<p>The model presented in Figure XXX explains 87% of the variance in the number of languages in which each Formula-1 driver has a presence in the Wikipedia, showing that for Formula-1 drivers the number of languages in the Wikipedia tracks accomplishments discounted by time accurately.</p>
+			<p>The model presented in Figure 6 explains 87% of the variance in the number of languages in which each Formula-1 driver has a presence in the Wikipedia, showing that for Formula-1 drivers the number of languages in the Wikipedia tracks accomplishments discounted by time accurately.</p>
+			<p><b>Figure 6: Validation using Formula 1 drivers</b></p>
 			<figure><img src="images/formula1.png"></figure>
 			<h3 id="validation_with_tennis">Validation with Tennis Players</h3>
 			<p>Next we perform a similar analysis but focused on Tennis Players. The tennis player dataset has the added benefit of including both male and females, letting us study whether there is any evidence of gender bias in the multilingual presence of tennis players in the Wikipedia. For Tennis players we focus on the top 45 Tennis players according to the number of languages in the Wikipedia and collect a dataset containing the number of weeks as number one in the ATP, the number of Grand Slams wins, the top rank ever obtained, the gender (Female = 1), and the Age minus 24 (assuming 24 is peak age for tennis player). </p>
-			<p>The most parsimonious model—using Grand Slam Wins, Gender and Time—explains 54% of the variance in the number of Languages each of these individuals has a presence in the Wikipedia (Figure XX). This shows that once again, the number of languages in the Wikipedia is a good proxy for individual accomplishments. We also find that the gender coefficient is negative and significant, meaning that a female at the same level of accomplishment has--on average--a presence in one less language than the equivalent male.</p>
+			<p>The most parsimonious model—using Grand Slam Wins, Gender and Time—explains 54% of the variance in the number of Languages each of these individuals has a presence in the Wikipedia (Figure 7). This shows that once again, the number of languages in the Wikipedia is a good proxy for individual accomplishments. We also find that the gender coefficient is negative and significant, meaning that a female at the same level of accomplishment has--on average--a presence in one less language than the equivalent male.</p>
+			<p><b>Figure 7: Validation using Tennis Players </b></p>
 			<figure><img src="images/tennis.png"></figure>
 			<h3 id="validation_with_swimmers">Validation with Swimmers</h3>
 			<p>Finally, we perform a similar analysis considering Olympic swimmers born after 1950. In this case we use the total number of medals, gold medals, gender and time from last medal for our model. The best parsimonious model for the data is obtained for gold medals, gender and time--although gender is not significant in this case, likely due to the small sample size (N=19). This model explains 74% of the variance observed in the total number of languages that a swimmer has a presence in the Wikipedia. </p>
+			<p><b>Figure 8: Validation using Swimmers</b></p>
 			<figure><img src="images/swimmers.png"></figure>
 			<h3 id="discussion">Discussion</h3>
 			<p>In sum, for the three dataset studied the number of languages that an individual has a presence in the Wikipedia represents a good proxy for their accomplishments discounted by time. The comparison of these three datasets, however, invites us to reflect on some of their commonalities and differences. </p>
-			<p>First, we have the constant coefficient for the three models. This is the coefficients expressed as “A” in the equations and that account for the baseline level of notoriety in each dataset--number of languages in which individual has a presence. As we can see in figures XX-YY, for Tennis the “A” coefficient is around 80, whereas for Formula-1 and swimming it is respectively 40 and 25. We can interpret A as the global level of notoriety that is associated to each cultural domain. According to this interpretation, the baseline level of notoriety of a tennis player is larger than that of a Formula-1 racer, and that in turn, is larger than that of a swimmer. The large variation in the baseline numbers suggest that there are important differences in the level of notoriety associated with each discipline, and hence, that global notoriety is mediated by the cultural domain where each individual has made his or her contribution.</p>
+			<p>First, we have the constant coefficient for the three models. This is the coefficients expressed as “A” in the equations and that account for the baseline level of notoriety in each dataset--number of languages in which individual has a presence. As we can see in figures 6-8, for Tennis the “A” coefficient is around 80, whereas for Formula-1 and swimming it is respectively 40 and 25. We can interpret A as the global level of notoriety that is associated to each cultural domain. According to this interpretation, the baseline level of notoriety of a tennis player is larger than that of a Formula-1 racer, and that in turn, is larger than that of a swimmer. The large variation in the baseline numbers suggest that there are important differences in the level of notoriety associated with each discipline, and hence, that global notoriety is mediated by the cultural domain where each individual has made his or her contribution.</p>
 			<p>Second, we note that in all datasets the coefficient associated with time is negative, suggesting that the dataset is biased in favor of individuals who have made their contributions more recently. In all cases, the unit of time is years and the coefficients are of the order of 1/100 or 1/1000, meaning that for these datasets the notoriety expressed in L “erodes” at a rate by which it halves every 30 to 300 years. </p>
 			<p>Finally, we note that in both of the datasets for which gender information was available we found a negative coefficient associated with gender--even though in swimming this was not statistically significant. The negative coefficient indicates that at the same level of accomplishment women receive less notoriety from men. </p>
 			<p>Yet, there are two possible ways of interpreting this gender bias coefficient. One way of interpreting it is simply as a bias in favor of males. Another way of interpreting the bias is as a difference in the baseline notoriety “A” of the sub-cultural domains associated with male and female sports. Consider the case of tennis. In this case we can interpret the observed coefficient as the difference in attention received by the ATP and the WTA tournaments, as much as in racing we observe a difference between the baseline attention between Formula-1 and Nascar. To determine whether the bias observed is one based on gender, or on the existence of separate leagues that are harnessing a different baseline level of attention, we will need to collect data on cultural domains where the contributions of individuals are not done in leagues that are gender segregated. An example of such a dataset would involve the accomplishments of creative writers, since female authors and male authors participate of the same market. Certainly, having an objective measure of accomplishment will be difficult in the case of writing, but books sold or Nobel prizes could be ok proxies [7].</p>
 			<p>With this analysis we conclude our description of the dataset collected as well as its biases and validation. As we mentioned in the beginning, this is a live dataset that we are looking to expand in the future, so we appreciate any comments and suggestions you might have to help us improve the value of this resource. You can direct your questions, comments and suggestions to <a href="mailto:pantheon@media.mit.edu"/></p>
+
+			<h1 id="references">Additional References</h1>
+			<p>There are many good references and resources for those wanting to learn more about global cultural development. Below you can find a list with a few resources including literature, methods and datasets from a number of disciplines and authors. If you find that there is a resource that is missing, please be constructive and send us an email with a reference or link to the resource together with a brief summary of the contribution. That way, we can add it to this page. You can reach us easily at (culture (at) media.mit.edu).</p>
+			
+			<h2>Cultural Anthropology</h2>
+			<p>Rob Boyd and Peter Richerson are an essential reference for anyone interested in the topic of culture and its importance for the development of our species. Their recent book <a href="http://www.amazon.com/Not-Genes-Alone-Transformed-Evolution/dp/0226712125">Not By Genes Alone (2008)</a> is a good place to get started with their work. Additional references and material can be found in their personal homepages (<a href="http://www.sscnet.ucla.edu/anthro/faculty/boyd/Publications.htm">Boyd UCLA page</a> and <a href="http://www.des.ucdavis.edu/faculty/Richerson/Richerson.htm">Peter Richerson UC Davis Page</a>)</p>
+
+			<h2>Mathematical Models of Cultural Evolution</h2>
+			<p>Do you think the study of culture could benefit from mathematical models, such as coupled differential equations? Then, look no further than Luigi Cavalli-Sforza classic work on the topic. Whether you are interested in the transmission of lastnames or religious preferences you will find a model complete with derivations in his 1981 book <a href="http://www.amazon.com/Cultural-Transmission-Evolution-Luigi-Cavalli-Sforza/dp/0691082839/ref=sr_1_6?s=books&ie=UTF8&qid=1386531705&sr=1-6">Cultural Transmission and Evolution</a>. L.L. Cavalli-Sforza was a prolific author who wrote extensively about the evolution of culture as well as the estimation of phylogenetic trees and the spread of human populations, so if you are interested in this topic please do not hesitate to dive into this <a href="http://scholar.google.com/scholar?q=LL+cavalli-sforza&btnG=&hl=en&as_sdt=0%2C22">stream of literature</a>.</p>
+
+			<h2>Quantitative Estimates of Cultural Production</h2>
+			<p>Prior to the release of the dataset we are making available in this site, the largest linked dataset on cultural development and human accomplishments produced was that published by Charles Murray in his (2003) book <a href="http://www.amazon.com/Human-Accomplishment-Charles-Murray-ebook/dp/B000OVLJSC/ref=sr_1_sc_1?s=books&ie=UTF8&qid=1386532321&sr=1-1-spell&keywords=huma+accomplishment">Human Accomplishments</a>. Murray collected information from a number of linguistic sources from both the East and West and made this data available, together with a description of the data collection method, in his 2003 book. The book is an essential reference for anyone looking to work or study quantitative approaches estimating the level of cultural production for different regions and eras.</p>
+
+			<h2>Culturomics</h2>
+			<p>The work on n-grams by <a href="http://www.erez.com/">Erez Lieberman</a> and <a href="http://scholar.google.com/citations?user=rNL5rRIAAAAJ&hl=en">Jean-Baptiste Michel</a> has become well known among those working at the intersection of big data, networks, computer science and culture. The work looks at the n-grams (collections of n-characters) contained within the google books collection. You can explore the n-gram viewer by visiting this <a href="https://books.google.com/ngrams">link</a>.</p>
+
+			<h2>Works using Wikipedia to Study Culture</h2>
+
+			<p><a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0074554">Eom and Shepelyansky</a> (2013) used Wikipedia to try to determine whether the fame of historical characters is local or global.</p>
+
+			<p><a href="http://arxiv.org/abs/1204.3799">Aragon et al.</a> (2012) used Wikipedia to study differences in the links between biographies in different language editions.</p>
+
+			<p><a href="http://www.whoisbigger.com/">Skiena and Ward</a> (2013) used the English Wikipedia to create rankings of important historical characters and topics.</p>
+
+			<p><a href="http://arxiv.org/abs/1305.5566">Yasseri et al.</a> (2013) used the Wikipedia to study the topics that are more controversial in each language.</p>
 
 			<h1 id="endnotes">Endnotes</h1>
 			<p>[1] Edward O. Wilson, The Social Conquest of Earth, Liveright (2012)</p>

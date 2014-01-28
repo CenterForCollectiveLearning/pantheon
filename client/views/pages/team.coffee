@@ -7,6 +7,7 @@ teamMembers = [
     personal: "http://chidalgo.com/"
     twitter: "https://twitter.com/cesifoti"
     linkedin: "http://www.linkedin.com/pub/cesar-a-hidalgo/5/30a/a61"
+  dates: "Summer 2012 - present"
 ,
   name: "Amy Zhao Yu"
   photo: "images/amy_yu.png"
@@ -16,6 +17,7 @@ teamMembers = [
     personal: "http://www.amyyu.net/"
     twitter: "https://twitter.com/mangomochi86"
     linkedin: "http://www.linkedin.com/in/amyzhaoyu"
+  dates: "Fall 2012 - present"
 ,
   name: "Kevin Zeng Hu"
   photo: "images/kevin_hu.png"
@@ -25,6 +27,7 @@ teamMembers = [
     personal: "http://www.kevinzenghu.com"
     twitter: "https://www.twitter.com/kevinzenghu"
     linkedin: "http://www.linkedin.com/pub/kevin-hu/58/9a7/404"
+  dates: "2013 - present"
 ,
   name: "Ali Almossawi"
   photo: "images/ali_almossawi.jpg"
@@ -34,6 +37,7 @@ teamMembers = [
     personal: "http://almossawi.com/"
     twitter: "https://twitter.com/alialmossawi"
     linkedin: "http://www.linkedin.com/in/almossawi/"
+  dates: "2013"
 ,
   name: "Shahar Ronen"
   photo: "images/shahar_ronen.png"
@@ -43,6 +47,7 @@ teamMembers = [
     personal: "http://www.shaharronen.com/"
     twitter: "https://twitter.com/ShRonen"
     linkedin: "http://www.linkedin.com/in/shaharronen"
+  dates: "Summer 2012 - Summer 2013"
 ,
   name: "Deepak Jagdish"
   photo: "images/deepak_jagdish.png"
@@ -52,6 +57,7 @@ teamMembers = [
     personal: "http://deepakjagdish.com/"
     twitter: "https://twitter.com/dj247"
     linkedin: "http://www.linkedin.com/pub/deepak-jagdish/5/7a/a20"
+  dates: "2013 - present"
 ,
   name: "Andrew Mao"
   photo: "images/andrew_mao.png"
@@ -61,6 +67,7 @@ teamMembers = [
     personal: "http://www.andrewmao.net/"
     twitter: "https://twitter.com/mizzao"
     linkedin: "www.linkedin.com/pub/andrew-mao/6/6a6/533"
+  dates: "Fall 2013"
 ,
   name: "Defne Gurel"
   photo: "images/defne_gurel.png"
@@ -68,6 +75,7 @@ teamMembers = [
   role: ["Data"]
   media:
     linkedin: "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
+  dates: "2013"
 ,
   name: "Tiffany Lu"
   photo: "images/tiffany_lu.jpg"
@@ -75,6 +83,7 @@ teamMembers = [
   role: ["Data"]
   media:
     personal: "http://tweilu.scripts.mit.edu/"
+  dates: "Summer 2012"
 ]
 Template.team.helpers
   first_row_teamMembers: ->

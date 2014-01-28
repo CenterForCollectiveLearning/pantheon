@@ -128,7 +128,7 @@ ogcStory = [
 ,
   template: Template.ogc_step10
   onLoad: ->
-    Router.go "/data"
+    Router.go "/methods"
 ,
   template: Template.ogc_step11
   spot: ".wrapper"

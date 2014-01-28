@@ -48,13 +48,15 @@ div#table-of-contents {
 			a {
 				&.h1 {
 					// text-transform: uppercase;
+					font-size: 0.9em;
 				}
 				&.h2 {
+					font-size: 0.8em;
 					margin: 4px 0;
 					padding-left: 15px;
 				}
 				&.h3 {
-					font-size: 0.8em;
+					font-size: 0.7em;
 					margin: 4px 0;
 					padding-left: 30px;
 				}
