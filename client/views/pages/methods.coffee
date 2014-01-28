@@ -13,12 +13,12 @@ Template.methods.rendered = ->
     )
 
   Deps.autorun( ->
-    scrollPosition = $(Session.get("pageScrollID")).position().top
+    scrollPosition = $(Session.get("pageScrollID")).position()?.top
     if scrollPosition then window.scrollTo(0, scrollPosition - offset)
   )
 
   w.on('load', -> b.scrollspy('refresh'))
-  
+  MathJax.Hub.Queue ["Typeset", MathJax.Hub]    
 
 calcSize = (n) ->
   if n.values[0].hasOwnProperty("count")
