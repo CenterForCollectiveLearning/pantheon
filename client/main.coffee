@@ -82,7 +82,7 @@ Meteor.startup ->
     language: "all"
     # languageX: "en"
     # languageY: "ru"
-    category: getRandomFromArray(culturalDomains)
+    category: "all"
     categoryX: "ARTS"
     categoryY: "HUMANITIES"
     categoryLevel: "domain"
@@ -96,7 +96,7 @@ Meteor.startup ->
     scatterplotScale: "linear"
     scatterplotMirror: true
 
-  Session.setDefault "page", "observatory"
+  Session.setDefault "page", "explore"
   Session.setDefault "vizType", defaults.vizType
   Session.setDefault "vizMode", defaults.vizMode
   Session.setDefault "country", defaults.country
@@ -176,8 +176,8 @@ Template.google_analytics.destroyed = ->
 # TODO Is this repetitiveness necessary for correct formatting?
 leftSections = [
   section: "Explore"
-  template: "observatory"
-  url: "/observatory"
+  template: "explore"
+  url: "/explore"
 ,
   section: "Rankings"
   template: "rankings"
@@ -244,7 +244,7 @@ Template.sharing_options.events =
       height = 400
       left   = ($(window).width()  - width)  / 2
       top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
-      url    = "http://facebook.com/share.php?u=" + "Observatory of Global Culture" + "&url=" + encodeURIComponent(location.href)
+      url    = "http://facebook.com/share.php?u=" + "Pantheon" + "&url=" + encodeURIComponent(location.href)
       opts   = 'status=1' +
              ',width='  + width  +
              ',height=' + height +
@@ -260,7 +260,7 @@ Template.sharing_options.events =
       height = 400
       left   = ($(window).width()  - width)  / 2
       top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
-      url    = "http://www.twitter.com/intent/tweet?text=" + question + "&url=" + encodeURIComponent(location.href) + "&hashtags=OGC, culture"
+      url    = "http://www.twitter.com/intent/tweet?text=" + question + "&url=" + encodeURIComponent(location.href) + "&hashtags=Pantheon, culture"
       opts   = 'status=1' +
              ',width='  + width  +
              ',height=' + height +

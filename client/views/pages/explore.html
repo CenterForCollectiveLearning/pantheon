@@ -1,5 +1,5 @@
-<!-- Non-visualization specific Observatory elements (e.g. accordion, menu) -->
-<template name="observatory">
+<!-- Non-visualization specific explore page elements (e.g. accordion, menu) -->
+<template name="explore">
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="page-top span8 offset2">   
@@ -19,7 +19,7 @@
                 <div class="page-left span2">
                     <canvas id="canvas" width="0" height="0" style="display: none"></canvas>
                     {{#if initialDataReady}}
-                        {{> observatory_options}} 
+                        {{> explore_options}} 
                     {{/if}}
                 </div>
                 <!-- Visualization and Ranked List Container -->
@@ -35,7 +35,7 @@
     <div class="slider"></div>
 </template>
 
-<template name="observatory_options">
+<template name="explore_options">
     <div class="viz-selector">
         <div class="section-header">
             Visualizations
