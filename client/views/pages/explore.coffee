@@ -52,7 +52,7 @@ Template.accordion.events =
       paramTwo = Session.get(paramTwo)
 
     # Use session variables as parameters for a viz type change
-    Router.go "observatory",
+    Router.go "explore",
       vizType: vizType
       vizMode: vizMode
       paramOne: paramOne

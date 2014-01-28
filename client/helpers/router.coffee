@@ -13,13 +13,13 @@ Router.map ->
     data: -> 
       Session.set "page", @template
 
-  @route "observatory",
-    path: "/observatory"
+  @route "explore",
+    path: "/explore"
     before: [ ->
       @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
     ]
 
-  @route "observatory",
+  @route "explore",
     path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
     data: ->
       vizMode = @params.vizMode
@@ -36,15 +36,15 @@ Router.map ->
 
       # Reset defaults based on vizmode
       if vizMode is "country_exports"
-        Session.set "category", defaults.category
+        Session.set "category", "all"
       else if vizMode is "domain_exports_to"
         Session.set "country", defaults.country
       else if vizMode is "country_vs_country"
         Session.set "country", defaults.country
-        Session.set "category", defaults.category
+        Session.set "category", "all"
         Session.set "categoryLevel", defaults.categoryLevel
       else if vizMode is "domain_vs_domain"
-        Session.set "category", defaults.category
+        Session.set "category", "all"
 
       # Set category level based on category parameters
       if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"

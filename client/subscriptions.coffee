@@ -114,7 +114,7 @@ Deps.autorun ->
       Session.set "initialDataReady", true
     
     # Give a handle to this subscription so we can check if it's ready
-    if page is "observatory"
+    if page is "explore"
       switch vizType
         # Treemap modes
         when "treemap"
