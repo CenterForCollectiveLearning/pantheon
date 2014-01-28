@@ -82,7 +82,7 @@ Meteor.startup ->
     language: "all"
     # languageX: "en"
     # languageY: "ru"
-    category: "getRandomFromArray(culturalDomains)"
+    category: "all"
     categoryX: "ARTS"
     categoryY: "HUMANITIES"
     categoryLevel: "domain"
