@@ -136,9 +136,12 @@ Template.ranking_table.rendered = ->
         sTitle: "Total People"
       ]
 
-  if clickTooltip then displayLength = 10
+  if clickTooltip 
+    displayLength = 10
+    scrollLength = "200px"
   else 
     displayLength = 100
+    scrollLength = "600px"
 
   #initializations
   sorting = switch
@@ -147,7 +150,7 @@ Template.ranking_table.rendered = ->
     else [[6, "desc"], [1, "asc"]]  # Multi-column sort on L then name
 
   oTable = $("#ranking").dataTable
-    sScrollY: "600px"
+    sScrollY: scrollLength
     aoColumns: aoColumns
     aaData: data
     aaSorting: sorting
