@@ -1,8 +1,8 @@
 toMillions = (x) ->
-  String((x/1000000).toFixed(0)) + " M"
+  String((x/1000000).toFixed(2)) + " M"
 
 toThousands = (x) ->
-  String((x/1000).toFixed(0)) + " K"
+  String((x/1000).toFixed(2)) + " K"
 
 fnShowHide = (iCol) ->  
   # Get the DataTables object again - this is not a recreation, just a get of the object 
@@ -21,6 +21,15 @@ Template.rankings.columnDescriptions = ->
       new Handlebars.SafeString(Template.domains_columns(this))
 
 Template.ranking_table.rendered = ->
+  # for sorting formatted numbers
+  jQuery.extend jQuery.fn.dataTableExt.oSort,
+    "formatted-num-pre": (a) ->
+      a = (if (a is "-" or a is "") then 0 else a.replace(/[^\d\-\.]/g, ""))
+      parseFloat a
+    "formatted-num-asc": (a, b) ->
+      a - b
+    "formatted-num-desc": (a, b) ->
+      b - a 
   clickTooltip = Session.get("clicktooltip")
   entity = Session.get("entity")
   dataset = Session.get("dataset")
@@ -98,13 +107,13 @@ Template.ranking_table.rendered = ->
         , 
           sTitle: "L*"
         , 
-          sTitle: "Page Views"
+          {sTitle: "Page Views", sType: "formatted-num"}
         , 
-          sTitle: "English Page Views"
+          {sTitle: "English Page Views", sType: "formatted-num"}
         , 
-          sTitle: "Non-English Page Views"
+          {sTitle: "Non-English Page Views", sType: "formatted-num"}
         , 
-          sTitle: "Standard Deviation of Page Views"
+          {sTitle: "Standard Deviation of Page Views", sType: "formatted-num"}
         , 
           sTitle: "HPI"
         ]
