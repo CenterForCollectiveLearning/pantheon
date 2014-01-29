@@ -56,10 +56,10 @@ div.column-descriptions {
 	}
 }
 
-.fixed-size {
-    table-layout: fixed;
-    word-wrap: break-word;
-}
+//.fixed-size {
+//    table-layout: fixed;
+//    word-wrap: break-word;
+//}
 
 table.display thead th{
 	padding: 3px 10px;
