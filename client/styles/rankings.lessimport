@@ -83,10 +83,10 @@ table {
 				font-size: 0.7rem;
 				padding: 3px 5px !important;
 
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				-o-text-overflow: ellipsis;
+				//overflow: hidden;
+				//white-space: nowrap;
+				//text-overflow: ellipsis;
+				//-o-text-overflow: ellipsis;
 
 				a {
 					color: black;

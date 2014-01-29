@@ -115,19 +115,19 @@ Template.ranking_table.rendered = ->
         ,
           sTitle: "Name"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
-          # sWidth: "12%"
+          sWidth: "12%"
         ,
           sTitle: "Country of Birth"
-          # sWidth: "9%"
+          sWidth: "9%"
         ,
           sTitle: "Birth Year"
-          # sWidth: "8%"
+          sWidth: "8%"
         ,
           sTitle: "Gender"
-          # sWidth: "8%"
+          sWidth: "8%"
         ,
           sTitle: "Occupation"
-          # sWidth: "10%"
+          sWidth: "10%"
         ,
           sTitle: "L"
         , 
