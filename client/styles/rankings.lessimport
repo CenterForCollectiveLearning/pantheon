@@ -45,6 +45,26 @@ div.column-descriptions {
 	}
 }
 
+#ranking_info{
+	text-align: left;
+}
+
+.paginate_enabled_next,.paginate_enabled_previous{
+	color: @color_pantheon_black !important;
+	&:hover{
+		text-decoration: underline !important;
+	}
+}
+
+.fixed-size {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+table.display thead th{
+	padding: 3px 10px;
+}
+
 table {
 	background-color: rgba(0, 0, 0, 0.75);
 	thead{
@@ -61,7 +81,7 @@ table {
 			td {
 				color: black;
 				font-size: 0.7rem;
-				padding: 6px 10px;
+				padding: 3px 5px !important;
 
 				overflow: hidden;
 				white-space: nowrap;

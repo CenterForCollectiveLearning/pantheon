@@ -135,7 +135,7 @@ ogcStory = [
 ,
   template: Template.ogc_step12
   onLoad: ->
-    Router.go "/rankings/countries/all/all/-3000/1950/25"
+    Router.go "/rankings/countries/all/all/-3000/1950/H25"
 ,
   template: Template.ogc_step13
   spot: "#ranking"
@@ -143,7 +143,7 @@ ogcStory = [
   template: Template.ogc_step14
   spot: "#wrapper"
   onLoad: ->
-    Router.go "/rankings/people/all/all/-3000/1950/25"
+    Router.go "/rankings/people/all/all/-3000/1950/H25"
 ,
   template: Template.ogc_step15
   onLoad: ->

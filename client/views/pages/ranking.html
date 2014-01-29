@@ -48,7 +48,7 @@
 <template name="countries_columns">
     <div class="term">Ranking</div><div class="definition">Rank Index</div>
     <div class="term">Country</div><div class="definition">Country of Birth</div>
-    <div class="term">Number of people</div><div class="definition">Total number of people exported</div>
+    <div class="term">Number of people</div><div class="definition">Total number of globally known people</div>
     <div class="term">% Women</div><div class="definition">Percent women</div>
     <div class="term">Diversity</div><div class="definition">The number of unique cultural domains exported by a country</div>
     <div class="term">i50</div><div class="definition">The total number of individuals present in at least 50 Wikipedia languages</div>
@@ -65,10 +65,10 @@
     <div class="term">Occupation</div><div class="definition">lowest level of domain classification</div>
     <div class="term">L</div><div class="definition">Number of Wikipedia language editions</div>
     <div class="term">L*</div><div class="definition">Effective number of languages.</div>
-    <div class="term">Page Views</div><div class="definition">Total page views across all Wikipedia language editions from Jan 2008 - Dec 2013</div>
-    <div class="term">English Page Views</div><div class="definition">Page views within the English Wikipedia from Jan 2008 - Dec 2013</div>
-    <div class="term">Non-English Page Views</div><div class="definition">Page views within all non-English Wikipedias from Jan 2008 - Dec 2013</div>
-    <div class="term">Standard Deviation of Page Views</div><div class="definition">Standard deviation of total page views from Jan 2008 - Dec 2013</div>
+    <div class="term">Page Views(PV)</div><div class="definition">Total page views across all Wikipedia language editions from Jan 2008 - Dec 2013</div>
+    <div class="term">English Page Views (PV<sub>e</sub>)</div><div class="definition">Page views within the English Wikipedia from Jan 2008 - Dec 2013</div>
+    <div class="term">Non-English Page Views (PV<sub>ne</sub>)</div><div class="definition">Page views within all non-English Wikipedias from Jan 2008 - Dec 2013</div>
+    <div class="term">Standard Deviation of Page Views (&sigma;<sub>PV</sub>)</div><div class="definition">Standard deviation of total page views from Jan 2008 - Dec 2013</div>
     <div class="term">HPI</div><div class="definition">Historical Popularity Index</div>
 </template>
 
@@ -84,7 +84,7 @@
 
 <template name="ranking_table">
     {{#constant}}
-    <table cellpadding="0" cellspacing="0" border="0" class="display" id="ranking">
+    <table cellpadding="0" cellspacing="0" border="0" class="display fixed-size" id="ranking">
     </table>
     {{/constant}}
 </template>

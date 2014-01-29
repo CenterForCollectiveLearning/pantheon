@@ -4,12 +4,6 @@ toMillions = (x) ->
 toThousands = (x) ->
   String((x/1000).toFixed(2)) + " K"
 
-fnShowHide = (iCol) ->  
-  # Get the DataTables object again - this is not a recreation, just a get of the object 
-  oTable = $("#ranking").dataTable()
-  bVis = oTable.fnSettings().aoColumns[iCol].bVisible
-  oTable.fnSetColumnVis iCol, (if bVis then false else true)
-
 Template.rankings.columnDescriptions = ->
   entity = Session.get "entity"
   switch entity
@@ -67,8 +61,10 @@ Template.ranking_table.rendered = ->
 
       data = _.map collection, (d) ->
         p = People.findOne d._id
-        if dataset is "OGC"
-          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(0)]
+        if dataset is "OGC" and clickTooltip
+          [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), p.HPI.toFixed(2)]  
+        else if dataset is "OGC"
+          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(2)]
         else
           [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
 
@@ -88,32 +84,62 @@ Template.ranking_table.rendered = ->
         ,
           sTitle: "Index"
         ]
-      else
+      else if clickTooltip
         aoColumns = [
           sTitle: "Rank"
         ,
           sTitle: "Name"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
-        ,
-          sTitle: "Country of Birth"
+          sWidth: "20%"
         ,
           sTitle: "Birth Year"
         ,
           sTitle: "Gender"
         ,
           sTitle: "Occupation"
+          sWidth: "15%"
+        ,
+          sTitle: "L"
+          sWidth: "8%"
+        , 
+          sTitle: "L*"
+          sWidth: "8%"
+        , 
+          {sTitle: "Page Views", sType: "formatted-num"}
+        , 
+          sTitle: "HPI"
+        ]
+      else
+        aoColumns = [
+          sTitle: "Rank"
+        ,
+          sTitle: "Name"
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
+          sWidth: "12%"
+        ,
+          sTitle: "Country of Birth"
+          sWidth: "9%"
+        ,
+          sTitle: "Birth Year"
+          sWidth: "8%"
+        ,
+          sTitle: "Gender"
+          sWidth: "8%"
+        ,
+          sTitle: "Occupation"
+          sWidth: "10%"
         ,
           sTitle: "L"
         , 
           sTitle: "L*"
         , 
-          {sTitle: "Page Views", sType: "formatted-num"}
+          {sTitle: "PV", sType: "formatted-num"}
         , 
-          {sTitle: "English Page Views", sType: "formatted-num"}
+          {sTitle: "PV<sub>e</sub>", sType: "formatted-num"}
         , 
-          {sTitle: "Non-English Page Views", sType: "formatted-num"}
+          {sTitle: "PV<sub>ne</sub>", sType: "formatted-num"}
         , 
-          {sTitle: "Standard Deviation of Page Views", sType: "formatted-num"}
+          {sTitle: "&sigma;<sub>PV</sub>", sType: "formatted-num"}
         , 
           sTitle: "HPI"
         ]
@@ -136,25 +162,16 @@ Template.ranking_table.rendered = ->
         sTitle: "Total People"
       ]
 
-  if clickTooltip 
-    displayLength = 10
-    scrollLength = "200px"
-  else 
-    displayLength = 100
-    scrollLength = "600px"
-
   #initializations
   sorting = switch
     when entity is "countries" then [[7, "desc"]]
     when entity is "people" and dataset is "OGC" then [[12, "desc"], [1, "asc"]] 
     else [[6, "desc"], [1, "asc"]]  # Multi-column sort on L then name
 
-  oTable = $("#ranking").dataTable
-    sScrollY: scrollLength
+  dataTableParams = {
     aoColumns: aoColumns
     aaData: data
     aaSorting: sorting
-    iDisplayLength: displayLength
     bDeferRender: false
     bSortClasses: false
     bSorted: false
@@ -173,7 +190,17 @@ Template.ranking_table.rendered = ->
     aoColumnDefs: [
       bSortable: false
       aTargets: [0]
-    ]
+    ]    
+  }
+
+  if clickTooltip 
+    dataTableParams.iDisplayLength = 10
+    dataTableParams.sScrollY = "260px"
+  else 
+    dataTableParams.iDisplayLength = 100
+
+  oTable = $("#ranking").dataTable(dataTableParams)
+    
 
   $(window).bind "resize", ->
     oTable.fnAdjustColumnSizing()
