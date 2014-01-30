@@ -1,3 +1,18 @@
+.narrative-image{
+	position: relative;
+}
+
+div.section-guide {
+	z-index: 500;
+	float: left;
+	position: absolute;
+	bottom:0px;
+	img.cartoon {
+		width: 200px !important;
+		height: auto;
+	}
+}
+
 div.page-title {
 	background-color: @color_pantheon_black;
 	color: @color_beige;
@@ -39,19 +54,21 @@ div.landing-section-button {
 	text-align: center;
 	margin-bottom: 40px;
 	cursor: pointer;
+	position: relative;
 }
 
-div.section-guide {
-	img {
-		position: relative;
-		width: 300px;
-		left: 50%;
-		margin-left: -150px;
-	}
-}
+//div.section-guide {
+//	img {
+//		position: relative;
+//		width: 300px;
+//		left: 50%;
+//		margin-left: -150px;
+//	}
+//}
 
 div.flexslider {
 	height: 250px;
+	position: relative;
 }
 ul.slides {
 	max-height: 250px;

@@ -4,18 +4,21 @@ narratives = [
     description: "A Guided Tour of the Observatory"
     image: "pantheon-blur.jpg"
     tutorialType: "ogc"
+    guide: "/nora.png"
 ,
     domain: "ARTS"
     title: "Explore the Renaissance"
     description: "Discover where great artists made their cultural impact."
     image: "florence.jpg"
     tutorialType: "renaissance"
+    guide: "/alfredo.png"
 ,
     domain: "EXPLORATION"
     title: "Leaps for Humankind"
     description: "Follow the steps that led to the discovery of the world, and beyond."
     image: "moon.jpg"
     tutorialType: "moon"
+    guide: "/diana.png"
 ,
 ]
 

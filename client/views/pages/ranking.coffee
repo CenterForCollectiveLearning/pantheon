@@ -172,6 +172,7 @@ Template.ranking_table.rendered = ->
     aoColumns: aoColumns
     aaData: data
     aaSorting: sorting
+    aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]]
     bDeferRender: false
     bSortClasses: false
     bSorted: false
@@ -196,7 +197,9 @@ Template.ranking_table.rendered = ->
   if clickTooltip 
     dataTableParams.iDisplayLength = 10
     dataTableParams.sScrollY = "260px"
-  else 
+  else if entity is "countries"
+    dataTableParams.iDisplayLength = -1
+  else
     dataTableParams.iDisplayLength = 100
 
   oTable = $("#ranking").dataTable(dataTableParams)
