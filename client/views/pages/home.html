@@ -1,38 +1,38 @@
 <template name="home">
     <div class="page-top"></div>
     <div class="container-fluid">
-        <div class="row-fluid">
+        <div class="row-fluid main-panel">
 <!--             <div class="span4">   
                 <div class="page-title">Guided Tour</div>
                 <div class="description">Get a tour of the features of Pantheon from one of our helpful characters</div>
                 <div class="section-guide"><img src="/nora.png" alt="nora"></div>
                 <div class="landing-section-button">Begin Tour</div>
             </div> -->
-            <div class="span8">   
-                <div class="page-title">Featured Narratives</div>
+            <div class="span12">   
+                <!-- <div class="page-title">Featured Narratives</div> -->
                 {{>narratives}}
             </div>
-            <div id="divein" class="span4">   
+<!--             <div id="divein" class="span4">   
                 <div class="page-title">Explore On My Own</div>
-                <!-- <div class="description">Dive in immediately and start exploring Pantheon!</div> -->
+                <div class="description">Dive in immediately and start exploring Pantheon!</div>
                 <img class="narrative-image" src="/treemap.jpg"/>
                 <div class="landing-section-button">Dive In</div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span4">   
                 <div class="page-title">Visualizations</div>
-                <div class="description black-border-bottom">Dive into global culture with <a class="word" href="/treemap/country_exports/all/all/-3000/1950/25/OGC">treemaps</a>, <a class="word" href="/matrix/matrix_exports/all/all/-3000/1950/25/OGC">matrices</a>, <a class="word" href="/scatterplot/country_vs_country/MX/PE/-3000/1950/25/OGC">scatterplots</a>, and <a class="word" href="/map/map/all/all/-3000/1950/25/OGC">maps</a>. </div>
+                <div class="description black-border-bottom">Explore the historical patterns of global cultural development with <a class="word" href="/treemap/country_exports/all/all/-3000/1950/25/OGC">treemaps</a>, <a class="word" href="/matrix/matrix_exports/all/all/-3000/1950/25/OGC">matrices</a>, <a class="word" href="/scatterplot/country_vs_country/MX/PE/-3000/1950/25/OGC">scatterplots</a>, and <a class="word" href="/map/map/all/all/-3000/1950/25/OGC">maps</a>. </div>
             </div>
             <div class="span4">   
                 <div class="page-title">Rankings</div>
-                <div class="description black-border-bottom">Explore the rankings of <a class="word" href="/rankings/countries/all/all/-3000/1950/25">countries</a>, <a class="word" href="/rankings/people/all/all/-3000/1950/25">people</a>, and <a class="word" href="/rankings/domains/all/all/-3000/1950/25">domains</a> over time.</div>
+                <div class="description black-border-bottom">Compare the cultural production of <a class="word" href="/rankings/countries/all/all/-3000/1950/25">countries</a> and the popularity of historical <a class="word" href="/rankings/people/all/all/-3000/1950/25">people</a> with our rankings.</div>
             </div>
             <div class="span4">   
-                <div class="page-title">Data</div>
-                <div class="description black-border-bottom">Learn about how we <a class="word" href="/methods#methods">collected</a>, <a class="word" href="/methods#data_source_1">organized</a>, and <a class="word" href="/methods#validation">validated</a> our data.</div>
+                <div class="page-title">Methods</div>
+                <div class="description black-border-bottom">Learn about how we <a class="word" href="/methods#methods">collected</a>, <a class="word" href="/methods#data_source_1">organized</a>, and <a class="word" href="/methods#validation">validated</a> Pantheon's data.</div>
             </div>
         </div>
     </div>
@@ -49,12 +49,7 @@
 </template>
 
 <template name="narrative">
-    <li>
-     <!-- style="background-image:url('/{{image}}'); background-size:cover;"> -->
-        <img class="narrative-image" src="/{{image}}"/>
-        <!-- <div class="section-guide"><img class="cartoon" src="{{guide}}" alt="nora"></div> -->
-        <!-- <div class="speech speech-right triangle-border left" style="position:absolute;">{{description}}</div> -->
-        <!-- <div class="section-guide"><img class="character" src="{{guide}}" alt="alfredo"></div> -->
-        <div data-tutorial-type="{{tutorialType}}" class="landing-section-button learn-more">Launch Narrative</div>
+    <li> 
+        <img data-tutorial-type="{{tutorialType}}" class="narrative-image learn-more" src="/{{image}}"/>
     </li>
 </template>

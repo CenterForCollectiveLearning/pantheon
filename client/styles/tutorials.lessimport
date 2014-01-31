@@ -6,7 +6,7 @@ div.tutorial {
 		div.modal-body {
 			border-bottom: 0;
 			padding: 15px 15px 0 15px;
-			background-color: rgba(0, 0, 0, 0.85);
+			background-color: @color_beige;
 			div.guide {
 				float: left;
 				img.cartoon {
@@ -14,48 +14,26 @@ div.tutorial {
 	    			height: auto;
 	    		}
 			}
+
 			div.speech {
 			    font-weight:400;
+			    font-size: 17px;
 			}
 			div.speech-right {
 				margin: 0;
 				width: 70%;
 				float: right;
 			}
-			div.diana-left{
-			    border: 5px solid #6499ce;
-			    &:before{
-			        border-color: transparent #6499ce;
-			    }
-			}
-			div.diana-bottom{
-                border: 5px solid #6499ce;
-                &:before{
-                    border-color: #6499ce transparent;
-                }
-            }
-            div.nora-left{
-                border: 5px solid #6b3b7e;
-                &:before{
-                    border-color: transparent #6b3b7e;
-                }
-            }
-            div.nora-bottom{
-                border: 5px solid #6b3b7e;
-                &:before{
-                    border-color: #6b3b7e transparent;
-                }
-            }
 			a.quit {
 				position: absolute;
 				bottom: 15px;
 				right: 15px;
 
-				color: @color_grey;
+				color: @color_pantheon_black;
 				text-decoration: none;
 
 				&:hover { 
-					color: @color_gold; 
+					text-decoration:underline; 
 				}
 			}
 			div#goFurther{
@@ -63,11 +41,11 @@ div.tutorial {
 				bottom: 15px;
 				right: 15px;
 				a {
-					color: @color_grey;
+					color: @color_pantheon_black;
 					text-decoration: none;
 
 					&:hover { 
-						color: @color_gold; 
+						text-decoration: underline; 
 					}
 				}
 			}
@@ -76,10 +54,23 @@ div.tutorial {
 
 		div.modal-footer {
 			border-top: 0;
-			background-color: rgba(0, 0, 0, 0.85);
+			background-color: @color_beige;
+			.muted{
+				color: @color_pantheon_black;
+			}
 			button.action-tutorial-back {
 				display: none;
 				visibility: hidden;
+			}
+			.btn{
+				background-color: @color_gold;
+				&:hover{
+					background-colr: @color_grey;
+				}
+			}
+			.btn-primary{
+				color: @color_beige;
+				background-image: none !important;
 			}
 		}
 	}

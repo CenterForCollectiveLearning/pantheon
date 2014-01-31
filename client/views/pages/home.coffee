@@ -1,22 +1,22 @@
 narratives = [
-    domain: "ABOUT"
-    title: "Visualizing Culture"
-    description: "A Guided Tour of the Observatory"
-    image: "pantheon-blur.jpg"
-    tutorialType: "ogc"
-    guide: "/nora.png"
-,
+     domain: "ABOUT"
+     title: "Visualizing Culture"
+     description: "Let me show you how Pantheon works!"
+     image: "pantheon_homepage.jpg"
+     tutorialType: "ogc"
+     guide: "/nora1.png"
+ ,
     domain: "ARTS"
     title: "Explore the Renaissance"
-    description: "Discover where great artists made their cultural impact."
-    image: "florence.jpg"
+    description: "Explore the emergence of the Renaissance!"
+    image: "renaissance_homepage.jpg"
     tutorialType: "renaissance"
-    guide: "/alfredo.png"
+    guide: "/alfredo1.png"
 ,
     domain: "EXPLORATION"
     title: "Leaps for Humankind"
     description: "Follow the steps that led to the discovery of the world, and beyond."
-    image: "moon.jpg"
+    image: "explore_homepage.jpg"
     tutorialType: "moon"
     guide: "/diana.png"
 ,

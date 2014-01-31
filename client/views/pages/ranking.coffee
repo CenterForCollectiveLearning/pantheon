@@ -64,7 +64,7 @@ Template.ranking_table.rendered = ->
         if dataset is "OGC" and clickTooltip
           [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), p.HPI.toFixed(2)]  
         else if dataset is "OGC"
-          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(2)]
+          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(3)]
         else
           [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
 

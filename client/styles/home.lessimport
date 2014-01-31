@@ -2,15 +2,12 @@
 	position: relative;
 }
 
-div.section-guide {
-	z-index: 500;
-	float: left;
-	position: absolute;
-	bottom:0px;
-	img.cartoon {
-		width: 200px !important;
-		height: auto;
-	}
+.main-panel{
+	margin-bottom: 20px;
+}
+
+.flexslider{
+	margin: 0 !important;
 }
 
 div.page-title {
@@ -40,7 +37,7 @@ div.description {
 	}
 }
 
-#divein{
+#divein, .learn-more{
 	cursor: pointer;
 }
 
@@ -52,7 +49,6 @@ div.landing-section-button {
 	line-height: 50px;
 	font-size: 18px;
 	text-align: center;
-	margin-bottom: 40px;
 	cursor: pointer;
 	position: relative;
 }
@@ -67,16 +63,16 @@ div.landing-section-button {
 //}
 
 div.flexslider {
-	height: 250px;
+	height: 100%;
 	position: relative;
 }
 ul.slides {
-	max-height: 250px;
-	height: 250px;
+	max-height: 100%;
+	height: 100%;
 
 	li {
-		max-height: 250px;
-		height: 250px;
+		max-height: 100%;
+		height: 100%;
 	}
 }
 
@@ -184,6 +180,11 @@ ul.slides {
 // 	height: 100%;
 // }
 
+.flex-control-nav {
+	margin-top: 5px !important;
+	position: initial !important;
+}
+
 ol.flex-control-nav {
 	z-index: 100;
 	bottom: 250px;
@@ -203,7 +204,7 @@ ol.flex-control-nav {
 	li a {
 		&.flex-active {
 			zoom: 1;
-			background-color: @color_beige;
+			background-color: @color_pantheon_black;
 		}
 
 		border-radius: 7px;
@@ -211,7 +212,7 @@ ol.flex-control-nav {
 		-moz-border-radius: 7px;
 		-o-border-radius: 7px;
 		display: block;
-		border: 1px solid @color_beige;
+		border: 0px solid @color_beige;
 		margin: 0 2px;
 		height: 10px;
 		width: 10px;
