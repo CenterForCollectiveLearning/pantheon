@@ -72,6 +72,10 @@ div.tutorial {
 				color: @color_beige;
 				background-image: none !important;
 			}
+			.btn-success{
+				color: @color_beige;
+				background-image: none !important; 
+			}
 		}
 	}
 }

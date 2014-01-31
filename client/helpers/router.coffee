@@ -69,9 +69,11 @@ Router.map ->
       Session.set "entity", @params.entity
       Session.set "country", @params.country
       Session.set "category", @params.category
+      Session.set "categoryLevel", getCategoryLevel(@params.category)  
       Session.set "from", @params.from
       Session.set "to", @params.to
       Session.set "langs", @params.langs  
+      Session.set "clicktooltip", false  
       Session.set "dataset", "OGC"
       if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L" 
 

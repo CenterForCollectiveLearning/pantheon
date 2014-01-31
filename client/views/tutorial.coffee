@@ -20,12 +20,12 @@ renaissanceStory = [
   spot: "#cell_Painter rect"
 ,
   template: Template.renaissance_step5
-  spot: ".wrapper"
+  spot: "#cell_IT rect, #cell_FR rect, #cell_GB rect"
   onLoad: ->
     Router.go "/treemap/domain_exports_to/all/all/1300/1600/25/OGC"
 ,
   template: Template.renaissance_step6
-  spot: ".wrapper"
+  spot: "#page"
   onLoad: ->
     Router.go "/treemap/country_exports/IT/all/1300/1600/25/OGC"
 ,
@@ -54,20 +54,20 @@ explorationStory = [
   spot: "#cell_Explorer rect"
 ,
   template: Template.explorers_step3
-  spot: "#viz"
+  spot: "#page"
   onLoad: ->
-    Router.go "/treemap/country_exports/IS/all/-3000/1000/25/OGC"
+    Router.go "/treemap/domain_exports_to/EXPLORATION/all/-3000/1000/25/OGC"
 ,
   template: Template.explorers_step4
   spot: ".ranked_list"
 ,
   template: Template.explorers_step5
-  spot: "#viz"
+  spot: "#wrapper"
   onLoad: ->
     Router.go "/treemap/domain_exports_to/EXPLORATION/all/1000/1700/25/OGC"
 ,
   template: Template.explorers_step6
-  spot: "#cell_ES rect, #cell_IT rect"
+  spot: "#cell_ES rect, #cell_IT rect, #cell_FR rect, #cell_DK rect"
 ,
   template: Template.explorers_step7
   spot: "#cell_CN rect"
@@ -81,12 +81,12 @@ explorationStory = [
   spot: "#cell_NO rect"
 ,
   template: Template.explorers_step10
-  spot: ".wrapper"
+  spot: ".page"
   onLoad: ->
     Router.go "/treemap/domain_exports_to/EXPLORATION/all/1900/2000/25/OGC"
 ,
   template: Template.explorers_step11
-  spot: ".wrapper"
+  spot: ".page"
 ,
   template: Template.explorers_step12
   spot: "#cell_US rect"
@@ -104,7 +104,7 @@ ogcStory = [
     Router.go "/treemap/country_exports/all/all/-3000/1950/25/OGC"
 ,
   template: Template.ogc_step5
-  spot: ".page-left"
+  spot: ".viz-selector, .viz-options"
 ,
   template: Template.ogc_step6
   spot: ".wrapper"

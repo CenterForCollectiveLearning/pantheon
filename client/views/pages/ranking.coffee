@@ -55,16 +55,21 @@ Template.ranking_table.rendered = ->
       ]
     when "people"
       console.log "IN PEOPLE, clickTooltip: ", clickTooltip
-      if clickTooltip then collection = Tooltips.find({_id: {$not: "count"}}).fetch()
-      else collection = PeopleTopN.find().fetch()
+      if clickTooltip
+        collection = Tooltips.find({_id: {$not: "count"}}).fetch()
+        console.log 'HELLO TOOLTIPS.FIND'
+      else 
+        collection = PeopleTopN.find().fetch()
+        console.log 'HELLO PEOPLETOPN.FIND'
       console.log "COLLECTION", collection
+      console.log collection.length
 
       data = _.map collection, (d) ->
         p = People.findOne d._id
         if dataset is "OGC" and clickTooltip
           [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), p.HPI.toFixed(2)]  
         else if dataset is "OGC"
-          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(3)]
+          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(3)]
         else
           [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
 

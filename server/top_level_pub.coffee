@@ -21,6 +21,7 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
 
   args.dataset = dataset
   args.countryCode = country if country isnt "all" and vizMode is "country_exports"
+  console.log(categoryLevel)
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
   if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
   

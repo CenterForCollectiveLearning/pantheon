@@ -8,12 +8,12 @@ div#image-fullscreen {
 	z-index: 10;
     top: 50%;
     left: 50%;
-    margin-left: -400px;
-    margin-top: -250px;
+    margin-left: -500px;
+    margin-top: -350px;
 
     div.d3plus_tooltip_container {
     	background-color: #FFF;
-    	width: 800px;
+    	width: 1000px;
     	height: 100%;
     	padding: 15px;
     	border-radius: 3px;
@@ -96,6 +96,10 @@ div.text {
 				list-style-type: none;
 				text-align: left !important;
 			}
+		}
+		a {
+			color: @color_pantheon_black;
+			text-decoration: underline;
 		}	
 	}
 
@@ -152,7 +156,7 @@ div.text {
 	}
 
 	a {
-		color: black;
+		color: @color_pantheon_black;
 		text-decoration: none;
 		&:hover { 
 			color: black;
