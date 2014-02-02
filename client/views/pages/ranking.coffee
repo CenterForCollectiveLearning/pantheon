@@ -4,6 +4,13 @@ toMillions = (x) ->
 toThousands = (x) ->
   String((x/1000).toFixed(2)) + " K"
 
+toDecimal = (x, d) ->
+  if typeof x is "string" or x instanceof String
+    x
+  else
+    x.toFixed d
+
+
 Template.rankings.columnDescriptions = ->
   entity = Session.get "entity"
   switch entity
@@ -35,7 +42,7 @@ Template.ranking_table.rendered = ->
   switch entity
     when "countries"
       data = _.map CountriesRanking.find().fetch(), (c) ->
-        [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, c.HCPI.toFixed(0)]
+        [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 0)]
       aoColumns = [
         sTitle: "Rank"
       ,
@@ -57,19 +64,29 @@ Template.ranking_table.rendered = ->
       console.log "IN PEOPLE, clickTooltip: ", clickTooltip
       if clickTooltip
         collection = Tooltips.find({_id: {$not: "count"}}).fetch()
-        console.log 'HELLO TOOLTIPS.FIND'
       else 
-        collection = PeopleTopN.find().fetch()
-        console.log 'HELLO PEOPLETOPN.FIND'
+        args =
+          birthyear:
+            $gt: parseInt(Session.get("from"))
+            $lte: parseInt(Session.get("to"))
+        country = Session.get("country")
+        args.countryCode = country if country isnt "all"
+        category = Session.get("category")
+        args[Session.get("categoryLevel")] = category if category.toLowerCase() isnt "all"
+        L = Session.get("langs")
+        if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
+        console.log("PEOPLE RANKING COLLECTION ARGS:")
+        console.log(args)
+        collection = People.find(args).fetch()
       console.log "COLLECTION", collection
       console.log collection.length
 
       data = _.map collection, (d) ->
         p = People.findOne d._id
         if dataset is "OGC" and clickTooltip
-          [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(0), toMillions(p.TotalPageViews), p.HPI.toFixed(2)]  
+          [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,0), toMillions(p.TotalPageViews), toDecimal(p.HPI,2)]  
         else if dataset is "OGC"
-          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, p.L_star.toFixed(1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), p.HPI.toFixed(3)]
+          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), toDecimal(p.HPI,3)]
         else
           [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
 
