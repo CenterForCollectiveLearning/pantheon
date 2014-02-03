@@ -124,10 +124,9 @@ header {
 	    padding-bottom: 30px;
 	    background: @color_beige;
 	    // TODO Change box shadows in bootstrap source
-	    -webkit-box-shadow: 0 0 10px @color_beige !important;
-	    // -webkit-box-shadow: none !important;
-	    // -moz-box-shadow: none !important;	    
-	    // box-shadow: none !important;
+	    -webkit-box-shadow: 0 0 15px 15px @color_beige !important;
+	    -moz-box-shadow: 0 0 15px 15px @color_beige !important;
+	    box-shadow: 0 0 15px 15px @color_beige !important;
 
 	    @media (max-width: 1000px) {
 	        ul.nav {

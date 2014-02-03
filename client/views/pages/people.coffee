@@ -35,12 +35,15 @@ Template.person.helpers
     Session.set "personID", @_id
     Session.set "personCountry", @countryName
     CountryPeople.find()
-  occupationPeopleCount: -> numberWithCommas(People.find(occupation: @occupation).count())  # TODO extract all counts into one publication
-  birthyearPeopleCount: -> numberWithCommas(People.find(birthyear: @birthyear).count())
-  countryPeopleCount: -> numberWithCommas(People.find(countryName: @countryName).count())
+  occupationRank: -> numberWithCommas(People.find(occupation: @occupation, HPI: {$gt: @HPI}).count() + 1)
+  birthyearRank: -> numberWithCommas(People.find(birthyear: @birthyear, HPI: {$gt: @HPI}).count() + 1)
+  countryRank: -> numberWithCommas(People.find(countryName: @countryName, HPI: {$gt: @HPI}).count() + 1)
+  occupationCount: -> numberWithCommas(People.find(occupation: @occupation).count())  # TODO extract all counts into one publication
+  birthyearCount: -> numberWithCommas(People.find(birthyear: @birthyear).count())
+  countryCount: -> numberWithCommas(People.find(countryName: @countryName).count())
 
 Template.person.events = 
-  "mouseenter div.card": (d) ->
+  "click div.card": (d) ->
     srcE = (if d.srcElement then d.srcElement else d.target)
     rankingProperty = $(srcE).data "ranking-property"
     Session.set("rankingProperty", rankingProperty)
