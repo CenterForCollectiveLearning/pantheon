@@ -14,7 +14,7 @@ Template.methods.rendered = ->
 
   Deps.autorun( ->
     scrollPosition = $(Session.get("pageScrollID")).position()?.top
-    if scrollPosition then window.scrollTo(0, scrollPosition - offset - 50)
+    if scrollPosition then window.scrollTo(0, scrollPosition - offset - 40)
   )
 
   w.on('load', -> b.scrollspy('refresh'))

@@ -27,29 +27,6 @@
     	margin-top: -1.5em;
     }
 
-    .share-view {
-    	text-align: center;
-    	width: 130px;
-    	margin: 0 auto;
-    	
-    	a {
-    		.fade;
-    	    position: relative;
-    
-    	    cursor: pointer;
-    	    &:hover { 
-    	    	text-decoration: none;
-    	    }
-    
-    	    color: white;
-    	    font-size: 0.8em; // 32px / 1px
-    	    line-height: 30px;
-    	 
-    	    text-shadow: 0.5px 0.5px 1.0px black, -0.5px -0.5px 1px black;
-    	    text-transform: uppercase;
-    	}
-    }
-
     .name {
     	text-transform: capitalize;
     }

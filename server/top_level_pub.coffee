@@ -11,7 +11,7 @@ Meteor.publish "languages_pub", ->
 # Publish the top N people for the current query
 # Push the ids here as well since people will be in the client side
 #
-Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, N, dataset) ->
+Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, N, dataset) ->
   sub = this
   collectionName = "peopleTopN"
   args =
@@ -37,8 +37,8 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   else if vizMode is "domain_vs_domain"
     or1 = {}
     or2 = {}
-    or1["domain"] = categoryX
-    or2["domain"] = categoryY
+    or1[categoryLevelX] = categoryX
+    or2[categoryLevelY] = categoryY
     args.$or = [or1, or2]
 
   console.log("PeopleTopN pub")

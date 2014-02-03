@@ -22,7 +22,7 @@ Template.matrix_svg.rendered = ->
   matrixProps.width = matrixProps.fullWidth - matrixProps.margin.left - matrixProps.margin.right
 
   # TODO Don't rerun this code on every render
-  fill = d3.scale.linear().domain([0, 1]).range(["#f1e7d0", "red"])
+  # fill = d3.scale.log().domain([0, 1]).range(["white", "red"])
 
   matrixScales =
     x: d3.scale.ordinal().rangeBands([0, matrixProps.height])
@@ -57,7 +57,6 @@ Template.matrix_svg.rendered = ->
     header_svg = d3.select(@find("svg.header")).attr("width", matrixProps.fullWidth).append("g").attr("transform", "translate(" + matrixProps.margin.left + "," + matrixProps.headerHeight + ")")
 
     Deps.autorun -> # TODO: why is this in a Deps.autorun?
-
 
       # TODO: Don't re-render tooltip for already selected cell
       clickevent = (p) ->
@@ -132,81 +131,11 @@ Template.matrix_svg.rendered = ->
         $("#tooltip").empty()
         d3.selectAll("text").classed "active", false
 
-      # Rows
-      updateRows = (matrix) ->
 
-        # DATA JOIN
-        row = svg.selectAll(".row").data(matrix, (d, i) -> # Pass in index, bind country name from sorted countries list
-          countries[i]
-        )
-
-        # UPDATE
-        # row.attr("class", "update");
-
-        # ENTER
-        g = row.enter().append("g").attr("class", "row")
-        row.append("line").attr "x2", matrixProps.width
-        text = row.append("text").attr("class", "row-title").attr("x", -6).attr("y", matrixScales.x.rangeBand() / 2).attr("dy", ".32em").attr("text-anchor", "end").attr("font-family", "Lato").attr("fill", "#222222").attr("font-weight", "bold").attr("font-size", "0.8em")
-        # ENTER + Update
-        g.attr "transform", (d, i) ->
-          "translate(0," + matrixScales.x(i) + ")"
-
-        text.text (d, i) ->
-          countries[i]
-
-        # EXIT
-        row.exit().attr("class", "exit").transition().duration(750).attr("y", 60).remove()
-
-      updateColumns = (invMatrix) ->
-
-        # Cells
-        column = (column) ->
-
-          # ENTER
-          cell = d3.select(this).selectAll(".cell").data(column.filter((d) ->
-            d.z
-          ))
-          rect = cell.enter().append("rect").attr("class", "cell").attr("x", (d) ->
-            -matrixScales.x(d.y) - matrixScales.x.rangeBand()
-          ).attr("width", (Math.round(matrixScales.x.rangeBand() * 10) / 10) - 0.1).attr("height", (Math.round(matrixScales.y.rangeBand() * 10) / 10) - 0.5).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
-
-          # ENTER + UPDATE
-          rect.style "fill", (d) -> fill d.z
-
-          # EXIT
-          cell.exit().attr("class", "exit").transition().duration(750).attr("y", 60).remove()
-
-        columns = svg.selectAll(".column").data(invMatrix)
-        columnTitles = header_svg.selectAll(".column-title").data(invMatrix)
-
-        g = columns.enter().append("g").attr("class", "column")
-
-        g.attr("transform", (d, i) ->
-          "translate(" + matrixScales.y(i) + ")rotate(-90)"
-        ).each column
-
-        gColumnTitles = columnTitles.enter().append("g").attr("class", "column-title")
-
-        text = gColumnTitles.append("text")
-          .attr("dy", ".32em")
-          .attr("text-anchor", "start")
-          .attr("font-family", "Lato")
-          .attr("font-size", "1.2em")
-          .attr("fill", "#222222")
-          .attr("x", 6)
-          .attr("y", matrixScales.y.rangeBand() / 2)
-
-        text.text (d, i) ->
-          industries[i].capitalize()
-
-        text.attr "transform", (d, i) ->
-          "translate(" + matrixScales.y(i) + ")rotate(-90)"
-
-        columns.exit().attr "class", "exit"
 
       countries = []
       industries = []
-      maxValues = {}
+      maxValue = 0
       countryCounts = {}
       industryCounts = {}
       for datum in data
@@ -223,8 +152,11 @@ Template.matrix_svg.rendered = ->
         industryCounts[industry] ?= 0
         industryCounts[industry] += 1
 
-        maxValues[countryCode] ?= 0
-        if count > maxValues[countryCode] then maxValues[countryCode] = count
+        if count > maxValue then maxValue = count
+
+      console.log "maxValue:", maxValue
+
+      fill = d3.scale.log().domain([1, maxValue]).range(["white", "red"])
 
       matrix = [] # matrix mapping countries to industries
       invMatrix = [] # matrix mapping industries to countries
@@ -235,7 +167,7 @@ Template.matrix_svg.rendered = ->
 
         countryIndex = countries.indexOf countryCode
         industryIndex = industries.indexOf industry
-        normalizedCount = count / maxValues[countryCode]
+        normalizedCount = count
 
         matrix[countryIndex] ?= d3.range(industries.length).map (j) ->
           x: j
@@ -286,8 +218,8 @@ Template.matrix_svg.rendered = ->
 
       industryOrder = (value) ->
         matrixScales.y.domain industryOrders[value]
-        console.log industryOrders[value]
-        console.log matrixScales.y.domain()
+        # console.log industryOrders[value]
+        # console.log matrixScales.y.domain()
         t = svg.transition().duration(300)
         t.selectAll(".row").delay((d, i) ->
           matrixScales.x(i) * 1
@@ -310,6 +242,76 @@ Template.matrix_svg.rendered = ->
         ).attr("transform", (d, i) ->
           "translate(" + matrixScales.y(i) + ")"
         )
+
+            # Rows
+      updateRows = (matrix) ->
+
+        # DATA JOIN
+        row = svg.selectAll(".row").data(matrix, (d, i) -> # Pass in index, bind country name from sorted countries list
+          countries[i]
+        )
+
+        # UPDATE
+        # row.attr("class", "update");
+
+        # ENTER
+        g = row.enter().append("g").attr("class", "row")
+        row.append("line").attr "x2", matrixProps.width
+        text = row.append("text").attr("class", "row-title").attr("x", -6).attr("y", matrixScales.x.rangeBand() / 2).attr("dy", ".32em").attr("text-anchor", "end").attr("font-family", "Lato").attr("fill", "#222222").attr("font-weight", "bold").attr("font-size", "0.8em")
+        # ENTER + Update
+        g.attr "transform", (d, i) ->
+          "translate(0," + matrixScales.x(i) + ")"
+
+        text.text (d, i) ->
+          countries[i]
+
+        # EXIT
+        row.exit().attr("class", "exit").transition().duration(750).attr("y", 60).remove()
+
+      updateColumns = (invMatrix) ->
+
+        # Cells
+        column = (column) ->
+
+          # ENTER
+          cell = d3.select(this).selectAll(".cell").data(column.filter((d) -> d.z))
+          rect = cell.enter().append("rect").attr("class", "cell").attr("x", (d) ->
+            -matrixScales.x(d.y) - matrixScales.x.rangeBand()
+          ).attr("width", (Math.round(matrixScales.x.rangeBand() * 10) / 10) - 0.1).attr("height", (Math.round(matrixScales.y.rangeBand() * 10) / 10) - 0.5).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
+
+          # ENTER + UPDATE
+          rect.style "fill", (d) -> fill d.z
+
+          # EXIT
+          cell.exit().attr("class", "exit").transition().duration(750).attr("y", 60).remove()
+
+        columns = svg.selectAll(".column").data(invMatrix)
+        columnTitles = header_svg.selectAll(".column-title").data(invMatrix)
+
+        g = columns.enter().append("g").attr("class", "column")
+
+        g.attr("transform", (d, i) ->
+          "translate(" + matrixScales.y(i) + ")rotate(-90)"
+        ).each column
+
+        gColumnTitles = columnTitles.enter().append("g").attr("class", "column-title")
+
+        text = gColumnTitles.append("text")
+          .attr("dy", ".32em")
+          .attr("text-anchor", "start")
+          .attr("font-family", "Lato")
+          .attr("font-size", "1.2em")
+          .attr("fill", "#222222")
+          .attr("x", 6)
+          .attr("y", matrixScales.y.rangeBand() / 2)
+
+        text.text (d, i) ->
+          industries[i].capitalize()
+
+        text.attr "transform", (d, i) ->
+          "translate(" + matrixScales.y(i) + ")rotate(-90)"
+
+        columns.exit().attr "class", "exit"
 
       countryOrder Session.get "countryOrder"
       industryOrder Session.get "industryOrder"
