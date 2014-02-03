@@ -37,7 +37,7 @@ div#table-of-contents {
 
 	div.section-header {
 		text-align: left;
-		padding-top: 1em;
+		padding-top: 2em;
 		color: black;
 	}
 

@@ -78,6 +78,9 @@ table {
 			&.even {
 				background-color: @color_beige;
 			}
+			&:hover{
+				background-color: @color_grey;
+			}
 			td {
 				color: black;
 				font-size: 0.7rem;
@@ -99,3 +102,4 @@ table {
 		}
 	}
 }
+
