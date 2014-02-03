@@ -48,7 +48,10 @@
 	.transition(border, 0.2s, ease-in);
 }
 
-html, body { height: 100%; }
+html, body { 
+	height: 100%; 
+	background-color: @color_beige;
+}
 
 body { 
 	overflow-y: hidden; 

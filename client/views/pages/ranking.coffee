@@ -187,7 +187,9 @@ Template.ranking_table.rendered = ->
   #initializations
   sorting = switch
     when entity is "countries" then [[7, "desc"]]
-    when entity is "people" and dataset is "OGC" then [[12, "desc"], [1, "asc"]] 
+    when entity is "people" 
+      if dataset is "OGC" and not clickTooltip then [[12, "desc"]] 
+      else if clickTooltip then [[8, "desc"]]
     else [[6, "desc"], [1, "asc"]]  # Multi-column sort on L then name
 
   dataTableParams = {
