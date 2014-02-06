@@ -94,6 +94,7 @@ Meteor.startup ->
     person: getRandomFromArray(topHundredPeople)
     scatterplotScale: "linear"
     scatterplotMirror: true
+    rankingProperty: "occupation"
 
   Session.setDefault "page", "explore"
   Session.setDefault "vizType", defaults.vizType
@@ -137,6 +138,7 @@ Meteor.startup ->
   
   # PEOPLE
   Session.setDefault "person", defaults.person
+  Session.setDefault "rankingProperty", defaults.rankingProperty
 
   # Set session variable if window resized (throttled rate)
   throttledResize = _.throttle(->

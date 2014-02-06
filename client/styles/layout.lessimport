@@ -104,7 +104,7 @@ div.wrapper {
 body {
 	font-family: 'Lato';
 	font-weight: 300;
-	color: black;
+	color: @color_pantheon_black;
 }
 
 header.navbar-fixed-top{
@@ -124,7 +124,6 @@ header {
 	.navbar-inner {
 	    border: 0;
 	    padding: 0;
-	    padding-bottom: 30px;
 	    background: @color_beige;
 	    // TODO Change box shadows in bootstrap source
 	    -webkit-box-shadow: 0 0 15px 15px @color_beige !important;
@@ -149,7 +148,7 @@ header {
 	    .nav > li > a {
 	    	.no-select;
 	    	cursor: pointer;
-	    	color: black;
+	    	color: @color_pantheon_black;
 	    	text-decoration: none;
 	    	text-shadow: none;
 	    	font-size: 1em;
@@ -265,7 +264,7 @@ footer {
 
 		a {
 			text-decoration: none;
-			color: black;
+			color: @color_pantheon_black;
 			&:hover { 
 				font-weight: bold;
 			}
@@ -281,18 +280,20 @@ footer {
 
 div.sharing-options{
 	text-align: center;
+	width: 150px;
+	margin: 0 auto;
 	a {
-		padding-left: 5px;
 
 		&:first-child {
 			padding-left: 0;
 		}
 		i {
 			font-size: 1.75rem;
-			color: black;
+			color: @color_pantheon_black;
+			margin: 0 8px;
 
 			&:hover {
-				color: black;
+				color: @color_pantheon_black;
 				text-decoration: none;
 			}
 		}

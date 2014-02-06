@@ -106,7 +106,7 @@ div.d3plus_tooltip_large div.d3plus_tooltip_title {
   padding-bottom: 1em;
   text-align: center;
   color: @color_pantheon_black;
-  border-bottom: 1px solid @color_gold;
+  border-bottom: 1px solid @color_pantheon_black;
 }
 
 div.d3plus_tooltip_large div.d3plus_tooltip_subtitle {

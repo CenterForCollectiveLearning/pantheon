@@ -68,12 +68,6 @@ Deps.autorun ->
   vizType = Session.get("vizType")
   vizMode = Session.get("vizMode")
 
-  # People Page
-  personID = Session.get("personID")
-  personOccupation = Session.get("personOccupation")
-  personBirthyear = Session.get("personBirthyear")
-  personCountry = Session.get("personCountry")
-
   console.log "vizType: " + vizType
   console.log "vizMode: " + vizMode
   console.log "begin: " + begin
@@ -92,10 +86,7 @@ Deps.autorun ->
   console.log "gender: " + gender
   console.log "entity: " + entity
   console.log "page: " + page
-  console.log "dataset: " + dataset
-  console.log "similar people ranking property: ", + 
-  console.log "similar people ranking value: ", + 
-  
+  console.log "dataset: " + dataset  
   #
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
@@ -158,13 +149,7 @@ Deps.autorun ->
     else if page is "timeline"
       dataSub = Meteor.subscribe("timeline_pub", begin, end, onReady)
     else if page is "people"
-      console.log personOccupation, personBirthyear, personCountry
-      if personID and personOccupation and personBirthyear and personCountry
-         Meteor.subscribe("person_imports", personID)
-        occDataSub = Meteor.subscribe("occupation_pub", personID, personOccupation, onReady)
-        birthyearDataSub = Meteor.subscribe("birthyear_pub", personID, personBirthyear, onReady)
-        countryDataSub = Meteor.subscribe("country_pub", personID, personCountry, onReady)
-#
+      dataSub = Meteor.subscribe("peopleTopN", "treemap", "country_exports", begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, "all", dataset, onReady)
 # Subscription for tooltips on hover
 #  
 Deps.autorun ->

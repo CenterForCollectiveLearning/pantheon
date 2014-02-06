@@ -12,7 +12,7 @@ div#image-fullscreen {
     margin-top: -350px;
 
     div.d3plus_tooltip_container {
-    	background-color: #FFF;
+    	background-color: @color_beige;
     	width: 1000px;
     	height: 100%;
     	padding: 15px;

@@ -136,15 +136,19 @@
         {{#if tooltipDataReady}}
         <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
             <div id="tooltip-inner">
-                <span class="category">{{heading}}</span>
+                <div id="tooltip-top">
+                    <span class="category">{{heading}}</span>
                 
-                <div class="total-count">{{count}} {{suffix}}</div>
-                <div class="list">
-                    {{#each top5}} 
-                        {{> tt_person person_lookup}} 
-                    {{/each}}
+                    <div class="total-count">{{count}} {{suffix}}</div>
                 </div>
-                {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
+                <div id="tooltip-bottom">
+                    <div class="list">
+                        {{#each top5}} 
+                        {{> tt_person person_lookup}} 
+                        {{/each}}
+                    </div>
+                    {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
+                </div>
             </div>
         </div>
         {{/if}}
@@ -153,7 +157,7 @@
 
 <!-- Person in tooltip list-->
 <template name = "tt_person">
-    {{name}}<span class="birthplace"> born {{birthday}}, {{countryName}} ({{index}})</span><br />
+    {{name}}<span class="birthplace"> b. {{birthday}}, {{countryName}} ({{index}})</span><br />
 </template>
 
 <!-- Big Tooltip (Overlay for visualization click events -->

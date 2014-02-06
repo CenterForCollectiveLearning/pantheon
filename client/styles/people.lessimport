@@ -8,6 +8,82 @@ div.person-page {
     margin: 0 auto;
 }
 
+div.search-result {
+    background-color: @color_pantheon_black;
+    color: @color_beige;
+    font-family: 'Lato';
+    font-weight: 300;
+    text-align: left;
+}
+
+.-autocomplete-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.-autocomplete-item {
+    display: block;
+    background: @color_pantheon_black;
+}
+
+.-autocomplete-item.selected {
+    background: @color_beige;
+    color: @color_pantheon_black;
+    text-decoration: none;
+}
+
+// TODO Don't do this
+input {
+    background: none !important;
+    color: @color_beige !important;
+    font-family: 'Lato' !important;
+    font-weight: 300 !important;
+    background: none !important;
+    line-height: 1.2em !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    padding: 0 10px !important;
+    font-size: 1em !important;
+
+    &:focus {
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        box-shadow: none !important;
+        border-color: none !important;       
+    }
+}
+
+// input {
+//     position: relative;
+//     top: 14px;
+//     height: 1.25em;
+//     line-height: 1.2em;
+//     text-transform: uppercase;
+//     // height: 50px;
+//     // line-height: 50px;
+//     // font-size: 18px;
+//     // padding-left: 6px;
+//     color: @color_beige;
+//     font-family: 'Lato';
+//     font-weight: 300;
+//     background: none;
+//     -webkit-appearance: none;
+//     border: none;
+//     resize: none;
+
+//     &:focus {
+//         -webkit-box-shadow: none;
+//         -moz-box-shadow: none;
+//         box-shadow: none;
+//         border-color: none !important;
+//     }
+// }
+
+div.search-result {
+    color: black;
+}
+
 div.person-top {
     background-color: @color_pantheon_black;
     color: @color_beige;
@@ -20,6 +96,13 @@ div.person-top {
     span {
         position: relative;
         top: 10px;
+    }
+
+    i#search-button {
+        cursor: pointer;
+        position: relative;
+        top: 8px;
+        left: 10px;
     }
 
     span.person-name {
@@ -73,6 +156,37 @@ div.person-body {
     }
 }
 
+div.person-pill {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    color: black;
+}
+
+div.ranking-card {
+    &.active {
+        border-bottom: 8px solid @color_pantheon_black;
+    }
+}
+
+div.card {
+    cursor: pointer;
+    width: 213.3333333333px;
+    height: 125px;
+    text-align: center;
+    text-transform: uppercase;
+    float: left;
+    padding: 20px 30px;
+    font-weight: bold;
+    border-bottom: 8px solid @color_beige;
+
+
+    div.count {
+        font-size: 24px;
+        padding: 15px 0;
+    }
+}
+
 div.person-bottom {
     clear: both;
     div.person-ranking-title {
@@ -82,26 +196,6 @@ div.person-bottom {
         color: @color_beige;
     }
     div.person-ranking-cards {
-        div.card {
-            cursor: pointer;
-            width: 33.3333333%;
-            height: 125px;
-            text-align: center;
-            text-transform: uppercase;
-            float: left;
-            padding: 20px 30px;
-            font-weight: bold;
-            border-bottom: 8px solid @color_beige;
-
-            &:hover {
-                border-bottom: 8px solid @color_pantheon_black;
-            }
-
-            div.count {
-                font-size: 24px;
-                padding: 15px 0;
-            }
-        }
 
         div.shared-occupation {
             background-color: #4ede8a;
@@ -123,6 +217,16 @@ div.person-bottom {
             box-shadow: none;
         }
     }
+}
+
+div.page-left {
+    position: relative;
+    top: -30px;
+}
+
+div.page-right {
+    position: relative;
+    top: -30px;
 }
 
 div.body-padding {
