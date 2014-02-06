@@ -47,6 +47,7 @@ Template.ranking_table.rendered = ->
         sTitle: "Rank"
       ,
         sTitle: "Country"
+        fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + Countries.findOne({countryName : obj.aData[obj.iDataColumn]}, {})?["countryCode"] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
       ,
         sTitle: "Number of People"
       ,
@@ -172,10 +173,13 @@ Template.ranking_table.rendered = ->
         sTitle: "Rank"
       ,
         sTitle: "Occupation"
+        fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/domain_exports_to/" + obj.aData[obj.iDataColumn].toUpperCase() + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
       ,
         sTitle: "Industry"
+        fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/domain_exports_to/" + obj.aData[obj.iDataColumn].toUpperCase() + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
       ,
         sTitle: "Domain"
+        fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/domain_exports_to/" + obj.aData[obj.iDataColumn].toUpperCase() + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
       ,
         sTitle: "Total Exporters"
       ,
