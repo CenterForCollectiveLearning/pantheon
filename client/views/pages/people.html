@@ -19,9 +19,13 @@
 <template name="person">
 	<div class="page-top">
 	</div>
-
-	<div id="page" class="person-page">
-		<div class="page-middle">
+	<div id="page">
+		<div class="ranked-people-left">
+			{{#each peopleLeft}}
+			    {{> person_pill}}
+			{{/each}}
+		</div>
+		<div class="page-middle person-page">
 			<div class="person-top">
 				<span class="person-name">
 					{{name}}
@@ -88,21 +92,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="page-left">
-		{{#each peopleLeft}}
-		    {{> person_pill}}
-		{{/each}}
-	</div>
-	<div class="page-right">
-		{{#each peopleRight}}
-    		{{> person_pill}}
- 		{{/each}}
-	</div>
+</div>
+
+<div class="ranked-people-right">
+	{{#each peopleRight}}
+    	{{> person_pill}}
+   	{{/each}}
 </template>
 
 <template name="person_pill">
     <a href="{{pathFor 'people'}}">    	
-    	<div class="card person-pill">
+    	<div class="card person-pill {{coloring}}">
+    		{{rank}}
     		{{name}}
     	</div>
     </a>

@@ -38,7 +38,6 @@ Template.person.helpers
     args = {HPI: {$lt: @HPI}}
     rankingProperty = Session.get("rankingProperty")
     args[rankingProperty] = this[rankingProperty]
-    console.log rankingProperty, this[rankingProperty], People.find(args, {sort: {HPI: -1}, limit: 2}).fetch()[0].name, People.find(args, {sort: {HPI: -1}, limit: 2}).fetch()[1].name
     People.find(args, {sort: {HPI: -1}, limit: 2})
   occupationRank: -> numberWithCommas(People.find(occupation: @occupation, HPI: {$gt: @HPI}).count() + 1)
   birthyearRank: -> numberWithCommas(People.find(birthyear: @birthyear, HPI: {$gt: @HPI}).count() + 1)
@@ -51,6 +50,9 @@ rankingPropertyColorMapping =
   occupation: "#4ede8a"
   birthyear: "#8ccdf4"
   countryName: "#f7b18b"
+
+Template.person_pill.helpers
+  coloring: -> Session.get "rankingProperty"
 
 Template.person.events =
   "click #search-button": (d) ->
@@ -71,16 +73,12 @@ Template.person.events =
     $("div.ranking-card").removeClass("active")
     $(srcE).addClass("active")
 
-    color = rankingPropertyColorMapping[rankingProperty]
-    $("div.person-pill").css({"border-color": color, "color": color})
+  # "mouseenter div.ranking-card": (d) ->
+  #   srcE = (if d.srcElement then d.srcElement else d.target)
 
-  "mouseenter div.ranking-card": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    $(srcE).addClass("active")
-
-  "mouseleave div.ranking-card": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    $(srcE).removeClass("active")
+  # "mouseleave div.ranking-card": (d) ->
+  #   srcE = (if d.srcElement then d.srcElement else d.target)
+  #   $(srcE).removeClass("active")
 
 Template.ranking_person.helpers
   currentPerson: -> @_id.equals(People.findOne({"name": Session.get("name")})._id)
