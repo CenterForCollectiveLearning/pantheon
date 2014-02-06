@@ -3,6 +3,7 @@
 //
 
 div.person-page {
+    float: left;
     width: 640px;
     min-width: 640px;
     margin: 0 auto;
@@ -53,32 +54,6 @@ div.search-result {
         border-color: none !important;       
     }
 }
-
-// input {
-//     position: relative;
-//     top: 14px;
-//     height: 1.25em;
-//     line-height: 1.2em;
-//     text-transform: uppercase;
-//     // height: 50px;
-//     // line-height: 50px;
-//     // font-size: 18px;
-//     // padding-left: 6px;
-//     color: @color_beige;
-//     font-family: 'Lato';
-//     font-weight: 300;
-//     background: none;
-//     -webkit-appearance: none;
-//     border: none;
-//     resize: none;
-
-//     &:focus {
-//         -webkit-box-shadow: none;
-//         -moz-box-shadow: none;
-//         box-shadow: none;
-//         border-color: none !important;
-//     }
-// }
 
 div.search-result {
     color: black;
@@ -159,11 +134,25 @@ div.person-body {
 div.person-pill {
     border-width: 1px;
     border-style: solid;
-    border-color: black;
-    color: black;
+
+    &.occupation {
+        color: #4ede8a;
+        border-color: #4ede8a;
+    }
+
+    &.birthyear {
+        color: #8ccdf4;
+        border-color: #8ccdf4;
+    }
+
+    &.countryName {
+        color: #f7b18b;
+        border-color: #f7b18b;
+    }
 }
 
 div.ranking-card {
+    border-bottom: 8px solid @color_beige;
     &.active {
         border-bottom: 8px solid @color_pantheon_black;
     }
@@ -178,8 +167,6 @@ div.card {
     float: left;
     padding: 20px 30px;
     font-weight: bold;
-    border-bottom: 8px solid @color_beige;
-
 
     div.count {
         font-size: 24px;
@@ -219,14 +206,17 @@ div.person-bottom {
     }
 }
 
-div.page-left {
+div.ranked-people-left {
+    float: left;
     position: relative;
-    top: -30px;
+
+    top: 400px;
 }
 
-div.page-right {
+div.ranked-people-right {
+    float: left;
     position: relative;
-    top: -30px;
+    top: 400px;
 }
 
 div.body-padding {
