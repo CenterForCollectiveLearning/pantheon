@@ -41,9 +41,6 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
     or2[categoryLevelY] = categoryY
     args.$or = [or1, or2]
 
-  console.log("PeopleTopN pub")
-  console.log(args)
-
   if L[0] is "H"
     projection =
       fields:
@@ -59,8 +56,6 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
       sort: 
         numlangs: -1
   projection.limit = N if N isnt "all"
-
-  console.log(projection)
 
   People.find(args, projection).forEach (person) ->
     sub.added collectionName, person._id, person
@@ -129,7 +124,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     or1[categoryLevel] = categoryX
     or2[categoryLevel] = categoryY
     args.$or = [or1, or2]
-  
+
   if L[0] is "H"
     projection =
       fields:

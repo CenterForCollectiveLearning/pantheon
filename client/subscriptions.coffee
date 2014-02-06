@@ -157,11 +157,10 @@ Deps.autorun ->
   
   # get rid of people and count ready once tooltip is working
   # Return both in one publication
-  onDataReady = ->
-    Session.set "tooltipDataReady", true
+  onDataReady = -> Session.set "tooltipDataReady", true
   hover = Session.get("hover")
   showclicktooltip = Session.get("clicktooltip")
-  return  unless hover or showclicktooltip
+  return unless hover or showclicktooltip
   Session.set "tooltipDataReady", false
   if hover
     category = Session.get("tooltipCategory")
@@ -183,7 +182,9 @@ Deps.autorun ->
   gender = Session.get("gender")
   begin = parseInt(Session.get("from"))
   end = parseInt(Session.get("to"))
-  L = parseInt(Session.get("langs"))
+  L = Session.get("langs")
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
+
+  console.log "Before tooltip subscription", vizMode, begin, end, L, countryCode
   tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, dataset, showclicktooltip, onDataReady)
