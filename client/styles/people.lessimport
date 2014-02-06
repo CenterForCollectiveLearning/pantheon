@@ -34,7 +34,7 @@ div.search-result {
 }
 
 // TODO Don't do this
-input {
+#people-search {
     background: none !important;
     color: @color_beige !important;
     font-family: 'Lato' !important;
