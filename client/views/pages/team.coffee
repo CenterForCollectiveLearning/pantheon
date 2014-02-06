@@ -71,7 +71,7 @@ teamMembers = [
 ,
   name: "Defne Gurel"
   photo: "images/defne_gurel.png"
-  description: "Computer Science Undergraduate"
+  description: "Undergraduate"
   role: ["Data"]
   media:
     linkedin: "http://www.linkedin.com/pub/defne-gurel/63/2a0/ba6"
@@ -79,7 +79,7 @@ teamMembers = [
 ,
   name: "Tiffany Lu"
   photo: "images/tiffany_lu.jpg"
-  description: "Computer Science Undergraduate"
+  description: "Undergraduate"
   role: ["Data"]
   media:
     personal: "http://tweilu.scripts.mit.edu/"

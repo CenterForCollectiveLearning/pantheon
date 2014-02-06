@@ -45,6 +45,9 @@ Router.map ->
         Session.set "categoryLevel", defaults.categoryLevel
       else if vizMode is "domain_vs_domain"
         Session.set "category", "all"
+      else if vizMode is "matrix_exports"
+        Session.set "category", "all"
+        Session.set "categoryLevel", defaults.categoryLevel
 
       # Set category level based on category parameters
       if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"
