@@ -225,7 +225,6 @@ div.ui-slider {
 
 
 div.viz-options {
-	position: absolute;
 	width: 100%;
 }
 

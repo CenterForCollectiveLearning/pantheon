@@ -243,7 +243,7 @@ Template.sharing_options.events =
       height = 400
       left   = ($(window).width()  - width)  / 2
       top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
-      url    = "http://facebook.com/share.php?u=" + "Pantheon" + "&url=" + encodeURIComponent(location.href)
+      url    = "http://facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href)
       opts   = 'status=1' +
              ',width='  + width  +
              ',height=' + height +
