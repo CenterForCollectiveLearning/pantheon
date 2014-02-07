@@ -140,49 +140,49 @@ d3plus.tree_map = function(vars) {
   }
   
   cell
-    .on(d3plus.evt.move,function(d){
-      Session.set("hover", true);
-      var id = find_variable(d,vars.id_var).replace(" ", "_"),
-          self = d3.select("#cell_"+id).node()
+    .on(d3plus.evt.over,function(d){
+      if (Session.get("clicktooltip") == false){
+        Session.set("hover", true);
+        var id = find_variable(d,vars.id_var).replace(" ", "_"),
+            self = d3.select("#cell_"+id).node()
 
-      self.parentNode.appendChild(self)
+        self.parentNode.appendChild(self)
 
-      d3.select("#cell_"+id).select("rect")
-        .style("cursor","pointer")
-        .attr("opacity",1)
+        d3.select("#cell_"+id).select("rect")
+          .style("cursor","pointer")
+          .attr("opacity",1)
 
-      // Get parameters from DOM
-      // Subscription Parameters
+        // Get parameters from DOM
+        // Subscription Parameters
 
-      var vizMode = Session.get("vizMode");
-      var dataset = Session.get("dataset");
-      if (vizMode === "country_exports") {
-        var countryCode = Session.get("country");
-        var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
-        var category = id.replace("_", " ").toUpperCase();
-        var categoryLevel = "occupation";
-      } else if (vizMode === "domain_exports_to") {
-        var countryCode = id.replace("_", " ");
-        var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
-        var category = Session.get("category").toUpperCase();
-        var categoryLevel = Session.get("categoryLevel");
+        var vizMode = Session.get("vizMode");
+        var dataset = Session.get("dataset");
+        if (vizMode === "country_exports") {
+          var countryCode = Session.get("country");
+          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
+          var category = id.replace("_", " ").toUpperCase();
+          var categoryLevel = "occupation";
+        } else if (vizMode === "domain_exports_to") {
+          var countryCode = id.replace("_", " ");
+          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
+          var category = Session.get("category").toUpperCase();
+          var categoryLevel = Session.get("categoryLevel");
+        }
+
+        // Positioning
+        var position = {
+          "left": (d3.event.clientX + 40),
+          "top": (d3.event.clientY - 45)
+        }
+        Session.set("tooltipPosition", position);
+
+        // Subscription Parameters
+        Session.set("tooltipCategory", category);
+        Session.set("tooltipCategoryLevel", categoryLevel);
+        Session.set("tooltipCountryCode", countryCode);
+        Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
+        Session.set("showTooltip", true);
       }
-
-      // Positioning
-      var position = {
-        "left": (d3.event.clientX + 40),
-        "top": (d3.event.clientY - 45)
-      }
-      Session.set("tooltipPosition", position);
-
-      // Subscription Parameters
-      Session.set("tooltipCategory", category);
-      Session.set("tooltipCategoryLevel", categoryLevel);
-      Session.set("tooltipCountryCode", countryCode);
-
-      Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
-
-      Session.set("showTooltip", true);
     })
     .on(d3plus.evt.out,function(d){
       Session.set("hover", false);
@@ -199,6 +199,8 @@ d3plus.tree_map = function(vars) {
     .on(d3plus.evt.down,function(d){
       Session.set("hover", false);
       Session.set("showTooltip", false);
+      // Set the session variable to show the clicktooltip
+      Session.set("clicktooltip", true);
       var id = find_variable(d,vars.id_var).replace(" ", "_");
       var dataset = Session.get("dataset");
       var vizMode = Session.get("vizMode");
@@ -218,8 +220,6 @@ d3plus.tree_map = function(vars) {
       Session.set("bigtooltipCategoryLevel", categoryLevel);
       Session.set("bigtooltipCountryCode", countryCode);
       Template.clicktooltip.title = countryCode !== "all" ? countryName + ": " + category : category;
-      // Set the session variable to show the clicktooltip
-      Session.set("clicktooltip", true);
     })
   
   cell.transition().duration(d3plus.timing)

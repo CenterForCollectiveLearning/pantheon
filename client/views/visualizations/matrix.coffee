@@ -74,33 +74,34 @@ Template.matrix_svg.rendered = ->
       Session.set "clicktooltip", true
       Template.clicktooltip.title = countryName + ": " + industry
     mouseover = (p) ->
-      Session.set "hover", true
-      # outline cell on mouseover
-      d3.select(@parentNode.appendChild(this)).transition().duration(200).style
-        stroke: "#000000"
-        "stroke-opacity": 1
-        "stroke-width":2
-      
-      d3.selectAll(".row text").classed "active", (d, i) -> i is p.y
-      d3.selectAll(".column-title").classed "active", (d, i) -> i is p.x
-      # Positioning
-      position =
-        left: (d3.event.pageX + 40)
-        top: (d3.event.pageY - 45)
-      Session.set "tooltipPosition", position
-      countryCode = countries[p.y]
-      countryName = Countries.findOne(countryCode: countryCode).countryName
-      industry = industries[p.x]
-      categoryLevel = "industry"
-      # Subscription Parameters
-      Session.set "tooltipCategory", industry
-      Session.set "tooltipCategoryLevel", categoryLevel
-      Session.set "tooltipCountryCode", countryCode
-      # Retrieve and pass data to template
-      Template.tooltip.heading = countryName + ": " + industry
-      Template.tooltip.categoryA = countryName
-      Template.tooltip.categoryB = industry
-      Session.set "showTooltip", true
+      if not Session.get "clicktooltip"
+        Session.set "hover", true
+        # outline cell on mouseover
+        d3.select(@parentNode.appendChild(this)).transition().duration(200).style
+          stroke: "#000000"
+          "stroke-opacity": 1
+          "stroke-width":2
+        
+        d3.selectAll(".row text").classed "active", (d, i) -> i is p.y
+        d3.selectAll(".column-title").classed "active", (d, i) -> i is p.x
+        # Positioning
+        position =
+          left: (d3.event.pageX + 40)
+          top: (d3.event.pageY - 45)
+        Session.set "tooltipPosition", position
+        countryCode = countries[p.y]
+        countryName = Countries.findOne(countryCode: countryCode).countryName
+        industry = industries[p.x]
+        categoryLevel = "industry"
+        # Subscription Parameters
+        Session.set "tooltipCategory", industry
+        Session.set "tooltipCategoryLevel", categoryLevel
+        Session.set "tooltipCountryCode", countryCode
+        # Retrieve and pass data to template
+        Template.tooltip.heading = countryName + ": " + industry
+        Template.tooltip.categoryA = countryName
+        Template.tooltip.categoryB = industry
+        Session.set "showTooltip", true
     mouseout = (p) ->
       Template.tooltip.top5 = null
       Session.set "hover", false

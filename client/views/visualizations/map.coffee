@@ -45,40 +45,40 @@ key_gradient = (rect) ->
 # present on page
 
 mouseover = (d) ->
-  Session.set "hover", true
-  
-  # change outline of selected country on mouseover
-  d3.select(@parentNode.appendChild(this)).transition().duration(200).style
-    "stroke-opacity": 1
-    "stroke-width":2
-    stroke: "#F00"
+  if not Session.get "clicktooltip"
+    Session.set "hover", true
+    # change outline of selected country on mouseover
+    d3.select(@parentNode.appendChild(this)).transition().duration(200).style
+      "stroke-opacity": 1
+      "stroke-width":2
+      stroke: "#F00"
 
-  dataset = Session.get("dataset")
-  countryCode3 = d.id
-  # change this so only use dataset: OGC for the countryNames 
-  countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
-  if(dataset is "murray")
-    countryCode = countryCode3
-  else
-    countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
-  category = Session.get("category")
-  categoryAggregation = Session.get("categoryLevel")
-  position =
-    left: (d3.event.pageX + 40)
-    top: (d3.event.pageY - 45)
+    dataset = Session.get("dataset")
+    countryCode3 = d.id
+    # change this so only use dataset: OGC for the countryNames 
+    countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
+    if(dataset is "murray")
+      countryCode = countryCode3
+    else
+      countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
+    category = Session.get("category")
+    categoryAggregation = Session.get("categoryLevel")
+    position =
+      left: (d3.event.pageX + 40)
+      top: (d3.event.pageY - 45)
 
-  Session.set "tooltipPosition", position
-  
-  # Subscription Parameters
-  Session.set "tooltipCategory", category
-  Session.set "tooltipCategoryLevel", categoryAggregation
-  Session.set "tooltipCountryCode", countryCode
-  
-  # Retrieve and pass data to template
-  Template.tooltip.heading = countryName + ": " + category
-  Template.tooltip.categoryA = countryName
-  Template.tooltip.categoryB = category
-  Session.set "showTooltip", true
+    Session.set "tooltipPosition", position
+    
+    # Subscription Parameters
+    Session.set "tooltipCategory", category
+    Session.set "tooltipCategoryLevel", categoryAggregation
+    Session.set "tooltipCountryCode", countryCode
+    
+    # Retrieve and pass data to template
+    Template.tooltip.heading = countryName + ": " + category
+    Template.tooltip.categoryA = countryName
+    Template.tooltip.categoryB = category
+    Session.set "showTooltip", true
 
 mouseout = (d) ->
   Session.set "hover", false
@@ -202,7 +202,7 @@ Template.map_svg.rendered = ->
         value_color doc.count
       else
         "#FFF"
-    ).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
+    ).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent).on("touchstart", "mouseover").on("touchend", "mouseout")
     d3.select(".key").selectAll("text").text (d, i) ->
       value_range_big[i].toFixed 0
 

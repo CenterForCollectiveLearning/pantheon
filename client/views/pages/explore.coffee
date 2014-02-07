@@ -304,8 +304,6 @@ Template.histogram_country_exports.helpers
 Template.clicktooltip.events =
   # TODO Ensure this works for tap
   "click .d3plus_tooltip_close,.d3plus_tooltip_curtain": (d) ->
-    $("#clicktooltip").fadeOut()
     Session.set "clicktooltip", false
   "click .closeclicktooltip": (d) ->
-    $("#clicktooltip").fadeOut()
     Session.set "clicktooltip", false
