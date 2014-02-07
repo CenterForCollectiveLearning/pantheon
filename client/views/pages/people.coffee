@@ -20,6 +20,8 @@ Template.search.settings = ->
     template: Template.search_result
   ]
 
+
+# TODO Design this smarter to receive all relevant data at once
 Template.person.helpers
   name: -> @name
   gender: -> if @gender is "Male" then "He" else "She"
@@ -37,15 +39,24 @@ Template.person.helpers
     args = {HPI: {$gt: @HPI}}
     rankingProperty = Session.get("rankingProperty")
     args[rankingProperty] = this[rankingProperty]
-    People.find(args, {sort: {HPI: 1}, limit: 2})
+    People.find(args, {sort: {HPI: 1}, limit: 2}).fetch().reverse()
   peopleRight: -> 
     args = {HPI: {$lt: @HPI}}
     rankingProperty = Session.get("rankingProperty")
     args[rankingProperty] = this[rankingProperty]
     People.find(args, {sort: {HPI: -1}, limit: 2})
-  occupationRank: -> numberWithCommas(People.find(occupation: @occupation, HPI: {$gt: @HPI}).count() + 1)
-  birthyearRank: -> numberWithCommas(People.find(birthyear: @birthyear, HPI: {$gt: @HPI}).count() + 1)
-  countryRank: -> numberWithCommas(People.find(countryName: @countryName, HPI: {$gt: @HPI}).count() + 1)
+  occupationRank: -> 
+    occupationRank = People.find(occupation: @occupation, HPI: {$gt: @HPI}).count() + 1
+    Session.set "occupationRank", occupationRank
+    numberWithCommas(occupationRank)
+  birthyearRank: -> 
+    birthyearRank = People.find(birthyear: @birthyear, HPI: {$gt: @HPI}).count() + 1
+    Session.set "birthyearRank", birthyearRank
+    numberWithCommas(birthyearRank)
+  countryRank: -> 
+    countryRank = People.find(countryName: @countryName, HPI: {$gt: @HPI}).count() + 1
+    Session.set "countryRank", countryRank
+    numberWithCommas(countryRank)
   occupationCount: -> numberWithCommas(People.find(occupation: @occupation).count())  # TODO extract all counts into one publication
   birthyearCount: -> numberWithCommas(People.find(birthyear: @birthyear).count())
   countryCount: -> numberWithCommas(People.find(countryName: @countryName).count())
@@ -54,6 +65,18 @@ rankingPropertyColorMapping =
   occupation: "#4ede8a"
   birthyear: "#8ccdf4"
   countryName: "#f7b18b"
+
+Template.people.rendered = ->
+  Deps.autorun ->
+    rankingProperty = Session.get("rankingProperty")
+    console.log rankingProperty
+    if rankingProperty
+      switch rankingProperty
+        when "occupation" then currentRank = Session.get "occupationRank"
+        when "birthyear" then currentRank = Session.get "birthyearRank"
+        when "countryName" then currentRank = Session.get "countryRank"
+      $(".ranked-people-left .rank").each((i) -> $(this).text(currentRank - 2 + i))
+      $(".ranked-people-right .rank").each((i) -> $(this).text(currentRank + 1 + i))
 
 Template.person_pill.helpers
   coloring: -> Session.get "rankingProperty"

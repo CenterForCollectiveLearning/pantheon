@@ -49,10 +49,11 @@ Router.map ->
         Session.set "category", "all"
         Session.set "categoryLevel", defaults.categoryLevel
 
+      # TODO Rethink this pipeline
       # Set category level based on category parameters
       if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"
         Session.set "categoryLevel", getCategoryLevel(@params.paramOne)  
-        Session.set "categoryLevelX", getCategoryLevel(@params.paramTwo)  
+        Session.set "categoryLevelX", getCategoryLevel(@params.paramOne)  
       if IOMapping[vizMode]["in"][1] is "category" or IOMapping[vizMode]["in"][1] is "categoryX" or IOMapping[vizMode]["in"][1] is "categoryY"
         Session.set "categoryLevel", getCategoryLevel(@params.paramTwo)  
         Session.set "categoryLevelY", getCategoryLevel(@params.paramTwo)  

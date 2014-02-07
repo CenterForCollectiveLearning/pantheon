@@ -168,6 +168,8 @@ Deps.autorun ->
     countryCode = Session.get("tooltipCountryCode")
     categoryX = Session.get("categoryX")
     categoryY = Session.get("categoryY")
+    categoryLevelX = Session.get("categoryLevelX")
+    categoryLevelY = Session.get("categoryLevelY")
     countryCodeX = Session.get("tooltipCountryCodeX")
     countryCodeY = Session.get("tooltipCountryCodeY")
   else if showclicktooltip #separate these session variables because hovering updates the tooltip ones
@@ -176,6 +178,8 @@ Deps.autorun ->
     countryCode = Session.get("bigtooltipCountryCode")
     categoryX = Session.get("bigtooltipCategoryX")
     categoryY = Session.get("bigtooltipCategoryY")
+    categoryLevelX = Session.get("bigtooltipCategoryLevelX")
+    categoryLevelY = Session.get("bigtooltipCategoryLevelY")
     countryCodeX = Session.get("bigtooltipCountryCodeX")
     countryCodeY = Session.get("bigtooltipCountryCodeY")
 
@@ -187,4 +191,4 @@ Deps.autorun ->
   dataset = Session.get("dataset")
 
   console.log "Before tooltip subscription", vizMode, begin, end, L, countryCode
-  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, dataset, showclicktooltip, onDataReady)
+  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)

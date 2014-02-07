@@ -109,8 +109,8 @@
 <template name="person_pill">
     <a href="{{pathFor 'people'}}">    	
     	<div class="card person-pill {{coloring}}">
-    		{{rank}}
-    		{{name}}
+    		<div class="rank">{{rank}}</div>
+    		<div class="name">{{name}}</div>
     	</div>
     </a>
 </template>

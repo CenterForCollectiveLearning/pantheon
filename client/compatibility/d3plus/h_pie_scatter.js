@@ -140,6 +140,7 @@ d3plus.pie_scatter = function(vars) {
   nodes
     .on(d3plus.evt.over, function(d){
       Session.set("hover", true);
+      console.log("hovering", d);
       
       var val = d[vars.value_var] ? d[vars.value_var] : vars.size_scale.domain()[0]
       var radius = 9, // CHANGED vars.size_scale(val),

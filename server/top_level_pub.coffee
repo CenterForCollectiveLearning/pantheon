@@ -86,7 +86,7 @@ Meteor.publish "allpeople", ->
 #because the whole set of people already exists client side
 #
 
-Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, dataset, click) ->
+Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, click) ->
   sub = this
   args =
     birthyear:
@@ -118,11 +118,11 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       countryCode: countryY
     ]
   else if vizMode is "domain_vs_domain"
-    args.countryCode = country  if country isnt "all"
+    args.countryCode = country if country isnt "all"
     or1 = {}
     or2 = {}
-    or1[categoryLevel] = categoryX
-    or2[categoryLevel] = categoryY
+    or1[categoryLevelX] = categoryX if categoryX isnt "all"
+    or2[categoryLevelY] = categoryY if categoryY isnt "all"
     args.$or = [or1, or2]
 
   if L[0] is "H"
@@ -140,13 +140,12 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       sort:
         numlangs: -1
 
-  projection.limit = 5  if not click
+  projection.limit = 5 if not click
 
   # Get people
   People.find(args, projection).forEach (person) ->
     sub.added "tooltipCollection", person._id, {}
 
-  
   # Get count
   count = People.find(args,
     fields: projection

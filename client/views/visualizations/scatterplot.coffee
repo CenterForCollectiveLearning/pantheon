@@ -44,15 +44,6 @@ Template.scatterplot_svg.rendered = ->
     aggregatedField = "occupation"
     nesting = ["nesting_1", "nesting_3", "nesting_5"]
     nestingDepth = "nesting_3"
-  else if vizMode is "lang_vs_lang"
-    field = "lang"
-    x_code = Session.get("languageX")
-    y_code = Session.get("languageY")
-    x_name = Languages.findOne(lang: x_code).lang_name
-    y_name = Languages.findOne(lang: y_code).lang_name
-    aggregatedField = "occupation"
-    nesting = ["nesting_1", "nesting_3", "nesting_5"]
-    nestingDepth = "nesting_3"
   else if vizMode is "domain_vs_domain"
     field = "domain"
     x_code = Session.get("categoryX")
@@ -62,7 +53,9 @@ Template.scatterplot_svg.rendered = ->
     aggregatedField = "countryName"
     nesting = ["nesting_1", "nesting_3"]
     nestingDepth = "nesting_3"
+
   data = Scatterplot.find().fetch()
+
   aggregated = {} # X, Y values for each data point (eg. {WRITER: {x:1, y:5}})
   flatData = [] # Array of objects {xname: 130, yname:87, id: PHYSICIST}
   attrs = {}
@@ -133,7 +126,6 @@ Template.scatterplot_svg.rendered = ->
         color: continent_color
         nesting_1: continentDict
         nesting_3: countryDict
-
   
   # AGGREGATE
   for i of data
@@ -168,11 +160,6 @@ Template.scatterplot_svg.rendered = ->
     flatData.push d
   text_formatting = (d) ->
     d.charAt(0).toUpperCase() + d.substr(1)
-
-  # console.log("orignal data", data);
-  # console.log("aggregated", aggregated);
-  # console.log("FLAT DATA: ", flatData);
-  # console.log("ATTRS: ", attrs);
 
   width = $(".page-middle").width() - 10
   height = $(".page-middle").height() - 80

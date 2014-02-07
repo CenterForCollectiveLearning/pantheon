@@ -79,8 +79,6 @@ Meteor.startup ->
     countryX: getRandomFromArray(countriesOverTenPeople)
     countryY: getRandomFromArray(countriesOverTenPeople)
     language: "all"
-    # languageX: "en"
-    # languageY: "ru"
     category: "all"
     categoryX: "ARTS"
     categoryY: "HUMANITIES"

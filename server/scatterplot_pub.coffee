@@ -54,8 +54,8 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
     )
   else if vizMode is "domain_vs_domain"
     matchArgs.$or = [{}, {}]
-    matchArgs.$or[categoryLevelX] = categoryX if categoryX isnt "all"
-    matchArgs.$or[categoryLevelY] = categoryY if categoryY isnt "all"
+    matchArgs.$or[0][categoryLevelX] = categoryX if categoryX isnt "all"
+    matchArgs.$or[1][categoryLevelY] = categoryY if categoryY isnt "all"
 
     pipeline = [
       $match: matchArgs
@@ -72,7 +72,7 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
         count:
           $sum: 1
     ]
-    
+
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
@@ -85,7 +85,6 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
           industry: e._id.industry
           occupation: e._id.occupation
           count: e.count
-
 
       sub.ready()
     , (error) ->
