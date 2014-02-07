@@ -3,20 +3,6 @@ div.wrapper-left {
 	float: left;
 }
 
-.center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  
-  /*
-  Not even necessary really. 
-  e.g. Height could be left out!
-  */
-  width: 40%;
-  height: 50%;
-}
-
 div#image-fullscreen {
 	position: fixed;
 	z-index: 10;
