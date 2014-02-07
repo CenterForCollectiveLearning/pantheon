@@ -24,7 +24,7 @@ div#image-fullscreen {
     	height: 100%;
     	padding: 15px;
     	border-radius: 3px;
-    	border: 1px solid black;
+    	border: 1px solid @color_pantheon_black;
     }
 
     div.d3plus_tooltip_body {
@@ -45,7 +45,7 @@ div#table-of-contents {
 	div.section-header {
 		text-align: left;
 		padding-top: 2em;
-		color: black;
+		color: @color_pantheon_black;
 	}
 
 	ul {
@@ -68,7 +68,7 @@ div#table-of-contents {
 					padding-left: 30px;
 				}
 
-				color: black;
+				color: @color_pantheon_black;
 				&:hover {
 				    background-color: transparent;
 					text-decoration: underline;
@@ -87,7 +87,7 @@ div.text {
 	padding: 2em;
 	border-radius: 3px;
 	color: #121212;
-	// border: 3px solid black;
+	// border: 3px solid @color_pantheon_black;
 	// background-image: url(/paper_background.png);
 
 	// TODO Do this better
@@ -166,7 +166,7 @@ div.text {
 		color: @color_pantheon_black;
 		text-decoration: none;
 		&:hover { 
-			color: black;
+			color: @color_pantheon_black;
 			text-decoration: underline; 
 		}
 	}
