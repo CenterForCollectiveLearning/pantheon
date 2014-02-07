@@ -278,6 +278,17 @@ footer {
 	}
 }
 
+div#spinner-container {
+	padding-top: 150px;
+	width: 200px;
+	margin: 0 auto;	
+	img#spinner {
+		width: 200px;
+
+	}
+}
+
+
 div.sharing-options{
 	text-align: center;
 	width: 115px;

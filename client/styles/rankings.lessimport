@@ -82,7 +82,7 @@ table {
 				background-color: @color_grey;
 			}
 			td {
-				color: black;
+				color: @color_pantheon_black;
 				font-size: 0.7rem;
 				padding: 3px 5px !important;
 
@@ -92,10 +92,10 @@ table {
 				//-o-text-overflow: ellipsis;
 
 				a {
-					color: black;
+					color: @color_pantheon_black;
 					font-weight: 500;
 					&:hover { 
-						color: black;
+						color: @color_pantheon_black;
 					}
 				}
 			}

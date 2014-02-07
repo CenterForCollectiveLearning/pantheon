@@ -168,11 +168,9 @@ Template.question.question = ->
 # TOOLTIPS
 # 
 Template.tooltip.helpers
-  tooltipShown: ->
-    Session.get "showTooltip"
+  tooltipShown: -> (Session.get("showTooltip") and not Session.get("clicktooltip"))
 
-  position: ->
-    Session.get "tooltipPosition"
+  position: -> Session.get "tooltipPosition"
 
   top5: -> # Total count is also passed
     if Session.get("indexType") is "HPI" then order = {HPI:-1}
@@ -304,6 +302,7 @@ Template.histogram_country_exports.helpers
   dataset : -> Session.get("dataset")
 
 Template.clicktooltip.events =
+  # TODO Ensure this works for tap
   "click .d3plus_tooltip_close,.d3plus_tooltip_curtain": (d) ->
     $("#clicktooltip").fadeOut()
     Session.set "clicktooltip", false

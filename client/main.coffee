@@ -127,6 +127,7 @@ Meteor.startup ->
   # TOOLTIPS
   Session.setDefault "hover", false
   Session.setDefault "showTooltip", false
+  Session.setDefault "clicktooltip", false
   Session.setDefault "tooltipCategory", "all"
   Session.setDefault "tooltipCategoryLevel", "domain"
   Session.setDefault "tooltipCountryCode", "all"

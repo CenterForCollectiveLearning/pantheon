@@ -3,7 +3,7 @@
 //
 .page-top {
 	padding-top: 150px;
-	color: black;
+	color: @color_pantheon_black;
     .bold {
     	font-weight: 500;
     }
@@ -98,7 +98,7 @@
 	line-height: 18px;
 	max-height: 100%;
 	a {
-		color: black;
+		color: @color_pantheon_black;
 		text-decoration: none;
     
 		&:hover { 
@@ -127,10 +127,10 @@
 	text-transform: uppercase;
 	padding-bottom: 10px;
 	margin-bottom: 10px;
-	color: black;
+	color: @color_pantheon_black;
 	letter-spacing: 1px;
 	font-weight: bold;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid @color_pantheon_black;
 }
 
 div.ui-slider {
@@ -150,12 +150,12 @@ div.ui-slider {
 		font-family: 'Lato';
 		font-weight: 300;
 		font-size: 1em;
-		color: black;
+		color: @color_pantheon_black;
 	}
 
 	.ui-slider-handle {
 		width: 10px;
-		background-color: black;
+		background-color: @color_pantheon_black;
 		border: none;
 		border-radius: 0;
 	}
@@ -171,7 +171,7 @@ div.ui-slider {
     	padding: 5px;
     	font-weight: 300;
     	text-align: left;
-    	color: black;
+    	color: @color_pantheon_black;
     	font-size: 1em;
     	letter-spacing: 1px;
 
@@ -210,11 +210,11 @@ div.ui-slider {
     		list-style-type: none;
     		li {
     			padding-left: 0;
-    			color: black;
+    			color: @color_pantheon_black;
     			list-style-type: none;
     			a {
     				text-decoration: none;
-    				color: black;
+    				color: @color_pantheon_black;
     				&:hover { font-weight: bold }
 
     			}  
@@ -231,13 +231,13 @@ div.viz-options {
 .parameter-selection {
 	height: 50px;
 	width: 100%;
-	color: black;
+	color: @color_pantheon_black;
 	display: inline-block;
 	margin-top: 10px;
 	label {
     	font-weight: 300;
     	text-align: left;
-    	color: black;
+    	color: @color_pantheon_black;
     	font-size: 1em;
     	letter-spacing: 1px;
     	text-transform: uppercase;
@@ -328,12 +328,12 @@ div.chosen-container {
 	width: inherit !important;
 	background-color: transparent; // rgba(0, 0, 0, 0.75);
 	border-radius: 2px;
-	border: 1px solid black;
+	border: 1px solid @color_pantheon_black;
 	a.chosen-single {
 		box-shadow: none;
 		background: none;
 		text-align: center;
-		color: black;
+		color: @color_pantheon_black;
 		font-size: 14px;
 		border: 0 !important;
 		span {
@@ -342,20 +342,20 @@ div.chosen-container {
 	}
 	div.chosen-drop {
 		background-color: @color_beige; // rgba(0, 0, 0, 0.75);
-		border: 1px solid black;
+		border: 1px solid @color_pantheon_black;
 		box-shadow: none;
-		color: black;
+		color: @color_pantheon_black;
 		font-size: 14px;
 		div.chosen-search {
 			input:focus {
-				border-color: black;
+				border-color: @color_pantheon_black;
 				-webkit-box-shadow: none;
 				-moz-box-shadow: none;
 				box-shadow: none;
 			}
 		}
 		div.chosen-results {
-			color: black;
+			color: @color_pantheon_black;
 			font-size: 14px;
 		}
 	}
@@ -379,7 +379,7 @@ div.selector {
 		width: 100% !important;
 
 		option {
-			color:black;
+			color: @color_pantheon_black;
 		}
 	}
 }
