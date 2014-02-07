@@ -25,6 +25,8 @@ Template.search.settings = ->
 Template.person.helpers
   name: -> @name
   gender: -> if @gender is "Male" then "He" else "She"
+  imagePath: ->
+    imagePath = "/images/people/" + @en_curid + ".jpg"
   L_star: -> 
     console.log "HPI", @HPI
     if @L_star then @L_star.toFixed(2)
@@ -106,6 +108,3 @@ Template.person.events =
   # "mouseleave div.ranking-card": (d) ->
   #   srcE = (if d.srcElement then d.srcElement else d.target)
   #   $(srcE).removeClass("active")
-
-Template.ranking_person.helpers
-  currentPerson: -> @_id.equals(People.findOne({"name": Session.get("name")})._id)

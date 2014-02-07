@@ -23,7 +23,7 @@
 <template name="person">
 	<div class="ranked-people-left">
 		{{#each peopleLeft}}
-		{{> person_pill}}
+		    {{> person_pill}}
 		{{/each}}
 	</div>
 	<div class="page-middle person-page">
@@ -41,7 +41,7 @@
 		</div>
 		<div class="person-body">
 			<div class="person-body-left">
-				<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/>
+				<img class="person-image" src="{{imagePath}}" onerror="$('.person-body-left').remove(); $('.person-body-right').addClass('no-left');">
 			</div>
 			<div class="person-body-right">
 				<div class="person-description">
@@ -107,64 +107,10 @@
 </template>
 
 <template name="person_pill">
-    <a href="{{pathFor 'people'}}">    	
-    	<div class="card person-pill {{coloring}}">
-    		<div class="rank">{{rank}}</div>
-    		<div class="name">{{name}}</div>
-    	</div>
-    </a>
+	<a href="{{pathFor 'people'}}">    	
+		<div class="card person-pill {{coloring}}">
+			<div class="rank">{{rank}}</div>
+			<div class="name">{{name}}</div>
+		</div>
+	</a>
 </template>
-
-	<template name="person_name">
-		{{!inputAutocomplete settings id="msg" class="primary-text input-xlarge" placeholder="Chat..."}}
-	</template>
-
-	<template name="user_pill">
-		<div class="primary-text name">
-			{{name}}
-		</div>
-	</template>
-
-	<!-- Accordion Selector -->
-	<template name="people_accordion">
-		<div class="people-accordion">
-			<h3 class="app">{{occupation}}</h3>
-			<div>
-				<ul>
-					{{#each occupationPeople}}
-					{{> ranking_person}}
-					{{/each}}
-				</ul>
-			</div>
-			<h3 class="app">People Born in {{time_period}}</h3>
-			<div>
-				<ul>
-					{{#each birthyearPeople}}
-					{{> ranking_person}}
-					{{/each}}
-				</ul>
-			</div>
-			<h3 class="app">People Born in {{countryName}}</h3>
-			<div>
-				<ul>
-					{{#each countryPeople}}
-					{{> ranking_person}}
-					{{/each}}
-				</ul>
-			</div>
-		</div>
-	</template>
-
-	<template name="ranking_person">
-		<li class="person">
-			<a href="{{pathFor 'people'}}">
-				<div class="person-container{{#if currentPerson}} center-person{{/if}}">
-					<div class="top-info"><div class="rank">Rank: {{rank}}</div><div class="numlangs">Languages: {{numlangs}}</div></div>
-					<div class="person-image-container">
-						<img class="person-image" src="/images/people/{{en_curid}}.jpg" onerror="this.onerror=null;this.src='/fallback.jpg'"/></a>
-					</div>
-					<div class="bottom-info">{{name}}</div>
-				</div>
-			</a>
-		</li>
-	</template>
