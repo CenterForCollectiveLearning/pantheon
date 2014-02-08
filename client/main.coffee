@@ -63,6 +63,25 @@
     in: ["category", "language"]
     out: "country"
 
+# static lists of category mappings
+@mpdomains = #keys are pantheon, values are murray
+  "FINE ARTS" : "VISUAL ARTS"
+  "ASTRONOMER" : "ASTRONOMY"
+  "BIOLOGIST" : "BIOLOGY"
+  "CHEMIST" : "CHEMISTRY"
+  "GEOLOGIST" : "EARTH SCIENCES"
+  "LANGUAGE" : "LITERATURE"
+  "MATH" : "MATHEMATICS"
+  "MEDICINE" : "MEDICINE"
+  "MUSIC" : "MUSIC"
+  "PHILOSOPHY" : "PHIL"
+  "PHYSICIST" : "PHYSICS"
+  "NATURAL SCIENCES" : "SCIENCE"
+  "INVENTION" : "TECHNOLOGY"
+
+@pantheonCountries = ['AD','AE','AF','AG','AL','AM','AO','AR','AT','AU','AW','AZ','BA','BB','BD','BE','BF','BG','BH','BI','BJ','BM','BN','BO','BR','BT','BW','BY','CA','CD','CF','CG','CH','CI','CL','CM','CN','CO','CR','CU','CV','CY','CZ','DE','DJ','DK','DO','DZ','EC','EE','EG','ER','ES','ET','FI','FM','FO','FR','GA','GB','GE','GF','GH','GI','GL','GM','GN','GP','GQ','GR','GT','GU','GW','GY','HK','HN','HR','HT','HU','ID','IE','IL','IM','IN','IQ','IR','IS','IT','JE','JM','JO','JP','KE','KG','KH','KN','KP','KR','KW','KZ','LA','LB','LC','LK','LR','LS','LT','LU','LV','LY','MA','MC','MD','ME','MG','MK','ML','MM','MN','MQ','MR','MT','MU','MV','MW','MX','MY','MZ','NA','NC','NE','NG','NI','NL','NO','NP','NR','NZ','OM','PA','PE','PH','PK','PL','PR','PS','PT','PY','QA','RO','RS','RU','RW','SA','SB','SC','SD','SE','SG','SI','SK','SL','SN','SO','SR','SS','ST','SV','SY','SZ','TD','TG','TH','TJ','TL','TM','TN','TO','TR','TT','TW','TZ','UA','UG','UNK','US','UY','UZ','VE','VI','VN','VU','WS','XK','YE','ZA','ZM','ZW']
+@murrayCountries = ['AT','AU','Anc Greece','Arab World','BE','Balkans','CA','CH','CN','CZ','DE','DK','ES','FI','FR','GB','HU','IN','IS','IT','JP','Latin Am','NL','NO','NZ','PL','PT','RU','SE','SK','SS Africa','US']
+
 
 # Object containing domain hierarchy for domains dropdown
 @uniqueDomains = []

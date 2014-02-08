@@ -43,7 +43,6 @@ Template.accordion.map_active = -> if Session.equals("vizMode", "map") then "act
 
 Template.accordion.events = 
   "click li a": (d) ->
-    culturalDomains = ['ARTS', 'HUMANITIES', 'BUSINESS & LAW', 'EXPLORATION', 'INSTITUTIONS', 'PUBLIC FIGURE', 'SCIENCE & TECHNOLOGY', 'SPORTS']
     srcE = (if d.srcElement then d.srcElement else d.target)
     vizType = $(srcE).data "viz-type"
     vizMode = $(srcE).data "viz-mode"
@@ -55,9 +54,9 @@ Template.accordion.events =
     unless paramTwo is "all"
       paramTwo = Session.get(paramTwo)
     if vizMode in ["domain_exports_to","map"] and dataset is "OGC"# to randomize the domain when you click on domains
-      paramOne = getRandomFromArray(culturalDomains)
+      paramOne = getRandomFromArray(_.keys(mpdomains))
     if vizMode in ["domain_exports_to","map"] and dataset is "murray"# to randomize the domain when you click on domains
-      paramOne = "ART"
+      paramOne = getRandomFromArray(_.values(mpdomains))
 
     # Use session variables as parameters for a viz type change
     Router.go "explore",
@@ -99,7 +98,7 @@ Template.ranked_person.birthday = ->
   birthday
 
 Template.ranked_person.index = ->
-  if Session.get("indexType") is "HPI" and Session.get("dataset") is "OGC" then @HPI.toFixed(2) else @numlangs
+  if Session.get("indexType") is "HPI" and Session.get("dataset") is "OGC" then @HPI?.toFixed(2) else @numlangs
 
 Template.date_header.helpers
   from: ->
@@ -135,6 +134,7 @@ Template.question.question = ->
 @boldify = (str) -> "<b>" + str + "</b>"
 @getQuestion = (mode, vars) ->
   console.log mode, vars
+  dataset = Session.get("dataset")
   # If mode requires a category, switch based on categoryLevel because occupations are singular
   if mode in ["domain_exports_to", "map", "domain_vs_domain"]
     # Default to empty
@@ -143,7 +143,9 @@ Template.question.question = ->
       switch vars.categoryLevel
         when "domain", "industry" then category_prefix = " individuals in "
         when "occupation"
-          if vars.category is "Martial Arts" then vars.category = "Martial Artists" else vars.category = vars.category + "s"
+          if vars.category is "Martial Arts" then vars.category = "Martial Artists" 
+          if dataset is "murray" then category_prefix = " individuals in "
+          else if dataset is "OGC" then vars.category = vars.category + "s"
     else category_prefix = " individuals in "
 
   # If mode requires gender, then change subject
@@ -156,7 +158,8 @@ Template.question.question = ->
   # Actually construct the question
   switch mode
     when "country_exports" then return new Handlebars.SafeString("Who are the globally known people born in " + boldify(vars.country) + "?")
-    when "domain_exports_to", "map" then return new Handlebars.SafeString("Where were globally known " + category_prefix + boldify(vars.category) + " born?")
+    when "domain_exports_to", "map" 
+      return new Handlebars.SafeString("Where were globally known " + category_prefix + boldify(vars.category) + " born?")
     when "matrix_exports"
       if vars.gender_var is "ratio" then return new Handlebars.SafeString("What's the " + boldify("female to male") + " ratio for each country and cultural domain?")
       else return new Handlebars.SafeString("How many globally known " + boldify(vars.gender_var) + " are associated with each country and cultural domain?")

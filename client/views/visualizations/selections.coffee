@@ -219,25 +219,30 @@ Template.select_industry_order.rendered = ->
 
 Template.select_dataset.rendered = ->
   $(@find("select")).val(Session.get("dataset")).chosen().change( ->
-    murrayCountries = ['AT','AU','Anc Greece','Arab World','BE','Balkans','CA','CH','CN','CZ','DE','DK','ES','FI','FR','GB','HU','IN','IS','IT','JP','Latin Am','NL','NO','NZ','PL','PT','RU','SE','SK','SS Africa','US']
-    pantheonCountries = ['AD','AE','AF','AG','AL','AM','AO','AR','AT','AU','AW','AZ','BA','BB','BD','BE','BF','BG','BH','BI','BJ','BM','BN','BO','BR','BT','BW','BY','CA','CD','CF','CG','CH','CI','CL','CM','CN','CO','CR','CU','CV','CY','CZ','DE','DJ','DK','DO','DZ','EC','EE','EG','ER','ES','ET','FI','FM','FO','FR','GA','GB','GE','GF','GH','GI','GL','GM','GN','GP','GQ','GR','GT','GU','GW','GY','HK','HN','HR','HT','HU','ID','IE','IL','IM','IN','IQ','IR','IS','IT','JE','JM','JO','JP','KE','KG','KH','KN','KP','KR','KW','KZ','LA','LB','LC','LK','LR','LS','LT','LU','LV','LY','MA','MC','MD','ME','MG','MK','ML','MM','MN','MQ','MR','MT','MU','MV','MW','MX','MY','MZ','NA','NC','NE','NG','NI','NL','NO','NP','NR','NZ','OM','PA','PE','PH','PK','PL','PR','PS','PT','PY','QA','RO','RS','RU','RW','SA','SB','SC','SD','SE','SG','SI','SK','SL','SN','SO','SR','SS','ST','SV','SY','SZ','TD','TG','TH','TJ','TL','TM','TN','TO','TR','TT','TW','TZ','UA','UG','UNK','US','UY','UZ','VE','VI','VN','VU','WS','XK','YE','ZA','ZM','ZW']
     dataset = $(this).val()
-    Session.set "dataset", dataset
     vizMode = Session.get("vizMode")
     path = window.location.pathname.split("/")
-    switch dataset
-      when "murray" 
-        path[7] = 0
-        Session.set "langs", 0
-        # if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
-        #   countryCode = getRandomFromArray(murrayCountries)
-        #   path[3] = countryCode
-      when "OGC"
-        path[7] = 'H0'
-        Session.set "langs", 'H0'
-        # if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
-        #   countryCode = getRandomFromArray(pantheonCountries)
-        #   path[3] = countryCode
+    path[7] = path[7].toString()
+    if dataset is "murray"
+      path[7] = 0
+      if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
+        countryCode = getRandomFromArray(murrayCountries) #get random from mongo instead??
+        path[3] = countryCode
+      if vizMode in ["domain_exports_to","map"]
+        domain = Session.get 'category'
+        newdomain = mpdomains[domain]
+        if(newdomain) then path[3] = newdomain
+        else path[3] = getRandomFromArray(_.values(mpdomains))
+    if dataset is "OGC"
+      path[7] = 'H0'
+      if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
+        countryCode = getRandomFromArray(pantheonCountries)
+        path[3] = countryCode
+      if vizMode in ["domain_exports_to","map"]
+        domain = Session.get 'category'
+        newdomain = (_.invert(mpdomains))[domain]
+        if(newdomain) then path[3] = newdomain
+        else path[3] = getRandomFromArray(_.keys(mpdomains))
     path[8] = dataset
     Router.go path.join("/"))
 
