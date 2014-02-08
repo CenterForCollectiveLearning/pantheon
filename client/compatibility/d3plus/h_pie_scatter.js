@@ -140,7 +140,6 @@ d3plus.pie_scatter = function(vars) {
   nodes
     .on(d3plus.evt.over, function(d){
       Session.set("hover", true);
-      console.log("hovering", d);
       
       var val = d[vars.value_var] ? d[vars.value_var] : vars.size_scale.domain()[0]
       var radius = 9, // CHANGED vars.size_scale(val),
@@ -178,7 +177,8 @@ d3plus.pie_scatter = function(vars) {
         countryName = Countries.findOne({countryCode: dataPoint}).countryName;
         Session.set("tooltipCountryCode", dataPoint);
 
-        Session.set("tooltipCategoryLevel", Session.get("categoryLevel"));
+        Session.set("tooltipCategoryLevelX", Session.get("categoryLevelX"));
+        Session.set("tooltipCategoryLevelY", Session.get("categoryLevelY"));
         Session.set("tooltipCategoryX", xVar);
         Session.set("tooltipCategoryY", yVar);
         Template.tooltip.heading = countryName;
@@ -320,24 +320,28 @@ d3plus.pie_scatter = function(vars) {
 
       // Subscription Parameters
       if (vizMode === 'country_vs_country') {
-          var countryCodeX = Countries.findOne({countryName: xVar, dataset: dataset}).countryCode;
-          var countryCodeY = Countries.findOne({countryName: yVar, dataset: dataset}).countryCode;
+          var countryCodeX = xVar;
+          var countryCodeY = yVar;
           var category = dataPoint;
           var categoryLevel = "industry";
 
           Session.set("bigtooltipCategory", category);
-          Session.set("bigtooltipCategoryLevel", categoryLevel);
+          Session.set("bigtooltipCategoryLevel", Session.get("categoryLevel"));
+          Session.set("bigtooltipCategoryLevelX", Session.get("categoryLevelX"));
+          Session.set("bigtooltipCategoryLevelY", Session.get("categoryLevelY"));
           Session.set("bigtooltipCountryCodeX", countryCodeX);
           Session.set("bigtooltipCountryCodeY", countryCodeY);
+          Template.clicktooltip.title = dataPoint;
       } else if (vizMode === 'domain_vs_domain') {
-          Session.set("bigtooltipCountryCode", Countries.findOne({countryName: dataPoint, dataset: dataset}).countryCode);
+          Session.set("bigtooltipCountryCode", dataPoint);
+          countryName = Countries.findOne({countryCode: dataPoint, dataset: dataset}).countryName
           Session.set("bigtooltipCategoryLevel", Session.get("categoryLevel"));
+          Session.set("bigtooltipCategoryLevelX", Session.get("categoryLevelX"));
+          Session.set("bigtooltipCategoryLevelY", Session.get("categoryLevelY"));
           Session.set("bigtooltipCategoryX", xVar);
           Session.set("bigtooltipCategoryY", yVar);
+          Template.clicktooltip.title = countryName;
       }
-
-      Template.clicktooltip.title = dataPoint;
-
       // Set the session variable to show the clicktooltip
       Session.set("clicktooltip", true);
     })

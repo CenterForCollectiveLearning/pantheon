@@ -33,8 +33,11 @@ Template.scatterplot_svg.rendered = ->
     field = "countryCode"
     x_code = Session.get("countryX")
     y_code = Session.get("countryY")
+    # Need to work entirely in country codes because code -> name is not one-to-one
     x_name = x_code  # Countries.findOne(countryCode: x_code).countryName
     y_name = y_code  # Countries.findOne(countryCode: y_code).countryName
+    x_label = Countries.findOne(countryCode: x_code).countryName
+    y_label = Countries.findOne(countryCode: y_code).countryName
     aggregatedField = "occupation"
     nesting = ["nesting_1", "nesting_3", "nesting_5"]
     nestingDepth = "nesting_3"
@@ -44,13 +47,14 @@ Template.scatterplot_svg.rendered = ->
     y_code = Session.get("categoryY")
     x_name = x_code
     y_name = y_code
+    x_label = x_code
+    y_label = y_code    
     aggregatedField = "countryCode"
     nesting = ["nesting_1", "nesting_3"]
     nestingDepth = "nesting_3"
 
   Deps.autorun( ->
     data = Scatterplot.find().fetch()
-    console.log
   
     aggregated = {} # X, Y values for each data point (eg. {WRITER: {x:1, y:5}})
     flatData = [] # Array of objects {xname: 130, yname:87, id: PHYSICIST}
@@ -156,23 +160,19 @@ Template.scatterplot_svg.rendered = ->
     text_formatting = (d) ->
       d.charAt(0).toUpperCase() + d.substr(1)
   
-    console.log data
-    console.log flatData
-    console.log attrs
-  
     dataset = Session.get("dataset")
     L = Session.get("langs")
     scaleType = Session.get("scatterplotScale")
     mirrorType = Session.get("scatterplotMirror")
 
-    console.log "creating viz", x_name, y_name
-    
     viz.type("pie_scatter")
       .width(width)
       .height(height)
       .id_var("id")
       .attrs(attrs)
       .text_var("name")
+      .xaxis_label(x_label)
+      .yaxis_label(y_label)
       .xaxis_var(x_name)
       .yaxis_var(y_name)
       .xscale_type(scaleType)
