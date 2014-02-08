@@ -3,12 +3,7 @@ numberWithCommas = (x) ->
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   parts.join "."
 
-# Template.people.rendered = ->
-  # TODO Move into a central location
-  # Session.set("rankingProperty", "occupation")
-
-Template.people.helpers
-  person: -> People.findOne name: Session.get("name")
+Template.people.personName = -> People.findOne name: Session.get("name")
 
 Template.search.settings = ->
   position: "bottom"
@@ -19,7 +14,6 @@ Template.search.settings = ->
     field: "name"
     template: Template.search_result
   ]
-
 
 # TODO Design this smarter to receive all relevant data at once
 Template.person.helpers
@@ -101,10 +95,3 @@ Template.person.events =
 
     $("div.ranking-card").removeClass("active")
     $(srcE).addClass("active")
-
-  # "mouseenter div.ranking-card": (d) ->
-  #   srcE = (if d.srcElement then d.srcElement else d.target)
-
-  # "mouseleave div.ranking-card": (d) ->
-  #   srcE = (if d.srcElement then d.srcElement else d.target)
-  #   $(srcE).removeClass("active")

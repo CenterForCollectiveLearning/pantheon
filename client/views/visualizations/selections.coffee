@@ -120,10 +120,6 @@ Template.select_from.rendered = ->
     path = window.location.pathname.split("/")
     path[5] = $(this).val()
     Router.go path.join("/"))
-  # Deps.autorun ->
-  #   select.val(Session.get("from"))
-  #   select.trigger("chosen:updated")
-
 
 Template.select_to.rendered = ->
   $(@find("select")).val(Session.get("to")).chosen().change( ->

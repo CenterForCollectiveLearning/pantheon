@@ -1,13 +1,11 @@
 # These are static data that never change
 Meteor.subscribe "countries_pub"
-Meteor.subscribe "languages_pub"
 Meteor.subscribe "domains_pub"
 
 # These subscriptions are explicitly global variables
 allpeopleSub = Meteor.subscribe("allpeople")
 
 # Derived Collections -- These are client only collections
-# TODO: Do we need the @ sign here?
 @PeopleTopN = new Meteor.Collection "peopleTopN"
 @Treemap = new Meteor.Collection "treemap"
 @CountriesRanking = new Meteor.Collection "countries_ranking"
@@ -17,21 +15,14 @@ allpeopleSub = Meteor.subscribe("allpeople")
 @WorldMap = new Meteor.Collection "worldmap"
 @Histogram = new Meteor.Collection "histogram"
 @Tooltips = new Meteor.Collection "tooltipCollection"
-@Timeline = new Meteor.Collection "timeline"
-@Stacked = new Meteor.Collection "stacked"
+# @Timeline = new Meteor.Collection "timeline"
+# @Stacked = new Meteor.Collection "stacked"
 
 # People Page
 @OccupationPeople = new Meteor.Collection "occupationPeople"
 @BirthyearPeople = new Meteor.Collection "birthyearPeople"
 @CountryPeople = new Meteor.Collection "countryPeople"
 @PersonImports = new Meteor.Collection "person_imports"
-
-# Subscription names ... TODO: do we need these?
-top10Sub = null
-dataSub = null
-tooltipSub = null
-tooltipCountSub = null
-clicktooltipSub = null
 
 #
 #Subscription for the current data that is being visualized
@@ -40,15 +31,10 @@ Deps.autorun ->
   country = Session.get("country")
   countryX = Session.get("countryX")
   countryY = Session.get("countryY")
-  language = Session.get("language")
-  languageX = Session.get("languageX")
-  languageY = Session.get("languageY")
   begin = parseInt(Session.get("from"))
   end = parseInt(Session.get("to"))
   L = Session.get("langs")
-  langs = true
-  if L is null
-    langs = false
+  langs = if L is null then false else true
   category = Session.get("category")
   categoryX = Session.get("categoryX")
   categoryY = Session.get("categoryY")
@@ -76,9 +62,6 @@ Deps.autorun ->
   console.log "country: " + country
   console.log "countryX: " + countryX
   console.log "countryY: " + countryY
-  console.log "languageX: " + languageX
-  console.log "languageY: " + languageY
-  console.log "language: " + language
   console.log "category: " + category
   console.log "categoryLevel: " + categoryLevel
   console.log "categoryLevelX: " + categoryLevelX
@@ -91,18 +74,8 @@ Deps.autorun ->
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
   #      
-  if country and begin and end and langs
-    
-    #
-    #         Do nothing:
-    #
-    #         It's not necessary to track/stop subscriptions (i.e. those below)
-    #          that are called inside an autorun computation.
-    #         See http://docs.meteor.com/#meteor_subscribe
-    #
-    #         We verified this by going from map to treemap back to map while checking
-    #          the PeopleTop10 collection on the client. it goes from 0 -> 10 -> 0.
-    #         
+  # if country and begin and end and langs   
+  if page in ["explore", "rankings", "timeline", "people"]
     Session.set "dataReady", false
     
     # This gets passed to the subscriptions to indicate when data is ready
@@ -116,7 +89,7 @@ Deps.autorun ->
         # Treemap modes
         when "treemap"
           top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, 10, dataset)
-          dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
+          dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, category, categoryLevel, dataset, onReady)
         # Matrix modes
         when "matrix"
           top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, 10, dataset)
@@ -129,11 +102,6 @@ Deps.autorun ->
         when "map"
           top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, 10, dataset)
           dataSub = Meteor.subscribe("map_pub", begin, end, L, category, categoryLevel, dataset, onReady)
-        # when "histogram"
-        #   dataSub = Meteor.subscribe("histogram_pub", vizMode, begin, end, L, country, language, category, categoryLevel, onReady)
-        # when "stacked"
-        #   top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, "both", category, categoryLevel, 10, dataset)
-        #   dataSub = Meteor.subscribe("stacked_pub", vizMode, begin, end, L, country, language, category, categoryLevel, dataset, onReady)
         else
           console.log "Unsupported vizType"
     else if page is "rankings"
@@ -190,5 +158,4 @@ Deps.autorun ->
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
 
-  console.log "Before tooltip subscription", vizMode, begin, end, L, countryCode
   tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)

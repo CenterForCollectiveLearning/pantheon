@@ -110,11 +110,13 @@ d3plus.viz = function() {
     "xaxis_domain": null,
     "xaxis_val": null,
     "xaxis_var": null,
+    "xaxis_label": null,
     "xscale": null,
     "xscale_type": "log", // "linear",
     "yaxis_domain": null,
     "yaxis_val": null,
     "yaxis_var": null,
+    "yaxis_label": null,
     "yscale": null,
     "yscale_type": "log", // "linear",
     "year": null,
@@ -1705,6 +1707,12 @@ d3plus.viz = function() {
     vars.xscale_type = x;
     return chart;
   };
+
+  chart.xaxis_label = function(x) {
+    if (!arguments.length) return vars.xaxis_label;
+    vars.xaxis_label = x;
+    return chart;
+  };
   
   // CHANGED
   chart.yscale_type = function(x) {
@@ -1735,6 +1743,13 @@ d3plus.viz = function() {
   chart.yaxis_scale = function(x) {
     if (!arguments.length) return vars.yscale_type;
     vars.yscale_type = x;
+    return chart;
+  };
+  
+  // CHANGED
+  chart.yaxis_label = function(x) {
+    if (!arguments.length) return vars.yaxis_label;
+    vars.yaxis_label = x;
     return chart;
   };
   
@@ -1969,7 +1984,7 @@ d3plus.viz = function() {
       .attr('x', labelx)
       .attr('y', vars.height-10)
       .attr("fill", "#FFF") // Changed
-      .text(vars.format(vars.xaxis_var))
+      .text(vars.format(vars.xaxis_label))
       .attr("font-family",vars.font)
       .attr("font-weight",vars.font_weight)
       .attr(label_style)
@@ -1980,7 +1995,7 @@ d3plus.viz = function() {
       .attr('y', 15)
       .attr('x', -(vars.graph.height/2+vars.graph.margin.top))
       .attr("fill", "#FFF") // Changed
-      .text(vars.format(vars.yaxis_var))
+      .text(vars.format(vars.yaxis_label))
       .attr("transform","rotate(-90)")
       .attr("font-family",vars.font)
       .attr("font-weight",vars.font_weight)
@@ -2067,7 +2082,7 @@ d3plus.viz = function() {
         if (vars.data.length == 0) return 0
         else return 1
       })
-      .text(vars.format(vars.xaxis_var))
+      .text(vars.format(vars.xaxis_label))
 
     // Update Y axis label
     d3.select(".y_axis_label")
@@ -2077,7 +2092,7 @@ d3plus.viz = function() {
         if (vars.data.length == 0) return 0
         else return 1
       })
-      .text(vars.format(vars.yaxis_var))
+      .text(vars.format(vars.yaxis_label))
       
     // Axis Dotted Lines
     vars.chart_enter.append("line")

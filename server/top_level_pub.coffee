@@ -4,9 +4,6 @@ Meteor.publish "countries_pub", ->
 Meteor.publish "domains_pub", ->
   Domains.find()
 
-Meteor.publish "languages_pub", ->
-  Languages.find()
-
 #
 # Publish the top N people for the current query
 # Push the ids here as well since people will be in the client side

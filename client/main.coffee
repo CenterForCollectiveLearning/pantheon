@@ -206,13 +206,6 @@ leftSections = [
   template: "people",
   url: "/people"
 ,
-#   section: "Timeline"
-#   template: "timeline"
-#   url: "/timeline"
-# ,
-  # section: "Vision"
-  # template: "vision"
-  # url: "/vision"
 ]
 
 rightSections = [
@@ -220,12 +213,6 @@ rightSections = [
   template: "methods"
   url: "/methods"
 ,
-  
-  # {
-  #     section: "Publications",
-  #     template: "publications",
-  #     url: "/publications"
-  # },
   section: "Vision"
   template: "vision"
   url: "/vision"
@@ -329,23 +316,6 @@ Template.sharing_options.events =
       a.download = "viz.png"
       a.href = img
       a.click()
-
-# https://twitter.com/intent/tweet?
-# original_referer=https%3A%2F%2Fdev.twitter.com%2Fdocs%2Ftweet-button&text=Tweet%20Button%20%7C%20Twitter%20Developers&tw_p=tweetbutton&url=https%3A%2F%2Fdev.twitter.com&via=your_screen_name
-
-# <a href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fdev.twitter.com%2Fdocs%2Ftweet-button&amp;text=Tweet%20Button%20%7C%20Twitter%20Developers&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fdev.twitter.com&amp;via=your_screen_name" class="btn" id="b"><i></i><span class="label" id="l">Tweet</span></a>
-#   # Twitter
-#   d = document
-#   s = "script"
-#   id = "twitter-wjs"
-#   js = undefined
-#   fjs = d.getElementsByTagName(s)[0]
-#   p = (if /^http:/.test(d.location) then "http" else "https")
-#   unless d.getElementById(id)
-#     js = d.createElement(s)
-#     js.id = id
-#     js.src = p + "://platform.twitter.com/widgets.js"
-#     fjs.parentNode.insertBefore js, fjs
 
 Template.spinner.rendered = ->
   unless Session.get("showSpinner")

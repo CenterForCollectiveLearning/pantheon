@@ -247,18 +247,20 @@ div.viz-options {
 	@media (min-width: 980px) {
 	    &.inline {
 	    	display: inline;
-	    	width: 33%;
-	    	float: left;
+	    	width: 45%;
+	    	float: right;
     
 	    	&.first {
+	    		float: left;
 	    		margin-right: 0.5%;
 	    	}
+
 	    	&.last {
 	    		margin-left: 0.5%;
 	    	}
     
 	    	div.chosen-container {
-	    		width: 33% !important;
+	    		width: 345 !important;
 	    	}
 	    }
 	}
@@ -286,7 +288,8 @@ div.buttons {
 		text-align: center;
 		float: left;
 		cursor: pointer;
-		line-height: 20px;
+		height: 25px;
+		line-height: 22px;
 		background-color: transparent;
 		border: 1px solid rgba(0, 0, 0, 0.75);			
 

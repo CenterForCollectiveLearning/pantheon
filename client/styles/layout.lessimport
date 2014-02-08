@@ -11,6 +11,25 @@
 @color_black_trans: rgba(0, 0, 0, 0.5);
 
 /*
+ * Bootstrap Overrides
+ */
+
+@media (max-width: 767px) {
+  .hidden-desktop {
+    display: inherit !important;
+  }
+  .visible-desktop {
+    display: inherit !important;
+  }
+  .visible-phone {
+    display: none !important;
+  }
+  .hidden-phone {
+    display: none !important;
+  }
+}
+
+/*
  * Mixins
  */
 .opacity(@trans) {
