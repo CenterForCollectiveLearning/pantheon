@@ -1,8 +1,5 @@
 # Re-render visualization template on window resize
-Template.visualization.resize = ->
-  if Session.get "resize"
-    console.log "RESIZING"
-    return
+Template.visualization.resize = -> if Session.get "resize" then return
 
 # Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = ->
@@ -95,7 +92,6 @@ Handlebars.registerHelper "person_lookup", ->
 Template.ranked_list.top10 = ->
   if Session.get("indexType") is "HPI" then order = {HPI:-1}
   else order = {numlangs:-1}
-  console.log(order)
   PeopleTopN.find({}, {sort:order})
 
 Template.ranked_list.empty = ->

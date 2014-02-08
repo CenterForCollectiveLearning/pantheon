@@ -75,7 +75,7 @@ Deps.autorun ->
   #        Do something more robust.
   #      
   # if country and begin and end and langs   
-  if page in ["explore", "rankings", "timeline", "people"]
+  if page in ["explore", "rankings", "people"]
     Session.set "dataReady", false
     
     # This gets passed to the subscriptions to indicate when data is ready

@@ -134,9 +134,6 @@
 }
 
 div.ui-slider {
-	// .fade;
-	// .opacity(0.5);
-	// &:hover { .opacity(1.0); }
 	background: transparent;
 	div.ui-slider-range {
 		background: @color_pantheon_black;
@@ -154,7 +151,9 @@ div.ui-slider {
 	}
 
 	.ui-slider-handle {
-		width: 10px;
+		cursor: pointer; 
+		margin-left: -4px;
+		width: 8px;
 		background-color: @color_pantheon_black;
 		border: none;
 		border-radius: 0;
