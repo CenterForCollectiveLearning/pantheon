@@ -148,6 +148,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     fields: projection
     hint: occupation_countryCode
   ).count()
+
   sub.added "tooltipCollection", "count",
     count: count
 

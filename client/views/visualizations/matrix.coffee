@@ -78,7 +78,7 @@ Template.matrix_svg.rendered = ->
         Session.set "hover", true
         # outline cell on mouseover
         d3.select(@parentNode.appendChild(this)).transition().duration(200).style
-          stroke: "#000000"
+          stroke: "#222222"
           "stroke-opacity": 1
           "stroke-width":2
         

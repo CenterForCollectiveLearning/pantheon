@@ -36,8 +36,8 @@ Template.scatterplot_svg.rendered = ->
     # Need to work entirely in country codes because code -> name is not one-to-one
     x_name = x_code  # Countries.findOne(countryCode: x_code).countryName
     y_name = y_code  # Countries.findOne(countryCode: y_code).countryName
-    x_label = Countries.findOne(countryCode: x_code).countryName
-    y_label = Countries.findOne(countryCode: y_code).countryName
+    x_label = if x_name is "all" then "The World" else Countries.findOne(countryCode: x_code).countryName
+    y_label = if y_name is "all" then "The World" else Countries.findOne(countryCode: y_code).countryName
     aggregatedField = "occupation"
     nesting = ["nesting_1", "nesting_3", "nesting_5"]
     nestingDepth = "nesting_3"

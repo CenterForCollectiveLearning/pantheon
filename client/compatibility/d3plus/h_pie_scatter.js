@@ -326,9 +326,7 @@ d3plus.pie_scatter = function(vars) {
           var categoryLevel = "industry";
 
           Session.set("bigtooltipCategory", category);
-          Session.set("bigtooltipCategoryLevel", Session.get("categoryLevel"));
-          Session.set("bigtooltipCategoryLevelX", Session.get("categoryLevelX"));
-          Session.set("bigtooltipCategoryLevelY", Session.get("categoryLevelY"));
+          Session.set("bigtooltipCategoryLevel", categoryLevel);
           Session.set("bigtooltipCountryCodeX", countryCodeX);
           Session.set("bigtooltipCountryCodeY", countryCodeY);
           Template.clicktooltip.title = dataPoint;

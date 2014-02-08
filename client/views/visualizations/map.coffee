@@ -51,7 +51,7 @@ mouseover = (d) ->
     d3.select(@parentNode.appendChild(this)).transition().duration(200).style
       "stroke-opacity": 1
       "stroke-width":2
-      stroke: "#F00"
+      stroke: "#222"
 
     dataset = Session.get("dataset")
     countryCode3 = d.id
