@@ -51,14 +51,17 @@ Template.accordion.events =
     srcE = (if d.srcElement then d.srcElement else d.target)
     vizType = $(srcE).data "viz-type"
     vizMode = $(srcE).data "viz-mode"
+    dataset = Session.get("dataset")
     # Parameters depend on vizMode (e.g countries -> languages for exports)
     [paramOne, paramTwo] = IOMapping[vizMode]["in"]
     unless paramOne is "all"
       paramOne = Session.get(paramOne)
     unless paramTwo is "all"
       paramTwo = Session.get(paramTwo)
-    if vizMode in ["domain_exports_to","map"] # to randomize the domain when you click on domains
+    if vizMode in ["domain_exports_to","map"] and dataset is "OGC"# to randomize the domain when you click on domains
       paramOne = getRandomFromArray(culturalDomains)
+    if vizMode in ["domain_exports_to","map"] and dataset is "murray"# to randomize the domain when you click on domains
+      paramOne = "ART"
 
     # Use session variables as parameters for a viz type change
     Router.go "explore",

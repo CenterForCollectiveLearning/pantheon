@@ -140,7 +140,7 @@ d3plus.tree_map = function(vars) {
   }
   
   cell
-    .on(d3plus.evt.over,function(d){
+    .on(d3plus.evt.move,function(d){
       if (Session.get("clicktooltip") == false){
         Session.set("hover", true);
         var id = find_variable(d,vars.id_var).replace(" ", "_"),
