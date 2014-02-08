@@ -222,22 +222,23 @@ Template.select_dataset.rendered = ->
     dataset = $(this).val()
     vizMode = Session.get("vizMode")
     path = window.location.pathname.split("/")
+    path[7] = path[7].toString()
     if dataset is "murray"
       path[7] = 0
       if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
         countryCode = getRandomFromArray(murrayCountries) #get random from mongo instead??
         path[3] = countryCode
-      if (vizMode is 'domain_exports_to')
+      if vizMode in ["domain_exports_to","map"]
         domain = Session.get 'category'
         newdomain = mpdomains[domain]
         if(newdomain) then path[3] = newdomain
         else path[3] = getRandomFromArray(_.values(mpdomains))
     if dataset is "OGC"
-      path[7] = 25
+      path[7] = 'H0'
       if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
         countryCode = getRandomFromArray(pantheonCountries)
         path[3] = countryCode
-      if (vizMode is 'domain_exports_to')
+      if vizMode in ["domain_exports_to","map"]
         domain = Session.get 'category'
         newdomain = (_.invert(mpdomains))[domain]
         if(newdomain) then path[3] = newdomain

@@ -102,7 +102,7 @@ Template.ranked_person.birthday = ->
   birthday
 
 Template.ranked_person.index = ->
-  if Session.get("indexType") is "HPI" and Session.get("dataset") is "OGC" then @HPI.toFixed(2) else @numlangs
+  if Session.get("indexType") is "HPI" and Session.get("dataset") is "OGC" then @HPI?.toFixed(2) else @numlangs
 
 Template.date_header.helpers
   from: ->
