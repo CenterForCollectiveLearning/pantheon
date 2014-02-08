@@ -25,6 +25,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
       occupation: 1
 
     matchArgs.countryCode = country if country isnt "all"
+    console.log matchArgs
     pipeline = [
       $match: matchArgs
     ,
@@ -95,7 +96,6 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
       countryCode: 1
       countryName: 1
 
-    console.log matchArgs
     pipeline = [
       $match: matchArgs
     ,
