@@ -1,6 +1,6 @@
 # Set Defaults
 @getCategoryLevel = (s) ->
-  domains = Domains.find().fetch()
+  domains = Domains.find({dataset: Session.get("dataset")}).fetch()
   for i of domains
     domain_obj = domains[i]
     return "domain"  if domain_obj.domain is s
@@ -74,21 +74,20 @@
   "MATH" : "MATHEMATICS"
   "MEDICINE" : "MEDICINE"
   "MUSIC" : "MUSIC"
-  "PHILOSOPHY" : "PHIL"
+  "PHILOSOPHY" : "PHILOSOPHY"
   "PHYSICIST" : "PHYSICS"
   "NATURAL SCIENCES" : "SCIENCE"
   "INVENTION" : "TECHNOLOGY"
 
 @pantheonCountries = ['AD','AE','AF','AG','AL','AM','AO','AR','AT','AU','AW','AZ','BA','BB','BD','BE','BF','BG','BH','BI','BJ','BM','BN','BO','BR','BT','BW','BY','CA','CD','CF','CG','CH','CI','CL','CM','CN','CO','CR','CU','CV','CY','CZ','DE','DJ','DK','DO','DZ','EC','EE','EG','ER','ES','ET','FI','FM','FO','FR','GA','GB','GE','GF','GH','GI','GL','GM','GN','GP','GQ','GR','GT','GU','GW','GY','HK','HN','HR','HT','HU','ID','IE','IL','IM','IN','IQ','IR','IS','IT','JE','JM','JO','JP','KE','KG','KH','KN','KP','KR','KW','KZ','LA','LB','LC','LK','LR','LS','LT','LU','LV','LY','MA','MC','MD','ME','MG','MK','ML','MM','MN','MQ','MR','MT','MU','MV','MW','MX','MY','MZ','NA','NC','NE','NG','NI','NL','NO','NP','NR','NZ','OM','PA','PE','PH','PK','PL','PR','PS','PT','PY','QA','RO','RS','RU','RW','SA','SB','SC','SD','SE','SG','SI','SK','SL','SN','SO','SR','SS','ST','SV','SY','SZ','TD','TG','TH','TJ','TL','TM','TN','TO','TR','TT','TW','TZ','UA','UG','UNK','US','UY','UZ','VE','VI','VN','VU','WS','XK','YE','ZA','ZM','ZW']
 @murrayCountries = ['AT','AU','Anc Greece','Arab World','BE','Balkans','CA','CH','CN','CZ','DE','DK','ES','FI','FR','GB','HU','IN','IS','IT','JP','Latin Am','NL','NO','NZ','PL','PT','RU','SE','SK','SS Africa','US']
-
+@countriesOverTenPeople = ['US', 'GB', 'FR', 'DE', 'IT', 'RU', 'ES', 'TR', 'PL', 'AT', 'GR', 'IN', 'JP', 'SE', 'NL', 'BE', 'CN', 'HU', 'CH', 'CZ', 'UA', 'DK', 'BR', 'PT', 'EG', 'IR', 'CA', 'IE', 'NO', 'IL', 'FI', 'AR', 'RO', 'SA', 'AU', 'MX', 'RS', 'HR', 'ZA', 'LT', 'IQ', 'KR', 'PK', 'AF', 'PE', 'PH', 'DZ', 'GE', 'BG', 'CL', 'SY', 'TN', 'BY', 'LV', 'IS', 'EE', 'SK', 'NZ']
 
 # Object containing domain hierarchy for domains dropdown
 @uniqueDomains = []
 @indByDom = {}
 @occByInd = {}
 Meteor.startup ->
-  countriesOverTenPeople = ['US', 'GB', 'FR', 'DE', 'IT', 'RU', 'ES', 'TR', 'PL', 'AT', 'GR', 'IN', 'JP', 'SE', 'NL', 'BE', 'CN', 'HU', 'CH', 'CZ', 'UA', 'DK', 'BR', 'PT', 'EG', 'IR', 'CA', 'IE', 'NO', 'IL', 'FI', 'AR', 'RO', 'SA', 'AU', 'MX', 'RS', 'HR', 'ZA', 'LT', 'IQ', 'KR', 'PK', 'AF', 'PE', 'PH', 'DZ', 'GE', 'BG', 'CL', 'SY', 'TN', 'BY', 'LV', 'IS', 'EE', 'SK', 'NZ']
   topHundredPeople = ['Jesus Christ', 'Confucius', 'Isaac Newton', 'Wolfgang Amadeus Mozart', 'Leonardo Da Vinci', 'Adolf Hitler', 'Albert Einstein', 'Mustafa Kemal Atatürk', 'William Shakespeare', 'Michelangelo', 'Hebe Camargo', 'Vincent van Gogh', 'Christopher Columbus', 'Ludwig van Beethoven', 'Aristotle', 'Muhammad', 'Charles Darwin', 'Karl Marx', 'Galileo Galilei', 'Charlie Chaplin', 'Napoleon Bonaparte', 'Johann Sebastian Bach', 'Qin Shi Huang', 'George Bush', 'Pablo Picasso', 'Plato', 'Homer', 'Alexander the Great', 'Mahatma Gandhi', 'Dante', 'Socrates', 'Vladimir Lenin', 'Lech Wałęsa  Poland', 'George Washington', 'Joseph Stalin', 'Sigmund Freud', 'Nelson Mandela', 'Johann Wolfgang von Goethe', 'Abraham Lincoln', 'Marie Curie', 'Archimedes', 'Che Guevara', 'Julius Caesar', 'Miguel de Cervantes', 'Nicolaus Copernicus', 'Elizabeth II of the United Kingdom', 'Marco Polo', 'Thomas Edison', 'Immanuel Kant', 'Martin Luther', 'Rembrandt', 'Gautama Buddha', 'Carl Linnaeus', 'Leo Tolstoy', 'Pope Benedict', 'Victor Hugo', 'Mao Zedong', 'Salvador Dalí', 'Genghis Khan', 'Neil Armstrong', 'Ferdinand Magellan', 'Franz Kafka', 'René Descartes', 'Vasco da Gama', 'Yuri Gagarin', 'Bill Clinton', 'Elvis Presley', 'Roald Amundsen', 'Augustus', 'Euclid', 'Friedrich Nietzsche', 'Octave Mirbeau', 'Aleksandr Pushkin', 'Charlemagne  Belgium', 'Francisco Goya', 'John F. Kennedy', 'Louis Pasteur', 'Martin Luther King, Jr.', 'Richard Wagner', 'Charles Dickens', 'Fidel Castro', 'James Cook', 'James Joyce', 'Jean Auguste Dominique Ingres', 'Marlene Dietrich', 'Pythagoras', 'Virgil', 'Winston Churchill', 'Franklin D. Roosevelt', 'Fyodor Dostoyevsky', 'Thomas Jefferson', 'Walt Disney', 'Albrecht Dürer', 'Frida Kahlo', 'Raphael', 'Sarah Bernhardt', 'Simón Bolívar', 'Voltaire', 'Adam Smith']
   
   @defaults =

@@ -335,7 +335,7 @@ Template.category_dropdown.industries = ->
 Template.industry_item.occupations_given_industry = ->
   uniqueOccupations = []
   res = []
-  _.each Domains.find(industry: @industry).fetch(), (domain_obj) ->
+  _.each Domains.find(industry: @industry, dataset: Session.get("dataset")).fetch(), (domain_obj) ->
     occupation = domain_obj.occupation
     if uniqueOccupations.indexOf(occupation) is -1
       uniqueOccupations.push occupation
@@ -346,7 +346,7 @@ Template.industry_item.occupations_given_industry = ->
 Template.domain_item.industries_given_domain = ->
   uniqueIndustries = []
   res = []
-  _.each Domains.find(domain: @domain).fetch(), (domain_obj) ->
+  _.each Domains.find(domain: @domain, dataset: Session.get("dataset")).fetch(), (domain_obj) ->
     industry = domain_obj.industry
     if uniqueIndustries.indexOf(industry) is -1
       uniqueIndustries.push industry

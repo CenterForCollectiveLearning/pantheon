@@ -14,7 +14,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
   matchArgs.dataset = dataset
   if L[0] is "H" then matchArgs.HPI = {$gt:parseInt(L.slice(1,L.length))} else matchArgs.numlangs = {$gt: parseInt(L)}
 
-
+  console.log matchArgs
   pipeline = []
   if vizMode is "country_exports"
     project =

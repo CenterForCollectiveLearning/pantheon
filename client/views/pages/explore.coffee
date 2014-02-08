@@ -60,6 +60,10 @@ Template.accordion.events =
       paramOne = getRandomFromArray(_.keys(mpdomains))
     if vizMode in ["domain_exports_to","map"] and dataset is "murray"# to randomize the domain when you click on domains
       paramOne = getRandomFromArray(_.values(mpdomains))
+    if vizMode is "country_exports" and dataset is "OGC"# to randomize the domain when you click on domains
+      paramOne = getRandomFromArray(countriesOverTenPeople)
+    if vizMode is "country_exports" and dataset is "murray"# to randomize the domain when you click on domains
+      paramOne = getRandomFromArray(murrayCountries)
 
     # Use session variables as parameters for a viz type change
     Router.go "explore",
