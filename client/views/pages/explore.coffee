@@ -36,7 +36,6 @@ Template.accordion.rendered = ->
     collapsible: false
     heightStyle: "content"
     fillSpace: false
-  # accordion.accordion "resize"
 
 Template.accordion.country_treemap_active = -> if Session.equals("vizMode", "country_exports") then "active" else ""
 Template.accordion.domain_treemap_active = -> if Session.equals("vizMode", "domain_exports_to") then "active" else ""
@@ -167,8 +166,9 @@ Template.question.question = ->
       else return new Handlebars.SafeString("How many globally known " + boldify(vars.gender_var) + " are associated with each country and cultural domain?")
     when "country_vs_country" then return new Handlebars.SafeString("How does " + boldify(vars.countryX) + " and " + boldify(vars.countryY) + " compare in terms of number of globally known people?")
     when "domain_vs_domain" then return new Handlebars.SafeString("What countries have produced globally known people in " + boldify(vars.categoryX) + " and " + boldify(vars.categoryY))
+
 #
-# TOOLTIPS
+# TOOLTIPS (client-side implementation)
 # 
 Template.tooltip.helpers
   tooltipShown: -> (Session.get("showTooltip") and not Session.get("clicktooltip"))
@@ -196,28 +196,19 @@ Template.tooltip.helpers
     doc = Tooltips.findOne(_id: "count")
     (if (typeof doc isnt "undefined") then doc.count - 5 else 0)
 
-Template.tt_person.birthday = ->
-  birthday = (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
-  birthday
+Template.tt_person.birthday = -> (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
 
 Template.tt_person.index = ->
   if Session.get("indexType") is "HPI" and Session.get("dataset") is "OGC" then @HPI.toFixed(2) else @numlangs
 
 Template.clicktooltip.helpers
-  showclicktooltip: ->
-    Session.get "clicktooltip"
-  categoryName : ->
-    Session.get("bigtooltipCategory").capitalize()
-  category : ->
-    Session.get("bigtooltipCategory")
-  from : ->
-    Session.get("from")
-  to : ->
-    Session.get("to")
-  L : ->
-    Session.get("langs")
-  dataset : ->
-    Session.get("dataset")
+  showclicktooltip: -> Session.get "clicktooltip"
+  categoryName : -> Session.get("bigtooltipCategory").capitalize()
+  category : -> Session.get("bigtooltipCategory")
+  from : -> Session.get("from")
+  to : -> Session.get("to")
+  L : -> Session.get("langs")
+  dataset : -> Session.get("dataset")
   count: ->
     doc = Tooltips.findOne(_id: "count")
     (if (typeof doc isnt "undefined") then doc.count else 0)
@@ -244,6 +235,7 @@ Template.domain_exporter_question.question = ->
   categoryLevel = getCategoryLevel(category)
   if category is "all" then category = "all domains" else category = category.capitalize()
   getQuestion("domain_exports_to", {category: category, categoryLevel: categoryLevel})
+
 Template.country_exports_question.question = -> 
   countryCode = Session.get("tooltipCountryCode")
   dataset = Session.get("dataset")

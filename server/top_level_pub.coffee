@@ -4,9 +4,6 @@ Meteor.publish "countries_pub", ->
 Meteor.publish "domains_pub", ->
   Domains.find()
 
-Meteor.publish "languages_pub", ->
-  Languages.find()
-
 #
 # Publish the top N people for the current query
 # Push the ids here as well since people will be in the client side
@@ -151,6 +148,9 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     fields: projection
     hint: occupation_countryCode
   ).count()
+  console.log "IN TOOLTIP"
+  console.log args
+  console.log count
   sub.added "tooltipCollection", "count",
     count: count
 

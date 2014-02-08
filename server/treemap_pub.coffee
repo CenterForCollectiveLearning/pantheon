@@ -2,7 +2,7 @@
 # * Static query that pushes the treemap structure
 # * This needs to run a native mongo query due to aggregates being not supported directly yet
 # 
-Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, category, categoryLevel, dataset) ->
+Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, categoryLevel, dataset) ->
   sub = this
   driver = MongoInternals.defaultRemoteCollectionDriver()
   matchArgs =
@@ -10,7 +10,6 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, language, catego
       $gte: begin
       $lte: end
 
-  matchArgs.lang = language if language isnt "all"
   matchArgs[categoryLevel] = category if category.toLowerCase() isnt "all"
   matchArgs.dataset = dataset
   if L[0] is "H" then matchArgs.HPI = {$gt:parseInt(L.slice(1,L.length))} else matchArgs.numlangs = {$gt: parseInt(L)}

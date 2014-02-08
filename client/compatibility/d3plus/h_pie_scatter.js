@@ -164,8 +164,8 @@ d3plus.pie_scatter = function(vars) {
    
       // Subscription Parameters
       if (vizMode === 'country_vs_country') {
-        var countryCodeX = Countries.findOne({countryName: xVar}).countryCode;
-        var countryCodeY = Countries.findOne({countryName: yVar}).countryCode;
+        var countryCodeX = xVar; // Countries.findOne({countryName: xVar}).countryCode;
+        var countryCodeY = yVar; // Countries.findOne({countryName: yVar}).countryCode;
         var category = dataPoint;
         var categoryLevel = "industry";
 
@@ -173,18 +173,16 @@ d3plus.pie_scatter = function(vars) {
         Session.set("tooltipCategoryLevel", categoryLevel);
         Session.set("tooltipCountryCodeX", countryCodeX);
         Session.set("tooltipCountryCodeY", countryCodeY);
+        Template.tooltip.heading = dataPoint;
       } else if (vizMode === 'domain_vs_domain') {
-        Session.set("tooltipCountryCode", Countries.findOne({countryName: dataPoint}).countryCode);
+        countryName = Countries.findOne({countryCode: dataPoint}).countryName;
+        Session.set("tooltipCountryCode", dataPoint);
 
-        // Session.set("tooltipCountry", category);
         Session.set("tooltipCategoryLevel", Session.get("categoryLevel"));
         Session.set("tooltipCategoryX", xVar);
         Session.set("tooltipCategoryY", yVar);
+        Template.tooltip.heading = countryName;
       }
-
-      Template.tooltip.heading = dataPoint;
-      // Template.tooltip.categoryA = countryNameX;
-      // Template.tooltip.categoryB = dataPoint;
 
       Session.set("showTooltip", true);
 

@@ -36,6 +36,7 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
         count:
           $sum: 1
     ]
+    console.log "In scatterplot", matchArgs
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
@@ -57,6 +58,7 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
     matchArgs.$or[0][categoryLevelX] = categoryX if categoryX isnt "all"
     matchArgs.$or[1][categoryLevelY] = categoryY if categoryY isnt "all"
 
+    console.log "In scatterplot", matchArgs
     pipeline = [
       $match: matchArgs
     ,
@@ -64,7 +66,6 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
         _id:
           continent: "$continentName"
           countryCode: "$countryCode"
-          countryName: "$countryName"
           domain: "$domain"
           industry: "$industry"
           occupation: "$occupation"
@@ -80,7 +81,6 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
         sub.added "scatterplot", Random.id(),
           continent: e._id.continent
           countryCode: e._id.countryCode
-          countryName: e._id.countryName
           domain: e._id.domain
           industry: e._id.industry
           occupation: e._id.occupation
