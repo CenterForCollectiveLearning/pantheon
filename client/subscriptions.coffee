@@ -82,7 +82,8 @@ Deps.autorun ->
     onReady = ->
       Session.set "dataReady", true
       Session.set "initialDataReady", true
-    
+
+    console.log "IN SUBSCRIPTIONS", page, vizType      
     # Give a handle to this subscription so we can check if it's ready
     if page is "explore"
       switch vizType
@@ -130,6 +131,7 @@ Deps.autorun ->
   showclicktooltip = Session.get("clicktooltip")
   return unless hover or showclicktooltip
   Session.set "tooltipDataReady", false
+  console.log "SUBSCRIBING TO TOOLTIPS"
   if hover
     category = Session.get("tooltipCategory")
     categoryLevel = Session.get("tooltipCategoryLevel")

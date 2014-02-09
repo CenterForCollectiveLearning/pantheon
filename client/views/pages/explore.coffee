@@ -137,11 +137,10 @@ Template.date_header.helpers
     to = Session.get("to")
     return "1 A.D."  if to is "1"
     (if (to < 0) then (to * -1) + " B.C." else to)
-
+ 
 # Generate question given viz type
 Template.question.question = -> 
   dataset = Session.get("dataset")
-  console.log dataset, Session.get("country")
   try
     country = if Session.get("country") is "all" then "the world" else Countries.findOne({countryCode: Session.get("country"), dataset: dataset}).countryName
     countryX = if Session.get("countryX") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryX"), dataset: dataset}).countryName
@@ -160,7 +159,6 @@ Template.question.question = ->
 
 @boldify = (str) -> "<b>" + str + "</b>"
 @getQuestion = (mode, vars) ->
-  console.log mode, vars
   dataset = Session.get("dataset")
   # If mode requires a category, switch based on categoryLevel because occupations are singular
   if mode in ["domain_exports_to", "map", "domain_vs_domain"]

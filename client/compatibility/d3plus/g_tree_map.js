@@ -138,9 +138,8 @@ d3plus.tree_map = function(vars) {
       "data": tooltip_data
     })
   }
-  
-  cell
-    .on(d3plus.evt.move,function(d){
+
+  onMouseMove = function(d){
       if (Session.get("clicktooltip") == false){
         Session.set("hover", true);
         var id = find_variable(d,vars.id_var).replace(" ", "_"),
@@ -181,10 +180,12 @@ d3plus.tree_map = function(vars) {
         Session.set("tooltipCategoryLevel", categoryLevel);
         Session.set("tooltipCountryCode", countryCode);
         Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
+        
         Session.set("showTooltip", true);
       }
-    })
-    .on(d3plus.evt.out,function(d){
+    }
+
+  onMouseOut = function(d){
       Session.set("hover", false);
       Template.tooltip.top5 = null;
       Session.set("showTooltip", false);
@@ -195,7 +196,13 @@ d3plus.tree_map = function(vars) {
       d3.select("#cell_"+id).select("rect")
         .attr("opacity",0.85)
 
-    })
+    }
+  throttledMouseMove = _.throttle(onMouseMove, 500)
+  // throttledMouseMove = _.throttle(onMouseMove, 500)
+  
+  cell
+    .on(d3plus.evt.move, throttledMouseMove)
+    .on(d3plus.evt.out, onMouseOut)
     .on(d3plus.evt.down,function(d){
       Session.set("hover", false);
       Session.set("showTooltip", false);

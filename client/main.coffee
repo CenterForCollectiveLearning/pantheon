@@ -165,7 +165,6 @@ Meteor.startup ->
 
 Template.google_analytics.rendered = ->
   unless Session.get("googleAnalytics")
-    console.log "RENDERING GOOGLE ANALYTICS"
     i = window
     s = document
     o = "script"
