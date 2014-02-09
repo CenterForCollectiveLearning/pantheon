@@ -8,7 +8,7 @@ toDecimal = (x, d) ->
   if typeof x is "string" or x instanceof String
     x
   else
-    x.toFixed d
+    x?.toFixed d
 
 
 Template.rankings.columnDescriptions = ->
@@ -72,6 +72,7 @@ Template.ranking_table.rendered = ->
             $lte: parseInt(Session.get("to"))
         country = Session.get("country")
         args.countryCode = country if country isnt "all"
+        args.dataset = "OGC"
         category = Session.get("category")
         args[Session.get("categoryLevel")] = category if category.toLowerCase() isnt "all"
         L = Session.get("langs")
