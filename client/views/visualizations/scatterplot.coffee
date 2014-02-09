@@ -1,26 +1,8 @@
-# TODO Namespace these
 scatterplotProps =
   width: 725
   height: 560
 
 Template.scatterplot_svg.properties = scatterplotProps
-
-boilingOrange = "#F29A2E"
-chiliRed = "#C14925"
-sapGreen = "#587507"
-brickBrown = "#72291D"
-seaGreen = "#46AF69"
-salmon = "#EB7151"
-manganeseBlue = "#129B97"
-magenta = "#822B4C"
-
-color_domains = d3.scale.ordinal()
-  .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS", "Art", "Lit", "Music", "Phil", "Science"])
-  .range([salmon, boilingOrange, brickBrown, sapGreen, chiliRed, seaGreen, manganeseBlue, magenta, boilingOrange, brickBrown, salmon, chiliRed, magenta, manganeseBlue])
-
-color_countries = d3.scale.ordinal()
-  .domain(["Africa", "Asia", "Europe", "North America", "South America", "Oceania", "Unknown"])
-  .range([salmon, boilingOrange, brickBrown, sapGreen, chiliRed, seaGreen, manganeseBlue, magenta])
 
 Template.scatterplot_svg.rendered = ->
   context = this

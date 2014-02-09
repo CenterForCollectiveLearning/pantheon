@@ -11,7 +11,7 @@ d3plus.error = function(vars) {
     .append("text")
       .attr("x",vars.svg_width/2)
       .attr("font-size","30px")
-      .attr("fill","#888")
+      .attr("fill","#222")
       .attr("text-anchor", "middle")
       .attr("font-family", "Lato")
       .style("font-weight", "300")

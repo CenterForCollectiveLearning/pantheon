@@ -359,9 +359,15 @@ d3plus.viz = function() {
       vars.svg_enter = vars.svg.enter().append("svg")
         .attr('width',vars.svg_width)
         .attr('height',vars.svg_height)
+
+      var errorclass = "";
+      if (!error && !vars.data) {
+        errorclass = "error";
+      }
         
       vars.svg_enter.append("rect")
         .attr("id","svgbg")
+        .attr("class", errorclass)
         .attr("fill",vars.background)
         .attr('width',vars.svg_width)
         .attr('height',vars.svg_height)

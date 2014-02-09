@@ -149,8 +149,8 @@ Template.map_svg.rendered = ->
       svg_width : $(".page-middle").width()
   if data.length is 0 #No data screen
     error = d3.select(@firstNode).attr("width", vars.svg_width).attr("height", vars.svg_height).append("svg:g").selectAll("g.d3plus-error").data(["No data available"])
-    error.enter().append("rect").attr("width", vars.svg_width).attr("height", vars.svg_height).attr("fill", "#000000")
-    error.enter().append("g").attr("class", "d3plus-error").attr("opacity", 100).append("text").attr("x", vars.svg_width / 2).attr("font-size", "30px").attr("fill", "#888").attr("text-anchor", "middle").attr("font-family", "Lato").style("font-weight", "300").each((d) ->
+    error.enter().append("rect").attr("width", vars.svg_width).attr("height", vars.svg_height).attr("fill", "#f9f6e1")
+    error.enter().append("g").attr("class", "d3plus-error").attr("opacity", 100).append("text").attr("x", vars.svg_width / 2).attr("font-size", "30px").attr("fill", "#222").attr("text-anchor", "middle").attr("font-family", "Lato").style("font-weight", "300").each((d) ->
       d3plus.utils.wordwrap
         text: d
         parent: this

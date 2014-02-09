@@ -424,3 +424,11 @@ g#countries > path {
 .treemap g text{
 	fill:white;
 }
+
+g.d3plus-error text{
+	fill: @color_pantheon_black !important;
+}
+
+.error{
+	fill:@color_beige !important;
+}
