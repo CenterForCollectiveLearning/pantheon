@@ -207,26 +207,28 @@ d3plus.tree_map = function(vars) {
       Session.set("hover", false);
       Session.set("showTooltip", false);
       // Set the session variable to show the clicktooltip
-      Session.set("clicktooltip", true);
-      var id = find_variable(d,vars.id_var).replace(" ", "_");
-      var dataset = Session.get("dataset");
-      var vizMode = Session.get("vizMode");
-      if (vizMode === "country_exports") {
-          var countryCode = Session.get("country");
-          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
-          var category = id.replace("_", " ").toUpperCase();
-          var categoryLevel = "occupation";
-      } else if (vizMode === "domain_exports_to") {
-          var countryCode = id.replace("_", " ");
-          var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
-          var category = Session.get("category").toUpperCase();
-          var categoryLevel = Session.get("categoryLevel");
+      if (Session.equals("tutorialType", null) || Session.equals("tutorialType", undefined)) {
+        Session.set("clicktooltip", true);
+        var id = find_variable(d,vars.id_var).replace(" ", "_");
+        var dataset = Session.get("dataset");
+        var vizMode = Session.get("vizMode");
+        if (vizMode === "country_exports") {
+            var countryCode = Session.get("country");
+            var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
+            var category = id.replace("_", " ").toUpperCase();
+            var categoryLevel = "occupation";
+        } else if (vizMode === "domain_exports_to") {
+            var countryCode = id.replace("_", " ");
+            var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
+            var category = Session.get("category").toUpperCase();
+            var categoryLevel = Session.get("categoryLevel");
+        }
+        // Subscription Parameters
+        Session.set("bigtooltipCategory", category);
+        Session.set("bigtooltipCategoryLevel", categoryLevel);
+        Session.set("bigtooltipCountryCode", countryCode);
+        Template.clicktooltip.title = countryCode !== "all" ? countryName + ": " + category : category;
       }
-      // Subscription Parameters
-      Session.set("bigtooltipCategory", category);
-      Session.set("bigtooltipCategoryLevel", categoryLevel);
-      Session.set("bigtooltipCountryCode", countryCode);
-      Template.clicktooltip.title = countryCode !== "all" ? countryName + ": " + category : category;
     })
   
   cell.transition().duration(d3plus.timing)

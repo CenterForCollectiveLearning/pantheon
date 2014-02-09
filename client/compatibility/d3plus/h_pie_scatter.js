@@ -303,45 +303,46 @@ d3plus.pie_scatter = function(vars) {
       // On click show clicktooltip overlay
       Session.set("hover", false);
       Session.set("showTooltip", false);
+      if (Session.equals("tutorialType", null) || Session.equals("tutorialType", undefined)) {
+        var dataPoint = d.id;
+        var xVar = vars.xaxis_var;
+        var yVar = vars.yaxis_var;
 
-      var dataPoint = d.id;
-      var xVar = vars.xaxis_var;
-      var yVar = vars.yaxis_var;
+        var dataset = Session.get("dataset");
+        var vizMode = Session.get("vizMode");
 
-      var dataset = Session.get("dataset");
-      var vizMode = Session.get("vizMode");
+        // Positioning
+        var position = {
+            "left": (d3.event.clientX + 40),
+            "top": (d3.event.clientY - 45)
+        }
+        Session.set("tooltipPosition", position);
 
-      // Positioning
-      var position = {
-          "left": (d3.event.clientX + 40),
-          "top": (d3.event.clientY - 45)
+        // Subscription Parameters
+        if (vizMode === 'country_vs_country') {
+            var countryCodeX = xVar;
+            var countryCodeY = yVar;
+            var category = dataPoint;
+            var categoryLevel = "industry";
+
+            Session.set("bigtooltipCategory", category);
+            Session.set("bigtooltipCategoryLevel", categoryLevel);
+            Session.set("bigtooltipCountryCodeX", countryCodeX);
+            Session.set("bigtooltipCountryCodeY", countryCodeY);
+            Template.clicktooltip.title = dataPoint;
+        } else if (vizMode === 'domain_vs_domain') {
+            Session.set("bigtooltipCountryCode", dataPoint);
+            countryName = Countries.findOne({countryCode: dataPoint, dataset: dataset}).countryName
+            Session.set("bigtooltipCategoryLevel", Session.get("categoryLevel"));
+            Session.set("bigtooltipCategoryLevelX", Session.get("categoryLevelX"));
+            Session.set("bigtooltipCategoryLevelY", Session.get("categoryLevelY"));
+            Session.set("bigtooltipCategoryX", xVar);
+            Session.set("bigtooltipCategoryY", yVar);
+            Template.clicktooltip.title = countryName;
+        }
+        // Set the session variable to show the clicktooltip
+        Session.set("clicktooltip", true);
       }
-      Session.set("tooltipPosition", position);
-
-      // Subscription Parameters
-      if (vizMode === 'country_vs_country') {
-          var countryCodeX = xVar;
-          var countryCodeY = yVar;
-          var category = dataPoint;
-          var categoryLevel = "industry";
-
-          Session.set("bigtooltipCategory", category);
-          Session.set("bigtooltipCategoryLevel", categoryLevel);
-          Session.set("bigtooltipCountryCodeX", countryCodeX);
-          Session.set("bigtooltipCountryCodeY", countryCodeY);
-          Template.clicktooltip.title = dataPoint;
-      } else if (vizMode === 'domain_vs_domain') {
-          Session.set("bigtooltipCountryCode", dataPoint);
-          countryName = Countries.findOne({countryCode: dataPoint, dataset: dataset}).countryName
-          Session.set("bigtooltipCategoryLevel", Session.get("categoryLevel"));
-          Session.set("bigtooltipCategoryLevelX", Session.get("categoryLevelX"));
-          Session.set("bigtooltipCategoryLevelY", Session.get("categoryLevelY"));
-          Session.set("bigtooltipCategoryX", xVar);
-          Session.set("bigtooltipCategoryY", yVar);
-          Template.clicktooltip.title = countryName;
-      }
-      // Set the session variable to show the clicktooltip
-      Session.set("clicktooltip", true);
     })
     
   nodes.transition().duration(d3plus.timing)

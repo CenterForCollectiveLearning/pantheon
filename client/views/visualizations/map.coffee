@@ -90,23 +90,24 @@ mouseout = (d) ->
     stroke: "#eee"
 
 clickevent = (d) ->
-  Session.set "hover", false
-  Session.set "showTooltip", false
-  dataset = Session.get("dataset")
-  countryCode3 = d.id
-  countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
-  if dataset is "murray"
-    countryCode = countryCode3
-  else
-    countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
-  category = Session.get("category")
-  categoryAggregation = Session.get("categoryLevel")
-  # Subscription Parameters
-  Session.set "bigtooltipCategory", category
-  Session.set "bigtooltipCategoryLevel", categoryAggregation
-  Session.set "bigtooltipCountryCode", countryCode
-  Template.clicktooltip.title = (if category isnt "all" then countryName + ": " + category else countryName)
-  Session.set "clicktooltip", true
+  if Session.equals("tutorialType", null) or Session.equals("tutorialType", undefined)
+    Session.set "hover", false
+    Session.set "showTooltip", false
+    dataset = Session.get("dataset")
+    countryCode3 = d.id
+    countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
+    if dataset is "murray"
+      countryCode = countryCode3
+    else
+      countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
+    category = Session.get("category")
+    categoryAggregation = Session.get("categoryLevel")
+    # Subscription Parameters
+    Session.set "bigtooltipCategory", category
+    Session.set "bigtooltipCategoryLevel", categoryAggregation
+    Session.set "bigtooltipCountryCode", countryCode
+    Template.clicktooltip.title = (if category isnt "all" then countryName + ": " + category else countryName)
+    Session.set "clicktooltip", true
 
 
 

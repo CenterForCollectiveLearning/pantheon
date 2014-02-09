@@ -56,23 +56,24 @@ Template.matrix_svg.rendered = ->
 
     # TODO: Don't re-render tooltip for already selected cell
     clickevent = (p) ->
-      Session.set "hover", false
-      Session.set "showTooltip", false
-      $("#tooltip").empty()
-      dataset = Session.get("dataset")
+      if Session.equals("tutorialType", null) or Session.equals("tutorialType", undefined)
+        Session.set "hover", false
+        Session.set "showTooltip", false
+        $("#tooltip").empty()
+        dataset = Session.get("dataset")
 
-      countryCode = countries[p.y]
-      countryName = Countries.findOne({countryCode: countryCode, dataset:dataset}).countryName
+        countryCode = countries[p.y]
+        countryName = Countries.findOne({countryCode: countryCode, dataset:dataset}).countryName
 
-      industry = industries[p.x]
-      categoryLevel = "industry"
+        industry = industries[p.x]
+        categoryLevel = "industry"
 
-      # Subscription Parameters
-      Session.set "bigtooltipCategory", industry
-      Session.set "bigtooltipCategoryLevel", categoryLevel
-      Session.set "bigtooltipCountryCode", countryCode
-      Session.set "clicktooltip", true
-      Template.clicktooltip.title = countryName + ": " + industry
+        # Subscription Parameters
+        Session.set "bigtooltipCategory", industry
+        Session.set "bigtooltipCategoryLevel", categoryLevel
+        Session.set "bigtooltipCountryCode", countryCode
+        Session.set "clicktooltip", true
+        Template.clicktooltip.title = countryName + ": " + industry
     mouseover = (p) ->
       if not Session.get "clicktooltip"
         Session.set "hover", true
