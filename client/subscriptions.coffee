@@ -115,10 +115,10 @@ Deps.autorun ->
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, L, onReady)
         else
           console.log "Invalid ranking entity!"
-    else if page is "timeline"
-      dataSub = Meteor.subscribe("timeline_pub", begin, end, onReady)
     else if page is "people"
       dataSub = Meteor.subscribe("peopleTopN", "treemap", "country_exports", begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, "all", dataset, onReady)
+
+#      
 # Subscription for tooltips on hover
 #  
 Deps.autorun ->
@@ -131,7 +131,7 @@ Deps.autorun ->
   showclicktooltip = Session.get("clicktooltip")
   return unless hover or showclicktooltip
   Session.set "tooltipDataReady", false
-  console.log "SUBSCRIBING TO TOOLTIPS"
+
   if hover
     category = Session.get("tooltipCategory")
     categoryLevel = Session.get("tooltipCategoryLevel")
@@ -160,4 +160,5 @@ Deps.autorun ->
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
 
+  console.log "SUBSCRIBING TO TOOLTIPS"
   tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)

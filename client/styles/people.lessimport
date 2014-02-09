@@ -41,6 +41,7 @@ div.search-result {
 
 // TODO Don't do this
 #people-search {
+    width: 200px;
     background: none !important;
     color: @color_beige !important;
     font-family: 'Lato' !important;
