@@ -85,7 +85,7 @@ div.d3plus_tooltip_body {
       height: 100px;
       border: 3px solid transparent;      
       &:hover {
-        border: 3px solid @color_gold;
+        border: 3px solid @color_grey;
       }
     }
   }

@@ -164,7 +164,6 @@ Template.matrix_svg.rendered = ->
         d3.descending industryCounts[industries[a]], industryCounts[industries[b]]
       )
      countryOrder = (value) ->
-      console.log "in countryOrder", value, countryOrders[value]
       matrixScales.x.domain countryOrders[value]
       t = svg.transition().duration(300)
 
@@ -183,10 +182,7 @@ Template.matrix_svg.rendered = ->
         -matrixScales.x(d.y) - matrixScales.x.rangeBand()
 
     industryOrder = (value) ->
-      console.log "in industryOrder", value, industryOrders[value]
       matrixScales.y.domain industryOrders[value]
-      # console.log industryOrders[value]
-      # console.log matrixScales.y.domain()
       t = svg.transition().duration(300)
 
       t.selectAll(".row").delay((d, i) ->

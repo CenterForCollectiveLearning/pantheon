@@ -84,6 +84,7 @@ Meteor.publish "allpeople", ->
 #
 
 Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, click) ->
+  console.log "PUBLISHING TOOLTIPS"
   sub = this
   args =
     birthyear:
