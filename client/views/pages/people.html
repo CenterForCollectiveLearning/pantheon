@@ -21,6 +21,7 @@
 </template>
 
 <template name="person">
+	{{debugContext}}
 	<div class="ranked-people-left">
 		{{#each peopleLeft}}
 		    {{> person_pill}}
@@ -77,22 +78,22 @@
 				Ranking Among...
 			</div>
 			<div class="person-ranking-cards">
-				<div class="card ranking-card shared-occupation active" data-ranking-property="occupation">
+				<div class="card ranking-card shared-occupation {{#if rankingOccupation}}active{{/if}}" data-ranking-property="occupation">
 					<div class="ranking-label">{{occupation}}</div>
 					<div class="ranking-fraction">
-						<div class="ranking">{{occupationRank}}</div> out of <div class="count" data-ranking-property="occupation">{{occupationCount}}</div>
+						<div class="ranking">{{occupationRank}}</div> out of <div class="count">{{occupationCount}}</div>
 					</div>
 				</div>
-				<div class="card ranking-card shared-birthyear" data-ranking-property="birthyear">
+				<div class="card ranking-card shared-birthyear {{#if rankingBirthyear}}active{{/if}}" data-ranking-property="birthyear">
 					<div class="ranking-label">People b. {{birthyear}}</div>
 					<div class="ranking-fraction">
-						<div class="ranking">{{birthyearRank}}</div> out of <div class="count" data-ranking-property="birthyear">{{birthyearCount}}</div>
+						<div class="ranking">{{birthyearRank}}</div> out of <div class="count">{{birthyearCount}}</div>
 					</div>
 				</div>
-				<div class="card ranking-card shared-birthplace" data-ranking-property="countryName">
+				<div class="card ranking-card shared-birthplace {{#if rankingCountryName}}active{{/if}}" data-ranking-property="countryName">
 					<div class="ranking-label">People b. {{countryName}}</div>
 					<div class="ranking-fraction">
-						<div class="ranking">{{countryRank}}</div> out of <div class="count" data-ranking-property="countryName">{{countryCount}}</div>
+						<div class="ranking">{{countryRank}}</div> out of <div class="count">{{countryCount}}</div>
 					</div>
 				</div>
 			</div>
@@ -109,7 +110,7 @@
 <template name="person_pill">
 	<a href="{{pathFor 'people'}}">    	
 		<div class="card person-pill {{coloring}}">
-			<div class="rank">{{rank}}</div>
+			<div class="rank">{{getRank}}</div>
 			<div class="name">{{name}}</div>
 		</div>
 	</a>

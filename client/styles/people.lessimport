@@ -35,7 +35,7 @@ div.search-result {
 }
 
 #people-page {
-    width: 1240px;
+    width: 1260px;
     margin: 0 auto;
 }
 
@@ -188,7 +188,7 @@ div.card {
     height: 125px;
     text-align: center;
     float: left;
-    padding: 20px 30px;
+    padding: 25px 10px 20px;
     font-weight: bold;
 
     div.ranking-label {
@@ -247,13 +247,38 @@ div.ranked-people-left {
     position: relative;
 
     top: 400px;
+
+    div.person-pill {
+        margin-top: 2px;
+        margin-right: 5px;
+        height: 118px
+    }
 }
 
 div.ranked-people-right {
     float: left;
     position: relative;
     top: 400px;
+
+    div.person-pill {
+        margin-top: 2px;
+        margin-left: 5px;
+        height: 118px;
+    }
 }
+
+@media (max-width: 1280px) {
+    #people-page {
+        width: 970px;
+    }
+    div.ranked-people-left, div.ranked-people-right {
+        top: 280px;
+        a {
+            display: block;
+        }
+    }
+}
+
 
 div.body-padding {
     padding: 2em;

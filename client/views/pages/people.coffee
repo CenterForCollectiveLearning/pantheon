@@ -3,7 +3,7 @@ numberWithCommas = (x) ->
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   parts.join "."
 
-Template.people.personName = -> People.findOne name: Session.get("name")
+Template.people.personName = -> People.findOne(name: Session.get("name"), dataset: "OGC")
 
 Template.search.settings = ->
   position: "bottom"
@@ -27,50 +27,49 @@ Template.person.helpers
   pageviews: -> if @TotalPageViews then numberWithCommas(@TotalPageViews)
   birthday: -> (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
   peopleLeft: ->
-    args = {HPI: {$gt: @HPI}}
     rankingProperty = Session.get("rankingProperty")
-    args[rankingProperty] = this[rankingProperty]
-    People.find(args, {sort: {HPI: 1}, limit: 2}).fetch().reverse()
+    if rankingProperty
+      args = {HPI: {$gt: @HPI}}
+      args[rankingProperty] = this[rankingProperty]
+      People.find(args, {sort: {HPI: 1}, limit: 2}, dataset: "OGC").fetch().reverse()
   peopleRight: -> 
-    args = {HPI: {$lt: @HPI}}
     rankingProperty = Session.get("rankingProperty")
-    args[rankingProperty] = this[rankingProperty]
-    People.find(args, {sort: {HPI: -1}, limit: 2})
+    if rankingProperty
+      args = {HPI: {$lt: @HPI}}
+      args[rankingProperty] = this[rankingProperty]
+      People.find(args, {sort: {HPI: -1}, limit: 2}, dataset: "OGC")
   occupationRank: -> 
-    occupationRank = People.find(occupation: @occupation, HPI: {$gt: @HPI}).count() + 1
+    occupationRank = People.find(occupation: @occupation, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1
     Session.set "occupationRank", occupationRank
     numberWithCommas(occupationRank)
   birthyearRank: -> 
-    birthyearRank = People.find(birthyear: @birthyear, HPI: {$gt: @HPI}).count() + 1
+    birthyearRank = People.find(birthyear: @birthyear, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1
     Session.set "birthyearRank", birthyearRank
     numberWithCommas(birthyearRank)
   countryRank: -> 
-    countryRank = People.find(countryName: @countryName, HPI: {$gt: @HPI}).count() + 1
+    countryRank = People.find(countryName: @countryName, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1
     Session.set "countryRank", countryRank
     numberWithCommas(countryRank)
-  occupationCount: -> numberWithCommas(People.find(occupation: @occupation).count())  # TODO extract all counts into one publication
-  birthyearCount: -> numberWithCommas(People.find(birthyear: @birthyear).count())
-  countryCount: -> numberWithCommas(People.find(countryName: @countryName).count())
-
-rankingPropertyColorMapping =
-  occupation: "#4ede8a"
-  birthyear: "#8ccdf4"
-  countryName: "#f7b18b"
-
-Template.people.rendered = ->
-  Deps.autorun ->
-    rankingProperty = Session.get("rankingProperty")
-    console.log rankingProperty
-    if rankingProperty
-      switch rankingProperty
-        when "occupation" then currentRank = Session.get "occupationRank"
-        when "birthyear" then currentRank = Session.get "birthyearRank"
-        when "countryName" then currentRank = Session.get "countryRank"
-      $(".ranked-people-left .rank").each((i) -> $(this).text(currentRank - 2 + i))
-      $(".ranked-people-right .rank").each((i) -> $(this).text(currentRank + 1 + i))
+  occupationCount: -> numberWithCommas(People.find(occupation: @occupation, dataset: "OGC").count())  # TODO extract all counts into one publication
+  birthyearCount: -> numberWithCommas(People.find(birthyear: @birthyear, dataset: "OGC").count())
+  countryCount: -> numberWithCommas(People.find(countryName: @countryName, dataset: "OGC").count())
+  rankingOccupation: -> (Session.get("rankingProperty") is "occupation")
+  rankingBirthyear: -> (Session.get("rankingProperty") is "birthyear")
+  rankingCountryName: -> (Session.get("rankingProperty") is "countryName")
 
 Template.person_pill.helpers
   coloring: -> Session.get "rankingProperty"
+  currentRanking: ->
+    rankingProperty = Session.get("rankingProperty")
+    switch rankingProperty
+      when "occupation" then Session.get("occupationRank")
+      when "birthyear" then Session.get("birthyearRank")
+      when "countryName" then Session.get("countryRank")
+  getRank: -> 
+    args = {HPI: {$gt: @HPI}}
+    rankingProperty = Session.get("rankingProperty")
+    args[rankingProperty] = this[rankingProperty]
+    People.find(args).count() + 1
 
 Template.person.events =
   "click #search-button": (d) ->
@@ -84,9 +83,11 @@ Template.person.events =
     else $("input").css(border: "1px solid red")
 
   "click div.ranking-card": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    rankingProperty = $(srcE).data "ranking-property"
-    Session.set("rankingProperty", rankingProperty)
+    srcE = $(if d.srcElement then d.srcElement else d.target)
+    unless srcE.hasClass("ranking-card") then srcE = srcE.closest("div.ranking-card")
+    console.log "CLICKED", srcE
 
-    $("div.ranking-card").removeClass("active")
-    $(srcE).addClass("active")
+    rankingProperty = srcE.data "ranking-property"
+    if rankingProperty
+      console.log "CLICKED", rankingProperty
+      Session.set("rankingProperty", rankingProperty)
