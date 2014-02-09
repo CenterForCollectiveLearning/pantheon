@@ -223,26 +223,73 @@ Template.select_dataset.rendered = ->
     vizMode = Session.get("vizMode")
     path = window.location.pathname.split("/")
     path[7] = path[7].toString()
+    # make sure transitions between datasets are smooth
+    # if linked entities exist between the two datasets, use the existing selections. otherwise create a randomized view with valid parameters.
     if dataset is "murray"
-      path[7] = 0
+      path[7] = 0 # set the default index value for murray data
+      # treemap by country
       if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
-        countryCode = getRandomFromArray(murrayCountries) #get random from mongo instead??
+        countryCode = getRandomFromArray(murrayCountries) 
         path[3] = countryCode
+      # treemap by domain, map
       if vizMode in ["domain_exports_to","map"]
         domain = Session.get 'category'
         newdomain = mpdomains[domain]
         if(newdomain) then path[3] = newdomain
         else path[3] = getRandomFromArray(_.values(mpdomains))
+      # country v country scatterplot
+      if vizMode is 'country_vs_country' and ((Countries.find({dataset:dataset, countryCode: Session.get("countryX")}).count() is 0) or (Countries.find({dataset:dataset, countryCode: Session.get("countryY")}).count() is 0))
+        countryX = getRandomFromArray(murrayCountries)
+        countryY = getRandomFromArray(murrayCountries)
+        while countryX is countryY
+          countryY = getRandomFromArray(murrayCountries)
+        path[3] = countryX
+        path[4] = countryY
+      # domain v domain scatterplot
+      if vizMode is 'domain_vs_domain' 
+        if mpdomains[Session.get("categoryX")]? and mpdomains[Session.get("categoryY")]?
+          categoryX = mpdomains[Session.get("categoryX")]
+          categoryY = mpdomains[Session.get("categoryY")]
+        else
+          categoryX = getRandomFromArray(_.values(mpdomains))
+          categoryY = getRandomFromArray(_.values(mpdomains))
+          while categoryX is categoryY
+            categoryY = getRandomFromArray(_.values(mpdomains))
+        path[3] = categoryX
+        path[4] = categoryY
+      else 
     if dataset is "OGC"
-      path[7] = 'H0'
+      path[7] = 'H0' # set the default index value for Pantheon data
+      # treemap by country
       if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
         countryCode = getRandomFromArray(pantheonCountries)
         path[3] = countryCode
+      # treemap by domain and maps
       if vizMode in ["domain_exports_to","map"]
         domain = Session.get 'category'
         newdomain = (_.invert(mpdomains))[domain]
         if(newdomain) then path[3] = newdomain
         else path[3] = getRandomFromArray(_.keys(mpdomains))
+      # country v country scatterplot
+      if vizMode is 'country_vs_country' and ((Countries.find({dataset:dataset, countryCode: Session.get("countryX")}).count() is 0) or (Countries.find({dataset:dataset, countryCode: Session.get("countryY")}).count() is 0))
+        countryX = getRandomFromArray(pantheonCountries)
+        countryY = getRandomFromArray(pantheonCountries)
+        while countryX is countryY
+          countryY = getRandomFromArray(pantheonCountries)
+        path[3] = countryX
+        path[4] = countryY
+      # domain v domain scatterplot
+      if vizMode is 'domain_vs_domain' 
+        if (_.invert(mpdomains))[Session.get("categoryX")]? and (_.invert(mpdomains))[Session.get("categoryY")]?
+          categoryX = (_.invert(mpdomains))[Session.get("categoryX")]
+          categoryY = (_.invert(mpdomains))[Session.get("categoryY")]
+        else
+          categoryX = getRandomFromArray(_.keys(mpdomains))
+          categoryY = getRandomFromArray(_.keys(mpdomains))
+          while categoryX is categoryY
+            categoryY = getRandomFromArray(_.keys(mpdomains))
+        path[3] = categoryX
+        path[4] = categoryY
     path[8] = dataset
     Router.go path.join("/"))
 

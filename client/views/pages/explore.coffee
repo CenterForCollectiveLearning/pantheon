@@ -84,6 +84,28 @@ Template.accordion.events =
       paramOne = getRandomFromArray(countriesOverTenPeople)
     if vizMode is "country_exports" and dataset is "murray"# to randomize the domain when you click on domains
       paramOne = getRandomFromArray(murrayCountries)
+    if vizMode is "country_vs_country" and dataset is "OGC"
+      paramOne = getRandomFromArray(countriesOverTenPeople)
+      paramTwo = getRandomFromArray(countriesOverTenPeople)
+      while paramOne is paramTwo
+        paramTwo = getRandomFromArray(countriesOverTenPeople)
+    if vizMode is "country_vs_country" and dataset is "murray"
+      paramOne = getRandomFromArray(murrayCountries)
+      paramTwo = getRandomFromArray(murrayCountries)
+      while paramOne is paramTwo
+        paramTwo = getRandomFromArray(murrayCountries)
+    if vizMode is "domain_vs_domain" and dataset is "OGC"
+      paramOne = getRandomFromArray(_.keys(mpdomains))
+      paramTwo = getRandomFromArray(_.keys(mpdomains))
+      while paramOne is paramTwo
+        paramTwo = getRandomFromArray(_.keys(mpdomains))
+    if vizMode is "domain_vs_domain" and dataset is "murray"
+      paramOne = getRandomFromArray(_.values(mpdomains))
+      paramTwo = getRandomFromArray(_.values(mpdomains))
+      while paramOne is paramTwo
+        paramTwo = getRandomFromArray(_.values(mpdomains))
+
+    
 
     # Use session variables as parameters for a viz type change
     Router.go "explore",
@@ -143,6 +165,7 @@ Template.question.question = ->
   dataset = Session.get("dataset")
   try
     country = if Session.get("country") is "all" then "the world" else Countries.findOne({countryCode: Session.get("country"), dataset: dataset}).countryName
+  try # separate out the countryX and countryY try becaused if country is not in the same dataset it kicks out the rest of the assignments
     countryX = if Session.get("countryX") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryX"), dataset: dataset}).countryName
     countryY = if Session.get("countryY") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryY"), dataset: dataset}).countryName
   vars = 
