@@ -11,22 +11,10 @@
 @color_black_trans: rgba(0, 0, 0, 0.5);
 
 /*
- * Bootstrap Overrides
+ * Minimum widths
  */
-
-@media (max-width: 767px) {
-  .hidden-desktop {
-    display: inherit !important;
-  }
-  .visible-desktop {
-    display: inherit !important;
-  }
-  .visible-phone {
-    display: none !important;
-  }
-  .hidden-phone {
-    display: none !important;
-  }
+.min-width {
+	min-width: 1024px;
 }
 
 /*
@@ -134,22 +122,23 @@ header {
 	// border-bottom: 3px solid @color_gold;
 	position: fixed !important;
 
-	@media (max-width: 1000px) {
-		.navbar-inner {
-			padding: 5px !important;
-		}
-	}
+	// @media (max-width: 1000px) {
+	// 	.navbar-inner {
+	// 		padding: 5px !important;
+	// 	}
+	// }
 
 	.navbar-inner {
 	    border: 0;
 	    padding: 0;
+	    padding-top: 0px !important;
 	    background: @color_beige;
 	    // TODO Change box shadows in bootstrap source
 	    -webkit-box-shadow: 0 0 15px 15px @color_beige !important;
 	    -moz-box-shadow: 0 0 15px 15px @color_beige !important;
 	    box-shadow: 0 0 15px 15px @color_beige !important;
 
-	    @media (max-width: 1000px) {
+	    @media (max-width: 1200px) {
 	        ul.nav {
 	        	li.main_nav {
 	        		float: none;
@@ -157,7 +146,7 @@ header {
 	        }
 	    }
 
-	    @media (max-width: 1000px) {
+	    @media (max-width: 1200px) {
 	    	.nav > li > a {
 	    		line-height: 0.5em !important;
 	    	}
@@ -214,7 +203,7 @@ header {
 	    			}
 	    		}
 	    	}
-	    	@media (max-width: 1000px) {
+	    	@media (max-width: 1200px) {
 	    		li {
 	    			text-align: right;
 	    		}
@@ -256,14 +245,14 @@ header {
         }
     }
 
-    @media (max-width: 1000px) {
-    	div.logo {
-    		width: 220px;
-    		margin-top: 8px;
-    		margin-left: -110px;
-    		padding: 0;
-    	}
-    }
+    // @media (max-width: 1000px) {
+    // 	div.logo {
+    // 		width: 220px;
+    // 		margin-top: 8px;
+    // 		margin-left: -110px;
+    // 		padding: 0;
+    // 	}
+    // }
 }
 
 footer {

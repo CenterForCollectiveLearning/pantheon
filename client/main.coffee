@@ -157,9 +157,10 @@ Meteor.startup ->
   Session.setDefault "person", defaults.person
   Session.setDefault "rankingProperty", defaults.rankingProperty
 
-  # Set session variable if window resized (throttled rate)
+  # Set session variable if window resized (throttled rate) and window outerwidth greater than 1024px
   throttledResize = _.throttle(->
-    Session.set "resize", new Date()
+    if window.outerWidth > 1024
+      Session.set "resize", new Date()
   , 50)
   $(window).resize throttledResize
 

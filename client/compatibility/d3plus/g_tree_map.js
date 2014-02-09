@@ -201,7 +201,7 @@ d3plus.tree_map = function(vars) {
   // throttledMouseMove = _.throttle(onMouseMove, 500)
   
   cell
-    .on(d3plus.evt.move, throttledMouseMove)
+    .on(d3plus.evt.move, onMouseMove)
     .on(d3plus.evt.out, onMouseOut)
     .on(d3plus.evt.down,function(d){
       Session.set("hover", false);

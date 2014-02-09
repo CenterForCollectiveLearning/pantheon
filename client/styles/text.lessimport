@@ -27,8 +27,7 @@ div#image-fullscreen {
 
 div#table-of-contents {
 	position: fixed !important;
-	width: 330px;
-	min-width: 330px;
+	width: 305px;
 	top: 0;
 	margin-top: 70px;
 	min-height: 100%;

@@ -19,14 +19,9 @@ Template.search.settings = ->
 Template.person.helpers
   name: -> @name
   gender: -> if @gender is "Male" then "He" else "She"
-  imagePath: ->
-    imagePath = "/images/people/" + @en_curid + ".jpg"
-  L_star: -> 
-    console.log "HPI", @HPI
-    if @L_star then @L_star.toFixed(2)
-  hpi: -> 
-    console.log "HPI", @HPI
-    if @HPI then @HPI.toFixed(2) else "N/A"
+  imagePath: -> imagePath = "/images/people/" + @en_curid + ".jpg"
+  L_star: -> if @L_star then @L_star.toFixed(2)
+  hpi: -> if @HPI then @HPI.toFixed(2) else "N/A"
   stdDevPageViews: -> (@StdDevPageViews / @TotalPageViews).toFixed(2)
   occupation: -> @occupation.capitalize()
   pageviews: -> if @TotalPageViews then numberWithCommas(@TotalPageViews)
