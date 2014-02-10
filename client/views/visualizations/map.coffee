@@ -183,20 +183,20 @@ Template.map_svg.rendered = ->
         .attr("id", "countries")
 
     map_projection = d3.geo.equirectangular()
-        .scale(vars.svg_width * 0.17)
+        .scale(vars.svg_width * 0.14)
         .translate([vars.svg_width / 2, vars.svg_height / 2])
 
     value_color = d3.scale.log().domain(value_range).interpolate(d3.interpolateRgb).range([color_gradient[0], color_gradient[1], color_gradient[2], color_gradient[3], color_gradient[4], color_gradient[5]])
     svg.selectAll("path").data(d3.values(mapData.features)).enter().append("path").attr("id", (d, i) ->
       d.id
     ).attr("stroke", "#fff").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
-    key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(100, 500)").append("rect").call(key_gradient)
+    key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(100, 450)").append("rect").call(key_gradient)
     d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
       Math.round (50 * Math.pow((590 / 50), i / 10))
     ).attr("y", 0).attr("width", 2).attr("height", 10).style "fill", "#fff"
     d3.select(".key").selectAll("text").data(value_range_big).enter().append("text").attr("x", (d, i) ->
       Math.round (50 * Math.pow((590 / 50), i / 10))
-    ).attr("y", 12).attr("dy", 12).attr("text-anchor", "middle").style "fill", "#fff"
+    ).attr("y", 12).attr("dy", 12).attr("text-anchor", "middle").style "fill", "#222"
     svg.selectAll("path").attr("fill", (d) ->
       doc = WorldMap.findOne(countryCode: d.id)
       if doc
