@@ -345,7 +345,7 @@ div#spinner-container {
 
 div.sharing-options{
 	text-align: center;
-	width: 115px;
+	width: 160px;
 	margin: 0 auto;
 	a {
 
