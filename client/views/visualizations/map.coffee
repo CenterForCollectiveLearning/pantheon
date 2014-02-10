@@ -50,7 +50,7 @@ mouseover = (d) ->
     # change outline of selected country on mouseover
     d3.select(@parentNode.appendChild(this)).transition().duration(200).style
       "stroke-opacity": 1
-      "stroke-width":2
+      "stroke-width":1.5
       stroke: "#222"
 
     dataset = Session.get("dataset")
@@ -88,6 +88,7 @@ mouseout = (d) ->
   d3.select(@parentNode.appendChild(this)).transition().duration(200).style
     "stroke-opacity": 0.4
     stroke: "#eee"
+    "stroke-width": 0.5
 
 clickevent = (d) ->
   if Session.equals("tutorialType", null) or Session.equals("tutorialType", undefined)
@@ -189,7 +190,7 @@ Template.map_svg.rendered = ->
     value_color = d3.scale.log().domain(value_range).interpolate(d3.interpolateRgb).range([color_gradient[0], color_gradient[1], color_gradient[2], color_gradient[3], color_gradient[4], color_gradient[5]])
     svg.selectAll("path").data(d3.values(mapData.features)).enter().append("path").attr("id", (d, i) ->
       d.id
-    ).attr("stroke", "#fff").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
+    ).attr("stroke", "#eee").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
     key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(100, 450)").append("rect").call(key_gradient)
     d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
       Math.round (50 * Math.pow((590 / 50), i / 10))
