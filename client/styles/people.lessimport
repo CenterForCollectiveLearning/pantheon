@@ -156,6 +156,10 @@ div.person-pill {
     border-width: 1px;
     width: 150px;
     border-style: solid;
+    padding-top: 35px;
+    &:hover {
+        border-width: 3px;
+    }
 
     &.occupation {
         color: #4ede8a;

@@ -12,7 +12,8 @@ Template.scatterplot_svg.rendered = ->
   viz = d3plus.viz()
   vizMode = Session.get("vizMode")
   if vizMode is "country_vs_country"
-    field = "countryCode"
+    x_field = "countryCode"
+    y_field = "countryCode"
     x_code = Session.get("countryX")
     y_code = Session.get("countryY")
     # Need to work entirely in country codes because code -> name is not one-to-one
@@ -24,7 +25,9 @@ Template.scatterplot_svg.rendered = ->
     nesting = ["nesting_1", "nesting_3", "nesting_5"]
     nestingDepth = "nesting_3"
   else if vizMode is "domain_vs_domain"
-    field = "domain"
+    # field = "domain"
+    x_field = Session.get("categoryLevelX")
+    y_field = Session.get("categoryLevelY")
     x_code = Session.get("categoryX")
     y_code = Session.get("categoryY")
     x_name = x_code
@@ -113,15 +116,20 @@ Template.scatterplot_svg.rendered = ->
       datum = data[i]
       dataPoint = datum[aggregatedField]
       count = datum.count
-      code = datum[field]
-      axis = (if code is x_code then "x" else "y")
-      other_axis = (if axis is "x" then "y" else "x")
-      unless aggregated.hasOwnProperty(dataPoint)
-        aggregated[dataPoint] = {}
-        aggregated[dataPoint][axis] = count
-        aggregated[dataPoint][other_axis] = 0
+      match_x = if datum[x_field] is x_code then true else false
+      match_y = if datum[y_field] is y_code then true else false
+      console.log match_x, datum[x_field], x_code
+      console.log match_y, datum[y_field], y_code
+
+      if aggregated.hasOwnProperty(dataPoint)
+        if match_x then aggregated[dataPoint].x += count
+        if match_y then aggregated[dataPoint].y += count
       else
-        aggregated[dataPoint][axis] += count
+        aggregated[dataPoint] = x: 0, y: 0
+        if match_x then aggregated[dataPoint].x = count
+        if match_y then aggregated[dataPoint].y = count
+
+    console.log aggregated
     
     # FLATTEN
     for dataPoint of aggregated
