@@ -116,12 +116,26 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       countryCode: countryY
     ]
   else if vizMode is "domain_vs_domain"
-    args.countryCode = country if country isnt "all"
-    or1 = {}
-    or2 = {}
-    or1[categoryLevelX] = categoryX if categoryX isnt "all"
-    or2[categoryLevelY] = categoryY if categoryY isnt "all"
-    args.$or = [or1, or2]
+    # args.countryCode = country if country isnt "all"
+    # or1 = {}
+    # or2 = {}
+    # or1[categoryLevelX] = categoryX if categoryX isnt "all"
+    # or2[categoryLevelY] = categoryY if categoryY isnt "all"
+    # args.$or = [or1, or2]
+    argsX = 
+      birthyear:
+        $gt: begin
+        $lte: end
+      dataset: dataset
+    argsY = 
+      birthyear:
+        $gt: begin
+        $lte: end
+      dataset: dataset
+    argsX.countryCode = country if country isnt "all"
+    argsY.countryCode = country if country isnt "all"
+    argsX[categoryLevelX] = categoryX if categoryX isnt "all"  
+    argsY[categoryLevelY] = categoryY if categoryY isnt "all"  
 
   if L[0] is "H"
     projection =
@@ -145,10 +159,13 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     sub.added "tooltipCollection", person._id, {}
 
   # Get count
-  count = People.find(args,
-    fields: projection
-    hint: occupation_countryCode
-  ).count()
+  # Work-around for strange "or" behavior in mongodb (not for minimongo)
+  if argsX and argsY
+    countX = People.find(argsX, {fields: projection, hint: occupation_countryCode}).count()
+    countY = People.find(argsY, {fields: projection, hint: occupation_countryCode}).count()
+    count = countX + countY
+  else
+    count = People.find(args, {fields: projection, hint: occupation_countryCode}).count()
 
   sub.added "tooltipCollection", "count",
     count: count
