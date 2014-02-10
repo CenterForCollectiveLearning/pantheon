@@ -229,6 +229,26 @@ Template.section.helpers selected: ->
 
 Template.sharing_options.events = 
 
+    "click a.email-icon": ->
+      question = $("#question").text()
+      width  = 575
+      height = 400
+      left   = ($(window).width()  - width)  / 2
+      top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
+      url    = "mailto:?subject=[Pantheon] " + question + "&amp;body=Learn more at " + encodeURIComponent(location.href)
+      opts   = 'status=1' +
+             ',width='  + width  +
+             ',height=' + height +
+             ',top='    + top    +
+             ',left='   + left
+
+      win = window.open(url, 'email', opts)
+      setTimeout (-> #close the window because email client opens message window
+        win.close()
+        return
+      ), 1000
+      false
+
     "click a.google-plus-icon": ->
       width  = 575
       height = 400

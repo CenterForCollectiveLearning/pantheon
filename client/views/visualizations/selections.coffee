@@ -290,7 +290,8 @@ Template.select_dataset.rendered = ->
             categoryY = getRandomFromArray(_.keys(mpdomains))
         path[3] = categoryX
         path[4] = categoryY
-    path[8] = dataset
+    path[8] = if dataset is "murray" then dataset else if dataset is "OGC" then "pantheon"
+    console.log(path)
     Router.go path.join("/"))
 
 Template.select_scale.events =
