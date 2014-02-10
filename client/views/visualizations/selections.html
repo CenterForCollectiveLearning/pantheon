@@ -237,9 +237,9 @@
 </template>
 
 <template name="select_scale">
-    <div class="parameter-selection" style="height:20px">
-        <label class="one">Axes Scale</label>
-        <div class="two buttons">
+    <div class="parameter-selection inline first">
+        <label>Scale</label>
+        <div class="buttons">
             <div id="linear-button" class="button active">Lin</div>
             <div id="log-button" class="button">Log</div>
         </div>
@@ -248,9 +248,9 @@
 
 
 <template name="select_mirror">
-    <div class="parameter-selection" style="height:20px">
-        <label class = "one">Mirror Axes</label>
-        <div class="two buttons">
+    <div class="parameter-selection inline">
+        <label>Mirror</label>
+        <div class="buttons">
             <div id="mirror-true-button" class="button active">Yes</div>
             <div id="mirror-false-button" class="button">No</div>
         </div>
@@ -392,14 +392,14 @@
 
 <template name="select_l">
 {{#if murray}}
-    <div class="parameter-selection inline last">
+    <div class="parameter-selection last">
         <label>Index</label>
         <select>
             {{>options0_20}}
         </select>
     </div>
 {{else}}
-    <div class="parameter-selection" style="margin-bottom:10px;">
+    <div class="parameter-selection">
         <label>Index</label>
         <div class="one buttons">
         <div id="HPI-button" class="button {{HPI_active}}">HPI</div>
@@ -428,9 +428,9 @@
 </template>
 
 <template name="select_country_order">
-    <div class="parameter-selection" style="height:20px">
-        <label class = "one">Rows</label>
-        <div class="two buttons">
+    <div class="parameter-selection inline first">
+        <label>Rows</label>
+        <div class="buttons">
             <div id="country-count-button" class="button active">Count</div>
             <div id="country-name-button" class="button">Name</div>
         </div>
@@ -438,9 +438,9 @@
 </template>
 
 <template name="select_industry_order">
-    <div class="parameter-selection" style="height:20px">
-        <label class = "one">Columns</label>
-        <div class="two buttons">
+    <div class="parameter-selection inline">
+        <label>Columns</label>
+        <div class="buttons">
             <div id="industry-count-button" class="button active">Count</div>
             <div id="industry-name-button" class="button">Name</div>
         </div>
@@ -448,13 +448,13 @@
 </template>
 
 <template name="select_gender">
-    <div class="parameter-selection" style="height:20px">
-        <label class = "one" style="width:15%">Gender</label>
-        <div class="two buttons" style="width:65%">
-            <div id = "both-button" class="button {{both_active}}" style="width:25%">Both</div>
-            <div id = "male-button" class="button {{male_active}}" style="width:25%">M</div>
-            <div id = "female-button" class="button {{female_active}}" style="width:25%">F</div>
-            <div id = "ratio-button" class="button {{ratio_active}}" style="width:25%">F/M</div>
+    <div class="parameter-selection">
+        <label>Gender</label>
+        <div class="buttons">
+            <div id = "both-button" class="quarter-button button {{both_active}}">Both</div>
+            <div id = "male-button" class="quarter-button button {{male_active}}">M</div>
+            <div id = "female-button" class="quarter-button button {{female_active}}">F</div>
+            <div id = "ratio-button" class="quarter-button button {{ratio_active}}">F/M</div>
         </div>
     </div>
 </template>

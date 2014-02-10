@@ -30,6 +30,10 @@
     .name {
     	text-transform: capitalize;
     }
+
+    .sharing-options {
+    	padding-top: 5px;
+    }
 }
 
 #page {
@@ -308,6 +312,10 @@ div.buttons {
 		&:last-child {
 			border-top-right-radius: 2px;
 			border-bottom-right-radius: 2px;		
+		}
+
+		&.quarter-button {
+			width: 25%;
 		}
 	}
 }

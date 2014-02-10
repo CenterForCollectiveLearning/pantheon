@@ -68,7 +68,7 @@ div#table-of-contents {
 			}
 
 			&.active > a {
-				background-color: @color_gold;
+				background-color: @color_grey;
 			}
 		}
 	}

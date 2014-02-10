@@ -164,12 +164,12 @@
   cursor: default;
 }
 .chosen-container .chosen-results li.highlighted {
-  background-color: #D8C568;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #D8C568), color-stop(90%, #D8C568));
-  background-image: -webkit-linear-gradient(#D8C568 20%, #D8C568 90%);
-  background-image: -moz-linear-gradient(#D8C568 20%, #D8C568 90%);
-  background-image: -o-linear-gradient(#D8C568 20%, #D8C568 90%);
-  background-image: linear-gradient(#D8C568 20%, #D8C568 90%);
+  background-color: #CCCCCC;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #CCCCCC), color-stop(90%, #CCCCCC));
+  background-image: -webkit-linear-gradient(#CCCCCC 20%, #CCCCCC 90%);
+  background-image: -moz-linear-gradient(#CCCCCC 20%, #CCCCCC 90%);
+  background-image: -o-linear-gradient(#CCCCCC 20%, #CCCCCC 90%);
+  background-image: linear-gradient(#CCCCCC 20%, #CCCCCC 90%);
   color: black;
 }
 .chosen-container .chosen-results li.no-results {
