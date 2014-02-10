@@ -118,8 +118,6 @@ Template.scatterplot_svg.rendered = ->
       count = datum.count
       match_x = if datum[x_field] is x_code then true else false
       match_y = if datum[y_field] is y_code then true else false
-      console.log match_x, datum[x_field], x_code
-      console.log match_y, datum[y_field], y_code
 
       if aggregated.hasOwnProperty(dataPoint)
         if match_x then aggregated[dataPoint].x += count
@@ -128,8 +126,6 @@ Template.scatterplot_svg.rendered = ->
         aggregated[dataPoint] = x: 0, y: 0
         if match_x then aggregated[dataPoint].x = count
         if match_y then aggregated[dataPoint].y = count
-
-    console.log aggregated
     
     # FLATTEN
     for dataPoint of aggregated
