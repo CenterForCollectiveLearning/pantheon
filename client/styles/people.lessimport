@@ -108,7 +108,7 @@ div.person-body {
         padding: 0px 20px;
         border-right: 1px solid @color_pantheon_black;
         &.no-left {
-            width: 640px;
+            width: 690px;
             border-left: 1px solid @color_pantheon_black;
 
             div.person-description {
