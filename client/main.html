@@ -94,6 +94,13 @@
     </div>
 </template>
 
+<template name="contact_options">
+    <div class="sharing-options">
+        <a href="https://www.facebook.com/macroconnections" class="facebook-icon"><i class="fa fa-facebook pull-left"></i></a>
+        <a href="mailto:pantheon@media.mit.edu" class="email-icon"><i class="fa fa-envelope pull-left"></i></a>
+    </div>
+</template>
+
 <template name="footer">
     {{> google_analytics}}
     <!--    <div class="footer-logo">
@@ -101,8 +108,8 @@
         </div> -->
 
         <div class="more-projects">
-            <div class="copyright section-header">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a></div>
-            <div class="more-from section-header">More from the team:</div>
+            <div class="copyright section-header">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a> • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>
+            <div class="more-from section-header">More projects from Macro Connections:</div>
             <div class="projects">
                 <a href="http://atlas.media.mit.edu/"><div class="oec"><img src="/OEC_logo.png" alt="Observatory of Economic Complexity"></div></a>
                 <a href="http://www.dataviva.info/"><div class="dataviva"><img src="/DataViva_logo.png" alt="DataViva"></div></a>
@@ -113,11 +120,9 @@
 
 <!--         <div class="footer-license center">
             &copy; 2013 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a>, <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>, <a href="http://web.mit.edu/" target="_blank">Massachusetts Institute of Technology</a>.<br>This work is being shared under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons By-NC-SA license</a>.
-        </div> -->
-
-        <div class="share">
-            {{> sharing_options}}
         </div>
+-->
+
 </template>
 
 <template name="spinner">

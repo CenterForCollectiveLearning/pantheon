@@ -268,6 +268,11 @@ footer {
 	padding: 0.3em 0;
 
 	div.more-projects {
+		.fa{
+			&:hover{
+				color: #4b67a1;
+			}
+		}
 		div.copyright {
 			border-bottom: none;
 			padding-bottom: 0;
@@ -293,6 +298,10 @@ footer {
 				float: left;
 				img {
 					width: 150px;
+					.grayscale(1);
+					&:hover {
+						.grayscale(0);
+					}
 				}
 			}
 
@@ -300,6 +309,9 @@ footer {
 				font-size: 35px;
 				color: black;
 				line-height: 45px;
+				&:hover {
+					color: #9467bd;
+				}
 			}
 
 			div.place-pulse {
@@ -308,6 +320,9 @@ footer {
 				line-height: 50px;
 				font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 				color: #343a4a;
+				&:hover {
+					color: #eb584a;
+				}
 			}
 		}
 	}
