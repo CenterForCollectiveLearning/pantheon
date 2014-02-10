@@ -8,7 +8,7 @@ renaissanceStory = [
   template: Template.renaissance_step1
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/treemap/country_exports/all/all/1300/1600/25/OGC"
+    Router.go "/treemap/country_exports/all/all/1300/1600/25/pantheon"
 ,
   template: Template.renaissance_step2
   spot: "#viz"
@@ -22,17 +22,17 @@ renaissanceStory = [
   template: Template.renaissance_step5
   spot: "#cell_IT rect, #cell_FR rect, #cell_GB rect"
   onLoad: ->
-    Router.go "/treemap/domain_exports_to/all/all/1300/1600/25/OGC"
+    Router.go "/treemap/domain_exports_to/all/all/1300/1600/25/pantheon"
 ,
   template: Template.renaissance_step6
   spot: "#page"
   onLoad: ->
-    Router.go "/treemap/country_exports/IT/all/1300/1600/25/OGC"
+    Router.go "/treemap/country_exports/IT/all/1300/1600/25/pantheon"
 ,
   template: Template.renaissance_step7
   spot: "#wrapper"
   onLoad: ->
-    Router.go "/scatterplot/country_vs_country/GB/FR/1300/1600/25/OGC"
+    Router.go "/scatterplot/country_vs_country/GB/FR/1300/1600/25/pantheon"
 ,
   template: Template.renaissance_step8
   spot: "#viz"
@@ -40,7 +40,7 @@ renaissanceStory = [
   template: Template.renaissance_step9
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/treemap/country_exports/all/all/1300/1600/25/OGC"
+    Router.go "/treemap/country_exports/all/all/1300/1600/25/pantheon"
 
 ]
 
@@ -48,7 +48,7 @@ explorationStory = [
   template: Template.explorers_step1
   spot:".page-middle span8"
   onLoad: ->
-    Router.go "/treemap/country_exports/all/all/-3000/1950/25/OGC"
+    Router.go "/treemap/country_exports/all/all/-3000/1950/25/pantheon"
 ,
   template: Template.explorers_step2
   spot: "#cell_Explorer rect"
@@ -56,7 +56,7 @@ explorationStory = [
   template: Template.explorers_step3
   spot: "#page"
   onLoad: ->
-    Router.go "/treemap/domain_exports_to/EXPLORATION/all/-3000/1000/25/OGC"
+    Router.go "/treemap/domain_exports_to/EXPLORATION/all/-3000/1000/25/pantheon"
 ,
   template: Template.explorers_step4
   spot: ".ranked_list"
@@ -64,7 +64,7 @@ explorationStory = [
   template: Template.explorers_step5
   spot: "#wrapper"
   onLoad: ->
-    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1000/1700/25/OGC"
+    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1000/1700/25/pantheon"
 ,
   template: Template.explorers_step6
   spot: "#cell_ES rect, #cell_IT rect, #cell_FR rect, #cell_DK rect"
@@ -75,7 +75,7 @@ explorationStory = [
   template: Template.explorers_step8
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1800/1900/25/OGC"
+    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1800/1900/25/pantheon"
 ,
   template: Template.explorers_step9
   spot: "#cell_NO rect"
@@ -83,7 +83,7 @@ explorationStory = [
   template: Template.explorers_step10
   spot: ".page"
   onLoad: ->
-    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1900/2000/25/OGC"
+    Router.go "/treemap/domain_exports_to/EXPLORATION/all/1900/2000/25/pantheon"
 ,
   template: Template.explorers_step11
   spot: ".page"
@@ -101,7 +101,7 @@ ogcStory = [
   template: Template.ogc_step4
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/treemap/country_exports/all/all/-3000/1950/25/OGC"
+    Router.go "/treemap/country_exports/all/all/-3000/1950/25/pantheon"
 ,
   template: Template.ogc_step5
   spot: ".viz-selector, .viz-options"
@@ -109,22 +109,22 @@ ogcStory = [
   template: Template.ogc_step6
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/treemap/domain_exports_to/all/all/-3000/1950/25/OGC"
+    Router.go "/treemap/domain_exports_to/all/all/-3000/1950/25/pantheon"
 ,
   template: Template.ogc_step7
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/matrix/matrix_exports/all/all/-3000/1950/25/OGC"
+    Router.go "/matrix/matrix_exports/all/all/-3000/1950/25/pantheon"
 ,
   template: Template.ogc_step8
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/scatterplot/country_vs_country/US/RU/-3000/1950/25/OGC"
+    Router.go "/scatterplot/country_vs_country/US/RU/-3000/1950/25/pantheon"
 ,
   template: Template.ogc_step9
   spot: ".wrapper"
   onLoad: ->
-    Router.go "/map/map/all/all/-3000/1950/25/OGC"
+    Router.go "/map/map/all/all/-3000/1950/25/pantheon"
 ,
   template: Template.ogc_step10
   onLoad: ->
