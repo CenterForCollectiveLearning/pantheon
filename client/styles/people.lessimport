@@ -3,8 +3,8 @@
 //
 
 div.person-page {
-    width: 640px;
-    min-width: 640px;
+    width: 690px;
+    min-width: 690px;
     margin: 0 auto;
 }
 
@@ -88,10 +88,6 @@ div.person-top {
     span.person-name {
     }
 
-    span.person-hpi {
-        float: right;
-        margin-right: 5px;
-    }
 }
 
 div.person-body {
@@ -100,13 +96,15 @@ div.person-body {
 
     div.person-body-left {
         float: left;
-        clear: right;
-        width: 250px;
+
+        img.person-image {
+            width: 270px;
+        }
     }
     div.person-body-right {
         float: right;
-        width: 390px;
-        height: 333px;
+        width: 420px;
+        height: 360px;
         padding: 0px 20px;
         border-right: 1px solid @color_pantheon_black;
         &.no-left {
@@ -127,6 +125,10 @@ div.person-body {
                 text-transform: uppercase;
                 font-weight: bold;
                 border-bottom: 1px solid @color_pantheon_black;
+
+                span.person-hpi {
+                    float: right;
+                }
             }
             div.person-metrics-body {
                 div {
@@ -158,7 +160,7 @@ div.person-pill {
     border-style: solid;
     padding-top: 35px;
     &:hover {
-        border-width: 3px;
+        border-bottom: 8px solid @color_pantheon_black;
     }
 
     &.occupation {
@@ -178,7 +180,7 @@ div.person-pill {
 }
 
 div.ranking-card {
-    width: 213.3333333333px !important;
+    width: 230px !important;
     border-bottom: 8px solid @color_beige;
     &.active {
         border-bottom: 8px solid @color_pantheon_black;
@@ -187,7 +189,7 @@ div.ranking-card {
 
 div.card {
     cursor: pointer;
-    width: 150px;
+    width: 125px;
     height: 125px;
     text-align: center;
     float: left;
@@ -246,21 +248,18 @@ div.person-bottom {
 }
 
 div.ranked-people-left {
-    display: float;
     position: relative;
-    top: 400px;
+    top: 428px;
+    margin-left: 24px;
 
     div.person-pill {
         margin-top: 2px;
         margin-right: 5px;
-        height: 118px
+        height: 117px
     }
 }
 
 div.ranked-people-right {
-    display: inline;
-    position: relative;
-    top: 400px;
 
     div.person-pill {
         margin-top: 2px;
@@ -274,15 +273,17 @@ div.ranked-people-right {
         width: 970px;
     }
     div.ranked-people-left{
-        top: 280px;
+        top: 309px;
         float: left;
+        margin-left: 9px;
         a {
             display: block;
         }
     }
 
     div.ranked-people-right{
-        top: -122px;
+        position: relative;
+        top: -119px;
         a {
             display: block;
         }

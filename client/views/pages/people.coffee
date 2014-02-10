@@ -22,9 +22,11 @@ Template.person.helpers
   imagePath: -> imagePath = "/images/people/" + @en_curid + ".jpg"
   L_star: -> if @L_star then @L_star.toFixed(2)
   hpi: -> if @HPI then @HPI.toFixed(2) else "N/A"
-  stdDevPageViews: -> (@StdDevPageViews / @TotalPageViews).toFixed(2)
+  stdDevPageViews: -> (@StdDevPageViews / @TotalPageViews).toFixed(5)
   occupation: -> @occupation.capitalize()
   pageviews: -> if @TotalPageViews then numberWithCommas(@TotalPageViews)
+  pageviews_e: -> if @PageViewsEnglish then numberWithCommas(@PageViewsEnglish)
+  pageviews_ne: -> if @PageViewsNonEnglish then numberWithCommas(@PageViewsNonEnglish)
   birthday: -> (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
   peopleLeft: ->
     rankingProperty = Session.get("rankingProperty")

@@ -36,9 +36,7 @@
 			<span class="person-name">
 				{{> search}}
 			</span>
-			<span class="person-hpi">
-				HPI = {{hpi}}
-			</span>
+			
 		</div>
 		<div class="person-body">
 			<div class="person-body-left">
@@ -51,12 +49,19 @@
 					<p>{{gender}} is featured in <b class="numlangs">{{numlangs}}</b> different language editions of Wikipedia and has received <b>{{pageviews}}</b> combined Pageviews since 2008.</p>
 				</div>
 				<div class="person-metrics">
-					<div class="person-metrics-title">Pantheon Metrics</div>
+					<div class="person-metrics-title">
+						Pantheon Metrics
+						<span class="person-hpi">
+							HPI = {{hpi}}
+						</span>
+					</div>
 					<div class="person-metrics-body">
 						<div class="person-metrics-body-left">
 							<ul>
 								<li>L (language editions):</li>
 								<li>PV (page views):</li>
+								<li>PV<sub>e</sub> (english pageviews):</li>
+								<li>PV<sub>ne</sub> (non-english pageviews):</li>
 								<li>CV (coeff. of variation):</li>
 								<li>L* (effective L):</li>
 							</ul>
@@ -65,6 +70,8 @@
 							<ul>
 								<li>{{numlangs}}</li>
 								<li>{{pageviews}}</li>
+								<li>{{pageviews_e}}</li>
+								<li>{{pageviews_ne}}</li>
 								<li>{{stdDevPageViews}}</li>
 								<li>{{L_star}}</li>
 							</ul>
