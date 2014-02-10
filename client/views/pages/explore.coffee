@@ -105,8 +105,6 @@ Template.accordion.events =
       while paramOne is paramTwo
         paramTwo = getRandomFromArray(_.values(mpdomains))
 
-    
-
     # Use session variables as parameters for a viz type change
     Router.go "explore",
       vizType: vizType
@@ -117,7 +115,7 @@ Template.accordion.events =
       to: Session.get("to")
       langs: Session.get("langs")
       gender: Session.get("gender")
-      dataset: Session.get("dataset")
+      dataset: if dataset is "murray" then dataset else if dataset is "OGC" then "pantheon"
 
 # Global helper for data ready
 Handlebars.registerHelper "dataReady", ->

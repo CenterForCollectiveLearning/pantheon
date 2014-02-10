@@ -16,7 +16,7 @@ Router.map ->
   @route "explore",
     path: "/explore"
     before: [ ->
-      @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/" + defaults.dataset
+      @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/pantheon"
     ]
 
   @route "explore",
@@ -32,7 +32,7 @@ Router.map ->
       Session.set "to", @params.to
       Session.set "langs", @params.langs
       if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L"
-      Session.set "dataset", @params.dataset
+      if @params.dataset is "murray" then Session.set "dataset", @params.dataset else if @params.dataset is "pantheon" then Session.set "dataset", "OGC"
 
       # Reset defaults based on vizmode
       if vizMode is "country_exports"
