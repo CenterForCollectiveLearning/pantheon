@@ -1,7 +1,7 @@
 div.tutorial {
 	div.modal {
 		background-color: transparent;
-		border: 1px solid @color_gold;
+		border: 1px solid @color_pantheon_black;
 
 		div.modal-body {
 			border-bottom: 0;
@@ -33,7 +33,7 @@ div.tutorial {
 				text-decoration: none;
 
 				&:hover { 
-					text-decoration:underline; 
+					font-weight: bold;
 				}
 			}
 			div#goFurther{
@@ -45,7 +45,7 @@ div.tutorial {
 					text-decoration: none;
 
 					&:hover { 
-						text-decoration: underline; 
+						font-weight: bold;
 					}
 				}
 			}
@@ -53,19 +53,32 @@ div.tutorial {
 
 
 		div.modal-footer {
-			border-top: 0;
+			border-top: 1px solid @color_pantheon_black;
 			background-color: @color_beige;
 			.muted{
 				color: @color_pantheon_black;
+				margin-top: 5px;
+				i.icon-move {
+					margin-top: 3px;
+					margin-right: 4px;
+				}
 			}
 			button.action-tutorial-back {
 				display: none;
 				visibility: hidden;
 			}
 			.btn{
-				background-color: @color_gold;
-				&:hover{
-					background-colr: @color_grey;
+				background-color: @color_pantheon_black;
+				font-family: 'Lato';
+				border-radius: 2px;
+				text-shadow: none;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				box-shadow: none;
+				border: 1px solid rgba(0, 0, 0, 0.75);	
+				i {
+					margin-top: 1px;
+					margin-left: 2px;
 				}
 			}
 			.btn-primary{
