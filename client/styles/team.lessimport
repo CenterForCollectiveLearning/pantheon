@@ -1,9 +1,36 @@
+// TODO Make
+
 .white-bg {
 	background-color: white;
 }
 
 .black-border {
 	border: 1px solid @color_pantheon_black;
+}
+
+div.team-page {
+	a.macro-link { 
+		font-weight: bold;
+	}
+	div.team-row {
+		margin-top: 20px;
+		ul {
+			margin-top: 20px;
+			float: left;
+			width: 100%;
+			margin: 0;
+			li.team-member {
+				margin-top: 15px;
+				width: 33.33333333%;
+				float: left;
+				text-align: center !important;
+
+				div.photo_container {
+					position: relative;
+				}
+			}
+		}
+	}
 }
 
 #page {
@@ -21,10 +48,6 @@
 			span {
 				color: @color_pantheon_black;
 				margin: 0 4px;
-			}
-
-			div.photo_container {
-				position: relative;
 			}
 
 			div.info {

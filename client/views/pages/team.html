@@ -1,6 +1,6 @@
 
 <template name="teamMember">
-	<li class="span4 team-member">
+	<li class="team-member">
 		{{>teamMemberInfo}}
 	</li>
 </template>
@@ -36,33 +36,31 @@
 		</div>
 	</div>
 	<!-- TODO Pull subparts into a template -->
-	<div id="page" class="container-fluid min-width">
-		<div class="row-fluid">
-			<div class="page-middle body-padding span6 offset3 text">
-				<p>Pantheon is a project from the <a href="http://macroconnections.media.mit.edu" target="_blank">Macro Connections</a> group at The MIT Media Lab. We are a team of designers, engineers, and scientists working collaboratively to quantify, analyze, measure and visualize global culture.</p>
-				<div class="row-fluid">
-					<ul>
-						{{#each first_row_teamMembers}}
-						    {{> teamMember}}
-						{{/each}}
-					</ul>
-				</div>
-				<div class="row-fluid">
-					<ul>
-						{{#each second_row_teamMembers}}
-						    {{> teamMember}}
-						{{/each}}
-					</ul>
-				</div>
-				<div class="row-fluid">
-					<ul>
-						{{#each third_row_teamMembers}}
-						    {{> teamMember}}
-						{{/each}}
-					</ul>
-				</div>
-				</div>
+	<div id="page" class="min-width">
+		<div class="text-page-middle page-middle text team-page">
+			<p>Pantheon is a project from the <a class="macro-link" href="http://macroconnections.media.mit.edu" target="_blank">Macro Connections</a> group at The MIT Media Lab. We are a team of designers, engineers, and scientists working collaboratively to quantify, analyze, measure and visualize global culture.</p>
+			<div class="team-row">
+				<ul>
+					{{#each first_row_teamMembers}}
+					{{> teamMember}}
+					{{/each}}
+				</ul>
+			</div>
+			<div class="team-row">
+				<ul>
+					{{#each second_row_teamMembers}}
+					{{> teamMember}}
+					{{/each}}
+				</ul>
+			</div>
+			<div class="team-row">
+				<ul>
+					{{#each third_row_teamMembers}}
+					{{> teamMember}}
+					{{/each}}
+				</ul>
 			</div>
 		</div>
 	</div>
+</div>
 </template>
