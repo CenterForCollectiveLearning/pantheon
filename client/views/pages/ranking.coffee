@@ -201,7 +201,7 @@ Template.ranking_table.rendered = ->
     aoColumns: aoColumns
     aaData: data
     aaSorting: sorting
-    aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]]
+    aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
     bDeferRender: false
     bSortClasses: false
     bSorted: false
