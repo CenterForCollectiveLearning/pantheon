@@ -54,6 +54,8 @@ Template.matrix_svg.rendered = ->
     svg = d3.select(@find("svg.matrix")).attr("width", matrixProps.fullWidth).append("g").attr("transform", "translate(" + matrixProps.margin.left + "," + 0 + ")")
     header_svg = d3.select(@find("svg.header")).attr("width", matrixProps.fullWidth).append("g").attr("transform", "translate(" + matrixProps.margin.left + "," + matrixProps.headerHeight + ")")
 
+    console.log "Adding color scale"
+
     # TODO: Don't re-render tooltip for already selected cell
     clickevent = (p) ->
       if Session.equals("tutorialType", null) or Session.equals("tutorialType", undefined)
@@ -129,7 +131,34 @@ Template.matrix_svg.rendered = ->
       industryCounts[industry] ?= 0
       industryCounts[industry] += 1
       if count > maxValue then maxValue = count
-    fill = d3.scale.log().domain([1, maxValue]).range(["white", "red"])
+
+    # jet = [d3.rgb(0, 0.592, 0), d3.rgb(0.527, 0.527, 0), d3.rgb()]
+    # TODO Understand how this is done
+    # https://groups.google.com/forum/#!topic/d3-js/B31N2zSVEiE
+    colorArray = ["#ffff95","orange","red"] #["white", "red", "blue"]
+    fill = d3.scale.log().domain([1, maxValue])
+    logDomain = [0, 0.5, 1].map(fill.invert)
+    console.log logDomain
+    fill.domain(logDomain)
+    fill.range(colorArray)
+
+    # TODO Make this code not suck and make it d3-esque
+    legendHeight = "12px"
+    legendSvgWidth = matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
+    legendWidth = matrixProps.width + matrixProps.margin.left + matrixProps.margin.right - 13
+
+    colorScale = d3.select(@find("svg.color-scale")).attr("width", legendSvgWidth).attr("height", "30px").append("g")  #.attr("transform", "translate(" + 10+ "," + 0 + ")")
+    gradient = colorScale.append("svg:linearGradient").attr("id", "gradient").attr("x1", "0%").attr("y1", "0%").attr("x2", "100%").attr("y2", "0%").attr("spreadMethod", "pad")
+    colorScale.append("rect").attr("width", legendWidth).attr("height", legendHeight) # .attr("x", 20)
+    for color, i in colorArray
+      logVal = logDomain[i]
+      offset = logVal / maxValue
+      gradient.append("svg:stop").attr("offset", offset).attr("stop-color", color).attr("stop-opacity", 1)
+      colorScale.append("rect").attr("x", legendWidth * offset).attr("y", 0).attr("height", legendHeight).style("fill", "#222").attr("width", 2)
+      colorScale.append("text").attr("x", legendWidth * offset).attr("y", "24px").attr("text-anchor", "middle").text(Math.round(logVal))
+
+
+    # fill = d3.scale.log().domain([1, maxValue/4, maxValue/2, 3*maxValue/4, maxValue]).range(["blue", "green", "yellow", "red"])
     matrix = [] # matrix mapping countries to industries
     invMatrix = [] # matrix mapping industries to countries
     for datum in data
@@ -235,7 +264,9 @@ Template.matrix_svg.rendered = ->
           -matrixScales.x(d.y) - matrixScales.x.rangeBand()
         ).attr("width", (Math.round(matrixScales.x.rangeBand() * 10) / 10) - 0.1).attr("height", (Math.round(matrixScales.y.rangeBand() * 10) / 10) - 0.5).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent)
         # ENTER + UPDATE
-        rect.style "fill", (d) -> fill d.z
+        rect.style "fill", (d) -> 
+          # console.log fill.domain(), d.z, fill(d.z)
+          fill d.z
         # EXIT
         cell.exit().attr("class", "exit").transition().duration(750).attr("y", 60).remove()
       columns = svg.selectAll(".column").data(invMatrix)
@@ -264,17 +295,8 @@ Template.matrix_svg.rendered = ->
     updateRows matrix
     updateColumns invMatrix
 
-  # 
-  # Legend
-  #     
-  # TODO Make sure this works
-  colorScale = d3.select(@find("svg.color-scale")).attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right).attr("height", "30px")
-  gradient = colorScale.append("svg:linearGradient").attr("id", "gradient").attr("x1", "0%").attr("y1", "0%").attr("x2", "100%").attr("y2", "0%").attr("spreadMethod", "pad")
-  gradient.append("svg:stop").attr("offset", "0%").attr("stop-color", "#f1e7d0").attr "stop-opacity", 1
-  gradient.append("svg:stop").attr("offset", "100%").attr("stop-color", "red").attr "stop-opacity", 1
-  colorScale.append("rect").attr("width", matrixProps.width + matrixProps.margin.left + matrixProps.margin.right).attr "height", "30px"
-  colorScale.append("text").attr("x", 5).attr("y", "21px").text "0%"
-  colorScale.append("text").attr("x", matrixProps.width / 4).attr("y", "21px").text "25%"
-  colorScale.append("text").attr("x", matrixProps.width / 2).attr("y", "21px").text "50%"
-  colorScale.append("text").attr("x", 3 * matrixProps.width / 4).attr("y", "21px").text "75%"
-  colorScale.append("text").attr("x", matrixProps.width - 5).attr("y", "21px").text "100%"
+    # 
+    # Legend
+    #     
+    # TODO Make sure this works
+   

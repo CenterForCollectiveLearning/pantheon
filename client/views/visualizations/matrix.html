@@ -3,10 +3,7 @@
         <div id="viz" class="matrix">
             {{#if dataReady}}
                 {{> matrix_svg}}
-                {{> time_slider}} 
-                <div class="scale">
-                    <svg class="color-scale"></svg>
-                </div>
+                {{> time_slider}}                 
             {{else}}
                 {{> spinner}}
             {{/if}}     
@@ -23,6 +20,9 @@
     <svg class="header" width="{{properties.fullWidth}}" height="{{properties.headerHeight}}"></svg>
     <div class="scroll-container">
         <svg class="matrix" width="{{properties.fullWidth}}" height="{{properties.fullHeight}}"></svg>
+    </div>
+    <div class="scale">
+        <svg class="color-scale"></svg>
     </div>
   </div>
 </template>
