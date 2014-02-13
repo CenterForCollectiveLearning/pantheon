@@ -285,17 +285,21 @@ footer {
 		div.more-from {
 			border-bottom: none;
 			padding-bottom: 0;
-			margin-bottom: 0;
+			margin-bottom: 10px;
 			margin-top: 15px;
 			width: 100%;
 			color: black;
+			a {
+				color: black;							
+			}
 		}
 		div.projects {
-			width: 800px;
-			margin: 0 auto;
-			div {
-				margin-left: 40px;
-				float: left;
+			a{
+				&:hover{
+					text-decoration: none;
+				}
+			}
+			div{
 				img {
 					width: 150px;
 					//.grayscale(1);
@@ -306,6 +310,13 @@ footer {
 						filter: none;
 						.grayscale(0);
 					}
+				}
+			}
+
+			div.dataviva{
+				img{
+					display: block; 
+					margin: 0 auto; 
 				}
 			}
 
