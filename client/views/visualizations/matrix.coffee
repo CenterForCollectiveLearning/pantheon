@@ -86,7 +86,7 @@ Template.matrix_svg.rendered = ->
           "stroke-width":2
         
         d3.selectAll(".row text").classed "active", (d, i) -> i is p.y
-        d3.selectAll(".column-title").classed "active", (d, i) -> i is p.x
+        d3.selectAll(".column-title text").classed "active", (d, i) -> i is p.x
         # Positioning
         position =
           left: (d3.event.pageX + 40)
