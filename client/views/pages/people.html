@@ -1,13 +1,13 @@
 <template name="people">
 	<div class="page-top">
 		<div id="people-page">
-			{{#if dataReady}} 
+			{{!#if dataReady}} 
     			{{#with personName}}
 	        		{{> person}}
 			    {{/with}}
-			{{else}}
-			    {{> spinner}}
-			{{/if}}
+			{{!else}}
+			    {{!> spinner}}
+			{{!/if}}
 		</div>
 	</div>
 </template>
@@ -21,19 +21,20 @@
 </template>
 
 <template name="person">
-	{{debugContext}}
-	<div class="ranked-people-left">
-		{{#each peopleLeft}}
-		    {{> person_pill}}
-		{{/each}}
-	</div>
+	{{#if dataReady}}
+    	<div class="ranked-people-left">
+    		{{#each peopleLeft}}
+		        {{> person_pill}}
+	        {{/each}}
+	    </div>
+    {{/if}}
 	<div class="page-middle person-page">
 		<div class="person-top">
 			<span class="person-name">
 				{{name}}
 			</span>
 			<i id="search-button" class="fa fa-search"></i>
-			<span class="person-name">
+			<span class="person-search">
 				{{> search}}
 			</span>
 			
@@ -106,18 +107,19 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="ranked-people-right">
-	{{#each peopleRight}}
-    	{{> person_pill}}
-   	{{/each}}
+	{{#if dataReady}}
+    	<div class="ranked-people-right">
+    		{{#each peopleRight}}
+    		    {{> person_pill}}
+   		    {{/each}}
+   		</div>
+    {{/if}}
 </template>
 
 <template name="person_pill">
-	<a href="{{pathFor 'people'}}">    	
-		<div class="card person-pill {{coloring}}">
-			<div class="rank">{{getRank}}</div>
+	<a href="{{pathFor 'people'}}">
+		<div class="card person-pill {{coloring}}{{#if hidden}} filler{{/if}}">
+			<div class="rank">{{rank}}</div>
 			<div class="name">{{name}}</div>
 		</div>
 	</a>

@@ -15,9 +15,8 @@ Template.search.settings = ->
     template: Template.search_result
   ]
 
-# TODO Design this smarter to receive all relevant data at once
+# Minimize number of people collection queries
 Template.person.helpers
-  name: -> @name
   gender: -> if @gender is "Male" then "He" else "She"
   imagePath: -> imagePath = "/images/people/" + @en_curid + ".jpg"
   L_star: -> if @L_star then @L_star.toFixed(2)
@@ -28,30 +27,11 @@ Template.person.helpers
   pageviews_e: -> if @PageViewsEnglish then numberWithCommas(@PageViewsEnglish)
   pageviews_ne: -> if @PageViewsNonEnglish then numberWithCommas(@PageViewsNonEnglish)
   birthday: -> (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
-  peopleLeft: ->
-    rankingProperty = Session.get("rankingProperty")
-    if rankingProperty
-      args = {HPI: {$gt: @HPI}}
-      args[rankingProperty] = this[rankingProperty]
-      People.find(args, {sort: {HPI: 1}, limit: 2}, dataset: "OGC").fetch().reverse()
-  peopleRight: -> 
-    rankingProperty = Session.get("rankingProperty")
-    if rankingProperty
-      args = {HPI: {$lt: @HPI}}
-      args[rankingProperty] = this[rankingProperty]
-      People.find(args, {sort: {HPI: -1}, limit: 2}, dataset: "OGC")
-  occupationRank: -> 
-    occupationRank = People.find(occupation: @occupation, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1
-    Session.set "occupationRank", occupationRank
-    numberWithCommas(occupationRank)
-  birthyearRank: -> 
-    birthyearRank = People.find(birthyear: @birthyear, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1
-    Session.set "birthyearRank", birthyearRank
-    numberWithCommas(birthyearRank)
-  countryRank: -> 
-    countryRank = People.find(countryName: @countryName, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1
-    Session.set "countryRank", countryRank
-    numberWithCommas(countryRank)
+  peopleLeft: -> SimilarPeople.find(position: "left")
+  peopleRight: -> SimilarPeople.find(position: "right")
+  occupationRank: -> numberWithCommas(People.find(occupation: @occupation, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
+  birthyearRank: -> numberWithCommas(People.find(birthyear: @birthyear, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
+  countryRank: -> numberWithCommas(People.find(countryName: @countryName, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
   occupationCount: -> numberWithCommas(People.find(occupation: @occupation, dataset: "OGC").count())  # TODO extract all counts into one publication
   birthyearCount: -> numberWithCommas(People.find(birthyear: @birthyear, dataset: "OGC").count())
   countryCount: -> numberWithCommas(People.find(countryName: @countryName, dataset: "OGC").count())
@@ -61,33 +41,33 @@ Template.person.helpers
 
 Template.person_pill.helpers
   coloring: -> Session.get "rankingProperty"
-  currentRanking: ->
-    rankingProperty = Session.get("rankingProperty")
-    switch rankingProperty
-      when "occupation" then Session.get("occupationRank")
-      when "birthyear" then Session.get("birthyearRank")
-      when "countryName" then Session.get("countryRank")
-  getRank: -> 
-    args = {HPI: {$gt: @HPI}}
-    rankingProperty = Session.get("rankingProperty")
-    args[rankingProperty] = this[rankingProperty]
-    People.find(args).count() + 1
+  hidden: -> if @rank is -1 then true else false
 
+# Desired search interaction model:
+# On click off or esc, clear input
+# On click of search icon, put into input
+# On enter, either close drop down or submit
+# Alternatively, click search button to submit
+# If failure to submit, underline input with red
 Template.person.events =
   "click #search-button": (d) ->
     val = $("input").val().trim()
     valid = People.find(name: val).count()
     if valid
-      console.log "Valid person:", val
       Router.go "people", 
         name: val
         dataset: ""
     else $("input").css(border: "1px solid red")
 
+  "keydown #people-search": (d) ->
+    if d.keyCode is 13
+      Router.go "people", 
+        name: val
+        dataset: ""
+
   "click div.ranking-card": (d) ->
     srcE = $(if d.srcElement then d.srcElement else d.target)
     unless srcE.hasClass("ranking-card") then srcE = srcE.closest("div.ranking-card")
-    console.log "CLICKED", srcE
 
     rankingProperty = srcE.data "ranking-property"
     if rankingProperty

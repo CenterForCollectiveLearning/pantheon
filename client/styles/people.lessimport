@@ -40,7 +40,7 @@ div.search-result {
 
 // TODO Don't do this
 #people-search {
-    width: 200px;
+    width: 50px;
     background: none !important;
     color: @color_beige !important;
     font-family: 'Lato' !important;
@@ -49,7 +49,7 @@ div.search-result {
     line-height: 1.2em !important;
     text-transform: uppercase !important;
     border: none !important;
-    padding: 0 10px !important;
+    padding: 0 4px !important;
     font-size: 1em !important;
 
     &:focus {
@@ -76,6 +76,10 @@ div.person-top {
     span {
         position: relative;
         top: 10px;
+        &.person-search {
+            left: 15px;
+            border-bottom: 1px solid @color_beige;
+        }
     }
 
     i#search-button {
@@ -84,10 +88,6 @@ div.person-top {
         top: 8px;
         left: 10px;
     }
-
-    span.person-name {
-    }
-
 }
 
 div.person-body {
@@ -159,6 +159,7 @@ div.person-pill {
     width: 150px;
     border-style: solid;
     padding-top: 35px;
+
     &:hover {
         border-bottom: 8px solid @color_pantheon_black;
     }
@@ -177,6 +178,13 @@ div.person-pill {
         color: #f7b18b;
         border-color: #f7b18b;
     }
+
+    &.filler {
+        color: @color_beige;
+        border-color: @color_beige;
+        pointer-events: none;
+    }
+
 }
 
 div.ranking-card {
