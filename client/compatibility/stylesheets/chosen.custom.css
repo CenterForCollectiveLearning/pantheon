@@ -122,7 +122,8 @@
   background: url('chosen-sprite.png') no-repeat 100% -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
   background: url('chosen-sprite.png') no-repeat 100% -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   font-size: 1em;
-  font-family: sans-serif;
+  font-family: 'Lato';
+  color: #222222;
   line-height: normal;
   border-radius: 0;
 }

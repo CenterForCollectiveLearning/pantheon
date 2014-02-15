@@ -26,17 +26,10 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
           industry: "$industry"
           occupation: "$occupation"
 
-        people:
-          $addToSet: "$en_curid"
-    ,
-      $unwind: "$people"
-    ,
-      $group:
-        _id: "$_id"
         count:
           $sum: 1
     ]
-    console.log "In scatterplot country_vs_country", matchArgs
+    console.log JSON.stringify(pipeline)
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
@@ -74,6 +67,7 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
           $sum: 1
     ]
 
+    console.log JSON.stringify(pipeline)
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         

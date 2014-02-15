@@ -818,7 +818,7 @@ d3plus.viz = function() {
   make_title = function(t,type){
 
     // Set the total value as data for element.
-    var font_size = type == "title" ? 18 : 13,
+    var font_size = type == "title" ? 18 : 14,
         title_position = {
           "x": vars.svg_width/2,
           "y": vars.margin.top
@@ -879,8 +879,8 @@ d3plus.viz = function() {
             "text": d.title,
             "parent": this,
             "width": width,
-            "height": vars.svg_height/8,
-            "resize": false
+            "height": vars.svg_height/6,
+            "resize": false,
           })
         })
     

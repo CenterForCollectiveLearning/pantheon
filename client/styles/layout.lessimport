@@ -146,12 +146,6 @@ header {
 	        }
 	    }
 
-	    @media (max-width: 1200px) {
-	    	.nav > li > a {
-	    		line-height: 0.5em !important;
-	    	}
-	    }
-
         // TODO Deal with shifts due to font-weight changes	    
 	    .nav > li > a {
 	    	.no-select;
@@ -168,6 +162,13 @@ header {
 	    		font-weight: bold;
 	    		background: @color_grey;
 	    		color: @color_pantheon_black;
+	    	}
+	    }
+
+	    @media (max-width: 1200px) {
+	    	.nav > li > a {
+	    		height: 40px;
+	    		line-height: 20px;
 	    	}
 	    }
     

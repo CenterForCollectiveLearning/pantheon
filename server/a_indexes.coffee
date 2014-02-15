@@ -1,177 +1,79 @@
 # Indexes
-# Index Usage (???): db.runCommand( { serverStatus: 0, repl: 0, indexCounters: 1 } ).indexCounters
 
-# Heuristics: If _id not included in index, drop in projection
+# Heuristics: For aggregation, need to index grouped-on fields not only matched fields
+# Explaining Aggregations http://stackoverflow.com/questions/19591405/index-optimization-for-mongodb-aggregation-framework
 
-# 
+#
 # TREEMAPS
-# 
+#
 
-# Country Exports (birthyear, numlangs, [category], [country])
-# Checked: db.people.find({numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, countryCode: 'CN'}, {_id: 0, domain: 1, industry: 1, occupation: 1}).explain()
-People._ensureIndex
-  numlangs: 1
-  birthyear: 1
-  countryCode: 1
-  domain: 1
-  industry: 1
-  occupation: 1
+# Country exports
+# db.people.runCommand("aggregate", {pipeline: [{"$match":{"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gt":0},"countryCode":"NZ"}},{"$project":{"_id":0,"domain":1,"industry":1,"occupation":1}},{"$group":{"_id":{"domain":"$domain","industry":"$industry","occupation":"$occupation"},"count":{"$sum":1}}}], explain: true}).serverPipeline[0].cursor.indexOnly
+@countryExportsIndex_hpi = {dataset: 1, birthyear: 1, countryCode: 1, domain: 1, industry: 1, occupation: 1, HPI: 1, _id: 1}
+@countryExportsIndex_numlangs = {dataset: 1, birthyear: 1, countryCode: 1, domain: 1, industry: 1, occupation: 1, numlangs: 1, _id: 1}
+People._ensureIndex(countryExportsIndex_hpi)
+People._ensureIndex(countryExportsIndex_numlangs)
 
-People._ensureIndex
-  HPI: 1
-  birthyear: 1
-  countryCode: 1
-  domain: 1
-  industry: 1
-  occupation: 1
-
-# Domain Exports
-# Checked: db.people.find({ numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, domain: 'ARTS' }, {_id: 0, countryCode: 1, countryName: 1, continent: 1}).explain()
-People._ensureIndex
-  numlangs: 1
-  birthyear: 1
-  domain: 1
-  countryCode: 1
-  countryName: 1
-  continent: 1
-
-People._ensureIndex
-  numlangs: 1
-  birthyear: 1
-  industry: 1
-  countryCode: 1
-  countryName: 1
-  continent: 1
-
-People._ensureIndex
-  numlangs: 1
-  birthyear: 1
-  occupation: 1
-  countryCode: 1
-  countryName: 1
-  continent: 1
-
-People._ensureIndex
-  HPI: 1
-  birthyear: 1
-  domain: 1
-  countryCode: 1
-  countryName: 1
-  continent: 1
-
-People._ensureIndex
-  HPI: 1
-  birthyear: 1
-  industry: 1
-  countryCode: 1
-  countryName: 1
-  continent: 1
-
-People._ensureIndex
-  HPI: 1
-  birthyear: 1
-  occupation: 1
-  countryCode: 1
-  countryName: 1
-  continent: 1
-
-
+# Domain exporters
+# db.people.runCommand("aggregate", {pipeline: [{"$match":{"birthyear":{"$gte":-3000,"$lte":2000},"industry":"MATH","dataset":"OGC","HPI":{"$gt":0}}},{"$project":{"_id":0,"continent":1,"countryCode":1,"countryName":1}},{"$group":{"_id":{"continent":"$continentName","countryCode":"$countryCode","countryName":"$countryName"},"count":{"$sum":1}}}], explain: true}).serverPipeline[0].cursor.indexOnly
+@domainExportersIndex_domain_hpi = {dataset: 1, birthyear: 1, continent: 1, countryName: 1, countryCode: 1, domain: 1, HPI: 1}
+@domainExportersIndex_industry_hpi = {dataset: 1, birthyear: 1, continent: 1, countryName: 1, countryCode: 1, industry: 1, HPI: 1}
+@domainExportersIndex_occupation_hpi = {dataset: 1, birthyear: 1, continent: 1, countryName: 1, countryCode: 1, occupation: 1, HPI: 1}
+@domainExportersIndex_domain_numlangs = {dataset: 1, birthyear: 1, continent: 1, countryName: 1, countryCode: 1, domain: 1, numlangs: 1}
+@domainExportersIndex_industry_numlangs = {dataset: 1, birthyear: 1, continent: 1, countryName: 1, countryCode: 1, industry: 1, numlangs: 1}
+@domainExportersIndex_occupation_numlangs = {dataset: 1, birthyear: 1, continent: 1, countryName: 1, countryCode: 1, occupation: 1, numlangs: 1}
+People._ensureIndex(domainExportersIndex_domain_hpi)
+People._ensureIndex(domainExportersIndex_industry_hpi)
+People._ensureIndex(domainExportersIndex_occupation_hpi)
+People._ensureIndex(domainExportersIndex_domain_numlangs)
+People._ensureIndex(domainExportersIndex_industry_numlangs)
+People._ensureIndex(domainExportersIndex_occupation_numlangs)
 
 # 
 # MATRICES
-# 
+#
 
-# Matrix (birthyear, numlangs, gender)
-# Index needed here to iterate through people
-# Checked: db.people.find({ numlangs: { '$gt': 25 }, birthyear: { '$gte': -1000, '$lte': 1950 }, gender: 'Female' }, {_id: 0, countryCode: 1, industry: 1}).explain()
-People._ensureIndex
-  numlangs: 1
-  birthyear: 1
-  gender: 1
-  countryCode: 1
-  industry: 1
-  _id: 1
+# db.people.runCommand("aggregate", {pipeline: [{"$match":{"birthyear":{"$gte":-3000,"$lte":2000},"countryCode":{"$ne":"UNK"},"dataset":"OGC","HPI":{"$gt":0}}},{"$project":{"_id":0,"countryCode":1,"industry":1}},{"$group":{"_id":{"countryCode":"$countryCode","industry":"$industry"},"count":{"$sum":1}}}], explain: true}).serverPipeline[0].cursor.indexOnly
+@matrix_hpi = {dataset: 1, birthyear: 1, countryCode: 1, industry: 1, HPI: 1, gender: 1, _id: 1}
+@matrix_numlangs = {dataset: 1, birthyear: 1, countryCode: 1, industry: 1, numlangs: 1, gender: 1, _id: 1}
+People._ensureIndex(matrix_hpi)
+People._ensureIndex(matrix_numlangs)
 
-People._ensureIndex
-  HPI: 1
-  birthyear: 1
-  gender: 1
-  countryCode: 1
-  industry: 1
-  _id: 1
+#
+# SCATTERPLOTS
+#
+# Country vs. Country
+# db.people.runCommand("aggregate", {pipeline: [{"$match":{"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gt":0},"$or":[{"countryCode":"SE"},{"countryCode":"SY"}]}},{"$group":{"_id":{"countryCode":"$countryCode","domain":"$domain","industry":"$industry","occupation":"$occupation"},"count":{"$sum":1}}}], explain: true}).serverPipeline[0].cursor.clauses[0].indexOnly
+# Handled by countryExportsIndex_hpi
+
+# Category vs. Category
+# db.people.runCommand("aggregate", {pipeline: [{"$match":{"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gt":0},"$or":[{"occupation":"CHEMIST"},{"industry":"FINE ARTS"}]}},{"$group":{"_id":{"continent":"$continentName","countryCode":"$countryCode","domain":"$domain","industry":"$industry","occupation":"$occupation"},"count":{"$sum":1}}}], explain: true}).serverPipeline[0].cursor.clauses[0].indexOnly
 
 # 
 # TOOLTIPS
 # 
 
-# Country Exports (input: country, occupation)
-@domain_countryCode =
-  _id: 1
-  birthyear: 1
-  numlangs: 1
-  domain: 1
-  countryCode: 1
+# Country Exports (input: country, category)
+# db.people.find({"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gte":0},"countryCode":"DE","occupation":"SOCCER PLAYER"}, {"_id":1,"HPI":1}, {"sort":{"HPI":-1},"limit":5}).explain().indexOnly
+# Handled by countryExportsIndex_hpi
 
-@industry_countryCode =
-  _id: 1
-  birthyear: 1
-  numlangs: 1
-  industry: 1
-  countryCode: 1
+# Domain Exports (input: same as above)
+# db.people.find({"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gte":0},"countryCode":"IT","industry":"MEDICINE"}, {"_id":1,"HPI":1}, {"sort":{"HPI":-1},"limit":5}).explain().indexOnly 
+# Handled by countryExportsIndex_hpi
 
-@occupation_countryCode =
-  _id: 1
-  birthyear: 1
-  numlangs: 1
-  occupation: 1
-  countryCode: 1
+# Matrix (input: country, category, gender)
+# db.people.find({"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gte":0},"gender":"Female","countryCode":"US","industry":"FILM AND THEATRE"}, {"_id":1, "HPI":1}, {"sort":{"HPI":-1},"limit":5}).explain().indexOnly
+# Handled by matrix_hpi
+# TODO This is not working in the console
 
-@domain_countryCode =
-  _id: 1
-  birthyear: 1
-  HPI: 1
-  domain: 1
-  countryCode: 1
-
-@industry_countryCode =
-  _id: 1
-  birthyear: 1
-  HPI: 1
-  industry: 1
-  countryCode: 1
-
-@occupation_countryCode =
-  _id: 1
-  birthyear: 1
-  HPI: 1
-  occupation: 1
-  countryCode: 1
-
-People._ensureIndex domain_countryCode
-People._ensureIndex industry_countryCode
-People._ensureIndex occupation_countryCode
-
-# Domain Exporters (input: country, occupation)
-# People._ensureIndex({ occupation: 1, countryCode: 1, birthyear: 1, numlangs: 1});
-
-#
-# * Need to have a prefix of all the lookups we are going to do
-#  * in at least one of the indices below
+# 
+# RANKINGS
 # 
 
-Imports._ensureIndex({name: 1, lang: 1, lang_name: 1})
-# Imports._ensureIndex({ birthyear: 1, countryCode: 1,  occupation: 1} );
-# Imports._ensureIndex({ continentName:1, countryCode: 1, occupation: 1, birthyear: 1} );
-# Imports._ensureIndex({ lang_family: 1, lang: 1, occupation: 1, birthyear: 1} );
-# Imports._ensureIndex({ category: 1, industry: 1, occupation: 1, birthyear: 1} );
-# Imports._ensureIndex({ industry: 1} );
-# Imports._ensureIndex({ occupation: 1} );
-# Imports._ensureIndex({ countryCode: 1, numlangs: 1, birthyear: 1}, {background: true});
-# Imports._ensureIndex({birthyear: 1, numlangs: 1});
-
-#
-# DATASETS
-#
-
-People._ensureIndex
-  dataset: 1
+# 
+# PEOPLE
+# 
+@people_individual = {name: 1, dataset: 1}
+@people_occupation = {HPI: 1, dataset: 1, occupation: 1, _id: 1}
+@people_countryName = {HPI: 1, dataset: 1, countryName: 1, id: 1}
+@people_birthyear = {name: 1, dataset: 1, birthyear: 1, _id: 1}

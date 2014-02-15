@@ -140,7 +140,22 @@ d3plus.tree_map = function(vars) {
   }
 
   onMouseMove = function(d){
-      if (Session.get("clicktooltip") == false){
+    // console.log(d3.event);
+    eventTime = d3.event.timeStamp;
+    // TODO Reduce the time of this computation -- it's laggy
+    timeDiff = eventTime - Session.get("tooltipTime");
+      if (!Session.get("clicktooltip")){
+        // Desired behavior: If moving over an element to reach another, don't trigger tooltip
+        // If the tooltip is already shown for the same cell, just update the positon
+
+        if (Session.get("showTooltip")) {
+          var position = {
+            "left": (d3.event.clientX + 40),
+            "top": (d3.event.clientY - 45)
+          }
+          Session.set("tooltipPosition", position);
+          return;
+        }
         Session.set("hover", true);
         var id = find_variable(d,vars.id_var).replace(" ", "_"),
             self = d3.select("#cell_"+id).node()
@@ -153,7 +168,6 @@ d3plus.tree_map = function(vars) {
 
         // Get parameters from DOM
         // Subscription Parameters
-
         var vizMode = Session.get("vizMode");
         var dataset = Session.get("dataset");
         if (vizMode === "country_exports") {
@@ -168,12 +182,12 @@ d3plus.tree_map = function(vars) {
           var categoryLevel = Session.get("categoryLevel");
         }
 
-        // Positioning
         var position = {
           "left": (d3.event.clientX + 40),
           "top": (d3.event.clientY - 45)
         }
         Session.set("tooltipPosition", position);
+        Session.set("tooltipTime", eventTime);
 
         // Subscription Parameters
         Session.set("tooltipCategory", category);
@@ -197,7 +211,7 @@ d3plus.tree_map = function(vars) {
         .attr("opacity",0.85)
 
     }
-  throttledMouseMove = _.throttle(onMouseMove, 500)
+  throttledMouseMove = _.debounce(onMouseMove, 500)
   // throttledMouseMove = _.throttle(onMouseMove, 500)
   
   cell

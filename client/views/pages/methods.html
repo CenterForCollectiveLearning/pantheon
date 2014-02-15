@@ -125,9 +125,9 @@
 			<p>Where the summation is over all of the characters \(i\) associated with location \(c\).</p>
 			<p>The historical HCPI is cumulative, so the value for any period can be taken as the difference between the beginning and the end points of the period. The figure below shows the HCPI for countries over time.</p>
 			<p><b>Figure 1a: Historical Cultural Production Index (Total) over time</b></p>
-			<figure><img src="images/CivChartTotalHCPI.png"></figure>
+			<figure><img src="/CivChartTotalHCPI.png"></figure>
 			<p><b>Figure 1b: Historical Cultural Production Index (Fraction) over time</b></p>
-			<figure><img src="images/CivChartFractionHCPI.png"></figure>
+			<figure><img src="/CivChartFractionHCPI.png"></figure>
 			<!-- ADD UPDATES -->
 			<h2 id="bias_methods">Methods</h2>
 			<p>Pantheon was constructed from data that we curated and collected from Freebase and Wikipedia. Both of these sources are open-source, collaborative knowledge bases that are freely available to the general public. </p>
@@ -196,11 +196,11 @@
 
 			<p>The recency bias is interesting in the sense that it represents a bias of the Internet as new media. Certainly, people whose fame coincided with the existence of the Internet will be overrepresented in the Wikipedia. Hence, the bias can be understood as a combination of both, a bias for recency, but also, a bias of the media available at the time in which the individual became notorious for a contribution (if the Wikipedia had existed in the early eighties probably Cindi Lauper would have a higher presence).</p>
 			<p><b>Figure 3: Chilean Presidents</b></p>
-			<figure><img src="images/chart-cp.png"></figure>
+			<figure><img src="/chart-cp.png"></figure>
 			<p><b>Figure 4: Academy Award Winners for Best Actress</b></p>
-			<figure><img src="images/chart-ba.png"></figure>
+			<figure><img src="/chart-ba.png"></figure>
 			<p><b>Figure 5: Top Scorers of the Spanish Liga</b></p>
-			<figure><img src="images/chart-liga.png"></figure>
+			<figure><img src="/chart-liga.png"></figure>
 
 			<h3 id="other_technical_limitations">5. Other Technical Limitations</h3>
 
@@ -213,16 +213,16 @@
 			<p>First we consider the subset of our dataset containing the top 25 Formula-1 drivers according to the number of languages in which they have a presence in the Wikipedia. For each of these drivers we created an additional dataset with the number of Grand Prix Wins, Championships Won, Podiums (number of times in the top 3), Starts, a dummy for Killed in Action, and the Time since the last F1-race. We used these variables to construct a statistical model that explained the number of languages in which each driver has a presence in the Wikipedia. Since Grand Prix Wins, Championships and Podiums are highly collinear—and hence not statistically significant when used together—we use only one of them in the final model (Podiums). Finally, we choose an exponential function linking our accomplishment variables to the number of languages in the Wikipedia L. We choose an exponential since we look for a function that is always positive (since L cannot be negative).</p>
 			<p>The model presented in Figure 6 explains 87% of the variance in the number of languages in which each Formula-1 driver has a presence in the Wikipedia, showing that for Formula-1 drivers the number of languages in the Wikipedia tracks accomplishments discounted by time accurately.</p>
 			<p><b>Figure 6: Validation using Formula 1 drivers</b></p>
-			<figure><img src="images/formula1.png"></figure>
+			<figure><img src="/formula1.png"></figure>
 			<h3 id="validation_with_tennis">Validation with Tennis Players</h3>
 			<p>Next we perform a similar analysis but focused on Tennis Players. The tennis player dataset has the added benefit of including both male and females, letting us study whether there is any evidence of gender bias in the multilingual presence of tennis players in the Wikipedia. For Tennis players we focus on the top 45 Tennis players according to the number of languages in the Wikipedia and collect a dataset containing the number of weeks as number one in the ATP, the number of Grand Slams wins, the top rank ever obtained, the gender (Female = 1), and the Age minus 24 (assuming 24 is peak age for tennis player). </p>
 			<p>The most parsimonious model—using Grand Slam Wins, Gender and Time—explains 54% of the variance in the number of Languages each of these individuals has a presence in the Wikipedia (Figure 7). This shows that once again, the number of languages in the Wikipedia is a good proxy for individual accomplishments. We also find that the gender coefficient is negative and significant, meaning that a female at the same level of accomplishment has--on average--a presence in one less language than the equivalent male.</p>
 			<p><b>Figure 7: Validation using Tennis Players </b></p>
-			<figure><img src="images/tennis.png"></figure>
+			<figure><img src="/tennis.png"></figure>
 			<h3 id="validation_with_swimmers">Validation with Swimmers</h3>
 			<p>Finally, we perform a similar analysis considering Olympic swimmers born after 1950. In this case we use the total number of medals, gold medals, gender and time from last medal for our model. The best parsimonious model for the data is obtained for gold medals, gender and time--although gender is not significant in this case, likely due to the small sample size (N=19). This model explains 74% of the variance observed in the total number of languages that a swimmer has a presence in the Wikipedia. </p>
 			<p><b>Figure 8: Validation using Swimmers</b></p>
-			<figure><img src="images/swimmers.png"></figure>
+			<figure><img src="/swimmers.png"></figure>
 			<h3 id="discussion">Discussion</h3>
 			<p>In sum, for the three dataset studied the number of languages that an individual has a presence in the Wikipedia represents a good proxy for their accomplishments discounted by time. The comparison of these three datasets, however, invites us to reflect on some of their commonalities and differences. </p>
 			<p>First, we have the constant coefficient for the three models. This is the coefficients expressed as “A” in the equations and that account for the baseline level of notoriety in each dataset--number of languages in which individual has a presence. As we can see in figures 6-8, for Tennis the “A” coefficient is around 80, whereas for Formula-1 and swimming it is respectively 40 and 25. We can interpret A as the global level of notoriety that is associated to each cultural domain. According to this interpretation, the baseline level of notoriety of a tennis player is larger than that of a Formula-1 racer, and that in turn, is larger than that of a swimmer. The large variation in the baseline numbers suggest that there are important differences in the level of notoriety associated with each discipline, and hence, that global notoriety is mediated by the cultural domain where each individual has made his or her contribution.</p>

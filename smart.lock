@@ -10,7 +10,8 @@
       "scss": {},
       "autocomplete": {},
       "font-awesome": {},
-      "tutorials": {}
+      "tutorials": {},
+      "observatory": {}
     },
     "packages": {
       "jquery-ui": {
@@ -43,6 +44,11 @@
         "tag": "v0.3.1",
         "commit": "d154f1df80c0fc4ba69c439cb4a6da1294459740"
       },
+      "observatory": {
+        "git": "https://github.com/jhoxray/observatory.git",
+        "tag": "v0.3.21",
+        "commit": "3d6b436af0a70b784d0f9ec4709907c77bd4fd63"
+      },
       "bootboxjs": {
         "git": "https://github.com/TimHeckel/meteor-bootboxjs.git",
         "tag": "v3.2.2",
@@ -53,10 +59,20 @@
         "tag": "v1.10.3r2",
         "commit": "d54f75cfad37ff8ce6ef9ad49de55738ba921af7"
       },
+      "observatory-apollo": {
+        "git": "https://github.com/superstringsoftware/observatory-apollo.git",
+        "tag": "v0.3.2",
+        "commit": "f704848187a4da2bd179864ae80a1f73a3fd22a6"
+      },
       "build-fetcher": {
         "git": "https://github.com/mizzao/meteor-build-fetcher.git",
         "tag": "v0.1.0",
         "commit": "e3813b1fc7f5c576e8e1fa4c51ae6f4687780a35"
+      },
+      "observatory-galileo": {
+        "git": "https://github.com/superstringsoftware/observatory-galileo.git",
+        "branch": "master",
+        "commit": "f21b80e6502d38a7ce66206374b706f2cbd0228d"
       }
     }
   }

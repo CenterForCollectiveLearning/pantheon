@@ -2,23 +2,23 @@
     <div class="page-middle span8">
         <div id="viz" class="map">
             {{#if dataReady}}
-            {{> map_svg}}
-            {{> time_slider}} 
-
-            {{! TODO: here render the color scale with meteor }}
-
+                {{> map_svg}}
+                {{> time_slider}} 
             {{else}}
-            {{> spinner}}
+                {{> spinner}}
             {{/if}}
         </div>
     </div>
     <div class="page-right span2">
         {{#if initialDataReady}}
-        {{> ranked_list }}
+            {{> ranked_list }}
         {{/if}}
     </div>
 </template>
 
 <template name="map_svg">
     <svg width="{{properties.width}}" height="{{properties.height}}"></svg>
+    <div class="scale">
+        <svg class="color-scale"></svg>
+    </div>
 </template>

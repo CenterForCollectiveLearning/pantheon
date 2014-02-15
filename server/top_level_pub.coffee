@@ -19,7 +19,7 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   args.dataset = dataset
   args.countryCode = country if country isnt "all" and vizMode is "country_exports"
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
-  if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
+  if L[0] is "H" then args.HPI = {$gte:parseInt(L.slice(1,L.length))} else args.numlangs = {$gte: parseInt(L)}
   
   if gender is "male" or gender is "female"
     genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
@@ -84,15 +84,14 @@ Meteor.publish "allpeople", ->
 #
 
 Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, click) ->
-  console.log "PUBLISHING TOOLTIPS"
   sub = this
   args =
     birthyear:
-      $gt: begin
+      $gte: begin
       $lte: end
     dataset: dataset
 
-  if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
+  if L[0] is "H" then args.HPI = {$gte:parseInt(L.slice(1,L.length))} else args.numlangs = {$gte: parseInt(L)}
   # TODO - this is hardcoded fix for matrix to update tooltip with gender - may want to generalize this
   if gender is "male" or gender is "female"
     genderField = gender.charAt(0).toUpperCase() + gender.slice(1)
@@ -116,26 +115,20 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       countryCode: countryY
     ]
   else if vizMode is "domain_vs_domain"
-    # args.countryCode = country if country isnt "all"
-    # or1 = {}
-    # or2 = {}
-    # or1[categoryLevelX] = categoryX if categoryX isnt "all"
-    # or2[categoryLevelY] = categoryY if categoryY isnt "all"
-    # args.$or = [or1, or2]
     argsX = 
       birthyear:
-        $gt: begin
+        $gte: begin
         $lte: end
       dataset: dataset
     argsY = 
       birthyear:
-        $gt: begin
+        $gte: begin
         $lte: end
       dataset: dataset
     argsX.countryCode = country if country isnt "all"
     argsY.countryCode = country if country isnt "all"
     argsX[categoryLevelX] = categoryX if categoryX isnt "all"  
-    argsY[categoryLevelY] = categoryY if categoryY isnt "all"  
+    argsY[categoryLevelY] = categoryY if categoryY isnt "all" 
 
   if L[0] is "H"
     projection =
@@ -161,11 +154,11 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
   # Get count
   # Work-around for strange "or" behavior in mongodb (not for minimongo)
   if argsX and argsY
-    countX = People.find(argsX, {fields: projection, hint: occupation_countryCode}).count()
-    countY = People.find(argsY, {fields: projection, hint: occupation_countryCode}).count()
+    countX = People.find(argsX, {fields: projection}).count()
+    countY = People.find(argsY, {fields: projection}).count()
     count = countX + countY
   else
-    count = People.find(args, {fields: projection, hint: occupation_countryCode}).count()
+    count = People.find(args, {fields: projection}).count()
 
   sub.added "tooltipCollection", "count",
     count: count

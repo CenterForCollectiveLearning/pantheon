@@ -14,7 +14,6 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
   matchArgs.dataset = dataset
   if L[0] is "H" then matchArgs.HPI = {$gt:parseInt(L.slice(1,L.length))} else matchArgs.numlangs = {$gt: parseInt(L)}
 
-  console.log matchArgs
   pipeline = []
   if vizMode is "country_exports"
     project =
@@ -24,14 +23,14 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
       occupation: 1
 
     matchArgs.countryCode = country if country isnt "all"
-    console.log matchArgs
+
     pipeline = [
       $match: matchArgs
     ,
       $project: project
     ,
       $group:
-        _id:
+        _id: 
           domain: "$domain"
           industry: "$industry"
           occupation: "$occupation"
@@ -39,16 +38,16 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
         count:
           $sum: 1
     ]
+
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
-        
+
         # Generate a random disposable id for each aggregate
         sub.added "treemap", Random.id(),
           domain: e._id.domain
           industry: e._id.industry
           occupation: e._id.occupation
           count: e.count
-
 
       sub.ready()
     , (error) ->
@@ -109,6 +108,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
         count:
           $sum: 1
     ]
+    console.log JSON.stringify(pipeline)
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
