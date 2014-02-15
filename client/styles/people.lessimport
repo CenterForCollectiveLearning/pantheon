@@ -16,9 +16,15 @@ div.search-result {
     text-align: left;
 }
 
+.-autocomplete-container {
+    min-width: 250px;
+}
+
 .-autocomplete-list {
+    cursor: pointer;
     list-style: none;
-    margin: 0;
+    margin-top: -15px;
+    margin-left: -2px;
     padding: 0;
 }
 
@@ -40,7 +46,7 @@ div.search-result {
 
 // TODO Don't do this
 #people-search {
-    width: 50px;
+    width: 150px;
     background: none !important;
     color: @color_beige !important;
     font-family: 'Lato' !important;
@@ -60,10 +66,6 @@ div.search-result {
     }
 }
 
-div.search-result {
-    color: @color_pantheon_black;
-}
-
 div.person-top {
     background-color: @color_pantheon_black;
     color: @color_beige;
@@ -73,10 +75,18 @@ div.person-top {
     font-size: 18px;
     padding-left: 6px;
 
+    a {
+        color: @color_beige;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
     span {
         position: relative;
         top: 10px;
         &.person-search {
+            top: 11px;
             left: 15px;
             border-bottom: 1px solid @color_beige;
         }
@@ -87,6 +97,14 @@ div.person-top {
         position: relative;
         top: 8px;
         left: 10px;
+    }
+
+    i#random-button {
+        cursor: pointer;
+        float: right;
+        position: relative;
+        top: 25px;
+        right: 8px;
     }
 }
 

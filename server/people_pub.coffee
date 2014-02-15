@@ -18,35 +18,106 @@ Meteor.publish "person_imports", (id) ->
         limit: 5
     )
 
+# TODO Change dataReady to listen to this publication
+# TODO Add publications!
+
+# Looking up people is on the server-side because minimongo is not indexed  
 # Return five people with the same occupation with similar number of languages
-Meteor.publish "similar_people_pub", (id, rankingProperty, rankingPropertyValue) ->
+Meteor.publish "similar_people_pub", (personName, rankingProperty) ->
+    console.log "In similar_people_pub"
     sub = this
     collectionName = "similarPeople"
 
-    # Write this query to not resort every time
-    peopleCursor = People.find({ rankingProperty: rankingPropertyValue }, { sort: { numlangs: -1} }) #, sort: numlangs: -1).fetch()
-    peopleCount = peopleCursor.count()
-    people = peopleCursor.fetch()
+    currentPerson = People.findOne(name: personName, dataset: "OGC")
+    personHPI = currentPerson.HPI
+    rankingPropertyValue = currentPerson[rankingProperty]
 
-    # Get index of individual
-    centerIndex = 0
-    for d, i in people 
-        d.rank = i + 1
-        if d._id.equals(id) then centerIndex = i
+    console.log personName, rankingProperty, personHPI, rankingPropertyValue
 
-    # If in first two, just return first five
-    if centerIndex < 2 then result = people.slice(0, 5)
+    # One publication with some people with an added field of "left" or "right"
+    # Change projection to only pass name
+    # peopleCursor = People.find({ rankingProperty: rankingPropertyValue }, { sort: { numlangs: -1} }, {name: 1}).limit(4)
 
-    # If in last two, just return last five
-    else if centerIndex > (peopleCount - 3) then result = people.slice(peopleCount - 5, peopleCount)
+    # TODO Ensure an index!
+    argsLeft = {HPI: {$gt: personHPI}, dataset: "OGC"}
+    argsRight = {HPI: {$lt: personHPI}, dataset: "OGC"}
+    argsLeft[rankingProperty] = rankingPropertyValue
+    argsRight[rankingProperty] = rankingPropertyValue
 
-    else result = people.slice(centerIndex - 2, centerIndex + 3)
+    projectionLeft =
+        fields:
+            _id: 0
+            name: 1
+            HPI: 1
+        sort:
+            HPI: 1
+        limit: 2
 
-    console.log "OCCUPATION RESULT:", result
-    _.each result, (person) -> 
-        sub.added collectionName, person._id, person
+    projectionRight =
+        fields:
+            _id: 0
+            name: 1
+            HPI: 1
+        sort:
+            HPI: -1
+        limit: 2
+
+    console.log "peoplePage args:"
+    console.log JSON.stringify(argsLeft)
+    console.log JSON.stringify(projectionLeft)
+
+    # TODO Ensure ranking
+    peopleLeft = People.find(argsLeft, projectionLeft)
+    peopleRight = People.find(argsRight, projectionRight)
+
+    rank = People.find(argsLeft).count() + 1
+    console.log "PERSON RANK", rank
+
+    numberLeft = 2
+    # TODO Create method to pad array
+    if peopleLeft.count() is 1
+        numberLeft = 1
+        sub.added collectionName, Random.id(), 
+            name: ""
+            rank: -1
+            position: "left"
+    else if peopleLeft.count() is 0
+        sub.added collectionName, Random.id(), 
+            name: ""
+            rank: -1
+            position: "left"
+        sub.added collectionName, Random.id(), 
+            name: ""
+            rank: -1
+            position: "left"
+
+    peopleLeft.fetch().reverse().forEach (person, i) -> 
+        sub.added collectionName, Random.id(), 
+            name: person.name
+            rank: rank - numberLeft + i
+            position: "left"
+
+    peopleRight.forEach (person, i) -> 
+        console.log person
+        sub.added collectionName, Random.id(), 
+            name: person.name
+            rank: rank + 1 + i
+            position: "right"
+
+    if peopleRight.count() is 1
+        sub.added collectionName, Random.id(), 
+            name: ""
+            rank: -1
+            position: "right"
+    if peopleRight.count() is 0
+        sub.added collectionName, Random.id(), 
+            name: ""
+            rank: -1
+            position: "right"
+        sub.added collectionName, Random.id(), 
+            name: ""
+            rank: -1
+            position: "right"
+
     sub.ready()
     return
-
-# Meteor.publish "gender_pub", (id, gender) ->
-#     return

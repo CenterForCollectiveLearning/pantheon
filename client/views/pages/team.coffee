@@ -1,6 +1,6 @@
 teamMembers = [
   name: "César A. Hidalgo"
-  photo: "images/cesar_hidalgo.png"
+  photo: "cesar_hidalgo.png"
   description: "Principal Investigator"
   role: ["Concept", "Data", "Design"]
   media:
@@ -10,7 +10,7 @@ teamMembers = [
   dates: "Summer 2012 - present"
 ,
   name: "Amy Zhao Yu"
-  photo: "images/amy_yu.png"
+  photo: "amy_yu.png"
   description: "Graduate Student"
   role: ["Data", "Content", "Development"]
   media:
@@ -20,7 +20,7 @@ teamMembers = [
   dates: "Fall 2012 - present"
 ,
   name: "Kevin Zeng Hu"
-  photo: "images/kevin_hu.png"
+  photo: "kevin_hu.png"
   description: "Graduate Student"
   role: ["Development", "Design", "Data"]
   media:
@@ -30,7 +30,7 @@ teamMembers = [
   dates: "2013 - present"
 ,
   name: "Ali Almossawi"
-  photo: "images/ali_almossawi.jpg"
+  photo: "ali_almossawi.jpg"
   description: "Mozilla Corporation"
   role: ["Design"]
   media:
@@ -40,7 +40,7 @@ teamMembers = [
   dates: "2013"
 ,
   name: "Shahar Ronen"
-  photo: "images/shahar_ronen.png"
+  photo: "shahar_ronen.png"
   description: "Graduate Alumnus"
   role: ["Data"]
   media:
@@ -50,7 +50,7 @@ teamMembers = [
   dates: "Summer 2012 - Summer 2013"
 ,
   name: "Deepak Jagdish"
-  photo: "images/deepak_jagdish.png"
+  photo: "deepak_jagdish.png"
   description: "Graduate Student"
   role: ["Design", "Video"]
   media:
@@ -60,7 +60,7 @@ teamMembers = [
   dates: "2013 - present"
 ,
   name: "Andrew Mao"
-  photo: "images/andrew_mao.png"
+  photo: "andrew_mao.png"
   description: "Graduate Student at Harvard"
   role: ["Development"]
   media:
@@ -70,7 +70,7 @@ teamMembers = [
   dates: "Fall 2013"
 ,
   name: "Defne Gurel"
-  photo: "images/defne_gurel.png"
+  photo: "defne_gurel.png"
   description: "Undergraduate"
   role: ["Data"]
   media:
@@ -78,7 +78,7 @@ teamMembers = [
   dates: "2013"
 ,
   name: "Tiffany Lu"
-  photo: "images/tiffany_lu.jpg"
+  photo: "tiffany_lu.jpg"
   description: "Undergraduate"
   role: ["Data"]
   media:

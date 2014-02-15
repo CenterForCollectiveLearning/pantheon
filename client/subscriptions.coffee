@@ -19,10 +19,10 @@ allpeopleSub = Meteor.subscribe("allpeople")
 # @Stacked = new Meteor.Collection "stacked"
 
 # People Page
-@OccupationPeople = new Meteor.Collection "occupationPeople"
-@BirthyearPeople = new Meteor.Collection "birthyearPeople"
-@CountryPeople = new Meteor.Collection "countryPeople"
+@SimilarPeople = new Meteor.Collection "similarPeople"
 @PersonImports = new Meteor.Collection "person_imports"
+
+dataSub = null
 
 #
 #Subscription for the current data that is being visualized
@@ -45,6 +45,10 @@ Deps.autorun ->
   categoryLevel = Session.get("categoryLevel")
   categoryLevelX = Session.get("categoryLevelX")
   categoryLevelY = Session.get("categoryLevelY")
+
+  # People Page
+  personName = Session.get("name")
+  rankingProperty = Session.get("rankingProperty")
 
   # Changing Pages
   page = Session.get("page")
@@ -76,6 +80,7 @@ Deps.autorun ->
   #      
   # if country and begin and end and langs   
   if page in ["explore", "rankings", "people"]
+    dataSub?.stop()
     Session.set "dataReady", false
     
     # This gets passed to the subscriptions to indicate when data is ready
@@ -83,12 +88,13 @@ Deps.autorun ->
       Session.set "dataReady", true
       Session.set "initialDataReady", true
 
-    console.log "IN SUBSCRIPTIONS", page, vizType      
     # Give a handle to this subscription so we can check if it's ready
+    # TODO Move these into an underscore partial to avoid passing so many arguments
     if page is "explore"
       switch vizType
         # Treemap modes
         when "treemap"
+          console.log "SUBCRIBING TREEMAP"
           top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, 10, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, category, categoryLevel, dataset, onReady)
         # Matrix modes
@@ -116,7 +122,7 @@ Deps.autorun ->
         else
           console.log "Invalid ranking entity!"
     else if page is "people"
-      dataSub = Meteor.subscribe("peopleTopN", "treemap", "country_exports", begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, "all", dataset, onReady)
+      dataSub = Meteor.subscribe("similar_people_pub", personName, rankingProperty, onReady)
 
 #      
 # Subscription for tooltips on hover
@@ -161,4 +167,6 @@ Deps.autorun ->
   dataset = Session.get("dataset")
 
   console.log "SUBSCRIBING TO TOOLTIPS"
+  debouncedSubscribe = _.debounce(Meteor.subscribe, 500)
+  # tooltipSub = debouncedSubscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)
   tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)

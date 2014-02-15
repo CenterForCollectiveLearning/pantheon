@@ -59,6 +59,7 @@ Template.treemap_svg.rendered = ->
       flat = []
   
       data.forEach (d) ->
+        console.log "Adding to flat", d.occupation, d.count
         flat.push #use a dummy year here for now ...
           id: d.occupation.capitalize()
           name: d.occupation.capitalize()
@@ -115,6 +116,8 @@ Template.treemap_svg.rendered = ->
           name: d.countryName.capitalize()
           num_ppl: d.count
           year: 2000
+
+      console.log "FLAT DATA:", flat
   
       viz.type("tree_map")
           .width(width)
@@ -163,6 +166,7 @@ Template.treemap_svg.rendered = ->
   
       flat = []
       data.forEach (d) ->
+        console.log "ADDING TO DATA", d.count
         flat.push #use a dummy year here for now ...
           id: d.lang
           name: d.lang_name
