@@ -68,7 +68,7 @@ Template.ranking_table.rendered = ->
       else 
         args =
           birthyear:
-            $gt: parseInt(Session.get("from"))
+            $gte: parseInt(Session.get("from"))
             $lte: parseInt(Session.get("to"))
         country = Session.get("country")
         args.countryCode = country if country isnt "all"

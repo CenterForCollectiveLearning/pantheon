@@ -137,6 +137,9 @@ Template.ranked_list.top10 = ->
   else order = {numlangs:-1}
   PeopleTopN.find({}, {sort:order})
 
+Template.ranked_list.pantheon = ->
+  Session.equals("dataset", "OGC") and not Session.equals("vizType", "scatterplot") and not (PeopleTopN.find().count() is 0)
+
 Template.ranked_list.empty = ->
   PeopleTopN.find().count() is 0
 
@@ -146,6 +149,9 @@ Template.ranked_person.birthday = ->
 
 Template.ranked_person.index = ->
   if Session.get("indexType") is "HPI" and Session.get("dataset") is "OGC" then @HPI?.toFixed(2) else @numlangs
+
+Template.ranked_list.full_ranking_link = ->
+    "/rankings/people/" + Session.get("country") + "/" + Session.get("category") + "/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs")
 
 Template.date_header.helpers
   from: ->

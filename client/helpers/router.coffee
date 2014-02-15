@@ -38,7 +38,7 @@ Router.map ->
       if vizMode is "country_exports"
         Session.set "category", "all"
       else if vizMode is "domain_exports_to"
-        Session.set "country", defaults.country
+        Session.set "country", "all"
       else if vizMode is "country_vs_country"
         Session.set "country", defaults.country
         Session.set "category", "all"
@@ -46,8 +46,11 @@ Router.map ->
       else if vizMode is "domain_vs_domain"
         Session.set "category", "all"
       else if vizMode is "matrix_exports"
+        Session.set "country", "all"
         Session.set "category", "all"
         Session.set "categoryLevel", defaults.categoryLevel
+      else if vizMode is "map"
+        Session.set "country", "all"
 
       # TODO Rethink this pipeline
       # Set category level based on category parameters

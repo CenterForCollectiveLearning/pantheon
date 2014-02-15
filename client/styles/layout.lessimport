@@ -283,6 +283,7 @@ footer {
 			}
 		}
 		div.more-from {
+			text-align: left;
 			border-bottom: none;
 			padding-bottom: 0;
 			margin-bottom: 10px;
@@ -315,8 +316,8 @@ footer {
 
 			div.dataviva{
 				img{
-					display: block; 
-					margin: 0 auto; 
+					//display: block; 
+					//margin: 0 auto; 
 				}
 			}
 

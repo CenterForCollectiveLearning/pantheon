@@ -13,7 +13,7 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   collectionName = "peopleTopN"
   args =
     birthyear:
-      $gt: begin
+      $gte: begin
       $lte: end
 
   args.dataset = dataset
