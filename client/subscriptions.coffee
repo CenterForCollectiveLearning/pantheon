@@ -3,7 +3,7 @@ Meteor.subscribe "countries_pub"
 Meteor.subscribe "domains_pub"
 
 # These subscriptions are explicitly global variables
-allpeopleSub = Meteor.subscribe("allpeople")
+# allpeopleSub = Meteor.subscribe("allpeople")
 
 # Derived Collections -- These are client only collections
 @PeopleTopN = new Meteor.Collection "peopleTopN"
@@ -17,6 +17,7 @@ allpeopleSub = Meteor.subscribe("allpeople")
 @Tooltips = new Meteor.Collection "tooltipCollection"
 # @Timeline = new Meteor.Collection "timeline"
 # @Stacked = new Meteor.Collection "stacked"
+@ClientPeople = new Meteor.Collection()
 
 # People Page
 @SimilarPeople = new Meteor.Collection "similarPeople"

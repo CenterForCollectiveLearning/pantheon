@@ -98,6 +98,16 @@ Meteor.startup ->
   # Observatory.logCollection()
   # Observatory.logMeteor()
 
+  # Bypass the need for the mergebox to loaded people for each client
+  d3.json("/people_2-16-2014.json", (people) -> 
+    console.log "Parsing people"
+    for person in people
+      person._id = new Meteor.Collection.ObjectID(person._id.$oid)
+      ClientPeople.insert(person)
+    console.log "Done Parsing"
+  )
+
+
   @defaults =
     vizType: "treemap"
     vizMode: "country_exports"

@@ -54,8 +54,6 @@ Template.matrix_svg.rendered = ->
     svg = d3.select(@find("svg.matrix")).attr("width", matrixProps.fullWidth).append("g").attr("transform", "translate(" + matrixProps.margin.left + "," + 0 + ")")
     header_svg = d3.select(@find("svg.header")).attr("width", matrixProps.fullWidth).append("g").attr("transform", "translate(" + matrixProps.margin.left + "," + matrixProps.headerHeight + ")")
 
-    console.log "Adding color scale"
-
     # TODO: Don't re-render tooltip for already selected cell
     clickevent = (p) ->
       if Session.equals("tutorialType", null) or Session.equals("tutorialType", undefined)
@@ -138,7 +136,6 @@ Template.matrix_svg.rendered = ->
     colorArray = ["#ffff95","orange","red"] #["white", "red", "blue"]
     fill = d3.scale.log().domain([1, maxValue])
     logDomain = [0, 0.5, 1].map(fill.invert)
-    console.log logDomain
     fill.domain(logDomain)
     fill.range(colorArray)
 

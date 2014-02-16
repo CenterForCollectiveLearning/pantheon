@@ -3,7 +3,7 @@ numberWithCommas = (x) ->
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   parts.join "."
 
-Template.people.person = -> People.findOne(name: Session.get("name"), dataset: "OGC")
+Template.people.person = -> ClientPeople.findOne(name: Session.get("name"), dataset: "OGC")
 
 Template.search.settings = ->
   position: "bottom"
@@ -30,12 +30,12 @@ Template.person_page.helpers
   pageviews_e: -> if @PageViewsEnglish then numberWithCommas(@PageViewsEnglish)
   pageviews_ne: -> if @PageViewsNonEnglish then numberWithCommas(@PageViewsNonEnglish)
   birthday: -> (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
-  occupationRank: -> numberWithCommas(People.find(occupation: @occupation, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
-  birthyearRank: -> numberWithCommas(People.find(birthyear: @birthyear, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
-  countryRank: -> numberWithCommas(People.find(countryName: @countryName, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
-  occupationCount: -> numberWithCommas(People.find(occupation: @occupation, dataset: "OGC").count())  # TODO extract all counts into one publication
-  birthyearCount: -> numberWithCommas(People.find(birthyear: @birthyear, dataset: "OGC").count())
-  countryCount: -> numberWithCommas(People.find(countryName: @countryName, dataset: "OGC").count())
+  occupationRank: -> numberWithCommas(ClientPeople.find(occupation: @occupation, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
+  birthyearRank: -> numberWithCommas(ClientPeople.find(birthyear: @birthyear, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
+  countryRank: -> numberWithCommas(ClientPeople.find(countryName: @countryName, HPI: {$gt: @HPI}, dataset: "OGC").count() + 1)
+  occupationCount: -> numberWithCommas(ClientPeople.find(occupation: @occupation, dataset: "OGC").count())  # TODO extract all counts into one publication
+  birthyearCount: -> numberWithCommas(ClientPeople.find(birthyear: @birthyear, dataset: "OGC").count())
+  countryCount: -> numberWithCommas(ClientPeople.find(countryName: @countryName, dataset: "OGC").count())
   rankingOccupation: -> Session.equals("rankingProperty", "occupation")
   rankingBirthyear: -> Session.equals("rankingProperty", "birthyear")
   rankingCountryName: -> Session.equals("rankingProperty","countryName")

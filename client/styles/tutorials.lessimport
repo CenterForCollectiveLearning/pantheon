@@ -2,6 +2,8 @@ div.tutorial {
 	div.modal {
 		background-color: transparent;
 		border: 1px solid @color_pantheon_black;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
 
 		div.modal-body {
 			border-bottom: 0;

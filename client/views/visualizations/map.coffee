@@ -1,3 +1,5 @@
+
+# Creates the legend for the svg
 key_gradient = (rect) ->
   gradient = d3.select("svg").append("defs").append("linearGradient").attr(
     id: "gradient"
@@ -16,9 +18,31 @@ key_gradient = (rect) ->
   rect.attr(
     x: 80
     y: 0
-    width: 660
+    width: 640
     height: 10
   ).style "fill", "url(#gradient)"
+
+#///////////////////////////////////////////////
+# Enter
+#////////////////////////////////////////////////
+# Draw countries
+
+# Draw the key after the paths so it appears on top
+# If it's the first time the app is being built, add this group element
+
+# TODO don't hardcode the position of this bar if the SVG size changes
+
+# Draw key
+
+#///////////////////////////////////////////////
+# Update
+#////////////////////////////////////////////////
+
+#///////////////////////////////////////////////
+# Exit
+#////////////////////////////////////////////////
+# No need to exit anything since nodes are always
+# present on page
 
 mouseover = (d) ->
   if not Session.get "clicktooltip"
@@ -169,13 +193,12 @@ Template.map_svg.rendered = ->
     svg.selectAll("path").data(d3.values(mapData.features)).enter().append("path").attr("id", (d, i) ->
       d.id
     ).attr("stroke", "#eee").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
-
     key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(" + keyX_translate + ", 450)").append("rect").call(key_gradient)
     d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
-      Math.round (50 * Math.pow((svg_width / 50), i / 10))
+      Math.round (50 * Math.pow((590 / 50), i / 10))
     ).attr("y", 0).attr("width", 2).attr("height", 10).style "fill", "#fff"
     d3.select(".key").selectAll("text").data(value_range_big).enter().append("text").attr("x", (d, i) ->
-      Math.round (50 * Math.pow((svg_width / 50), i / 10))
+      Math.round (50 * Math.pow((590 / 50), i / 10))
     ).attr("y", 12).attr("dy", 12).attr("text-anchor", "middle").style "fill", "#222"
     svg.selectAll("path").attr("fill", (d) ->
       doc = WorldMap.findOne(countryCode: d.id)
@@ -195,4 +218,50 @@ Template.map_svg.rendered = ->
       )
     svg.call(zoom)
 
+
 mouseoverCell = null
+
+#   ////////////////////////////////////////////
+#   // PUBLIC getter / setter functions
+#   ////////////////////////////////////////////
+#   map.width = function(value) {
+#     if (!arguments.length) return width;
+#     width = value;
+#     return map;
+# };
+
+# map.height = function(value) {
+#     if (!arguments.length) return height;
+#     height = value;
+#     return map;
+# };
+
+# map.year = function(value) {
+#     if (!arguments.length) return year;
+#     year = value;
+#     return map;
+# };
+
+# map.highlight = function(value) {
+#     if (!arguments.length) return highlight;
+#     highlight = value;
+#     return map;
+# };
+
+# map.order = function(value) {
+#     if (!arguments.length) return order;
+#     order = value;
+#     return map;
+# };
+
+# map.highlight = function(value) {
+#     if (!arguments.length) return highlight;
+#     highlight = value;
+#     return map;
+# };
+
+#   /////////////////////////////////////////////////////////////////////
+#   // BE SURE TO ALWAYS RETURN THE APP TO ALLOW FOR METHOD CHAINING
+#   ///////////////////////////////////////////////////////////////////// 
+#   return map;
+# }

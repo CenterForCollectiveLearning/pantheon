@@ -130,7 +130,7 @@ Handlebars.registerHelper "tooltipDataReady", ->
 # Create a global helper
 # Use this from multiple templates
 Handlebars.registerHelper "person_lookup", ->
-  People.findOne @_id
+  ClientPeople.findOne @_id
 
 Template.ranked_list.top10 = ->
   if Session.get("indexType") is "HPI" then order = {HPI:-1}
