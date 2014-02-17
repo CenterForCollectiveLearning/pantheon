@@ -184,6 +184,9 @@
                         </div>
                         <div class="d3plus_tooltip_html">
                             {{> ranking_table }}
+                            {{#if pantheon}}
+                            <div class = "tooltip_to_rankings_link closeclicktooltip"><a href="{{full_ranking_link}}">View in Rankings page</a></div>
+                            {{/if}}
                         </div>
                     </div>
                 </div>

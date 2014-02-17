@@ -444,3 +444,15 @@ g.d3plus-error text{
 .error{
 	fill:@color_beige !important;
 }
+
+.dataTables_info {
+	width: 46% !important;
+}
+
+.tooltip_to_rankings_link{
+	display: inline-block;
+	a{
+		color: @color_pantheon_black;
+		&:hover { text-decoration: underline; }
+	}
+}

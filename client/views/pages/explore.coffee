@@ -348,6 +348,13 @@ Template.histogram_country_exports.helpers
   L : -> Session.get("langs")
   dataset : -> Session.get("dataset")
 
+Template.clicktooltip.pantheon = ->
+  Session.equals("dataset", "OGC") and not Session.equals("vizType", "scatterplot") and not (PeopleTopN.find().count() is 0)
+
+Template.clicktooltip.full_ranking_link = ->
+    "/rankings/people/" + Session.get("bigtooltipCountryCode") + "/" + Session.get("bigtooltipCategory") + "/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs")
+
+
 Template.clicktooltip.events =
   # TODO Ensure this works for tap
   "click .d3plus_tooltip_close,.d3plus_tooltip_curtain": (d) ->

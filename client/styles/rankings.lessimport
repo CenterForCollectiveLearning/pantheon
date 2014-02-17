@@ -49,8 +49,13 @@ div.column-descriptions {
 	text-align: left;
 }
 
+.paginate_disabled_previous, .paginate_disabled_next{
+	background: none;
+}
+
 .paginate_enabled_next,.paginate_enabled_previous{
 	color: @color_pantheon_black !important;
+	background: none;
 	&:hover{
 		text-decoration: underline !important;
 	}
