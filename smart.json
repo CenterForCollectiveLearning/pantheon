@@ -9,7 +9,10 @@
       "commit": "ff274326a8dd75292e69977ae6e32c786d50746e"
     },
     "scss": {},
-    "autocomplete": {},
+    "autocomplete": {
+      "git": "https://github.com/kevinzenghu/meteor-autocomplete.git",
+      "commit": "ba40db5505419671335db5e8d748ba2116cd0590"
+    },
     "font-awesome": {},
     "tutorials": {},
     "observatory": {}

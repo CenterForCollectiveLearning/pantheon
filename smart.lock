@@ -8,7 +8,10 @@
         "branch": "master"
       },
       "scss": {},
-      "autocomplete": {},
+      "autocomplete": {
+        "git": "https://github.com/kevinzenghu/meteor-autocomplete.git",
+        "branch": "master"
+      },
       "font-awesome": {},
       "tutorials": {},
       "observatory": {}
@@ -30,9 +33,9 @@
         "commit": "39f60d58c2b890bdd897ef52188644f3093fc2ac"
       },
       "autocomplete": {
-        "git": "https://github.com/mizzao/meteor-autocomplete.git",
-        "tag": "v0.1.0",
-        "commit": "00a4adbba9811da9040e23531867d9ff03e2f445"
+        "git": "https://github.com/kevinzenghu/meteor-autocomplete.git",
+        "branch": "master",
+        "commit": "ba40db5505419671335db5e8d748ba2116cd0590"
       },
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
