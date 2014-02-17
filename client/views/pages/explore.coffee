@@ -295,7 +295,6 @@ Template.country_exports_question.question = ->
     country = (Countries.findOne({countryCode3: countryCode}).countryName).capitalize()
   else 
     country = (Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName).capitalize() 
-  console.log "in helper: country_exports". country
   getQuestion("country_exports", {country: country})
 
 Template.country_advantage_question.countryName = ->

@@ -46,7 +46,6 @@ Template.narratives.events =
     "click .learn-more": (d) ->
         srcE = (if d.srcElement then d.srcElement else d.target)
         dataTutorialType = $(srcE).data "tutorial-type"
-        console.log dataTutorialType
         Session.set("tutorialType", dataTutorialType)
 
 # Template.pages.events = 

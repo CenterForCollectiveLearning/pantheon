@@ -37,8 +37,6 @@ Template.ranking_table.rendered = ->
   if clickTooltip
     entity = "people"
 
-  console.log "IN RANKING_TABLE TEMPLATE", clickTooltip, entity, dataset
-  
   switch entity
     when "countries"
       data = _.map CountriesRanking.find().fetch(), (c) ->
@@ -62,7 +60,6 @@ Template.ranking_table.rendered = ->
         sTitle: "HCPI"
       ]
     when "people"
-      console.log "IN PEOPLE, clickTooltip: ", clickTooltip
       if clickTooltip
         collection = Tooltips.find({_id: {$not: "count"}}).fetch()
       else 
@@ -77,14 +74,10 @@ Template.ranking_table.rendered = ->
         args[Session.get("categoryLevel")] = category if category.toLowerCase() isnt "all"
         L = Session.get("langs")
         if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
-        console.log("PEOPLE RANKING COLLECTION ARGS:")
-        console.log(args)
-        collection = People.find(args).fetch()
-      console.log "COLLECTION", collection
-      console.log collection.length
+        collection = ClientPeople.find(args).fetch()
 
       data = _.map collection, (d) ->
-        p = People.findOne d._id
+        p = ClientPeople.findOne d._id
         if dataset is "OGC" and clickTooltip
           [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,0), toMillions(p.TotalPageViews), toDecimal(p.HPI,2)]  
         else if dataset is "OGC"

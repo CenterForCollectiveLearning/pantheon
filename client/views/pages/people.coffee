@@ -51,7 +51,6 @@ Template.person_page.events =
 
     rankingProperty = srcE.data "ranking-property"
     if rankingProperty
-      console.log "CLICKED", rankingProperty
       Session.set("rankingProperty", rankingProperty)
 
   "click i#random-button": ->
