@@ -143,6 +143,8 @@ Template.ranked_list.pantheon = ->
 Template.ranked_list.empty = ->
   PeopleTopN.find().count() is 0
 
+Template.ranked_person.showPeopleLink = -> Session.equals("dataset", "OGC")
+
 Template.ranked_person.birthday = ->
   birthday = (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
   birthday

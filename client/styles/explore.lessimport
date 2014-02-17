@@ -104,10 +104,11 @@
 	a {
 		color: @color_pantheon_black;
 		text-decoration: none;
-    
-		&:hover { 
-			font-weight: bold;
-			// color: @color_gold !important; 
+
+		&.hover-bold {
+			&:hover { 
+				font-weight: bold;
+			}
 		}
 
 	    li {

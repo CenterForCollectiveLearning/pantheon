@@ -121,7 +121,7 @@
 
 <!-- Person in Ranked List -->
 <template name="ranked_person">
-    <a href="{{pathFor 'people'}}">
+    <a {{#if showPeopleLink}}href="{{pathFor 'people'}}" class="hover-bold"{{/if}}>
         <li>
             {{! insert thumbnail here}}
             {{name}}
