@@ -67,6 +67,12 @@ Meteor.publish "domains_ranking_pub", (begin, end, country, category, categoryLe
     birthyear:
       $gte: begin
       $lte: end
+  projection = 
+    occupation : 1
+    industry : 1
+    domain : 1
+    countryCode : 1
+    gender : 1
   if L[0] is "H" then criteria.HPI = {$gt:parseInt(L.slice(1,L.length))} else criteria.numlangs = {$gt: parseInt(L)}
   criteria.countryCode = country  if country isnt "all"
   criteria[categoryLevel] = category  if category.toLowerCase() isnt "all"

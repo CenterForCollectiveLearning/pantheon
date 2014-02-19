@@ -31,6 +31,10 @@ Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
       count:
         $sum: 1
   ]
+
+  console.log("MAP PIPELINE:")
+  console.log(pipeline)
+
   driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
     _.each result, (e) ->
       

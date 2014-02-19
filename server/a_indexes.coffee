@@ -50,6 +50,21 @@ People._ensureIndex(matrix_numlangs)
 # db.people.runCommand("aggregate", {pipeline: [{"$match":{"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gt":0},"$or":[{"occupation":"CHEMIST"},{"industry":"FINE ARTS"}]}},{"$group":{"_id":{"continent":"$continentName","countryCode":"$countryCode","domain":"$domain","industry":"$industry","occupation":"$occupation"},"count":{"$sum":1}}}], explain: true}).serverPipeline[0].cursor.clauses[0].indexOnly
 
 # 
+# MAPS
+# 
+# db.people.runCommand("aggregate", {pipeline: [ { '$match': 
+#      { "birthyear":{"$gte":-3000,"$lte":2000}, 
+#        dataset: 'OGC',
+#        occupation: 'CHEMIST',
+#        HPI: {"$gt":0} } },
+#   { '$group': { _id: {countryCode: "$countryCode3",countryName: "$countryName"}, count: {$sum: 1} } } ], explain: true}).serverPipeline[0].cursor.indexOnly
+
+@maps_hpi = {dataset: 1, birthyear: 1, occupation: 1, industry: 1, domain:1, HPI: 1, countryCode3:1, countryName:1, _id: 1}
+@maps_numlangs = {dataset: 1, birthyear: 1, occupation: 1, industry: 1, domain:1, numlangs: 1, countryCode3:1, countryName:1, _id: 1}
+People._ensureIndex(maps_hpi)
+People._ensureIndex(maps_numlangs)
+
+# 
 # TOOLTIPS
 # 
 
@@ -69,6 +84,18 @@ People._ensureIndex(matrix_numlangs)
 # 
 # RANKINGS
 # 
+
+# People
+# handled on the client (in ClientPeople)
+
+# Domains
+# db.people.find({ birthyear: { '$gte': -4000, '$lte': 2010 }, HPI: { '$gt': 0 }, countryCode: 'BO', domain: 'ARTS' },  { occupation: 1, industry: 1, domain: 1, countryCode: 1, gender: 1 }).explain().indexOnly
+@domainRanking_HPI = {birthyear: 1, countryCode: 1, domain:1, industry: 1, occupation:1, gender: 1, HPI:1, _id: 1}
+People._ensureIndex(domainRanking_HPI)
+@domainRanking_numlangs = {birthyear: 1, countryCode: 1, domain:1, industry: 1, occupation:1, gender: 1, numlangs:1, _id: 1}
+People._ensureIndex(domainRanking_numlangs)
+
+
 
 # 
 # PEOPLE
