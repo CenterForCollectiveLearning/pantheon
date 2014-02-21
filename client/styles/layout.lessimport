@@ -154,14 +154,16 @@ header {
 	    	text-decoration: none;
 	    	text-shadow: none;
 	    	font-size: 1em;
-	    	line-height: 3.6em;
+	    	line-height: 60px;
+	    	height: 60px;
 	    	text-transform: uppercase;
 	    	padding: 10px 15px;
     
 	    	&:hover {
 	    		font-weight: bold;
-	    		background: @color_grey;
-	    		color: @color_pantheon_black;
+	    		background: white;
+	    		color: @color_pantheon_black !important;  // TODO Don't do this
+	    		border-bottom: 2px solid @color_pantheon_black;
 	    	}
 	    }
 
@@ -269,78 +271,105 @@ footer {
 	padding: 0.3em 0;
 
 	div.more-projects {
+		height: 85px;
 		.fa{
 			&:hover{
 				color: #4b67a1;
 			}
 		}
-		div.copyright {
-			border-bottom: none;
-			padding-bottom: 0;
-			margin-bottom: 0;
-			width: 100%; 
-			a {
-				color: black;							
-			}
-		}
 		div.more-from {
-			text-align: left;
 			border-bottom: none;
 			padding-bottom: 0;
-			margin-bottom: 10px;
-			margin-top: 15px;
-			width: 100%;
-			color: black;
+			width: 620px;
+			margin: 0px auto 10px auto;
+			color: @color_pantheon_black;
+
+			span {
+				margin-bottom: 10px;
+			}
+
+			span.more-macro {
+				text-transform: uppercase;
+				float: left;
+				text-align: left;
+			}
+			span.more-d3 {
+				text-transform: uppercase;
+				float: right;
+				text-align: left;
+			}
 			a {
-				color: black;							
+				color: @color_pantheon_black;							
 			}
 		}
 		div.projects {
-			a{
-				&:hover{
+			width: 620px;
+			clear: both;
+			margin: 0 auto;
+
+			a {
+				float: left;
+				&:hover {
 					text-decoration: none;
+				}
+
+				&.left {
+					margin-right: 20px;
+				}
+
+				&.dataviva {
+					float: right;
 				}
 			}
 			div{
-				img {
-					width: 150px;
-					//.grayscale(1);
-					filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
-				    filter: gray; /* IE6-9 */
-				    -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
-					&:hover {
-						filter: none;
-						.grayscale(0);
-					}
-				}
-			}
+				border: 1px solid @color_pantheon_black;
+				border-radius: 3px;
+				height: 45px;
+				width: 140px;
+				text-align: center;
 
-			div.dataviva{
-				img{
-					//display: block; 
-					//margin: 0 auto; 
-				}
-			}
+				filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+				filter: gray; /* IE6-9 */
+				-webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
 
-			div.immersion {
-				font-size: 35px;
-				color: black;
-				line-height: 45px;
+				-webkit-transition: 0.25s all ease-in; 
+				-o-transition: 0.25s all ease-in;
+				-moz-transition: 0.25s all ease-in;
+				transition: 0.25s all ease-in;
+
 				&:hover {
-					color: #9467bd;
+					filter: none;
+					.grayscale(0);
 				}
-			}
 
-			div.place-pulse {
-				font-weight: 400;
-				font-size: 28px;
-				line-height: 50px;
-				font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-				color: #343a4a;
-				&:hover {
-					color: #eb584a;
+				&.oec {
+					background-image: url("/oec_icon.png")
+				}
+
+				&.immersion {
+					background-image: url("/immersion_icon.png");
+				}
+
+				&.place-pulse {
+					background-image: url("/place_pulse_icon.png");
+				}
+
+				&.dataviva {
+					background-image: url("/dataviva_icon.png");
 				}
 			}
+		}
+	}
+
+	div.copyright {
+		border-bottom: none;
+		margin-top: 15px;
+		padding-bottom: 5px;
+		width: 100%; 
+		text-align: center;
+		text-transform: uppercase;
+		a {
+			color: @color_pantheon_black;							
 		}
 	}
 

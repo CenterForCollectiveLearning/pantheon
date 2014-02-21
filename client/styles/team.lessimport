@@ -99,7 +99,7 @@ div.team-page {
 				margin: 1em auto;
 				width: 150px;
 				height: auto;
-				border: 2px solid black;
+				border: 1px solid @color_pantheon_black;
 
 				-webkit-border-radius: 3px;
 				-moz-border-radius: 3px;

@@ -48,11 +48,11 @@ div.search-result {
 #people-search {
     width: 150px;
     background: none !important;
-    color: @color_beige !important;
+    color: @color_pantheon_black !important;
     font-family: 'Lato' !important;
     font-weight: 300 !important;
     background: none !important;
-    line-height: 1.2em !important;
+    line-height: 1.4em !important;
     text-transform: uppercase !important;
     border: none !important;
     padding: 0 4px !important;
@@ -75,6 +75,11 @@ div.person-top {
     font-size: 18px;
     padding-left: 6px;
 
+    div.person-top-right {
+        float: right;
+        height: 100%;
+    }
+
     a {
         color: @color_beige;
         &:hover {
@@ -86,9 +91,10 @@ div.person-top {
         position: relative;
         top: 10px;
         &.person-search {
-            top: 11px;
-            left: 15px;
-            border-bottom: 1px solid @color_beige;
+            top: 9px;
+            right: 30px;
+            background: @color_beige;
+            border-radius: 2px;
         }
     }
 
@@ -96,14 +102,14 @@ div.person-top {
         cursor: pointer;
         position: relative;
         top: 8px;
-        left: 10px;
+        right: 35px;
     }
 
     i#random-button {
         cursor: pointer;
         float: right;
         position: relative;
-        top: 25px;
+        top: 24px;
         right: 8px;
     }
 }

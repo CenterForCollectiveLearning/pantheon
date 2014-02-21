@@ -14,12 +14,20 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
     dataset: "OGC"
   criteria[categoryLevel] = category if category.toLowerCase() isnt "all"
   if L[0] is "H" then criteria.HPI = {$gt:parseInt(L.slice(1,L.length))} else criteria.numlangs = {$gt: parseInt(L)}
-  console.log(criteria)
+
+  projection =
+    countryName: 1
+    continentName: 1
+    HCPI: 1
+    gender: 1
+    numlangs: 1
+    _id: 0
   country = {}
-  data = People.find(criteria).fetch()
+  data = People.find(criteria, projection).fetch()
   countries = _.groupBy(data, "countryCode")
   finaldata = []
   hdata = {}
+
   for cc of countries #build an object with all of the H-index data
     countrylangs = _.groupBy(countries[cc], "numlangs")
     nums = _.sortBy(_.keys(countrylangs), (num) -> parseInt(num)).reverse()

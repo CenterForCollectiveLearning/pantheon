@@ -38,7 +38,7 @@ Template.visualization.render_template = ->
 Template.time_slider.rendered = ->
   # Not sure why this works, but it overcomes the re-styling issue
   $("div#from > select, div#to > select").selectToUISlider
-    labels: 15
+    labels: 20
     tooltip: false
 
 Template.accordion.rendered = ->

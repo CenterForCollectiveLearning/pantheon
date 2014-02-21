@@ -45,33 +45,56 @@ Meteor.publish "matrix_pub", (begin, end, L, gender, dataset) ->
       Meteor._debug "Error doing aggregation: " + error
     )
 
-  # else
-  #   results = {}
-  #   for gender in ["Male", "Female"]
-  #     matchArgs.gender = genderField
+  else
+    # Aggregate for females first
+    matchArgs.gender = "Female"
+    project =
+      _id: 0
+      countryCode: 1
+      industry: 1
+    pipeline = [
+      $match: matchArgs
+    ,
+      $project: project
+    ,
+      $group:
+        _id:
+          countryCode: "$countryCode"
+          industry: "$industry"
+        count:
+          $sum: 1
+    ]    
 
-  #     project =
-  #         _id: 0
-  #         countryCode: 1
-  #         industry: 1
+    driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
+      femaleCounts = {}
+      _.each result, (e) ->
+        countryCode = e._id.countryCode
+        industry = e._id.industry
+        count = e.count
+
+        if not femaleCounts[countryCode] then femaleCounts[countryCode] = {}
+        femaleCounts[countryCode][industry] = count
+
+      matchArgs.gender = "Male"
+      pipeline[0] = {$match: matchArgs}
+
+      driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
+        _.each result, (e) ->
+          countryCode = e._id.countryCode
+          industry = e._id.industry
+          count = e.count
+          if femaleCounts[countryCode]?[industry]
+            ratio = femaleCounts[countryCode][industry] / count
+            # console.log femaleCounts[countryCode][industry], count, ratio
+            sub.added "matrix", Random.id(),
+              countryCode: countryCode
+              industry: industry
+              count: ratio
+        sub.ready()
+      , (error) ->
+        Meteor._debug "Error doing aggregation: " + error
+      )  
+    , (error) ->
+      Meteor._debug "Error doing aggregation: " + error
+    )  
     
-  #     pipeline = [
-  #       $match: matchArgs
-  #     ,
-  #       $project: project
-  #     ,
-  #       $group:
-  #         _id:
-  #           countryCode: "$countryCode"
-  #           industry: "$industry"
-  #         count:
-  #           $sum: 1
-  #     ]
-
-  #     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
-  #       _.each result, (e) ->
-  #         countryCode = e.countryCode
-  #         industry = 
-  #       , (error) ->
-  #         Meteor._debug "Error doing aggregation: " + error
-  #       )

@@ -14,7 +14,10 @@
       "commit": "ba40db5505419671335db5e8d748ba2116cd0590"
     },
     "font-awesome": {},
-    "tutorials": {},
+    "tutorials": {
+      "git": "https://github.com/kevinzenghu/meteor-tutorials.git",
+      "commit": "b66356dbf050a3bcfa6e3d87ff7c982d99d6fd55"
+    },
     "observatory": {}
   }
 }

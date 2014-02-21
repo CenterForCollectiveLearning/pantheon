@@ -84,6 +84,9 @@ People._ensureIndex(maps_numlangs)
 # 
 # RANKINGS
 # 
+# Country Rankings
+# db.people.find({"countryCode":{"$ne":"UNK"},"birthyear":{"$gte":-4000,"$lte":2010},"dataset":"OGC","HPI":{"$gt":0}, "domain": "ARTS"}, {countryName: 1, continentName: 1, HCPI: 1, length: 1, _id: 0}).explain().indexOnly
+People._ensureIndex({dataset: 1, birthyear: 1, countryCode: 1, HPI: 1, countryName: 1, continentName: 1, countryName: 1, occupation: 1, HCPI: 1, gender: 1, numlangs: 1})
 
 # People
 # handled on the client (in ClientPeople)
@@ -100,7 +103,17 @@ People._ensureIndex(domainRanking_numlangs)
 # 
 # PEOPLE
 # 
-@people_individual = {name: 1, dataset: 1}
-@people_occupation = {HPI: 1, dataset: 1, occupation: 1, _id: 1}
-@people_countryName = {HPI: 1, dataset: 1, countryName: 1, id: 1}
-@people_birthyear = {name: 1, dataset: 1, birthyear: 1, _id: 1}
+
+## TODO Pass a hint!
+
+# db.people.find({name: "Richard Wagner", dataset: "OGC"}, {HPI: 1, occupation: 1}).explain().indexOnly
+@people_individual = {name: 1, dataset: 1, occupation: 1, birthyear: 1, countryName: 1}
+
+# db.people.find({"HPI":{"$gt":30.91190978},"dataset":"OGC","occupation":"POLITICIAN"}, {"_id": 0, "name": 1, "HPI": 1}).explain().indexOnly
+@people_occupation = {HPI: 1, dataset: 1, occupation: 1, name: 1}
+
+# db.people.find({"HPI":{"$gt":32.84608581},"dataset":"OGC","countryName":"Germany"}, {"_id": 0, "name": 1, "HPI": 1}).explain().indexOnly
+@people_countryName = {HPI: 1, dataset: 1, countryName: 1, name: 1}
+
+# db.people.find({"HPI":{"$gt":32.84608581},"dataset":"OGC","birthyear":1813}, {"_id": 0, "name": 1, "HPI": 1}).explain().indexOnly
+@people_birthyear = {HPI: 1, dataset: 1, birthyear: 1, name: 1}

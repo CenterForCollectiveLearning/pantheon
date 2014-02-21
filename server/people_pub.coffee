@@ -28,17 +28,17 @@ Meteor.publish "similar_people_pub", (personName, rankingProperty) ->
     sub = this
     collectionName = "similarPeople"
 
-    currentPerson = People.findOne(name: personName, dataset: "OGC")
+    currentPersonProjection =
+        HPI: 1
+    currentPersonProjection[rankingProperty] = 1
+    currentPerson = People.findOne({name: personName, dataset: "OGC"}, {HPI: 1})
     personHPI = currentPerson.HPI
     rankingPropertyValue = currentPerson[rankingProperty]
-
-    console.log personName, rankingProperty, personHPI, rankingPropertyValue
 
     # One publication with some people with an added field of "left" or "right"
     # Change projection to only pass name
     # peopleCursor = People.find({ rankingProperty: rankingPropertyValue }, { sort: { numlangs: -1} }, {name: 1}).limit(4)
 
-    # TODO Ensure an index!
     argsLeft = {HPI: {$gt: personHPI}, dataset: "OGC"}
     argsRight = {HPI: {$lt: personHPI}, dataset: "OGC"}
     argsLeft[rankingProperty] = rankingPropertyValue

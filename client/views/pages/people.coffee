@@ -10,7 +10,7 @@ Template.search.settings = ->
   limit: 10
   rules: [
     token: ''
-    collection: People
+    collection: ClientPeople
     field: "name"
     template: Template.search_result
   ]

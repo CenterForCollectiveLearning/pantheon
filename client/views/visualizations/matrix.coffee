@@ -130,29 +130,62 @@ Template.matrix_svg.rendered = ->
       industryCounts[industry] += 1
       if count > maxValue then maxValue = count
 
-    # jet = [d3.rgb(0, 0.592, 0), d3.rgb(0.527, 0.527, 0), d3.rgb()]
-    # TODO Understand how this is done
-    # https://groups.google.com/forum/#!topic/d3-js/B31N2zSVEiE
-    colorArray = ["#ffff95","orange","red"] #["white", "red", "blue"]
-    fill = d3.scale.log().domain([1, maxValue])
-    logDomain = [0, 0.5, 1].map(fill.invert)
-    fill.domain(logDomain)
-    fill.range(colorArray)
+
+    if Session.equals("gender", "ratio")
+      colorArray = ["blue", "white" ,"red"]
+      fill = d3.scale.linear()
+      domainArray = [0, 1, maxValue]
+      fill.domain(domainArray)
+      fill.range(colorArray)
+    else
+      colorArray = ["#ffff95", "orange", "red"]
+      fill = d3.scale.log().domain([1, maxValue])
+      domainArray = [0, 0.5, 1].map(fill.invert)
+      fill.domain(domainArray)
+      fill.range(colorArray)
 
     # TODO Make this code not suck and make it d3-esque
     legendHeight = "12px"
     legendSvgWidth = matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
     legendWidth = matrixProps.width + matrixProps.margin.left + matrixProps.margin.right - 13
 
+    makeNice = (num) -> if num > 10 then 10*(Math.floor(num/10)) else num
+
+    getTicks = (domain) ->
+      [minVal, midVal, maxVal] = domain
+      midVal = makeNice(midVal)
+      maxVal = Math.round(maxVal)
+      results = []
+      results.push(minVal)
+      results.push(midVal)
+
+      orderOfMagnitude = maxVal.toString().length
+      increment = Math.pow(10, orderOfMagnitude - 1)
+      console.log orderOfMagnitude, increment
+      currentIncrement = 0
+      while (currentIncrement + increment) < maxVal
+        currentIncrement += increment
+        results.push currentIncrement
+      results.push maxVal
+      results
+
+
     colorScale = d3.select(@find("svg.color-scale")).attr("width", legendSvgWidth).attr("height", "30px").append("g")  #.attr("transform", "translate(" + 10+ "," + 0 + ")")
     gradient = colorScale.append("svg:linearGradient").attr("id", "gradient").attr("x1", "0%").attr("y1", "0%").attr("x2", "100%").attr("y2", "0%").attr("spreadMethod", "pad")
     colorScale.append("rect").attr("width", legendWidth).attr("height", legendHeight) # .attr("x", 20)
-    for color, i in colorArray
-      logVal = logDomain[i]
-      offset = logVal / maxValue
-      gradient.append("svg:stop").attr("offset", offset).attr("stop-color", color).attr("stop-opacity", 1)
-      colorScale.append("rect").attr("x", legendWidth * offset).attr("y", 0).attr("height", legendHeight).style("fill", "#222").attr("width", 2)
-      colorScale.append("text").attr("x", legendWidth * offset).attr("y", "24px").attr("text-anchor", "middle").text(Math.round(logVal))
+
+    ticks =  getTicks(domainArray)
+    console.log "TICKS:", ticks
+    for tick in ticks
+      offset = tick / maxValue
+
+      # Crudely revent overlap 
+
+      if (offset < 0.9) or (offset is 1)
+        color = fill(tick)
+        gradient.append("svg:stop").attr("offset", offset).attr("stop-color", color).attr("stop-opacity", 1)
+        colorScale.append("rect").attr("x", legendWidth * offset).attr("y", 0).attr("height", legendHeight).style("fill", "#222").attr("width", 1)
+        colorScale.append("text").attr("x", legendWidth * offset).attr("y", "24px").attr("text-anchor", "middle").text(tick)
 
 
     # fill = d3.scale.log().domain([1, maxValue/4, maxValue/2, 3*maxValue/4, maxValue]).range(["blue", "green", "yellow", "red"])

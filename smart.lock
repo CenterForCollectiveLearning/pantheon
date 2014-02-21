@@ -13,7 +13,10 @@
         "branch": "master"
       },
       "font-awesome": {},
-      "tutorials": {},
+      "tutorials": {
+        "git": "https://github.com/kevinzenghu/meteor-tutorials.git",
+        "branch": "master"
+      },
       "observatory": {}
     },
     "packages": {
@@ -43,9 +46,9 @@
         "commit": "61e9361384347547ae144f8228faa4deffda23db"
       },
       "tutorials": {
-        "git": "https://github.com/mizzao/meteor-tutorials.git",
-        "tag": "v0.3.1",
-        "commit": "d154f1df80c0fc4ba69c439cb4a6da1294459740"
+        "git": "https://github.com/kevinzenghu/meteor-tutorials.git",
+        "branch": "master",
+        "commit": "b66356dbf050a3bcfa6e3d87ff7c982d99d6fd55"
       },
       "observatory": {
         "git": "https://github.com/jhoxray/observatory.git",

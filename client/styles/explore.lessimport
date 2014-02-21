@@ -8,6 +8,10 @@
     	font-weight: 500;
     }
 
+    &.methods {
+    	padding-top: 80px;
+    }
+
     .primary-text {
     	font-size: 2em; // 32px / 1px
     	line-height: 1em;
@@ -154,7 +158,7 @@ div.ui-slider {
 	span.ui-slider-label {
 		font-family: 'Lato';
 		font-weight: 300;
-		font-size: 1em;
+		font-size: 13px;
 		color: @color_pantheon_black;
 	}
 

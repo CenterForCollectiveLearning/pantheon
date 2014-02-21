@@ -66,11 +66,11 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
 #this just pushes all the people and forgets about them
 #and does not incur the overhead of a mongo observe()
 #
-Meteor.publish "allpeople", ->
-  sub = this
-  People.find().forEach (person) ->
-    sub.added "people", person._id, person
-  sub.ready()
+# Meteor.publish "allpeople", ->
+#   sub = this
+#   People.find().forEach (person) ->
+#     sub.added "people", person._id, person
+#   sub.ready()
 
 
 # No stop needed here
