@@ -109,7 +109,7 @@ div.person-top {
         cursor: pointer;
         float: right;
         position: relative;
-        top: 24px;
+        top: -24px;
         right: 8px;
     }
 }
