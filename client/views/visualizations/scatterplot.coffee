@@ -4,6 +4,10 @@ scatterplotProps =
 
 Template.scatterplot_svg.properties = scatterplotProps
 
+Template.scatterplot_svg.destroyed = ->
+  # Stop any reactive computation from rendered
+  @computation?.stop()
+
 Template.scatterplot_svg.rendered = ->
   context = this
   width = $(".page-middle").width() - 10
@@ -39,6 +43,7 @@ Template.scatterplot_svg.rendered = ->
     nestingDepth = "nesting_3"
 
   Deps.autorun( ->
+    context.computation = this
     data = Scatterplot.find().fetch()
   
     aggregated = {} # X, Y values for each data point (eg. {WRITER: {x:1, y:5}})

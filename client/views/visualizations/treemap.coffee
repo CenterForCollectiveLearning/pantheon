@@ -4,15 +4,22 @@ treeProps =
 
 Template.treemap_svg.properties = treeProps
 
-Template.treemap_svg.rendered = ->
-  
+Template.treemap_svg.destroyed = ->
+  # Stop any reactive computation from rendered
+  @computation?.stop()
+
+Template.treemap_svg.rendered = ->  
   # Don't re-render with the same parameters...?
   context = this
   dataset = Session.get("dataset")
   viz = d3plus.viz()
   width = $(".page-middle").width()
   height = $(".page-middle").height() - 80
+  
   Deps.autorun ->
+    # For this to work, need to make sure that this is only called once
+    context.computation = this
+
     data = Treemap.find().fetch()
     attrs = {}
     vizMode = Session.get("vizMode")
