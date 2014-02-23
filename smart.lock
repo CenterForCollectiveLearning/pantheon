@@ -48,7 +48,7 @@
       "tutorials": {
         "git": "https://github.com/kevinzenghu/meteor-tutorials.git",
         "branch": "master",
-        "commit": "b66356dbf050a3bcfa6e3d87ff7c982d99d6fd55"
+        "commit": "ae1ee2409c1a40f8d15a2607d8a432bc4f80bab7"
       },
       "observatory": {
         "git": "https://github.com/jhoxray/observatory.git",
