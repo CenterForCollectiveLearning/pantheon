@@ -3,8 +3,10 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="page-top span8 offset2">   
-                {{> question}}
-                {{> date_header}}
+                {{#if initialDataReady}}
+                    {{> question}}
+                    {{> date_header}}
+                {{/if}}
             </div>
             <div class="page-top span2">
                 {{> sharing_options}}
