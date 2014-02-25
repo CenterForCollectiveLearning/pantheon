@@ -54,5 +54,5 @@ Template.person_page.events =
       Session.set("rankingProperty", rankingProperty)
 
   "click i#random-button": ->
-    randomPersonName = People.findOne({dataset: "OGC"}, {skip: Math.round(Math.random() * People.find({dataset: "OGC"}).count())}).name
+    randomPersonName = ClientPeople.findOne({dataset: "OGC"}, {skip: Math.round(Math.random() * ClientPeople.find({dataset: "OGC"}).count())}).name
     Router.go "people", name: randomPersonName
