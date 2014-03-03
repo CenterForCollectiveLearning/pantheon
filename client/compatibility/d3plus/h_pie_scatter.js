@@ -166,7 +166,7 @@ d3plus.pie_scatter = function(vars) {
         var countryCodeX = xVar; // Countries.findOne({countryName: xVar}).countryCode;
         var countryCodeY = yVar; // Countries.findOne({countryName: yVar}).countryCode;
         var category = dataPoint;
-        var categoryLevel = "industry";
+        var categoryLevel = "occupation";
 
         Session.set("tooltipCategory", category);
         Session.set("tooltipCategoryLevel", categoryLevel);
@@ -323,7 +323,7 @@ d3plus.pie_scatter = function(vars) {
             var countryCodeX = xVar;
             var countryCodeY = yVar;
             var category = dataPoint;
-            var categoryLevel = "industry";
+            var categoryLevel = "occupation";
 
             Session.set("bigtooltipCategory", category);
             Session.set("bigtooltipCategoryLevel", categoryLevel);
