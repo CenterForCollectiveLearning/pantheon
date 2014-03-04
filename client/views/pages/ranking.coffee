@@ -63,18 +63,19 @@ Template.ranking_table.rendered = ->
       if clickTooltip
         collection = Tooltips.find({_id: {$not: "count"}}).fetch()
       else 
-        args =
-          birthyear:
-            $gte: parseInt(Session.get("from"))
-            $lte: parseInt(Session.get("to"))
-        country = Session.get("country")
-        args.countryCode = country if country isnt "all"
-        args.dataset = "OGC"
-        category = Session.get("category")
-        args[Session.get("categoryLevel")] = category if category.toLowerCase() isnt "all"
-        L = Session.get("langs")
-        if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
-        collection = ClientPeople.find(args).fetch()
+          args =
+            birthyear:
+              $gte: parseInt(Session.get("from"))
+              $lte: parseInt(Session.get("to"))
+          country = Session.get("country")
+          args.countryCode = country if country isnt "all"
+          args.dataset = "OGC"
+          category = Session.get("category")
+          args[Session.get("categoryLevel")] = category if category.toLowerCase() isnt "all"
+          L = Session.get("langs")
+          if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
+          collection = ClientPeople.find(args).fetch()
+          console.log("CLIENT PEOPLE: ", ClientPeople.find().count())
 
       data = _.map collection, (d) ->
         p = ClientPeople.findOne d._id

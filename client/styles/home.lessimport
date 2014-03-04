@@ -180,15 +180,10 @@ ul.slides {
 // 	height: 100%;
 // }
 
-.flex-control-nav {
-	margin-top: 5px !important;
-	position: initial !important;
-}
-
 ol.flex-control-nav {
 	z-index: 100;
-	bottom: 250px;
-	text-align: right;
+	bottom: 5px;
+	text-align: center;
 	padding-right: 4px;
 
 	li {
@@ -202,9 +197,13 @@ ol.flex-control-nav {
 	}
 
 	li a {
+		background-color: @color_grey;
+		&:hover{
+			background-color: white; 
+		}
 		&.flex-active {
 			zoom: 1;
-			background-color: @color_pantheon_black;
+			background-color: @color_beige;
 		}
 
 		border-radius: 7px;

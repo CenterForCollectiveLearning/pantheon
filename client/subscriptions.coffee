@@ -118,6 +118,7 @@ Deps.autorun ->
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, L, onReady)
         when "people"
           dataSub = Meteor.subscribe("peopleTopN", "treemap", "country_exports", begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, "all", dataset, onReady)
+          console.log("using ClientPeople")
         when "domains"
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, L, onReady)
         else
