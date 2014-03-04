@@ -27,7 +27,7 @@ Template.scatterplot_svg.rendered = ->
     y_label = if y_name is "all" then "The World" else Countries.findOne(countryCode: y_code).countryName
     aggregatedField = "occupation"
     nesting = ["nesting_1", "nesting_3", "nesting_5"]
-    nestingDepth = "nesting_3"
+    nestingDepth = "nesting_5"
   else if vizMode is "domain_vs_domain"
     # field = "domain"
     x_field = Session.get("categoryLevelX")

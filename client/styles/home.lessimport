@@ -78,10 +78,115 @@ ul.slides {
 	position: initial !important;
 }
 
+// div.narrative-container {
+// 	z-index: 10;
+// 	position: relative;
+
+// 	div.content-container {
+// 		border-radius: 2px;
+// 		background-color: rgba(0, 0, 0, 0.75);
+// 		height: 300px;
+// 		width: 940px;
+// 		margin: 200px auto 0 auto;
+// 		padding: 60px 40px 40px;
+// 		div.content-container-left {
+// 			width: 70%;
+// 			float: left;
+// 		}
+// 		div.content-container-right {
+// 			width: 30%;
+// 			float: right;
+// 		}
+// 	}
+// }
+
+// section#narratives {
+// 	margin-top:65px;
+// 	height: 700px;
+// 	div.flexslider {
+// 		height: 700px;
+// 	}
+// 	ul.slides {
+// 		max-height: 700px;
+// 		height: 700px;
+
+// 		li {
+// 			max-height: 700px;
+// 			height: 700px;
+// 		}
+// 	}
+
+// 	div.narrative-container {
+// 		z-index: 10;
+// 		position: relative;
+
+// 		div.content-container {
+// 			border-radius: 2px;
+// 			background-color: rgba(0, 0, 0, 0.75);
+// 			height: 300px;
+// 			width: 940px;
+// 			margin: 200px auto 0 auto;
+// 			padding: 60px 40px 40px;
+// 			div.content-container-left {
+// 				width: 70%;
+// 				float: left;
+// 			}
+// 			div.content-container-right {
+// 				width: 30%;
+// 				float: right;
+// 			}
+// 		}
+
+// 		div.page-top {
+// 			padding-top: 0;
+// 			padding-bottom: 5em;
+// 		}
+
+// 		div.learn-more {
+// 			border-radius: 2px;
+// 			cursor: pointer;
+// 			text-transform: uppercase;
+// 			font-size: 1.5em;
+// 			padding: 10px;
+// 			float: right;
+// 			height: 40px;
+// 			margin-top: 65px;
+// 			background-color: #343434;
+
+// 			&:hover {
+// 				background-color: @color_pantheon_black;
+// 				opacity: 1;
+// 			}
+// 		}
+
+// 		div.description {
+// 			font-size: 1.5em;
+// 			line-height: 1.5em;
+// 			float: left;
+// 		}
+// 	}
+
+// div.flexslider {
+// 	border: 0;
+// 	margin: 0;
+// }
+
+// div.background {
+// 	background-repeat: no-repeat !important;
+// 	background-size: cover !important;
+// 	background-position: center !important;
+// 	position: absolute;
+// 	top: 0;
+// 	border: 0;
+// 	width: 100%;
+// 	height: 100%;
+// }
+>>>>>>> 8bcb773c233f586871fc5e04a0251fffb400017d
+
 ol.flex-control-nav {
 	z-index: 100;
-	bottom: 250px;
-	text-align: right;
+	bottom: 5px;
+	text-align: center;
 	padding-right: 4px;
 
 	li {
@@ -95,9 +200,13 @@ ol.flex-control-nav {
 	}
 
 	li a {
+		background-color: @color_grey;
+		&:hover{
+			background-color: white; 
+		}
 		&.flex-active {
 			zoom: 1;
-			background-color: @color_pantheon_black;
+			background-color: @color_beige;
 		}
 
 		border-radius: 7px;
