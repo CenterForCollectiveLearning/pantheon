@@ -21,6 +21,14 @@ Template.rankings.columnDescriptions = ->
     when "domains"
       new Handlebars.SafeString(Template.domains_columns(this))
 
+Template.rankings.rankingdataReady = ->
+  entity = Session.get "entity"
+  switch entity
+    when "countries", "domains"
+      Session.equals "dataReady", true
+    when "people"
+      Session.equals("peopleReady", true) and Session.equals("dataReady", true)
+
 Template.ranking_table.rendered = ->
   # for sorting formatted numbers
   jQuery.extend jQuery.fn.dataTableExt.oSort,
