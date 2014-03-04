@@ -209,15 +209,9 @@ d3plus.tree_map = function(vars) {
 
       d3.select("#cell_"+id).select("rect")
         .attr("opacity",0.85)
-
     }
-  throttledMouseMove = _.debounce(onMouseMove, 500)
-  // throttledMouseMove = _.throttle(onMouseMove, 500)
-  
-  cell
-    .on(d3plus.evt.move, onMouseMove)
-    .on(d3plus.evt.out, onMouseOut)
-    .on(d3plus.evt.down,function(d){
+
+  onClick = function(d){
       Session.set("hover", false);
       Session.set("showTooltip", false);
       // Set the session variable to show the clicktooltip
@@ -243,7 +237,19 @@ d3plus.tree_map = function(vars) {
         Session.set("bigtooltipCountryCode", countryCode);
         Template.clicktooltip.title = countryCode !== "all" ? countryName + ": " + category : category;
       }
-    })
+    }
+
+
+  throttledMouseMove = _.debounce(onMouseMove, 500)
+  // throttledMouseMove = _.throttle(onMouseMove, 500)
+  
+  cell
+    .on(d3plus.evt.move, function(d) { if(!Session.get("mobile")) onMouseMove(d) })
+    .on(d3plus.evt.out, function(d) { if(!Session.get("mobile")) onMouseOut(d) })
+    .on(d3plus.evt.down, function(d) {
+      if(Session.get("mobile")) onMouseMove(d)
+      else onClick(d)
+    });
   
   cell.transition().duration(d3plus.timing)
     .attr("transform", function(d) { 

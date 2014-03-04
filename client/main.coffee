@@ -1,3 +1,6 @@
+Handlebars.registerHelper "mobile", -> Session.get("mobile")
+Handlebars.registerHelper "paneOpen", -> Session.get("paneOpen")
+
 # Set Defaults
 @getCategoryLevel = (s) ->
   domains = Domains.find({dataset: Session.get("dataset")}).fetch()
@@ -96,7 +99,7 @@ Meteor.startup ->
   # Observatory.logMeteor()
 
   # Bypass the need for the mergebox to loaded people for each client
-  d3.json("/people_2-21-2014.json", (people) -> 
+  d3.json("/people_2-27-2014.json", (people) -> 
     for person in people
       person._id = new Meteor.Collection.ObjectID(person._id.$oid)
       ClientPeople.insert(person)
@@ -172,11 +175,12 @@ Meteor.startup ->
   # MOBILE
   mobile = ((a) -> /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a) or /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) navigator.userAgent or navigator.vendor or window.opera
   Session.setDefault "mobile", mobile
+  Session.setDefault "paneOpen", false
 
   # Set session variable if window resized (throttled rate) and window outerwidth greater than 1024px
   # Note: Doesn't recall subscription/publication, so short throttle time is OK
   throttledResize = _.throttle(->
-    if window.outerWidth > 1024
+    if Session.get("mobile") or window.outerWidth > 1024
       Session.set "resize", new Date()
   , 50)
   $(window).resize throttledResize
@@ -237,15 +241,74 @@ rightSections = [
   template: "team"
   url: "/team"
 ]
+
+# TODO Don't repeat!
+Template.defaultLayout.helpers
+  leftSections: leftSections
+  rightSections: rightSections
+
 Template.nav.helpers
   leftSections: leftSections
   rightSections: rightSections
 
+Template.pane_section.helpers selected: ->
+  (if Session.equals("page", @template) then "selected_section" else "")
+
 Template.section.helpers selected: ->
   (if Session.equals("page", @template) then "selected_section" else "")
 
-Template.sharing_options.events = 
+# TODO Handle overlapping functionality correctly
+# Template.defaultLayout.events =
+#   "tap, click div#background-wrapper": (d) ->
+#     paneOpen = Session.get("paneOpen")
+#     console.log paneOpen, 
+#     if paneOpen and (d.srcElement?.id is not "hamburger")
 
+#       # Close Pane
+#       $("div.logo").show()
+#       $("header.navbar").animate(left: ["0%", "easeOutExpo"], duration: 700)
+#       $("#background-wrapper").animate(left: ["0%", "easeOutExpo"], duration: 700)
+#       $('#background-wrapper').unbind('touchmove', (e) -> e.preventDefault());
+#       Session.set "paneOpen", false
+
+@openPane = (d) ->
+  $(".left-pane").removeClass("closed")
+  $("div.logo").hide()  # TODO Handle logo correctly
+  $("header.navbar").animate(left: ["60%", "easeOutExpo"], duration: 700)
+  $("#background-wrapper").animate(left: ["60%", "easeOutExpo"], duration: 700)
+  $("footer").animate(left: ["60%", "easeOutExpo"], 
+    duration: 700
+    complete: Session.set("paneOpen", true)
+  )
+  $('#background-wrapper').bind('touchmove', (e) -> e.preventDefault());
+
+@closePane = ->
+  $(".left-pane").addClass("closed")
+  $("div.logo").show()
+  $("header.navbar").animate(left: ["0%", "easeOutExpo"], duration: 700)
+  $("#background-wrapper").animate(left: ["0%", "easeOutExpo"], duration: 700)
+  $("footer").animate(left: ["0%", "easeOutExpo"], 
+    duration: 700
+    complete: Session.set("paneOpen", false)
+    )
+  $('#background-wrapper').unbind('touchmove', (e) -> e.preventDefault());
+
+Template.nav.events = 
+  "touchmove, mousedown #hamburger": (d) -> $(d.srcElement).addClass("mousedown")
+  "touchend, mouseup #hamburger": (d) -> $(d.srcElement).removeClass("mousedown")
+
+  "click #hamburger": (d) ->
+    paneOpen = Session.get("paneOpen")
+    if paneOpen then closePane()
+    else openPane()
+
+Template.pane_section.events =
+  "click a.pane_nav": ->
+    paneOpen = Session.get("paneOpen")
+    if paneOpen then closePane()
+    Session.set "paneOpen", false
+
+Template.sharing_options.events = 
     "click a.email-icon": ->
       question = $("#question").text()
       width  = 575
@@ -353,43 +416,16 @@ Template.sharing_options.events =
       a.href = img
       a.click()
 
-# Template.spinner.rendered = ->
-#   unless Session.get("showSpinner")
-#     NProgress.configure
-#       minimum: 0.2
-#       trickleRate: 0.1
-#       trickleSpeed: 500
+Template.spinner.rendered = ->
+  unless Session.get("showSpinner")
+    NProgress.configure
+      minimum: 0.2
+      trickleRate: 0.1
+      trickleSpeed: 500
 
-#     NProgress.start()
-#   Session.set "showSpinner", true
+    NProgress.start()
+  Session.set "showSpinner", true
 
-# Template.spinner.destroyed = ->
-#   NProgress.done()
-#   Session.set "showSpinner", false
-
-# Template.sharing_options.events =
-#   "click #download": (d) ->
-#     svg = $("svg")[0]
-#     serializer = new XMLSerializer()
-#     str = serializer.serializeToString(svg)
-#     canvas = document.querySelector("canvas")
-#     context = canvas.getContext("2d")
-#     image = new Image
-#     canvg(canvas, str)
-#     $("#canvas").attr("style", "display:none")
-#     img = canvas.toDataURL("image/png")
-#     # write the picture to the webpage...
-#     # document.write "<img src=\"" + img + "\"/>"
-
-#     url = "image/hello"
-#     $.ajax(
-#       type: "POST"
-#       , url: url
-#       , data: {imgBase64: img}
-#       ).done((o) -> console.log "saved", url)
-    
-#     # download the picture as viz.png...
-#     a = document.createElement("a")
-#     a.download = "viz.png"
-#     a.href = img
-#     a.click()
+Template.spinner.destroyed = ->
+  NProgress.done()
+  Session.set "showSpinner", false

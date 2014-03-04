@@ -165,7 +165,6 @@ table.display thead th {
 	font-weight: bold;
 	text-align:center;
 	cursor: pointer;
-	* cursor: hand;
 }
 
 table.display tfoot th {

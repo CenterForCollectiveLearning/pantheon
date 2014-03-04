@@ -9,6 +9,10 @@
 }
 
 div.team-page {
+	&.mobile {
+		width: 100% !important;
+		min-width: 100% !important;
+	}
 	a.macro-link { 
 		font-weight: bold;
 	}

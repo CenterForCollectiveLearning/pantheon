@@ -2,15 +2,15 @@
 <template name="explore">
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="page-top span8 offset2">   
-                {{#if initialDataReady}}
-                    {{> question}}
-                    {{> date_header}}
-                {{/if}}
+            <div class="page-top {{#unless mobile}}span8 offset2{{else}}span12 mobile{{/unless}}">   
+                {{> question}}
+                {{> date_header}}
             </div>
+            {{#unless mobile}}
             <div class="page-top span2">
                 {{> sharing_options}}
             </div>
+            {{/unless}}
         </div>
     </div>
 
@@ -18,17 +18,26 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
+                {{#unless mobile}}
                 <div class="page-left span2">
                     <canvas id="canvas" width="0" height="0" style="display: none"></canvas>
                     {{#if initialDataReady}}
                         {{> explore_options}} 
                     {{/if}}
                 </div>
+                {{/unless}}
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
                 {{> tooltip}}
                 {{> clicktooltip}}
             </div>
+            {{#if mobile}}
+            <div class="row-fluid">
+                {{#if initialDataReady}}
+                    {{> ranked_list }}
+                {{/if}}
+            </div>
+            {{/if}}
         </div>
     </div>
 </template>
@@ -123,11 +132,11 @@
 
 <!-- Person in Ranked List -->
 <template name="ranked_person">
-    <a {{#if showPeopleLink}}href="{{pathFor 'people'}}" class="hover-bold"{{/if}}>
+    <a {{#if showPeopleLink}}href="{{pathFor 'people'}}" class="hover-bold{{#if mobile}} mobile{{/if}}"{{/if}}>
         <li>
             {{! insert thumbnail here}}
             {{name}}
-            <br>
+            {{#unless mobile}}<br>{{/unless}}
             <span>
                 {{occupation}}, b. {{birthday}} ({{index}})
             </span>

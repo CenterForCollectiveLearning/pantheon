@@ -34,26 +34,36 @@
      <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <div id="background-wrapper" class="wrapper min-width">
+    <div class="left-pane closed">
+        <ul>
+        {{#each leftSections}}
+            {{> pane_section}}
+        {{/each}}
+        {{#each rightSections}}
+            {{> pane_section}}
+        {{/each}}
+        </ul>
+    </div>
+    <div id="background-wrapper" class="wrapper{{#unless mobile}} min-width{{else}} mobile{{/unless}}">
         <!-- Header -->
-        <header class="navbar navbar-fixed-top min-width">
-            <nav class="navbar-inner">
+        <header class="navbar navbar-fixed-top{{#unless mobile}} min-width{{/unless}}">
+            <nav class="navbar-inner{{#if mobile}} mobile{{/if}}">
                 {{yield 'nav'}}
             </nav>
             <div class="logo center">
                 <a href='/'>
-                    <img class="logo-img" src="/pantheon_logo.png" />
+                    <img class="logo-img" src="{{#if mobile}}/pantheon_logo_mobile.png{{else}}/pantheon_logo.png{{/if}}" />
                 </a>
             </div>
         </header>
 
         <!-- Body -->
-
         {{ yield }}
 
         <!-- render to the footer yield -->
     </div>
-    <footer class="min-width">
+
+    <footer class="{{#unless mobile}}min-width{{else}}mobile{{/unless}}">
         {{yield 'footer'}}
     </footer>
 
@@ -61,23 +71,33 @@
     {{> tutorial }}
 </template>
 
-<template name="aside">
-    <div class="more">
-        More from Macro Connections
-    </div>
+<template name="nav">
+    {{#if mobile}}
+        <div id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    {{else}}
+        <ul class="nav pull-left">
+            {{#each leftSections}}
+                {{> section}}
+            {{/each}}
+        </ul>
+        <ul class="nav pull-right">
+            {{#each rightSections}}
+                {{> section}}
+            {{/each}}
+        </ul>
+    {{/if}}
 </template>
 
-<template name="nav">
-    <ul class="nav pull-left">
-        {{#each leftSections}}
-            {{> section}}
-        {{/each}}
-    </ul>
-    <ul class="nav pull-right">
-        {{#each rightSections}}
-            {{> section}}
-        {{/each}}
-    </ul>
+<template name="pane_section">
+    <a href="{{url}}" class="pane_nav">
+        <li class="pane_nav {{selected}}">
+            {{section}}
+        </li>
+    </a>
 </template>
 
 <template name="section">
@@ -108,15 +128,18 @@
 
 <template name="footer">
     {{> google_analytics}}
-    <div class="more-projects">   
+    {{#unless mobile}} 
+    <div class="more-projects">  
+              
         <div class="more-from">
             <span class="more-macro">More projects from Macro Connections:</span>
             <span class="more-d3">Also using D3Plus:</span>
         </div>   
         <div class="projects">
-            <a href="http://atlas.media.mit.edu/" target="_blank" class="left"><div class="oec">
-                <!-- <img src="/OEC_logo.png" alt="Observatory of Economic Complexity"> -->
-            </div></a>
+            <a href="http://atlas.media.mit.edu/" target="_blank" class="left">
+                <div class="oec">
+                </div>
+            </a>
             <a href="https://immersion.media.mit.edu/" target="_blank" class="left">
                 <div class="immersion">
                 </div>
@@ -127,19 +150,48 @@
             </a>
             <a href="http://www.dataviva.info/"target="_blank"  class="dataviva">
                 <div class="dataviva">
-                    <!-- <img src="/DataViva_logo.png" alt="DataViva"> -->
                 </div>
             </a>
         </div>
+        <!-- Semi-working mobile version -->
+<!--         <div class="more-from">
+            <span class="more-macro">More projects from Macro Connections:</span>
+        </div>   
+        <div class="projects">
+            <a href="http://atlas.media.mit.edu/" target="_blank" class="left">
+                <div class="oec">
+                </div>
+            </a>
+            <a href="https://immersion.media.mit.edu/" target="_blank" class="left">
+                <div class="immersion">
+                </div>
+            </a>
+            <a href="http://pulse.media.mit.edu/" target="_blank" class="left">
+                <div class="place-pulse">
+                </div>
+            </a>
+        </div>
+        <div class="more-from">
+            <span class="more-d3">Also using D3Plus:</span>
+        </div>   
+        <div class="projects">
+            <a href="http://www.dataviva.info/"target="_blank"  class="dataviva">
+                <div class="dataviva">
+                </div>
+            </a>
+        </div> -->
     </div>
+    {{/unless}}
 
-    <div class="copyright">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a> • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>
+    <div class="copyright">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>{{#unless mobile}} • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>{{/unless}}
 </template>
 
 <template name="spinner">
+    {{#unless mobile}}
     <div id="spinner-container" style="padding-top:150px;">
         <img id="spinner" src="/FinalLogoSpinner.gif" alt="Macro">
     </div>
+    {{/unless}}
 </template>
 
 <template name="notFound">
