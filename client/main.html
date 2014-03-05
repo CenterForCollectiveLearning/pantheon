@@ -34,16 +34,18 @@
      <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <div class="left-pane closed">
-        <ul>
-        {{#each leftSections}}
-            {{> pane_section}}
-        {{/each}}
-        {{#each rightSections}}
-            {{> pane_section}}
-        {{/each}}
-        </ul>
-    </div>
+    {{#if mobile}}
+        <div class="left-pane closed">
+            <ul>
+            {{#each leftSections}}
+                {{> pane_section}}
+            {{/each}}
+            {{#each rightSections}}
+                {{> pane_section}}
+            {{/each}}
+            </ul>
+        </div>
+    {{/if}}
     <div id="background-wrapper" class="wrapper{{#unless mobile}} min-width{{else}} mobile{{/unless}}">
         <!-- Header -->
         <header class="navbar navbar-fixed-top{{#unless mobile}} min-width{{/unless}}">

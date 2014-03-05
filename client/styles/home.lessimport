@@ -181,7 +181,6 @@ ul.slides {
 // 	width: 100%;
 // 	height: 100%;
 // }
->>>>>>> 8bcb773c233f586871fc5e04a0251fffb400017d
 
 ol.flex-control-nav {
 	z-index: 100;

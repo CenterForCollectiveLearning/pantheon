@@ -420,15 +420,17 @@ Template.sharing_options.events =
       a.click()
 
 Template.spinner.rendered = ->
-  unless Session.get("showSpinner")
-    NProgress.configure
-      minimum: 0.2
-      trickleRate: 0.1
-      trickleSpeed: 500
-
-    NProgress.start()
-  Session.set "showSpinner", true
+  if Session.get("mobile")
+    unless Session.get("showSpinner")
+      NProgress.configure
+        minimum: 0.2
+        trickleRate: 0.1
+        trickleSpeed: 500
+  
+      NProgress.start()
+    Session.set "showSpinner", true
 
 Template.spinner.destroyed = ->
-  NProgress.done()
-  Session.set "showSpinner", false
+  if Session.get("mobile")
+    NProgress.done()
+    Session.set "showSpinner", false
