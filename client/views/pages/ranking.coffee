@@ -118,7 +118,7 @@ Template.ranking_table.rendered = ->
         p = ClientPeople.findOne d._id
         if dataset is "OGC" and clickTooltip
           [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,0), toMillions(p.TotalPageViews), toDecimal(p.HPI,2)]  
-        else if Session.equals("page") and mobile
+        else if Session.equals("page", "rankings") and mobile
           [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), toDecimal(p.HPI,2)]  
         else if dataset is "OGC" and not mobile
           [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), toDecimal(p.HPI,3)]

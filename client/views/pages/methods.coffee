@@ -181,9 +181,10 @@ renderTree = (url) ->
 
 Template.methods.events =
   "click img": (d) ->
-     srcE = (if d.srcElement then d.srcElement else d.target)
-     Session.set "showImageFullscreen", true
-     Session.set "imageShownFullscreen", $(srcE).attr("src")
+    if Session.equals("mobile", false)
+       srcE = (if d.srcElement then d.srcElement else d.target)
+       Session.set "showImageFullscreen", true
+       Session.set "imageShownFullscreen", $(srcE).attr("src")
 
 Template.image_fullscreen.helpers
   showImageFullscreen: -> Session.get "showImageFullscreen"
