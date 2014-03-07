@@ -12,9 +12,12 @@ Template.treemap_svg.rendered = ->
   # Don't re-render with the same parameters...?
   context = this
   dataset = Session.get("dataset")
+  mobile = Session.get("mobile")
   viz = d3plus.viz()
   width = $(".page-middle").width()
   height = $(".page-middle").height() - 80
+  if mobile
+    height = 200
   
   Deps.autorun ->
     # For this to work, need to make sure that this is only called once

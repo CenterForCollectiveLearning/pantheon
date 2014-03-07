@@ -102,6 +102,16 @@ div.text {
 		}	
 	}
 
+	&.mobile {
+		width: 100% !important;
+		min-width: 100% !important;
+
+		p {
+			width: 100%;
+			min-width: 100%;			
+		}
+	}
+
     font: 17px/26px 'Lato';
 	// font: 17px/26px Verdana, Geneva, sans-serif;
 	// font: 17px/26px georgia, "times new roman", times, serif;

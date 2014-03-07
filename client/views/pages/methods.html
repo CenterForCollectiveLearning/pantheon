@@ -30,6 +30,7 @@
 	</div>
 
 	<div id="page min-width">
+		{{#unless mobile}}
 		<div id="table-of-contents" class="text">			
 			<div class="section-header">
 				Index
@@ -60,8 +61,9 @@
 				<li><a class="h1" href="#references">References and Endnotes</a></li>
 			</ul>
 		</div>
+		{{/unless}}
 		<div class="wrapper-left"></div>
-		<div class="text-page-middle page-middle text" data-spy="scroll" data-target="#table-of-contents">
+		<div class="text-page-middle page-middle text {{#if mobile}} mobile{{/if}}" data-spy="scroll" data-target="#table-of-contents">
 			<h1 id="methods">Methods</h1>
 
 			<p>Pantheon is a project developed by the Macro Connection's group at The MIT Media Lab that's collecting, analyzing, and visualizing data on historical cultural popularity and production.</p>
