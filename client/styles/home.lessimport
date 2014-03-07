@@ -73,11 +73,6 @@ ul.slides {
 	}
 }
 
-.flex-control-nav {
-	margin-top: 5px !important;
-	position: initial !important;
-}
-
 // div.narrative-container {
 // 	z-index: 10;
 // 	position: relative;

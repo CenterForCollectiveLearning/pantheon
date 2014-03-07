@@ -122,7 +122,7 @@ Meteor.startup ->
     categoryLevel: "domain"
     from: "-4000"
     to: "2010"
-    langs: "H0"
+    langs: "H15"
     entity: "countries"
     gender: "both"
     dataset: "OGC"
