@@ -12,7 +12,7 @@ teamMembers = [
   name: "Amy Zhao Yu"
   photo: "amy_yu.png"
   description: "Graduate Student"
-  role: ["Data", "Content", "Development"]
+  role: ["Data", "Development", "Content"]
   media:
     personal: "http://www.amyyu.net/"
     twitter: "https://twitter.com/mangomochi86"
@@ -94,6 +94,9 @@ Template.team.helpers
 
   third_row_teamMembers: ->
     teamMembers.slice 6, 9
+
+  allteamMembers: ->
+    teamMembers
 
 Template.team.events =
   "mouseenter li.team-member": (d) ->

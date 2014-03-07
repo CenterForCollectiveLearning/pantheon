@@ -29,6 +29,11 @@ div.team-page {
 				float: left;
 				text-align: center !important;
 
+				&.mobile{
+					float:none;
+					width:100%;
+				}
+
 				div.photo_container {
 					position: relative;
 				}
