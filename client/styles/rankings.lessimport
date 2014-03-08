@@ -1,3 +1,7 @@
+.hidden{
+	display:none;
+}
+
 // Table
 div#ranking_wrapper {
 	div.dataTables_length {

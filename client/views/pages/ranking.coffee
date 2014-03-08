@@ -11,19 +11,33 @@ toDecimal = (x, d) ->
     x?.toFixed d
 
 Template.rankings.events = 
-  "click .fa-search": (d) ->
-    if Session.equals("showMobileRankingMenu", false)
+  "click .fa-search-plus": (d) ->
+      $(".fa-search-plus").hide()
+      $(".fa-search-minus").show()
       $("#rankingMenu").show("fast")
       Session.set("showMobileRankingMenu", true)
-    else
+  "click .fa-search-minus": (d) ->
+      $(".fa-search-minus").hide()
+      $(".fa-search-plus").show()
       $("#rankingMenu").hide("fast")
       Session.set("showMobileRankingMenu", false)
+
 
 Template.rankings.showMenu = ->
   if Session.equals("mobile", true)
     Session.equals("showMobileRankingMenu", true)
   else 
     true
+
+Template.rankings.entity = ->
+  entity = Session.get "entity"
+  switch entity
+    when "countries"
+      "Country"
+    when "people"
+      "People"
+    when "domains"
+      "Domain"
 
 Template.rankings.columnDescriptions = ->
   entity = Session.get "entity"
