@@ -194,6 +194,15 @@ header {
 	position: fixed !important;
 	z-index: 10 !important;
 
+	#magnifying-glass {
+		float: right;
+		position: relative;
+		font-size: 30px;
+		top: -35px;
+		right: 15px;
+		cursor: pointer;
+	}
+
 	#hamburger {
 		.no-select;
 		border-radius: 3px 3px 3px 3px;
@@ -237,6 +246,7 @@ header {
 	   	    -webkit-box-shadow: none !important;
 	   	    -moz-box-shadow: none !important;
 	   	    box-shadow: none !important; 	
+	   	    height: 55px;
 	    }
 
 	    @media (max-width: 1200px) {

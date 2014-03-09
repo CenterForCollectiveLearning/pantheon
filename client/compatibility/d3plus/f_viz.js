@@ -560,8 +560,10 @@ d3plus.viz = function() {
       var title_offset = 0
       if (vars.svg_width <= 400 || vars.svg_height <= 300) {
         vars.small = true;
-        vars.graph.margin = {"top": 0, "right": 0, "bottom": 0, "left": 0}
-        vars.graph.width = vars.width
+        // vars.graph.margin = {"top": 0, "right": 0, "bottom": 0, "left": 0}
+        // vars.graph.width = vars.width
+        vars.graph.margin = {"top": 5, "right": 10, "bottom": 55, "left": 53}
+        vars.graph.width = vars.width-vars.graph.margin.left-vars.graph.margin.right
         make_title(null,"title");
         make_title(null,"sub_title");
         make_title(null,"total_bar");
@@ -2024,6 +2026,7 @@ d3plus.viz = function() {
     vars.graph.height -= vars.graph.yoffset
     
     // Update Graph
+    console.log(vars.graph.margin.left, vars.graph.margin.top);
     d3.select(".chart").transition().duration(vars.graph.timing)
       .attr("transform", "translate(" + vars.graph.margin.left + "," + vars.graph.margin.top + ")")
       .attr("opacity",function(){

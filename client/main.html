@@ -81,6 +81,11 @@
             <div></div>
             <div></div>
         </div>
+        {{#if showMagnifyingGlass}}
+        <div id="magnifying-glass">
+            <i class="fa fa-search-plus"></i><i class="fa fa-search-minus" style="display:none;"></i>
+        </div>
+        {{/if}}
     {{else}}
         <ul class="nav pull-left">
             {{#each leftSections}}

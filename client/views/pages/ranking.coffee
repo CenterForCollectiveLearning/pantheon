@@ -10,18 +10,6 @@ toDecimal = (x, d) ->
   else
     x?.toFixed d
 
-Template.rankings.events = 
-  "click .fa-search-plus": (d) ->
-      $(".fa-search-plus").hide()
-      $(".fa-search-minus").show()
-      $("#rankingMenu").show("fast")
-      Session.set("showMobileRankingMenu", true)
-  "click .fa-search-minus": (d) ->
-      $(".fa-search-minus").hide()
-      $(".fa-search-plus").show()
-      $("#rankingMenu").hide("fast")
-      Session.set("showMobileRankingMenu", false)
-
 Template.rankings.rendered = ->
   # keep showing menu unless user collapses the search parameters
   if Session.equals("showMobileRankingMenu", true)

@@ -12,6 +12,15 @@
     fill: #202020;
 }
 
+div.mobile {
+    g.column-title {
+        text {
+            font-weight: 400;
+            font-size: 1em;
+        }
+    }
+}
+
 #viz {
 	width: 700;
     height: 560;
