@@ -18,8 +18,10 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="{{#unless mobile}}page-left span2{{else}} span12 {{/unless}}" id="explore-parameters" style="{{#if mobile}}display:none{{/if}}">
-                    {{#unless mobile}}<canvas id="canvas" width="0" height="0" style="display: none"></canvas>{{/unless}}
+                <div class="{{#unless mobile}}page-left span2{{else}} span12 {{/unless}} parameters" style="{{#if mobile}}display:none{{/if}}">
+                    {{#unless mobile}}
+                        <canvas id="canvas" width="0" height="0" style="display: none"></canvas>
+                    {{/unless}}
                     {{#if initialDataReady}}
                         {{> explore_options}} 
                     {{/if}}
@@ -100,7 +102,7 @@
 
 <!-- Visualization and Viz-Mode specific Question -->
 <template name="question">
-    <div id="question" class="primary-text">{{question}} {{#if mobile}}<i class="fa fa-search-plus"></i><i class="fa fa-search-minus" style="display:none;"></i>{{/if}}</div>
+    <div id="question" class="primary-text">{{question}}</div>
 </template>
 
 <template name="date_header">

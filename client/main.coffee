@@ -105,7 +105,7 @@ Meteor.startup ->
   # Bypass the need for the mergebox to loaded people for each client
   Session.set("peopleReady", false)
   
-  d3.json("/people_2-21-2014.json", (people) -> 
+  d3.json("/people_2-27-2014.json", (people) -> 
     for person in people
       person._id = new Meteor.Collection.ObjectID(person._id.$oid)
       ClientPeople.insert(person)
@@ -257,6 +257,8 @@ Template.defaultLayout.helpers
 Template.nav.helpers
   leftSections: leftSections
   rightSections: rightSections
+  showMagnifyingGlass: ->
+    if Session.get("page") in ["explore", "rankings"] then true else false
 
 Template.pane_section.helpers selected: ->
   (if Session.equals("page", @template) then "selected_section" else "")
@@ -265,7 +267,17 @@ Template.section.helpers selected: ->
   (if Session.equals("page", @template) then "selected_section" else "")
 
 # TODO Handle overlapping functionality correctly
-# Template.defaultLayout.events =
+Template.defaultLayout.events =
+  "click .fa-search-plus": (d) ->
+    $(".fa-search-plus").hide()
+    $(".fa-search-minus").show()
+    $(".parameters").show("fast")
+    Session.set("showMobileRankingMenu", true)
+  "click .fa-search-minus": (d) ->
+    $(".fa-search-minus").hide()
+    $(".fa-search-plus").show()
+    $(".parameters").hide("fast")
+    Session.set("showMobileRankingMenu", false)
 #   "tap, click div#background-wrapper": (d) ->
 #     paneOpen = Session.get("paneOpen")
 #     console.log paneOpen, 

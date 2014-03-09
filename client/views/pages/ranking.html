@@ -3,7 +3,7 @@
         <div class="row-fluid">
             <div class="page-top {{#unless mobile}}span8 offset2{{else}}span12 mobile{{/unless}}">
                 <div class="primary-text">
-                    {{entity}} Rankings {{#if mobile}}<i class="fa fa-search-plus"></i><i class="fa fa-search-minus" style="display:none;"></i>{{/if}}
+                    {{entity}} Rankings
                 </div>
             </div>
         </div>
@@ -12,7 +12,7 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="{{#unless mobile}}page-left span2{{else}}page-middle span12 {{/unless}}" id="rankingMenu" style="{{#if mobile}}display:none{{/if}}">
+                <div class="{{#unless mobile}}page-left span2{{else}}page-middle span12 {{/unless}} parameters" style="{{#if mobile}}display:none{{/if}}">
                     <div class="viz-selector">
                         {{> ranking_selections}}
                     </div>
@@ -26,14 +26,20 @@
                         {{> spinner}}
                     {{/if}}
                 </div>
-                {{#unless mobile}}
-                <div class="column-descriptions page-right span2">
+
+            {{#if mobile}}
+            </div>
+            <div class="row-fluid">
+            {{/if}}
+                <div class="column-descriptions {{#unless mobile}}page-right span2{{else}} page-middle span12{{/unless}}">
                     <div class="section-header">
                         Definitions
                     </div>
                     {{columnDescriptions}}
                 </div>
-                {{/unless}}
+            {{#if mobile}}
+            </div>
+            {{/if}}
             </div>
         </div>
     </div>

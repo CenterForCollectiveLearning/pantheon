@@ -16,9 +16,9 @@ key_gradient = (rect) ->
     gradient.append("stop").attr("offset", percent + "%").attr("stop-color", color_gradient[i / 20]).attr "stop-opacity", 1
     i = i + 20
   rect.attr(
-    x: 80
+    x: 0
     y: 0
-    width: 640
+    width: $(".page-middle").width()
     height: 10
   ).style "fill", "url(#gradient)"
 
@@ -149,6 +149,13 @@ Template.map_svg.rendered = ->
   vars =
       svg_height : $(".page-middle").height() - 80
       svg_width : $(".page-middle").width()
+
+  mobile = Session.get("mobile")
+  if mobile
+    vars =
+      svg_height : 200
+      svg_width : $(".page-middle").width()
+
   if data.length is 0 #No data screen
     error = d3.select(@firstNode).attr("width", vars.svg_width).attr("height", vars.svg_height).append("svg:g").selectAll("g.d3plus-error").data(["No data available"])
     error.enter().append("rect").attr("width", vars.svg_width).attr("height", vars.svg_height).attr("fill", "#f9f6e1")
@@ -174,8 +181,8 @@ Template.map_svg.rendered = ->
       .append("rect")
         .attr("width", vars.svg_width)
         .attr("height", vars.svg_height)
-        .attr("fill", "#f9f6e1")
-        .attr("fill-opacity", 0)
+        .attr("fill", "#000000") # "#f9f6e1")
+        .attr("fill-opacity", 0.4)
 
     svg = d3.select(@firstNode)
         .attr("width", vars.svg_width)
@@ -187,13 +194,16 @@ Template.map_svg.rendered = ->
         .scale(vars.svg_width * 0.14)
         .translate([vars.svg_width / 2, vars.svg_height / 2])
 
-    keyX_translate = (vars.svg_width - 640)/2 - 20
+    keyX_translate = 0 # (vars.svg_width - 640)/2 - 20
+    keyY_translate = if mobile then 170 else 450
 
     value_color = d3.scale.log().domain(value_range).interpolate(d3.interpolateRgb).range([color_gradient[0], color_gradient[1], color_gradient[2], color_gradient[3], color_gradient[4], color_gradient[5]])
     svg.selectAll("path").data(d3.values(mapData.features)).enter().append("path").attr("id", (d, i) ->
       d.id
     ).attr("stroke", "#eee").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
-    key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(" + keyX_translate + ", 450)").append("rect").call(key_gradient)
+
+    key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(" + keyX_translate + "," + keyY_translate + ")").append("rect").call(key_gradient)
+
     d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
       Math.round (50 * Math.pow((590 / 50), i / 10))
     ).attr("y", 0).attr("width", 2).attr("height", 10).style "fill", "#fff"
