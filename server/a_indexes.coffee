@@ -91,8 +91,8 @@ People._ensureIndex(maps_numlangs)
 # RANKINGS
 # 
 # Country Rankings
-# FALSE: db.people.find({"countryCode":{"$ne":"UNK"},"birthyear":{"$gte":-4000,"$lte":2010},"dataset":"OGC","HPI":{"$gt":0}, "domain": "ARTS"}, {countryName: 1, continentName: 1, HCPI: 1, length: 1, _id: 0}).explain().indexOnly
-People._ensureIndex({dataset: 1, birthyear: 1, countryCode: 1, HPI: 1, countryName: 1, continentName: 1, countryName: 1, occupation: 1, HCPI: 1, gender: 1, numlangs: 1})
+# FALSE: db.people.find({"countryCode":{"$ne":"UNK"},"birthyear":{"$gte":-4000,"$lte":2010},"dataset":"OGC","HPI":{"$gt":0}, "domain": "ARTS"}, {countryName: 1, continentName: 1, length: 1, _id: 0}).explain().indexOnly
+People._ensureIndex({dataset: 1, birthyear: 1, countryCode: 1, HPI: 1, countryName: 1, continentName: 1, countryName: 1, occupation: 1, gender: 1, numlangs: 1})
 
 # People
 # handled on the client (in ClientPeople)

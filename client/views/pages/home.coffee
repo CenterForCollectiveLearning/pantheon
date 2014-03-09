@@ -40,13 +40,20 @@ Template.home.events =
 # Template.home.destroyed = ->
 #     $(".logo").removeClass "gold-border"
 
-Template.narratives.narratives = narratives
+Template.narratives.narratives = ->
+    if Session.equals("mobile", true)
+        [narratives[0]]
+    else
+        narratives
 
 Template.narratives.events = 
     "click .learn-more": (d) ->
-        srcE = (if d.srcElement then d.srcElement else d.target)
-        dataTutorialType = $(srcE).data "tutorial-type"
-        Session.set("tutorialType", dataTutorialType)
+        if Session.equals("mobile", false)
+            srcE = (if d.srcElement then d.srcElement else d.target)
+            dataTutorialType = $(srcE).data "tutorial-type"
+            Session.set("tutorialType", dataTutorialType)
+        else
+            Router.go "/explore"
 
 # Template.pages.events = 
 #     "mouseenter div.page": (d) ->

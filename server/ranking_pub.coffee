@@ -46,7 +46,12 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
     country["countryCode"] = cc
     country["countryName"] = countries[cc][0].countryName
     country["continentName"] = countries[cc][0].continentName
-    country["HCPI"] = countries[cc][0].HCPI
+    # country["HCPI"] = countries[cc][0].HCPI
+    # console.log(country["countryName"], country["HCPI"])
+    country["HCPI"] = _.reduce(_.pluck(countries[cc], 'HPI'), 
+      (memo, num) -> 
+        memo + num
+      , 0)
     country["numppl"] = countries[cc].length
     females = _.countBy(countries[cc], (p) ->
       (if p.gender is "Female" then "Female" else "Male")
@@ -59,11 +64,10 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
     country["percentwomen"] = (country["numwomen"] / country["numppl"] * 100.0).toFixed(2)
     country["i50"] = (if fifties then fifties else 0)
     country["Hindex"] = hdata[cc]
-
-
     finaldata.push country
-  finaldata.forEach (person) ->
-    sub.added collectionName, Random.id(), person
+
+  finaldata.forEach (country) ->
+    sub.added collectionName, Random.id(), country
 
   sub.ready()
   return
@@ -101,8 +105,8 @@ Meteor.publish "domains_ranking_pub", (begin, end, country, category, categoryLe
     domain["numwomen"] = (if females then females else 0)
     domain["percentwomen"] = (domain["numwomen"] / domain["numppl"] * 100.0).toFixed(2)
     finaldata.push domain
-  finaldata.forEach (person) ->
-    sub.added collectionName, Random.id(), person
+  finaldata.forEach (domain) ->
+    sub.added collectionName, Random.id(), domain
 
   sub.ready()
   return
