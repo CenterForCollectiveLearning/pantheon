@@ -1,5 +1,5 @@
 <template name="treemap">
-    <div class="page-middle {{#unless mobile}}span8{{else}}span12{{/unless}}">
+    <div class="page-middle {{#unless mobile}}span8{{else}}span12 mobile{{/unless}}">
 	    <div id="viz" class="treemap">
             {{#if dataReady}}
                 {{> treemap_svg}}

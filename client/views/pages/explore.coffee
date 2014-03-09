@@ -164,6 +164,18 @@ Template.date_header.helpers
     to = Session.get("to")
     return "1 A.D."  if to is "1"
     (if (to < 0) then (to * -1) + " B.C." else to)
+
+Template.question.events =
+  "click .fa-search-plus": (d) ->
+      $(".fa-search-plus").hide()
+      $(".fa-search-minus").show()
+      $("#explore-parameters").show("fast")
+      Session.set("showMobileRankingMenu", true)
+  "click .fa-search-minus": (d) ->
+      $(".fa-search-minus").hide()
+      $(".fa-search-plus").show()
+      $("#explore-parameters").hide("fast")
+      Session.set("showMobileRankingMenu", false)
  
 # Generate question given viz type
 Template.question.question = -> 

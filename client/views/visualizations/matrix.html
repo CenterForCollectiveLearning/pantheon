@@ -1,19 +1,21 @@
 <template name="matrix">
-    <div class="page-middle span8">
+    <div class="page-middle {{#unless mobile}}span8{{else}}span12 mobile{{/unless}}">
         <div id="viz" class="matrix">
             {{#if dataReady}}
                 {{> matrix_svg}}
-                {{> time_slider}}                 
+                {{#unless mobile}}{{> time_slider}}{{/unless}}       
             {{else}}
                 {{> spinner}}
             {{/if}}     
         </div>
     </div>
+    {{#unless mobile}}
     <div class="page-right span2">
         {{#if initialDataReady}}
             {{> ranked_list }}
         {{/if}}
     </div>
+    {{/unless}}
 </template>
 
 <template name="matrix_svg">

@@ -61,6 +61,10 @@
 	}
 	.page-middle {
 		margin-bottom: 2em;
+		&.mobile {
+			margin: 0;
+			margin-bottom: 2em;
+		}
 		
 		// Visualization
 		svg {

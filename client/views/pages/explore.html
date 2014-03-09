@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="page-top {{#unless mobile}}span8 offset2{{else}}span12 mobile{{/unless}}">   
-                {{> question}}
+                {{> question}} 
                 {{> date_header}}
             </div>
             {{#unless mobile}}
@@ -18,14 +18,12 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
-                {{#unless mobile}}
-                <div class="page-left span2">
-                    <canvas id="canvas" width="0" height="0" style="display: none"></canvas>
+                <div class="{{#unless mobile}}page-left span2{{else}} span12 {{/unless}}" id="explore-parameters" style="{{#if mobile}}display:none{{/if}}">
+                    {{#unless mobile}}<canvas id="canvas" width="0" height="0" style="display: none"></canvas>{{/unless}}
                     {{#if initialDataReady}}
                         {{> explore_options}} 
                     {{/if}}
                 </div>
-                {{/unless}}
                 <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
                 {{> tooltip}}
@@ -74,7 +72,7 @@
         <h3 class="app">TREEMAPS</h3>
         <div>
             <ul>
-                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="country_exports" class= "{{country_treemap_active}}">By Country</a></span></li>
+                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="country_exports" class="{{country_treemap_active}}">By Country</a></span></li>
                 <li><span><a href="#" data-viz-type="treemap" data-viz-mode="domain_exports_to" class="{{domain_treemap_active}}">By Domain</a></span></li>
             </ul>
         </div>
@@ -102,7 +100,7 @@
 
 <!-- Visualization and Viz-Mode specific Question -->
 <template name="question">
-    <div id="question" class="primary-text">{{question}}</div>
+    <div id="question" class="primary-text">{{question}} {{#if mobile}}<i class="fa fa-search-plus"></i><i class="fa fa-search-minus" style="display:none;"></i>{{/if}}</div>
 </template>
 
 <template name="date_header">

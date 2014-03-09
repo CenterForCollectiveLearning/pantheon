@@ -42,6 +42,58 @@ div.search-result {
 #people-page {
     width: 1260px;
     margin: 0 auto;
+
+    &.mobile {
+        width: 100%;
+        min-width: 100%;
+
+        div.primary-text {
+            padding-bottom: 0;
+        }
+
+        img.person-image {
+            margin-bottom: 2em;
+            width: 100%;
+        }
+
+        div.person-metrics-title, div.mobile_title {
+            text-transform: uppercase;
+            font-weight: bold;
+            border-bottom: 1px solid @color_pantheon_black;
+            margin-bottom: 5px;
+
+            span.person-hpi {
+                float: right;
+            }
+        }
+        div.person-table-body {
+            div.person-table-left {
+                float: left;
+                ul {
+                    width: 100%;
+                    padding: 0;
+                }
+            }
+            div.person-table-right {
+                float: right;
+                ul {
+                    width: 100%;
+                    padding: 0;
+                }
+            }
+            ul {
+                list-style-type: none;
+                li {
+                    &.occupation {
+                        text-transform: capitalize;                        
+                    }
+                    list-style-type: none;
+                    text-align: left !important;
+                    margin: 5px 0;
+                }
+            }
+        }
+    }
 }
 
 // TODO Don't do this
