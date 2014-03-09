@@ -6,6 +6,9 @@
 <template name="select_time">
     {{> select_from}}
     {{> select_to}}
+</template>
+
+<template name="select_hpi_l">
     {{> select_l}}
 </template>
 
@@ -15,84 +18,95 @@
 
 <!-- Dropdown Menus -->
 <template name="country_exporters_mode">
-    {{> select_dataset}}
     {{> select_country}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="histogram_country_exporters_mode">
-    {{> select_dataset}}
     {{> select_country}}
     {{> select_industry_order}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="country_importers_mode">
-    {{> select_dataset}}
     {{> select_language}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="histogram_domain_mode">
-    {{> select_dataset}}
     {{> select_category}}
     {{> select_country_order}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="domain_mode">
-    {{> select_dataset}}
     {{> select_category}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="bilateral_exporters_mode">
-    {{> select_dataset}}
     {{> select_country}}
     {{> select_language}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}    
 </template>
 
 <template name="bilateral_importers_mode">
-    {{> select_dataset}}
     {{> select_country}}
     {{> select_category}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="matrix_exports_mode">
-    {{> select_dataset}}
-    {{> select_time }}
     {{> select_gender}}
     {{> select_country_order}}
     {{> select_industry_order}}
+    {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="country_vs_country_mode">
-    {{> select_dataset}}
     {{> select_countryX}}
     {{> select_countryY}}
     {{> select_time }}
     {{> select_scale}}
     {{> select_mirror}}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="language_vs_language_mode">
-    {{> select_dataset}}
     {{> select_languageX}}
     {{> select_languageY}}
     {{> select_time }}
     {{> select_scale}}
     {{> select_mirror}}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="domain_vs_domain_mode">
-    {{> select_dataset}}
     {{> select_categoryX}}
     {{> select_categoryY}}
     {{> select_time }}
     {{> select_scale}}
     {{> select_mirror}}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="countries_ranking_mode">
@@ -113,9 +127,10 @@
 </template>
 
 <template name="map_mode">
-    {{> select_dataset}}
     {{> select_category}}
     {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
 </template>
 
 <template name="select_country">
