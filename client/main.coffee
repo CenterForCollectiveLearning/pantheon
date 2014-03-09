@@ -97,6 +97,10 @@ Meteor.startup ->
   # Observatory.logTemplates()
   # Observatory.logCollection()
   # Observatory.logMeteor()
+  SEO.config
+    title: "Pantheon - Mapping Historical Cultural Production"
+    meta:
+      description: "Pantheon is a project celebrating our global cultural heritage - we are compiling, analyzing and visualizing datasets that can help us understand the process of global cultural development. Dive in, visualize, and enjoy."
 
   # Bypass the need for the mergebox to loaded people for each client
   Session.set("peopleReady", false)
