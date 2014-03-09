@@ -86,7 +86,7 @@ table {
 			&.even {
 				background-color: @color_beige;
 			}
-			&:hover{
+			&:not(.nohover):hover{
 				background-color: @color_grey;
 			}
 			td {

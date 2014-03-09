@@ -157,7 +157,7 @@ Template.select_l.events =
     Router.go path.join("/")
   "click #HPI-button": (d) -> 
     path = window.location.pathname.split("/")
-    path[7] = "H0"
+    path[7] = "H15"
     Router.go path.join("/")   
 
 Template.select_gender.female_active = -> if Session.equals("gender", "female") then "active" else ""
@@ -259,7 +259,7 @@ Template.select_dataset.rendered = ->
         path[4] = categoryY
       else 
     if dataset is "OGC"
-      path[7] = 'H0' # set the default index value for Pantheon data
+      path[7] = 'H15' # set the default index value for Pantheon data
       # treemap by country
       if (vizMode is 'country_exports') and (Countries.find({dataset:dataset, countryCode: Session.get("country")}).count() is 0)
         countryCode = getRandomFromArray(pantheonCountries)

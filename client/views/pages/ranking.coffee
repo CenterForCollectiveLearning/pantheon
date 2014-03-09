@@ -22,12 +22,12 @@ Template.rankings.events =
       $("#rankingMenu").hide("fast")
       Session.set("showMobileRankingMenu", false)
 
-
-Template.rankings.showMenu = ->
-  if Session.equals("mobile", true)
-    Session.equals("showMobileRankingMenu", true)
-  else 
-    true
+Template.rankings.rendered = ->
+  # keep showing menu unless user collapses the search parameters
+  if Session.equals("showMobileRankingMenu", true)
+    $(".fa-search-plus").hide()
+    $(".fa-search-minus").show()
+    $("#rankingMenu").show()
 
 Template.rankings.entity = ->
   entity = Session.get "entity"
@@ -133,7 +133,7 @@ Template.ranking_table.rendered = ->
         if dataset is "OGC" and clickTooltip
           [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,0), toMillions(p.TotalPageViews), toDecimal(p.HPI,2)]  
         else if Session.equals("page", "rankings") and mobile
-          [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), toDecimal(p.HPI,2)]  
+          [0, p.name, p.birthyear, p.countryCode, p.occupation.capitalize(), toDecimal(p.HPI,2)]  
         else if dataset is "OGC" and not mobile
           [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), toDecimal(p.HPI,3)]
         else
@@ -186,14 +186,12 @@ Template.ranking_table.rendered = ->
         ,
           sTitle: "Name"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
-          sWidth: "20%"
         ,
           sTitle: "Birth Year"
         ,
-          sTitle: "Gender"
+          sTitle: "Country"
         ,
-          sTitle: "Occupation"
-          sWidth: "15%"
+          sTitle: "Domain"
         , 
           sTitle: "HPI"
         ]
@@ -330,3 +328,5 @@ Template.ranking_table.rendered = ->
     oTable.fnAdjustColumnSizing()
 
   $(@find("select")).chosen()
+  if mobile
+    $("tr").addClass("nohover")
