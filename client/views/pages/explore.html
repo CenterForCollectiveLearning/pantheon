@@ -2,9 +2,11 @@
 <template name="explore">
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="page-top {{#unless mobile}}span8 offset2{{else}}span12 mobile{{/unless}}">   
-                {{> question}} 
-                {{> date_header}}
+            <div class="page-top {{#unless mobile}}span8 offset2{{else}}span12 mobile{{/unless}}">
+                {{#if dataReady}}   
+                    {{> question}} 
+                    {{> date_header}}
+                {{/if}}
             </div>
             {{#unless mobile}}
             <div class="page-top span2">
