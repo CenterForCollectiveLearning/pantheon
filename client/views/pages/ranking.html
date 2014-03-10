@@ -65,10 +65,12 @@
     <div class="term">Ranking</div><div class="definition">Rank Index</div>
     <div class="term">Country</div><div class="definition">Country of Birth</div>
     <div class="term">Number of people</div><div class="definition">Total number of globally known people</div>
+    {{#unless mobile}}
     <div class="term">% Women</div><div class="definition">Percent women</div>
     <div class="term">Diversity</div><div class="definition">The number of unique cultural domains exported by a country</div>
     <div class="term">i50</div><div class="definition">The total number of individuals present in at least 50 Wikipedia languages</div>
     <div class="term">H-index</div><div class="definition">Similar to the H-index measure for publications - a country has index h if h individuals from that country have presence in at least h Wikipedia languages.</div>
+    {{/unless}}
     <div class="term">HCPI</div><div class="definition">Historical Cultural Production Index - the aggregate HPI of the individuals from a specific country</div>
 </template>
 
@@ -77,7 +79,11 @@
     <div class="term">Name</div><div class="definition">Name of Individual</div>
     <div class="term">Country</div><div class="definition">Country of Birth</div>
     <div class="term">Birth Year</div><div class="definition">Birth year of individual</div>
+    {{#unless mobile}}
     <div class="term">Gender</div><div class="definition">Gender</div>
+    {{/unless}}
+    <div class="term">Domain</div><div class="definition">Highest level of domain classification</div>
+    {{#unless mobile}}
     <div class="term">Occupation</div><div class="definition">lowest level of domain classification</div>
     <div class="term">L</div><div class="definition">Number of Wikipedia language editions</div>
     <div class="term">L*</div><div class="definition">Effective number of languages.</div>
@@ -85,16 +91,21 @@
     <div class="term">English Page Views (PV<sub>e</sub>)</div><div class="definition">Page views within the English Wikipedia from Jan 2008 - Dec 2013</div>
     <div class="term">Non-English Page Views (PV<sub>ne</sub>)</div><div class="definition">Page views within all non-English Wikipedias from Jan 2008 - Dec 2013</div>
     <div class="term">Standard Deviation of Page Views (&sigma;<sub>PV</sub>)</div><div class="definition">Standard deviation of total page views from Jan 2008 - Dec 2013</div>
+    {{/unless}}
     <div class="term">HPI</div><div class="definition">Historical Popularity Index</div>
 </template>
 
 <template name="domains_columns">
     <div class="term">Ranking</div><div class="definition">Rank Index</div>
     <div class="term">Occupation</div><div class="definition">Lowest level of domain classification</div>
+    {{#unless mobile}}
     <div class="term">Industry</div><div class="definition">Second level of domain classification</div>
+    {{/unless}}
     <div class="term">Domain</div><div class="definition">Highest level of domain classification</div>
     <div class="term">Total Exporters</div><div class="definition">The number of countries that export the specified domain</div>
+    {{#unless mobile}}
     <div class="term">% Women</div><div class="definition">Percent women</div>
+    {{/unless}}
     <div class="term">Total People</div><div class="definition">Total individuals in this category</div>
 </template>
 
