@@ -165,6 +165,10 @@
 	letter-spacing: 1px;
 	font-weight: bold;
 	border-bottom: 1px solid @color_pantheon_black;
+
+	&.mobile {
+		padding-top: 10px;
+	}
 }
 
 div.ui-slider {
@@ -259,6 +263,10 @@ div.ui-slider {
 
 div.viz-options {
 	width: 100%;
+}
+
+div.parameters.mobile {
+	margin-bottom: 2em;
 }
 
 .parameter-selection {

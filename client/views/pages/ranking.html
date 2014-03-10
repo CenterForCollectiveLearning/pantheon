@@ -12,7 +12,7 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="{{#unless mobile}}page-left span2{{else}}page-middle span12 {{/unless}} parameters" style="{{#if mobile}}display:none{{/if}}">
+                <div class="{{#unless mobile}}page-left span2{{else}} span12 mobile {{/unless}}parameters" style="{{#if mobile}}display:none{{/if}}">
                     <div class="viz-selector">
                         {{> ranking_selections}}
                     </div>
@@ -27,20 +27,22 @@
                     {{/if}}
                 </div>
 
-            {{#if mobile}}
-            </div>
-            <div class="row-fluid">
-            {{/if}}
-                <div class="column-descriptions {{#unless mobile}}page-right span2{{else}} page-middle span12{{/unless}}">
-                    <div class="section-header">
-                        Definitions
-                    </div>
-                    {{columnDescriptions}}
+            {{#if rankingdataReady}}     
+                {{#if mobile}}
                 </div>
-            {{#if mobile}}
-            </div>
+                <div class="row-fluid">
+                {{/if}}
+                    <div class="column-descriptions {{#unless mobile}}page-right     span2{{else}} page-middle span12{{/unless}}">
+                        <div class="section-header{{#if mobile}} mobile{{/if}}">
+                            Definitions
+                        </div>
+                        {{columnDescriptions}}
+                    </div>
+                {{#if mobile}}
+                </div>
+                {{/if}}
+                </div>
             {{/if}}
-            </div>
         </div>
     </div>
 </template>
@@ -49,11 +51,10 @@
     {{#unless mobile}}
     <div class="section-header">
         Rankings
-    </div>
     {{/unless}}
     {{> select_entity}}
     <div class="spacer"></div>
-    <div class="section-header">
+    <div class="section-header {{#if mobile}} mobile{{/if}}">
         Parameters
     </div>
     {{> select_mode}}

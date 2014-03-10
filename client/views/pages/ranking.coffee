@@ -15,7 +15,7 @@ Template.rankings.rendered = ->
   if Session.equals("showMobileRankingMenu", true)
     $(".fa-search-plus").hide()
     $(".fa-search-minus").show()
-    $("#rankingMenu").show()
+    $(".parameters").show()
 
 Template.rankings.entity = ->
   entity = Session.get "entity"

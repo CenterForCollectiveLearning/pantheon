@@ -20,6 +20,12 @@
 #   .domain(["Afro-Asiatic", "Altaic", "Austro-Asiatic", "Austronesian", "Basque", "Caucasian", "Creoles and pidgins", "Dravidian", "Eskimo-Aleut", "Indo-European", "Niger-Kordofanian", "North American Indian", "Sino-Tibetan", "South American Indian", "Tai", "Uralic"])
 #   .range(["#E0BA9B", "#D95B43", "#43c1d9", "#C02942", "#546c97", "#d278c2", "#53a9f1", "#79BD9A", "#A69E80", "#ECD078", "#D28574", "#E7EDEA", "#CEECEF", "#912D1D", "#DE7838", "#59AB6D"])
 
+Template.visualization.rendered = ->
+  if Session.equals("showMobileRankingMenu", true)
+    $(".fa-search-plus").hide()
+    $(".fa-search-minus").show()
+    $(".parameters").show()
+
 # Re-render visualization template on window resize
 Template.visualization.resize = -> if Session.get "resize" then return
 

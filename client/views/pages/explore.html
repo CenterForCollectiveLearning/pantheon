@@ -20,7 +20,7 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="{{#unless mobile}}page-left span2{{else}} span12 {{/unless}} parameters" style="{{#if mobile}}display:none{{/if}}">
+                <div class="{{#unless mobile}}page-left span2{{else}} span12 mobile{{/unless}} parameters" style="{{#if mobile}}display:none{{/if}}">
                     {{#unless mobile}}
                         <canvas id="canvas" width="0" height="0" style="display: none"></canvas>
                     {{/unless}}
@@ -57,7 +57,7 @@
     </div>
     <div class="spacer"></div>
     <div class="viz-options">
-        <div id="parameters" class="section-header">
+        <div id="parameters" class="section-header{{#if mobile}} mobile{{/if}}">
             Parameters
         </div>
         {{> select_mode }}
