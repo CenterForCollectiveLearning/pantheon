@@ -6,7 +6,9 @@
     		    {{#unless mobile}}
         		    {{> person_left}}
 	           	{{/unless}}
+
 	           	{{> person_page}}
+
 	           	{{#unless mobile}}
     	           	{{> person_right}}
 	             {{/unless}}
@@ -24,6 +26,18 @@
 
 <template name="search_result">
 	{{name}}
+</template>
+
+<template name="People_mobile">
+	{{> person_page}}
+</template>
+
+<template name="People_web">
+	{{#if dataReady}}
+		{{> person_left}}
+		{{> person_page}}
+		{{> person_right}}
+	{{/if}}
 </template>
 
 <template name="person_left">
