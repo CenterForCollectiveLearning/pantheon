@@ -5,4 +5,6 @@
 @Countries = new Meteor.Collection "countries"
 @Domains = new Meteor.Collection "domains"
 @People = new Meteor.Collection "people"
-@Imports = new Meteor.Collection "imports"
+
+@SeoCollection = new Meteor.Collection "SeoCollection"
+

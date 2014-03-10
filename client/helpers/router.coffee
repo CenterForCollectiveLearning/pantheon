@@ -97,14 +97,6 @@ Router.map ->
       id = "#" + hash
       Session.set("pageScrollID", id)
 
-  @route "vision",
-    data: ->
-      Session.set "page", @template
-
-  @route "references",
-    data: ->
-      Session.set "page", @template
-
   @route "people",
     path: "/people"
     before: [->

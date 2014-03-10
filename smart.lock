@@ -16,7 +16,8 @@
       "tutorials": {
         "git": "https://github.com/kevinzenghu/meteor-tutorials.git",
         "branch": "master"
-      }
+      },
+      "ms-seo": {}
     },
     "packages": {
       "jquery-ui": {
@@ -49,6 +50,11 @@
         "branch": "master",
         "commit": "ae1ee2409c1a40f8d15a2607d8a432bc4f80bab7"
       },
+      "ms-seo": {
+        "git": "https://github.com/DerMambo/ms-seo",
+        "tag": "v0.1.4",
+        "commit": "6cd2cad761b03fc0ae0bde23f4d418d2313d84d9"
+      },
       "bootboxjs": {
         "git": "https://github.com/TimHeckel/meteor-bootboxjs.git",
         "tag": "v3.2.2",
@@ -56,8 +62,8 @@
       },
       "jqueryui": {
         "git": "https://github.com/mizzao/meteor-jqueryui.git",
-        "tag": "v1.10.3r2",
-        "commit": "d54f75cfad37ff8ce6ef9ad49de55738ba921af7"
+        "tag": "v1.10.4",
+        "commit": "c75906fc9e1e19abf1ad5b2963925122ff8a0336"
       },
       "build-fetcher": {
         "git": "https://github.com/mizzao/meteor-build-fetcher.git",

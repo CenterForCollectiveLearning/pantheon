@@ -17,6 +17,7 @@
     "tutorials": {
       "git": "https://github.com/kevinzenghu/meteor-tutorials.git",
       "commit": "ae1ee2409c1a40f8d15a2607d8a432bc4f80bab7"
-    }
+    },
+    "ms-seo": {}
   }
 }
