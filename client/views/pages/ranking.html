@@ -12,7 +12,7 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="{{#unless mobile}}page-left span2{{else}} span12 mobile {{/unless}}parameters" style="{{#if mobile}}display:none{{/if}}">
+                <div class="{{#unless mobile}}page-left span2{{else}} span12 mobile parameters{{/unless}}" style="{{#if mobile}}display:none{{/if}}">
                     <div class="viz-selector">
                         {{> ranking_selections}}
                     </div>
@@ -51,6 +51,7 @@
     {{#unless mobile}}
     <div class="section-header">
         Rankings
+    </div>
     {{/unless}}
     {{> select_entity}}
     <div class="spacer"></div>

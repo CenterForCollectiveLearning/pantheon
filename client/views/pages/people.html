@@ -1,21 +1,19 @@
 <template name="people">
 	<div class="page-top">
 		<div id="people-page" class="{{#if mobile}} mobile{{/if}}">
+			{{#if dataReady}}
     		{{#with person}}
     		    {{#unless mobile}}
-        		    {{#if dataReady}}
-	           	    	{{> person_left}}
-                    {{else}}
-                        {{> spinner}}
-	           	    {{/if}}
+        		    {{> person_left}}
 	           	{{/unless}}
 	           	{{> person_page}}
 	           	{{#unless mobile}}
-    	           	{{#if dataReady}}
-        	           	{{> person_right}}
-	             	{{/if}}
+    	           	{{> person_right}}
 	             {{/unless}}
 			{{/with}}
+			{{else}}
+    			{{> spinner}}
+			{{/if}}
 		</div>
 	</div>
 </template>
