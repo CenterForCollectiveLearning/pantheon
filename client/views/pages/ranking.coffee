@@ -175,9 +175,9 @@ Template.ranking_table.rendered = ->
           sTitle: "Name"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
-          sTitle: "Birth Year"
-        ,
           sTitle: "Country"
+        ,
+          sTitle: "Birth Year"
         ,
           sTitle: "Domain"
         , 
@@ -224,10 +224,10 @@ Template.ranking_table.rendered = ->
         aoColumns = [
           sTitle: "Rank"
         ,
-          sTitle: "Domain"
+          sTitle: "Occupation"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/domain_exports_to/" + obj.aData[obj.iDataColumn].toUpperCase() + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
-          sTitle: "Occupation"
+          sTitle: "Domain"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/domain_exports_to/" + obj.aData[obj.iDataColumn].toUpperCase() + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
           sTitle: "Total Exporters"
