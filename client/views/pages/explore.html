@@ -76,27 +76,27 @@
         <h3 class="app">TREEMAPS</h3>
         <div>
             <ul>
-                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="country_exports" class="{{country_treemap_active}}">By Country</a></span></li>
-                <li><span><a href="#" data-viz-type="treemap" data-viz-mode="domain_exports_to" class="{{domain_treemap_active}}">By Domain</a></span></li>
+                <li><span><a href="/treemap/country_exports/{{randomCountry}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="country_exports" class="{{country_treemap_active}}">By Country</a></span></li>
+                <li><span><a href="/treemap/domain_exports_to/{{randomDomain}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="domain_exports_to" class="{{domain_treemap_active}}">By Domain</a></span></li>
             </ul>
         </div>
         <h3 class="app">MATRICES</h3>
         <div>
             <ul>
-                <li><span><a href="#" data-viz-type="matrix" data-viz-mode="matrix_exports" class="{{matrix_active}}">Countries and Domains</a></span></li>
+                <li><span><a href="/matrix/matrix_exports/all/both/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="matrix" data-viz-mode="matrix_exports" class="{{matrix_active}}">Countries and Domains</a></span></li>
             </ul>
         </div>
         <h3 class="app">SCATTERPLOTS</h3>
         <div>
             <ul>
-                <li><span><a href="#" data-viz-type="scatterplot" data-viz-mode="country_vs_country" class="{{cvc_active}}">Country vs. Country</a></span></li>
-                <li><span><a href="#" data-viz-type="scatterplot" data-viz-mode="domain_vs_domain" class="{{dvd_active}}">Domain vs. Domain</a></span></li>
+                <li><span><a href="/scatterplot/country_vs_country/{{randomCountryX}}/{{randomCountryY}}/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="scatterplot" data-viz-mode="country_vs_country" class="{{cvc_active}}">Country vs. Country</a></span></li>
+                <li><span><a href="/scatterplot/domain_vs_domain/{{randomDomainX}}/{{randomDomainY}}/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="scatterplot" data-viz-mode="domain_vs_domain" class="{{dvd_active}}">Domain vs. Domain</a></span></li>
             </ul>
         </div>
         <h3 class="app">MAPS</h3>
         <div>
             <ul>
-                <li><span><a href="#" data-viz-type="map" data-viz-mode="map" class="{{map_active}}">Global Production</a></span></li>
+                <li><span><a href="/map/map/{{randomDomain}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="map" data-viz-mode="map" class="{{map_active}}">Global Production</a></span></li>
             </ul>
         </div>
     </div>

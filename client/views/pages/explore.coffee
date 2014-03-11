@@ -68,59 +68,69 @@ Template.accordion.matrix_active = -> if Session.equals("vizMode", "matrix_expor
 Template.accordion.cvc_active = -> if Session.equals("vizMode", "country_vs_country") then "active" else ""
 Template.accordion.dvd_active = -> if Session.equals("vizMode", "domain_vs_domain") then "active" else ""
 Template.accordion.map_active = -> if Session.equals("vizMode", "map") then "active" else ""
+Template.accordion.from = -> Session.get("from")
+Template.accordion.to = -> Session.get("to")
+Template.accordion.index = -> Session.get("langs")
+Template.accordion.dataset = -> if Session.equals("dataset", "murray") then "murray" else "pantheon"
+Template.accordion.randomCountry = -> if Session.equals("dataset", "murray") then getRandomFromArray(murrayCountries) else getRandomFromArray(countriesOverTenPeople)
+Template.accordion.randomDomain = -> if Session.equals("dataset", "murray") then getRandomFromArray(_.values(mpdomains)) else getRandomFromArray(_.keys(mpdomains))
+Template.accordion.randomCountryX = -> if Session.equals("dataset", "murray") then getRandomFromArray(murrayCountries.slice(0, murrayCountries.length/2)) else getRandomFromArray(countriesOverTenPeople.slice(0,countriesOverTenPeople.length/2))
+Template.accordion.randomDomainX = -> if Session.equals("dataset", "murray") then getRandomFromArray((_.values(mpdomains)).slice(0, (_.values(mpdomains)).length/2)) else getRandomFromArray((_.keys(mpdomains)).slice(0, (_.keys(mpdomains)).length/2))
+Template.accordion.randomCountryY = -> if Session.equals("dataset", "murray") then getRandomFromArray(murrayCountries.slice(murrayCountries.length/2)) else getRandomFromArray(countriesOverTenPeople.slice(countriesOverTenPeople.length/2))
+Template.accordion.randomDomainY = -> if Session.equals("dataset", "murray") then getRandomFromArray((_.values(mpdomains)).slice((_.values(mpdomains)).length/2)) else getRandomFromArray((_.keys(mpdomains)).slice((_.keys(mpdomains)).length/2))
 
-Template.accordion.events = 
-  "click li a": (d) ->
-    srcE = (if d.srcElement then d.srcElement else d.target)
-    vizType = $(srcE).data "viz-type"
-    vizMode = $(srcE).data "viz-mode"
-    dataset = Session.get("dataset")
-    # Parameters depend on vizMode (e.g countries -> languages for exports)
-    [paramOne, paramTwo] = IOMapping[vizMode]["in"]
-    unless paramOne is "all"
-      paramOne = Session.get(paramOne)
-    unless paramTwo is "all"
-      paramTwo = Session.get(paramTwo)
-    if vizMode in ["domain_exports_to","map"] and dataset is "OGC"# to randomize the domain when you click on domains
-      paramOne = getRandomFromArray(_.keys(mpdomains))
-    if vizMode in ["domain_exports_to","map"] and dataset is "murray"# to randomize the domain when you click on domains
-      paramOne = getRandomFromArray(_.values(mpdomains))
-    if vizMode is "country_exports" and dataset is "OGC"# to randomize the domain when you click on domains
-      paramOne = getRandomFromArray(countriesOverTenPeople)
-    if vizMode is "country_exports" and dataset is "murray"# to randomize the domain when you click on domains
-      paramOne = getRandomFromArray(murrayCountries)
-    if vizMode is "country_vs_country" and dataset is "OGC"
-      paramOne = getRandomFromArray(countriesOverTenPeople)
-      paramTwo = getRandomFromArray(countriesOverTenPeople)
-      while paramOne is paramTwo
-        paramTwo = getRandomFromArray(countriesOverTenPeople)
-    if vizMode is "country_vs_country" and dataset is "murray"
-      paramOne = getRandomFromArray(murrayCountries)
-      paramTwo = getRandomFromArray(murrayCountries)
-      while paramOne is paramTwo
-        paramTwo = getRandomFromArray(murrayCountries)
-    if vizMode is "domain_vs_domain" and dataset is "OGC"
-      paramOne = getRandomFromArray(_.keys(mpdomains))
-      paramTwo = getRandomFromArray(_.keys(mpdomains))
-      while paramOne is paramTwo
-        paramTwo = getRandomFromArray(_.keys(mpdomains))
-    if vizMode is "domain_vs_domain" and dataset is "murray"
-      paramOne = getRandomFromArray(_.values(mpdomains))
-      paramTwo = getRandomFromArray(_.values(mpdomains))
-      while paramOne is paramTwo
-        paramTwo = getRandomFromArray(_.values(mpdomains))
+# Template.accordion.events = #rewrite this such that links are rendered instead of Router.go
+#   "click li a": (d) ->
+#     srcE = (if d.srcElement then d.srcElement else d.target)
+#     vizType = $(srcE).data "viz-type"
+#     vizMode = $(srcE).data "viz-mode"
+#     dataset = Session.get("dataset")
+#     # Parameters depend on vizMode (e.g countries -> languages for exports)
+#     [paramOne, paramTwo] = IOMapping[vizMode]["in"]
+#     unless paramOne is "all"
+#       paramOne = Session.get(paramOne)
+#     unless paramTwo is "all"
+#       paramTwo = Session.get(paramTwo)
+#     if vizMode in ["domain_exports_to","map"] and dataset is "OGC"# to randomize the domain when you click on domains
+#       paramOne = getRandomFromArray(_.keys(mpdomains))
+#     if vizMode in ["domain_exports_to","map"] and dataset is "murray"# to randomize the domain when you click on domains
+#       paramOne = getRandomFromArray(_.values(mpdomains))
+#     if vizMode is "country_exports" and dataset is "OGC"# to randomize the domain when you click on domains
+#       paramOne = getRandomFromArray(countriesOverTenPeople)
+#     if vizMode is "country_exports" and dataset is "murray"# to randomize the domain when you click on domains
+#       paramOne = getRandomFromArray(murrayCountries)
+#     if vizMode is "country_vs_country" and dataset is "OGC"
+#       paramOne = getRandomFromArray(countriesOverTenPeople)
+#       paramTwo = getRandomFromArray(countriesOverTenPeople)
+#       while paramOne is paramTwo
+#         paramTwo = getRandomFromArray(countriesOverTenPeople)
+#     if vizMode is "country_vs_country" and dataset is "murray"
+#       paramOne = getRandomFromArray(murrayCountries)
+#       paramTwo = getRandomFromArray(murrayCountries)
+#       while paramOne is paramTwo
+#         paramTwo = getRandomFromArray(murrayCountries)
+#     if vizMode is "domain_vs_domain" and dataset is "OGC"
+#       paramOne = getRandomFromArray(_.keys(mpdomains))
+#       paramTwo = getRandomFromArray(_.keys(mpdomains))
+#       while paramOne is paramTwo
+#         paramTwo = getRandomFromArray(_.keys(mpdomains))
+#     if vizMode is "domain_vs_domain" and dataset is "murray"
+#       paramOne = getRandomFromArray(_.values(mpdomains))
+#       paramTwo = getRandomFromArray(_.values(mpdomains))
+#       while paramOne is paramTwo
+#         paramTwo = getRandomFromArray(_.values(mpdomains))
 
-    # Use session variables as parameters for a viz type change
-    Router.go "explore",
-      vizType: vizType
-      vizMode: vizMode
-      paramOne: paramOne
-      paramTwo: paramTwo
-      from: Session.get("from")
-      to: Session.get("to")
-      langs: Session.get("langs")
-      gender: Session.get("gender")
-      dataset: if dataset is "murray" then dataset else if dataset is "OGC" then "pantheon"
+#     # Use session variables as parameters for a viz type change
+#     Router.go "explore",
+#       vizType: vizType
+#       vizMode: vizMode
+#       paramOne: paramOne
+#       paramTwo: paramTwo
+#       from: Session.get("from")
+#       to: Session.get("to")
+#       langs: Session.get("langs")
+#       gender: Session.get("gender")
+#       dataset: if dataset is "murray" then dataset else if dataset is "OGC" then "pantheon"
 
 # Global helper for data ready
 Handlebars.registerHelper "dataReady", ->
@@ -235,7 +245,7 @@ Template.question.question = ->
       if vars.gender_var is "ratio" then return new Handlebars.SafeString("What's the " + boldify("female to male") + " ratio for each country and cultural domain?")
       else return new Handlebars.SafeString("How many globally known " + boldify(vars.gender_var) + " are associated with each country and cultural domain?")
     when "country_vs_country" then return new Handlebars.SafeString("How do " + boldify(vars.countryX) + " and " + boldify(vars.countryY) + " compare in terms of number of globally known people?")
-    when "domain_vs_domain" then return new Handlebars.SafeString("What countries have produced globally known people in " + boldify(vars.categoryX) + " and " + boldify(vars.categoryY))
+    when "domain_vs_domain" then return new Handlebars.SafeString("What countries have produced globally known people in " + boldify(vars.categoryX) + " and " + boldify(vars.categoryY) + "?")
 
 #
 # TOOLTIPS (client-side implementation)
