@@ -35,6 +35,9 @@
             </div>
             {{#if mobile}}
             <div class="row-fluid">
+                {{> mobile_tooltip_ranking}}
+            </div>
+            <div class="row-fluid">
                 {{#if initialDataReady}}
                     {{> ranked_list }}
                 {{/if}}
@@ -146,27 +149,54 @@
     </a>
 </template>
 
+<template name="mobile_tooltip_ranking">
+    {{#if tooltipShown}}
+        {{#if tooltipDataReady}}
+        <div class="ranked_list">
+            <div class="section-header">{{heading}} ({{count}})</div>
+            <div class="content">
+                {{#if empty}}
+                <i>none for the selected criteria.</i>
+                {{else}}
+                <ol>
+                    {{#each top5}}
+                    {{debugContext}}
+                    {{> ranked_person person_lookup}}
+                    {{/each}}
+                </ol>
+                {{/if}}
+            </div>
+            {{#if pantheon}}
+            <a href="{{full_ranking_link}}">Go to full ranking list...</a>
+            {{/if}}
+            </div>
+        </div>
+        {{/if}}
+    {{/if}}
+</template>
+
 <!-- Tooltips -->
 <template name="tooltip">
     {{#if tooltipShown}}
         {{#if tooltipDataReady}}
-        <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
-            <div id="tooltip-inner">
-                <div id="tooltip-top">
-                    <span class="category">{{heading}}</span>
-                
-                    <div class="total-count">{{count}} {{suffix}}</div>
-                </div>
-                <div id="tooltip-bottom">
-                    <div class="list">
-                        {{#each top5}} 
-                        {{> tt_person person_lookup}} 
-                        {{/each}}
+            {{#unless mobile}}
+            <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px"    >
+                <div id="tooltip-inner">
+                    <div id="tooltip-top">
+                        <span class="category">{{heading}}</span>
+                        <div class="total-count">{{count}} {{suffix}}</div>
                     </div>
-                    {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}}
+                    <div id="tooltip-bottom">
+                        <div class="list">
+                            {{#each top5}} 
+                                {{> tt_person person_lookup}} 
+                            {{/each}}
+                        </div>
+                        {{#if more}}<span class="extras">({{extras}} more)</span>    {{/if}}
+                    </div>
                 </div>
             </div>
-        </div>
+            {{/unless}}
         {{/if}}
     {{/if}}
 </template>

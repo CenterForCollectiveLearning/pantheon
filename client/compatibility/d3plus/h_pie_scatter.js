@@ -134,6 +134,7 @@ d3plus.pie_scatter = function(vars) {
         .attrTween("d",arcTween)
         
     })
+
   
   // update
   
@@ -274,23 +275,6 @@ d3plus.pie_scatter = function(vars) {
         ex = {"fill":num+"/"+den+" ("+vars.number_format((num/den)*100,"share")+"%)"}
       }
       var tooltip_data = get_tooltip_data(d,"short",ex)
-      
-      // d3plus.tooltip.remove(vars.type)
-      // d3plus.tooltip.create({
-      //   "id": vars.type,
-      //   "color": find_color(d[vars.id_var]),
-      //   "icon": find_variable(d[vars.id_var],"icon"),
-      //   "style": vars.icon_style,
-      //   "data": tooltip_data,
-      //   "title": find_variable(d[vars.id_var],vars.text_var),
-      //   "x": x+vars.graph.margin.left+vars.margin.left+vars.parent.node().offsetLeft,
-      //   "y": y+vars.graph.margin.top+vars.margin.top+vars.parent.node().offsetTop,
-      //   "offset": radius,
-      //   "arrow": true,
-      //   "footer": footer_text(),
-      //   "mouseevents": false
-      // })
-      
     })
     .on(d3plus.evt.out, function(d){
       Session.set("hover", false);

@@ -148,7 +148,7 @@ d3plus.tree_map = function(vars) {
         // Desired behavior: If moving over an element to reach another, don't trigger tooltip
         // If the tooltip is already shown for the same cell, just update the positon
 
-        if (Session.get("showTooltip")) {
+        if (!Session.get("mobile") && Session.get("showTooltip")) {
           var position = {
             "left": (d3.event.clientX + 40),
             "top": (d3.event.clientY - 45)
@@ -194,6 +194,7 @@ d3plus.tree_map = function(vars) {
         Session.set("tooltipCategoryLevel", categoryLevel);
         Session.set("tooltipCountryCode", countryCode);
         Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
+        Template.mobile_tooltip_ranking.heading = countryCode !== "all" ? countryName + ": " + category : category;
         
         Session.set("showTooltip", true);
       }

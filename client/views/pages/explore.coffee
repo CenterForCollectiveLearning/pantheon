@@ -167,8 +167,11 @@ Template.ranked_person.birthday = ->
 Template.ranked_person.index = ->
   if Session.get("indexType") is "HPI" and Session.get("dataset") is "OGC" then @HPI?.toFixed(2) else @numlangs
 
+Template.mobile_tooltip_ranking.full_ranking_link = ->
+  "/rankings/people/" + Session.get("tooltipCountryCode") + "/" + Session.get("tooltipCategory") + "/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs")
+
 Template.ranked_list.full_ranking_link = ->
-    "/rankings/people/" + Session.get("country") + "/" + Session.get("category") + "/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs")
+  "/rankings/people/" + Session.get("country") + "/" + Session.get("category") + "/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs")
 
 Template.date_header.helpers
   from: ->
@@ -248,7 +251,7 @@ Template.question.question = ->
     when "domain_vs_domain" then return new Handlebars.SafeString("What countries have produced globally known people in " + boldify(vars.categoryX) + " and " + boldify(vars.categoryY) + "?")
 
 #
-# TOOLTIPS (client-side implementation)
+# TOOLTIPS 
 # 
 Template.tooltip.helpers
   tooltipShown: -> (Session.get("showTooltip") and not Session.get("clicktooltip"))
@@ -275,6 +278,36 @@ Template.tooltip.helpers
   extras: ->
     doc = Tooltips.findOne(_id: "count")
     (if (typeof doc isnt "undefined") then doc.count - 5 else 0)
+
+#
+# MOBILE TOOLTIPS (rankings tables)
+# 
+Template.mobile_tooltip_ranking.helpers
+  tooltipShown: -> (Session.get("showTooltip") and not Session.get("clicktooltip"))
+
+  position: -> Session.get "tooltipPosition"
+
+  top5: -> # Total count is also passed
+    if Session.get("indexType") is "HPI" then order = {HPI:-1}
+    else order = {numlangs:-1}
+    Tooltips.find({_id:{$not: "count"}}, {sort:order})
+
+  count: ->
+    doc = Tooltips.findOne(_id: "count")
+    (if (typeof doc isnt "undefined") then doc.count else 0)
+
+  suffix: ->
+    doc = Tooltips.findOne(_id: "count")
+    (if (typeof doc isnt "undefined" and doc.count > 1) then "individuals" else "individual")
+
+  more: ->
+    doc = Tooltips.findOne(_id: "count")
+    (if (typeof doc isnt "undefined") then doc.count > 5 else false)
+
+  extras: ->
+    doc = Tooltips.findOne(_id: "count")
+    (if (typeof doc isnt "undefined") then doc.count - 5 else 0)
+
 
 Template.tt_person.birthday = -> (if (@birthyear < 0) then (@birthyear * -1) + " B.C." else @birthyear)
 
@@ -374,6 +407,9 @@ Template.histogram_country_exports.helpers
   to : -> Session.get("to")
   L : -> Session.get("langs")
   dataset : -> Session.get("dataset")
+
+Template.mobile_tooltip_ranking.pantheon = ->
+  Session.equals("dataset", "OGC") and not Session.equals("vizType", "scatterplot") and not (PeopleTopN.find().count() is 0)
 
 Template.clicktooltip.pantheon = ->
   Session.equals("dataset", "OGC") and not Session.equals("vizType", "scatterplot") and not (PeopleTopN.find().count() is 0)

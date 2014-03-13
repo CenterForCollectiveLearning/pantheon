@@ -249,14 +249,6 @@ header {
 	   	    height: 55px;
 	    }
 
-	    @media (max-width: 1200px) {
-	        ul.nav {
-	        	li.main_nav {
-	        		float: none;
-	        	}
-	        }
-	    }
-
         // TODO Deal with shifts due to font-weight changes	    
 	    .nav > li > a {
 	    	.no-select;
@@ -277,13 +269,6 @@ header {
 	    		border-bottom: 2px solid @color_pantheon_black;
 	    	}
 	    }
-
-	    @media (max-width: 1200px) {
-	    	.nav > li > a {
-	    		height: 40px;
-	    		line-height: 20px;
-	    	}
-	    }
     
 	    .selected_section a {
 	    	font-weight: bold;
@@ -300,7 +285,6 @@ header {
 	    		}
 	    	}
 	    }
-    
 
 	    .pull-right {
 	    	padding-right: 140px;
@@ -320,6 +304,31 @@ header {
 	    	@media (max-width: 1200px) {
 	    		li {
 	    			text-align: right;
+	    		}
+	    	}
+	    }
+
+	    @media (max-width: 1200px) {
+	    	.pull-left {
+	    		padding-left: 20px;
+	    		li {
+	    			a {
+	    				padding: 10px 10px;	    		
+	    				&:hover {
+	    					padding: 10px 9.5px;	    			    					
+	    				}
+	    			}
+	    		}
+	    	}
+	    	.pull-right {
+	    		padding-right: 22px;
+	    		li {
+	    			a {
+	    				padding: 10px 10px;	    		
+	    				&:hover {
+	    					padding: 10px 9.5px;	    			    					
+	    				}	    				
+	    			}
 	    		}
 	    	}
 	    }

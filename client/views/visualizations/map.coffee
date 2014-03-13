@@ -76,6 +76,7 @@ mouseover = (d) ->
     
     # Retrieve and pass data to template
     Template.tooltip.heading = countryName + ": " + category
+    Template.mobile_tooltip_ranking.heading = (if category isnt "all" then countryName + ": " + category else countryName)
     Template.tooltip.categoryA = countryName
     Template.tooltip.categoryB = category
     Session.set "showTooltip", true
@@ -229,7 +230,15 @@ Template.map_svg.rendered = ->
         value_color doc.count
       else
         "#FFF"
-    ).on("mousemove", mouseover).on("mouseout", mouseout).on("click", clickevent).on("touchstart", "mouseover").on("touchend", "mouseout")
+    ).on("mousemove", mouseover)
+    .on("mouseout", mouseout)
+    .on("click", (d) ->
+      if Session.get("mobile") then mouseOver(d)
+      else clickevent(d)
+      )
+    .on("touchstart", "mouseover")
+    .on("touchend", "mouseout")
+
     d3.select(".key").selectAll("text").text (d, i) ->
       value_range_big[i].toFixed 0
 
@@ -243,48 +252,3 @@ Template.map_svg.rendered = ->
 
 
 mouseoverCell = null
-
-#   ////////////////////////////////////////////
-#   // PUBLIC getter / setter functions
-#   ////////////////////////////////////////////
-#   map.width = function(value) {
-#     if (!arguments.length) return width;
-#     width = value;
-#     return map;
-# };
-
-# map.height = function(value) {
-#     if (!arguments.length) return height;
-#     height = value;
-#     return map;
-# };
-
-# map.year = function(value) {
-#     if (!arguments.length) return year;
-#     year = value;
-#     return map;
-# };
-
-# map.highlight = function(value) {
-#     if (!arguments.length) return highlight;
-#     highlight = value;
-#     return map;
-# };
-
-# map.order = function(value) {
-#     if (!arguments.length) return order;
-#     order = value;
-#     return map;
-# };
-
-# map.highlight = function(value) {
-#     if (!arguments.length) return highlight;
-#     highlight = value;
-#     return map;
-# };
-
-#   /////////////////////////////////////////////////////////////////////
-#   // BE SURE TO ALWAYS RETURN THE APP TO ALLOW FOR METHOD CHAINING
-#   ///////////////////////////////////////////////////////////////////// 
-#   return map;
-# }
