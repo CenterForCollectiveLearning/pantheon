@@ -101,6 +101,8 @@ Meteor.startup ->
     title: "Pantheon - Mapping Historical Cultural Production"
     meta:
       description: "Pantheon is a project celebrating our global cultural heritage - we are compiling, analyzing and visualizing datasets that can help us explore global cultural production. Dive in, visualize, and enjoy."
+    og:
+      image: "/pantheon-fbshare1.jpg"
 
   # Bypass the need for the mergebox to loaded people for each client
   Session.set("peopleReady", false)
