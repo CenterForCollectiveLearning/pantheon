@@ -18,9 +18,9 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
   projection =
     countryName: 1
     continentName: 1
-    HCPI: 1
     gender: 1
     numlangs: 1
+    HPI:1
     _id: 0
   country = {}
   data = People.find(criteria, projection).fetch()

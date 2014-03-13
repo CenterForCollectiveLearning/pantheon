@@ -6,7 +6,7 @@ toThousands = (x) ->
 
 toDecimal = (x, d) ->
   if typeof x is "string" or x instanceof String
-    x
+    parseFloat(x)?.toFixed d
   else
     x?.toFixed d
 
