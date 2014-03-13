@@ -148,7 +148,7 @@ color_gradient = ["#f2ecb4", "#f2e671", "#f6d626", "#f9b344", "#eb8c30", "#e84d2
 Template.map_svg.rendered = ->
   data = WorldMap.find().fetch()
   vars =
-      svg_height : $(".page-middle").height() - 80
+      svg_height : 485
       svg_width : $(".page-middle").width()
 
   mobile = Session.get("mobile")
@@ -216,7 +216,8 @@ Template.map_svg.rendered = ->
       d.id
     ).attr("stroke", "#eee").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
 
-    key_enter = svg.append("g").attr("class", "key").attr("transform", "translate(" + keyX_translate + "," + keyY_translate + ")").append("rect").call(key_gradient)
+    colorScale = d3.select(@find("svg.color-scale")).attr("width", $(".page-middle").width()).attr("height", "30px").append("g") 
+    key_enter = colorScale.append("g").attr("class", "key").append("rect").call(key_gradient)
 
     d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
       Math.round (50 * Math.pow((590 / 50), i / 10))
