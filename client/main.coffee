@@ -294,25 +294,25 @@ Template.defaultLayout.events =
 
 @openPane = (d) ->
   $(".left-pane").removeClass("closed")
-  $("div.logo").hide()  # TODO Handle logo correctly
+  $("div.logo, div#magnifying-glass").hide()  # TODO Handle logo correctly
   $("header.navbar").animate(left: ["60%", "easeOutExpo"], duration: 700)
   $("#background-wrapper").animate(left: ["60%", "easeOutExpo"], duration: 700)
   $("footer").animate(left: ["60%", "easeOutExpo"], 
     duration: 700
     complete: Session.set("paneOpen", true)
   )
-  $('#background-wrapper').bind('touchmove', (e) -> e.preventDefault());
+  # $('#background-wrapper').bind('touchmove', (e) -> e.preventDefault());
 
 @closePane = ->
   $(".left-pane").addClass("closed")
-  $("div.logo").show()
+  $("div.logo, div#magnifying-glass").show()
   $("header.navbar").animate(left: ["0%", "easeOutExpo"], duration: 700)
   $("#background-wrapper").animate(left: ["0%", "easeOutExpo"], duration: 700)
   $("footer").animate(left: ["0%", "easeOutExpo"], 
     duration: 700
     complete: Session.set("paneOpen", false)
     )
-  $('#background-wrapper').unbind('touchmove', (e) -> e.preventDefault());
+  # $('#background-wrapper').unbind('touchmove', (e) -> e.preventDefault());
 
 Template.nav.events = 
   "touchmove, mousedown #hamburger": (d) -> $(d.srcElement).addClass("mousedown")

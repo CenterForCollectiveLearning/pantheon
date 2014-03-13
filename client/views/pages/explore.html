@@ -130,7 +130,7 @@
             {{/if}}
         </div>
         {{#if pantheon}}
-        <a href="{{full_ranking_link}}">Go to full ranking list...</a>
+        <div class="full-ranking-list"><a href="{{full_ranking_link}}">Go to Full Ranking List</a></div>
         {{/if}}
     </div>
 </template>
@@ -152,7 +152,7 @@
 <template name="mobile_tooltip_ranking">
     {{#if tooltipShown}}
         {{#if tooltipDataReady}}
-        <div class="ranked_list">
+        <div class="ranked_list mobile-tooltip-ranking">
             <div class="section-header">{{heading}} ({{count}})</div>
             <div class="content">
                 {{#if empty}}
@@ -167,7 +167,7 @@
                 {{/if}}
             </div>
             {{#if pantheon}}
-            <a href="{{full_ranking_link}}">Go to full ranking list...</a>
+            <div class="full-ranking-list"><a href="{{full_ranking_link}}">Go to Full Ranking List</a></div>
             {{/if}}
             </div>
         </div>

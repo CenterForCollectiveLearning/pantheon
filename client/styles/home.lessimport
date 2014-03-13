@@ -53,7 +53,26 @@ div.landing-section-button {
 	position: relative;
 }
 
+div.video-sections {
+	margin-bottom: 20px;
+	height: 100%;
+	div.video-left {
+		width: 50%;
+		float: left;
+	}
+	div.video-right {
+		width: 50%;
+		float: right;
+	}
+
+	div.vid-wrapper {
+		height: 0;
+		padding-bottom: 56.25%;
+	}
+}
+
 div.home-sections {
+	margin-bottom: 12px;
 	div.row-fluid {
 		margin-bottom: 10px;
 	}

@@ -118,6 +118,20 @@
 	overflow:hidden;
 	line-height: 18px;
 	max-height: 100%;
+
+	&.mobile-tooltip-ranking {
+		margin-bottom: 20px;
+	}
+
+	div.full-ranking-list {
+		width: 100%;
+		text-align: center;
+
+		&:hover {
+			font-weight: bold;
+		}
+	}
+
 	a {
 		color: @color_pantheon_black;
 		text-decoration: none;

@@ -234,7 +234,7 @@ Template.map_svg.rendered = ->
     ).on("mousemove", mouseover)
     .on("mouseout", mouseout)
     .on("click", (d) ->
-      if Session.get("mobile") then mouseOver(d)
+      if Session.get("mobile") then mouseover(d)
       else clickevent(d)
       )
     .on("touchstart", "mouseover")
