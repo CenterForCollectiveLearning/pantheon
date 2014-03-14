@@ -79,7 +79,7 @@ Template.ranking_table.rendered = ->
         ]
       else
         data = _.map CountriesRanking.find().fetch(), (c) ->
-          [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 0)]
+          [0, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 2)]
         aoColumns = [
           sTitle: "Rank"
         ,

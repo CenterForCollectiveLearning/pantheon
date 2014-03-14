@@ -1,7 +1,11 @@
 <head>
-    <!--[if lt IE 9]><html class="ie"><![endif]-->
-    <!--[if gte IE 9]><!--><html><!--<!z[endif]-->
-
+    <!--[if lt IE 10]>
+    <div id="outdated" class="outdated"></div>
+    <![endif]-->
+    
+    <!--[if gte IE 10]>
+    <div id="outdated"></div>
+    <![endif]-->
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <!--     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -17,13 +21,6 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="icon" href="/pantheon_icon.ico" type="image/x-icon" />
-    <!-- 
-            This script enables structural HTML5 elements in old IE.
-            http://code.google.com/p/html5shim/
-    -->
-    <!--[if lt IE 9]>
-            <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 </head>
 
 <template name="google_analytics">
@@ -31,9 +28,21 @@
 
 <!-- Base Layout -->
 <template name="defaultLayout">
-     <!--[if lt IE 8]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <!--[if IE]>
+        <div style="width: 100%; height: 100%; min-width: 980px; background-color: #f9f6e1;">
+            <div style="position: relative; top: 0; width: 450px; padding-top: 50px; margin-bottom: 50px; margin-left: -225px; left: 50%;">
+                <img src="/pantheon_logo.png" />
+            </div>
+            <a href="http://browsehappy.com/" target="_blank" style="padding-left: 2%; padding-right: 2%;">
+                <img src="/pantheon_homepage_outdated_browser.jpg" style="min-width: 96%; min-height: 100%; width: 96%%; height: 100%; background-color: white; z-index: 99999999;"/>
+            </a>
+            <div style="position: relative; top: 0; width: 300px; padding-top: 50px; padding-bottom: 50px; margin-left: -150px; left: 50%;">
+                <a href="http://macro.media.mit.edu"><img src="/LogoBlack.png" /></a>
+            </div>
+        </div>
+
+    <![endif]-->
+    {{#unless outdated}}
     {{#if mobile}}
         <div class="left-pane closed">
             <ul>
@@ -46,6 +55,7 @@
             </ul>
         </div>
     {{/if}}
+
     <div id="background-wrapper" class="wrapper{{#unless mobile}} min-width{{else}} mobile{{/unless}}">
         <!-- Header -->
         <header class="navbar navbar-fixed-top{{#unless mobile}} min-width{{/unless}}">
@@ -68,6 +78,7 @@
     </footer>
 
     {{> tutorial }}
+    {{/unless}}
 </template>
 
 <template name="nav">
@@ -161,6 +172,7 @@
     {{/unless}}
 
     <div class="copyright">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>{{#unless mobile}} • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>{{/unless}}
+
 </template>
 
 <template name="spinner">

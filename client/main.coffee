@@ -1,5 +1,6 @@
 Handlebars.registerHelper "mobile", -> Session.get("mobile")
 Handlebars.registerHelper "paneOpen", -> Session.get("paneOpen")
+Handlebars.registerHelper "outdated", -> Session.get("outdated")
 
 # Set Defaults
 @getCategoryLevel = (s) ->
@@ -89,6 +90,8 @@ Handlebars.registerHelper "paneOpen", -> Session.get("paneOpen")
 @indByDom = {}
 @occByInd = {}
 Meteor.startup ->
+  outdated = if $("div#outdated").hasClass("outdated") then true else false
+  Session.set("outdated", outdated)
   # settings =
   #   logUser: true
   #   logHttp: true
@@ -107,8 +110,8 @@ Meteor.startup ->
   # Bypass the need for the mergebox to loaded people for each client
   Session.set("peopleReady", false)
   
-  d3.json("/people_2-27-2014.json", (people) -> 
-  # d3.json("/people_3-10-2014.json", (people) -> 
+  # d3.json("/people_2-27-2014.json", (people) -> 
+  d3.json("/people_3-10-2014.json", (people) -> 
     for person in people
       person._id = new Meteor.Collection.ObjectID(person._id.$oid)
       ClientPeople.insert(person)
