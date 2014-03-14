@@ -59,22 +59,22 @@ Deps.autorun ->
   vizType = Session.get("vizType")
   vizMode = Session.get("vizMode")
 
-  console.log "vizType: " + vizType
-  console.log "vizMode: " + vizMode
-  console.log "begin: " + begin
-  console.log "end: " + end
-  console.log "L: " + L
-  console.log "country: " + country
-  console.log "countryX: " + countryX
-  console.log "countryY: " + countryY
-  console.log "category: " + category
-  console.log "categoryLevel: " + categoryLevel
-  console.log "categoryLevelX: " + categoryLevelX
-  console.log "categoryLevelY: " + categoryLevelY
-  console.log "gender: " + gender
-  console.log "entity: " + entity
-  console.log "page: " + page
-  console.log "dataset: " + dataset  
+  # console.log "vizType: " + vizType
+  # console.log "vizMode: " + vizMode
+  # console.log "begin: " + begin
+  # console.log "end: " + end
+  # console.log "L: " + L
+  # console.log "country: " + country
+  # console.log "countryX: " + countryX
+  # console.log "countryY: " + countryY
+  # console.log "category: " + category
+  # console.log "categoryLevel: " + categoryLevel
+  # console.log "categoryLevelX: " + categoryLevelX
+  # console.log "categoryLevelY: " + categoryLevelY
+  # console.log "gender: " + gender
+  # console.log "entity: " + entity
+  # console.log "page: " + page
+  # console.log "dataset: " + dataset  
   #
   #        TODO this is probably not the right way to check if no data should be loaded.
   #        Do something more robust.
@@ -95,7 +95,6 @@ Deps.autorun ->
       switch vizType
         # Treemap modes
         when "treemap"
-          console.log "SUBCRIBING TREEMAP"
           top10Sub = Meteor.subscribe("peopleTopN", vizType, vizMode, begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, 10, dataset)
           dataSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, category, categoryLevel, dataset, onReady)
         # Matrix modes
@@ -117,9 +116,9 @@ Deps.autorun ->
         when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, L, onReady)
         when "people"
-          # dataSub = Meteor.subscribe("peopleTopN", "treemap", "country_exports", begin, end, L, country, countryX, countryY, "both", category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, "all", dataset, onReady)
+          # usig ClientPeople instead of peopleTopN
+          # defer onReady to make sure all people are loaded before rendering the datatable
           Meteor.defer onReady
-          console.log("using ClientPeople")
         when "domains"
           dataSub = Meteor.subscribe("domains_ranking_pub", begin, end, country, category, categoryLevel, L, onReady)
         else
@@ -169,7 +168,6 @@ Deps.autorun ->
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
 
-  console.log "SUBSCRIBING TO TOOLTIPS"
   debouncedSubscribe = _.debounce(Meteor.subscribe, 500)
   # tooltipSub = debouncedSubscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)
   tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)

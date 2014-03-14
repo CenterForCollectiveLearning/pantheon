@@ -29,7 +29,7 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
         count:
           $sum: 1
     ]
-    console.log JSON.stringify(pipeline)
+    # console.log JSON.stringify(pipeline)
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
@@ -51,7 +51,7 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
     matchArgs.$or[0][categoryLevelX] = categoryX if categoryX isnt "all"
     matchArgs.$or[1][categoryLevelY] = categoryY if categoryY isnt "all"
 
-    console.log "In scatterplot domain_vs_domain", matchArgs
+    # console.log "In scatterplot domain_vs_domain", matchArgs
     pipeline = [
       $match: matchArgs
     ,
@@ -67,7 +67,7 @@ Meteor.publish "scatterplot_pub", (vizMode, begin, end, L, countryX, countryY, c
           $sum: 1
     ]
 
-    console.log JSON.stringify(pipeline)
+    # console.log JSON.stringify(pipeline)
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         

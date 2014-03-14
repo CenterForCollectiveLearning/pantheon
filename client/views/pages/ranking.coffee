@@ -6,7 +6,7 @@ toThousands = (x) ->
 
 toDecimal = (x, d) ->
   if typeof x is "string" or x instanceof String
-    x
+    parseFloat(x)?.toFixed d
   else
     x?.toFixed d
 
@@ -114,7 +114,6 @@ Template.ranking_table.rendered = ->
           L = Session.get("langs")
           if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
           collection = ClientPeople.find(args).fetch()
-          console.log("CLIENT PEOPLE: ", ClientPeople.find().count())
 
       data = _.map collection, (d) ->
         p = ClientPeople.findOne d._id

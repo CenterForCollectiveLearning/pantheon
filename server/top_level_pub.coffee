@@ -115,20 +115,25 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       countryCode: countryY
     ]
   else if vizMode is "domain_vs_domain"
-    argsX = 
-      birthyear:
-        $gte: begin
-        $lte: end
-      dataset: dataset
-    argsY = 
-      birthyear:
-        $gte: begin
-        $lte: end
-      dataset: dataset
-    argsX.countryCode = country if country isnt "all"
-    argsY.countryCode = country if country isnt "all"
-    argsX[categoryLevelX] = categoryX if categoryX isnt "all"  
-    argsY[categoryLevelY] = categoryY if categoryY isnt "all" 
+    args.countryCode = country
+    args.$or = [{}, {}]
+    args.$or[0][categoryLevelX] = categoryX if categoryX isnt "all"
+    args.$or[1][categoryLevelY] = categoryY if categoryY isnt "all"
+    
+    # argsX = 
+    #   birthyear:
+    #     $gte: begin
+    #     $lte: end
+    #   dataset: dataset
+    # argsY = 
+    #   birthyear:
+    #     $gte: begin
+    #     $lte: end
+    #   dataset: dataset
+    # argsX.countryCode = country if country isnt "all"
+    # argsY.countryCode = country if country isnt "all"
+    # argsX[categoryLevelX] = categoryX if categoryX isnt "all"  
+    # argsY[categoryLevelY] = categoryY if categoryY isnt "all" 
 
   if L[0] is "H"
     projection =
@@ -150,15 +155,15 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
   # Get people
   People.find(args, projection).forEach (person) ->
     sub.added "tooltipCollection", person._id, {}
-
+    
   # Get count
   # Work-around for strange "or" behavior in mongodb (not for minimongo)
-  if argsX and argsY
-    countX = People.find(argsX, {fields: projection}).count()
-    countY = People.find(argsY, {fields: projection}).count()
-    count = countX + countY
-  else
-    count = People.find(args, {fields: projection}).count()
+  # if argsX and argsY
+  #   countX = People.find(argsX, {fields: projection}).count()
+  #   countY = People.find(argsY, {fields: projection}).count()
+  #   count = countX + countY 
+  # else
+  count = People.find(args, {fields: projection}).count()
 
   sub.added "tooltipCollection", "count",
     count: count

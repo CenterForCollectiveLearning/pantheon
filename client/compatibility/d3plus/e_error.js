@@ -1,7 +1,5 @@
 d3plus.error = function(vars) {
 
-  console.log(vars);
-  console.log(this);
   var error = d3.select("g.parent").selectAll("g.d3plus-error")
     .data([vars.error])
     

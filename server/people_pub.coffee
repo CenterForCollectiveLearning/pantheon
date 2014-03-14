@@ -24,7 +24,7 @@ Meteor.publish "person_imports", (id) ->
 # Looking up people is on the server-side because minimongo is not indexed  
 # Return five people with the same occupation with similar number of languages
 Meteor.publish "similar_people_pub", (personName, rankingProperty) ->
-    console.log "In similar_people_pub"
+    # console.log "In similar_people_pub"
     sub = this
     collectionName = "similarPeople"
 
@@ -62,16 +62,16 @@ Meteor.publish "similar_people_pub", (personName, rankingProperty) ->
             HPI: -1
         limit: 2
 
-    console.log "peoplePage args:"
-    console.log JSON.stringify(argsLeft)
-    console.log JSON.stringify(projectionLeft)
+    # console.log "peoplePage args:"
+    # console.log JSON.stringify(argsLeft)
+    # console.log JSON.stringify(projectionLeft)
 
     # TODO Ensure ranking
     peopleLeft = People.find(argsLeft, projectionLeft)
     peopleRight = People.find(argsRight, projectionRight)
 
     rank = People.find(argsLeft).count() + 1
-    console.log "PERSON RANK", rank
+    # console.log "PERSON RANK", rank
 
     numberLeft = 2
     # TODO Create method to pad array
@@ -98,7 +98,7 @@ Meteor.publish "similar_people_pub", (personName, rankingProperty) ->
             position: "left"
 
     peopleRight.forEach (person, i) -> 
-        console.log person
+        # console.log person
         sub.added collectionName, Random.id(), 
             name: person.name
             rank: rank + 1 + i

@@ -29,9 +29,9 @@ Template.treemap_svg.rendered = ->
     if vizMode is "country_exports" or vizMode is "country_imports" or vizMode is "bilateral_exporters_of"
       attr = Domains.find({dataset: dataset}).fetch()
       attr.forEach (a) ->
-        dom = a.domain.capitalize()
-        ind = a.industry.capitalize()
-        occ = a.occupation.capitalize()
+        dom = a.domain?.capitalize()
+        ind = a.industry?.capitalize()
+        occ = a.occupation?.capitalize()
         dom_color = color_domains(dom.toUpperCase())
         domDict =
           id: dom
@@ -70,8 +70,8 @@ Template.treemap_svg.rendered = ->
   
       data.forEach (d) ->
         flat.push #use a dummy year here for now ...
-          id: d.occupation.capitalize()
-          name: d.occupation.capitalize()
+          id: d.occupation?.capitalize()
+          name: d.occupation?.capitalize()
           num_ppl: d.count
           year: 2000
       
@@ -94,7 +94,7 @@ Template.treemap_svg.rendered = ->
       attr.forEach (a) ->
         continent = a.continentName
         countryCode = a.countryCode
-        countryName = a.countryName.capitalize()
+        countryName = a.countryName?.capitalize()
         continent_color = color_countries(continent)
         continentDict =
           id: continent
@@ -122,7 +122,7 @@ Template.treemap_svg.rendered = ->
       data.forEach (d) ->
         flat.push #use a dummy year here for now ...
           id: d.countryCode
-          name: d.countryName.capitalize()
+          name: d.countryName?.capitalize()
           num_ppl: d.count
           year: 2000
 

@@ -108,7 +108,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
         count:
           $sum: 1
     ]
-    console.log JSON.stringify(pipeline)
+    # console.log JSON.stringify(pipeline)
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
