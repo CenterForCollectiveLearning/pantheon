@@ -61,15 +61,12 @@
 
         <!-- Body -->
         {{ yield }}
-
-        <!-- render to the footer yield -->
     </div>
 
     <footer class="{{#unless mobile}}min-width{{else}}mobile{{/unless}}">
         {{yield 'footer'}}
     </footer>
 
-    {{! uncomment the below to start the tutorial }}
     {{> tutorial }}
 </template>
 
@@ -160,33 +157,6 @@
                 </div>
             </a>
         </div>
-        <!-- Semi-working mobile version -->
-<!--         <div class="more-from">
-            <span class="more-macro">More projects from Macro Connections:</span>
-        </div>   
-        <div class="projects">
-            <a href="http://atlas.media.mit.edu/" target="_blank" class="left">
-                <div class="oec">
-                </div>
-            </a>
-            <a href="https://immersion.media.mit.edu/" target="_blank" class="left">
-                <div class="immersion">
-                </div>
-            </a>
-            <a href="http://pulse.media.mit.edu/" target="_blank" class="left">
-                <div class="place-pulse">
-                </div>
-            </a>
-        </div>
-        <div class="more-from">
-            <span class="more-d3">Also using D3Plus:</span>
-        </div>   
-        <div class="projects">
-            <a href="http://www.dataviva.info/"target="_blank"  class="dataviva">
-                <div class="dataviva">
-                </div>
-            </a>
-        </div> -->
     </div>
     {{/unless}}
 

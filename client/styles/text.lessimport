@@ -1,3 +1,11 @@
+div.vision-videos {
+	div.video-wrapper {
+		position: relative;
+		padding-bottom: 56.25%;
+		height: 0;
+	}
+}
+
 div.wrapper-left {
 	width: 355px;
 	float: left;
