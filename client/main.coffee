@@ -280,17 +280,6 @@ Template.defaultLayout.events =
     $(".fa-search-plus").show()
     $(".parameters").hide("fast")
     Session.set("showMobileRankingMenu", false)
-#   "tap, click div#background-wrapper": (d) ->
-#     paneOpen = Session.get("paneOpen")
-#     console.log paneOpen, 
-#     if paneOpen and (d.srcElement?.id is not "hamburger")
-
-#       # Close Pane
-#       $("div.logo").show()
-#       $("header.navbar").animate(left: ["0%", "easeOutExpo"], duration: 700)
-#       $("#background-wrapper").animate(left: ["0%", "easeOutExpo"], duration: 700)
-#       $('#background-wrapper').unbind('touchmove', (e) -> e.preventDefault());
-#       Session.set "paneOpen", false
 
 @openPane = (d) ->
   $(".left-pane").removeClass("closed")
@@ -312,7 +301,6 @@ Template.defaultLayout.events =
     duration: 700
     complete: Session.set("paneOpen", false)
     )
-  # $('#background-wrapper').unbind('touchmove', (e) -> e.preventDefault());
 
 Template.nav.events = 
   "touchmove, mousedown #hamburger": (d) -> $(d.srcElement).addClass("mousedown")
