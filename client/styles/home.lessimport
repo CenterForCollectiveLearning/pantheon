@@ -106,6 +106,7 @@ div.videos {
 	margin-right: 40px;
 	height: 0;
 
+
 	img {
 		width: 130px;
 		height: auto;
@@ -113,6 +114,12 @@ div.videos {
 
 	div.video {
 		margin-bottom: 12px;
+
+		&:hover {
+			span {
+				font-weight: bold;
+			}
+		}
 	}
 
 	span {
@@ -120,10 +127,6 @@ div.videos {
 		width: 145px;
 		float: right;
 		color: @color_beige;
-
-		&:hover {
-			font-weight: bold;
-		}
 	}
 }
 

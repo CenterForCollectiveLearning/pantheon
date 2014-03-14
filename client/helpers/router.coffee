@@ -1,11 +1,6 @@
 # Almost all session changes happen here!
 # I.e. session is used to record state
 
-# splashCheck ->
-#   (if Session.get("authorized") then page else "splash")
-
-# Router.configure before: splashCheck
-
 Router.map ->
   @route "home",
     path: "/"
