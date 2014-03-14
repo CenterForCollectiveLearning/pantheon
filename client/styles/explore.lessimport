@@ -500,3 +500,15 @@ g.d3plus-error text{
 		&:hover { text-decoration: underline; }
 	}
 }
+
+a.contactus{
+	color: @color_pantheon_black;
+	text-decoration: underline;
+	&:hover { font-weight:bold; }
+}
+
+.feedback{
+	text-align:center;
+	margin-left:0px; 
+	padding-top:20px;
+}

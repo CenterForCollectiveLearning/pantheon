@@ -30,6 +30,11 @@
                 </div>
                  <!-- Visualization and Ranked List Container -->
                 {{> visualization}}
+                {{#if initialDataReady}}
+                <div class = "span12 feedback">
+                    {{> feedback}}
+                </div>
+                {{/if}}
                 {{> tooltip}}
                 {{> clicktooltip}}
             </div>
@@ -45,6 +50,10 @@
             {{/if}}
         </div>
     </div>
+</template>
+
+<template name="feedback">
+    Help us improve our data! Notice anything that should be changed? <a href="#" class="contactus">Let us know.</a>
 </template>
 
 <template name="time_slider">

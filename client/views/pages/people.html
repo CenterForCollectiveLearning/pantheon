@@ -18,6 +18,13 @@
 			{{/if}}
 		</div>
 	</div>
+	{{#if dataReady}}
+	<div class="row-fluid">
+	    <div class = "span12 feedback">
+	        {{> feedback}}
+	    </div>
+	</div>
+    {{/if}}
 </template>
 
 <template name="search">

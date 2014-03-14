@@ -195,7 +195,28 @@ Template.question.events =
       $(".fa-search-plus").show()
       $("#explore-parameters").hide("fast")
       Session.set("showMobileRankingMenu", false)
- 
+
+Template.feedback.events = 
+    "click a.contactus": ->
+      question = $("#question").text()
+      width  = 575
+      height = 400
+      left   = ($(window).width()  - width)  / 2
+      top    = ($(window).height() - height) / 2  # encodeURIComponent(location.href)
+      url    = "mailto:?subject=[Feedback]&amp;to=pantheon@media.mit.edu&amp;body=%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A ################################%0D%0A Debug Log – Do not remove%0D%0A ################################%0D%0A%0D%0A URL:" + encodeURIComponent(location.href) + "%0D%0A Browser: " + navigator.userAgent + "%0D%0A Mobile: " + Session.get("mobile") + "%0D%0A%0D%0A################################"
+      opts   = 'status=1' +
+             ',width='  + width  +
+             ',height=' + height +
+             ',top='    + top    +
+             ',left='   + left
+
+      win = window.open(url, 'email', opts)
+      setTimeout (-> #close the window because email client opens message window
+        win.close()
+        return
+      ), 1000
+      false
+
 # Generate question given viz type
 Template.question.question = -> 
   dataset = Session.get("dataset")
