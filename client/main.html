@@ -27,7 +27,6 @@
 
 <!-- Base Layout -->
 <template name="defaultLayout">
-    {{#unless outdated}}
     <!--[if IE]>
         <div style="width: 100%; height: 100%; min-width: 980px; background-color: #f9f6e1;">
             <div style="position: relative; top: 0; width: 450px; padding-top: 50px; margin-bottom: 50px; margin-left: -225px; left: 50%;">
@@ -42,6 +41,7 @@
         </div>
 
     <![endif]-->
+    {{#unless outdated}}
     {{#if mobile}}
         <div class="left-pane closed">
             <ul>
@@ -170,7 +170,7 @@
     </div>
     {{/unless}}
 
-    <div class="copyright">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>{{#unless mobile}} • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>{{/unless}}
+    <div class="copyright">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>{{#unless mobile}} • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="https://twitter.com/MacroMIT"><i class="fa fa-twitter"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>{{/unless}}
 
 </template>
 
