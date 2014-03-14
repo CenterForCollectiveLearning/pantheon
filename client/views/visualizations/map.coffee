@@ -22,27 +22,6 @@ key_gradient = (rect) ->
     height: 10
   ).style "fill", "url(#gradient)"
 
-#///////////////////////////////////////////////
-# Enter
-#////////////////////////////////////////////////
-# Draw countries
-
-# Draw the key after the paths so it appears on top
-# If it's the first time the app is being built, add this group element
-
-# TODO don't hardcode the position of this bar if the SVG size changes
-
-# Draw key
-
-#///////////////////////////////////////////////
-# Update
-#////////////////////////////////////////////////
-
-#///////////////////////////////////////////////
-# Exit
-#////////////////////////////////////////////////
-# No need to exit anything since nodes are always
-# present on page
 
 mouseover = (d) ->
   if not Session.get "clicktooltip"
@@ -228,11 +207,9 @@ Template.map_svg.rendered = ->
 
     svg.selectAll("path").attr("fill", (d) ->
       doc = WorldMap.findOne(countryCode: d.id)
-      if doc
-        value_color doc.count
-      else
-        "#FFF"
-    ).on("mousemove", mouseover)
+      if doc then value_color doc.count
+      else "#FFF"
+    ).on("mouseover", mouseover)
     .on("mouseout", mouseout)
     .on("click", (d) ->
       if Session.get("mobile") then mouseover(d)
