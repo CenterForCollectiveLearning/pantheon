@@ -137,9 +137,8 @@ d3plus.pie_scatter = function(vars) {
 
   
   // update
-  
-  nodes
-    .on(d3plus.evt.over, function(d){
+
+  onMouseOver = function(d){
       Session.set("hover", true);
       
       var val = d[vars.value_var] ? d[vars.value_var] : vars.size_scale.domain()[0]
@@ -174,6 +173,7 @@ d3plus.pie_scatter = function(vars) {
         Session.set("tooltipCountryCodeX", countryCodeX);
         Session.set("tooltipCountryCodeY", countryCodeY);
         Template.tooltip.heading = dataPoint;
+        Template.mobile_tooltip_ranking.heading = dataPoint;
       } else if (vizMode === 'domain_vs_domain') {
         countryName = Countries.findOne({countryCode: dataPoint}).countryName;
         Session.set("tooltipCountryCode", dataPoint);
@@ -183,9 +183,14 @@ d3plus.pie_scatter = function(vars) {
         Session.set("tooltipCategoryX", xVar);
         Session.set("tooltipCategoryY", yVar);
         Template.tooltip.heading = countryName;
+        Template.mobile_tooltip_ranking.heading = countryName;
       }
 
       Session.set("showTooltip", true);
+
+      if(Session.get("mobile")) {
+        d3.selectAll(".axis_hover").remove();
+      }
 
       // vertical line to x-axis
       viz.append("line")
@@ -275,15 +280,17 @@ d3plus.pie_scatter = function(vars) {
         ex = {"fill":num+"/"+den+" ("+vars.number_format((num/den)*100,"share")+"%)"}
       }
       var tooltip_data = get_tooltip_data(d,"short",ex)
-    })
-    .on(d3plus.evt.out, function(d){
+    }
+
+  onMouseOut = function(d){
       Session.set("hover", false);
       Session.set("showTooltip", false);
       $("#tooltip").empty();
 
       d3.selectAll(".axis_hover").remove()
-    })
-    .on(d3plus.evt.click, function(d){
+    }
+
+  onClick = function(d){
       // On click show clicktooltip overlay
       Session.set("hover", false);
       Session.set("showTooltip", false);
@@ -327,7 +334,15 @@ d3plus.pie_scatter = function(vars) {
         // Set the session variable to show the clicktooltip
         Session.set("clicktooltip", true);
       }
-    })
+    }
+  
+  nodes
+    .on(d3plus.evt.over, function(d) { if(!Session.get("mobile")) onMouseOver(d) })
+    .on(d3plus.evt.out, function(d) { if(!Session.get("mobile")) onMouseOut(d) })
+    .on(d3plus.evt.click, function(d) {
+      if(Session.get("mobile")) onMouseOver(d)
+      else onClick(d)
+    });
     
   nodes.transition().duration(d3plus.timing)
     .attr("transform", function(d) { return "translate("+vars.x_scale(d[vars.xaxis_var])+","+vars.y_scale(d[vars.yaxis_var])+")" } )

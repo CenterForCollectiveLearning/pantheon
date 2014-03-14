@@ -37,9 +37,6 @@ Template.home.events =
     "click #divein": (d) ->
         Router.go "/explore"
 
-# Template.home.destroyed = ->
-#     $(".logo").removeClass "gold-border"
-
 Template.narratives.narratives = ->
     if Session.equals("mobile", true)
         [narratives[0]]
@@ -54,31 +51,3 @@ Template.narratives.events =
             Session.set("tutorialType", dataTutorialType)
         else
             Router.go "/explore"
-
-# Template.pages.events = 
-#     "mouseenter div.page": (d) ->
-#         srcE = (if d.srcElement then d.srcElement else d.target)
-#         $(srcE).find("a.word").addClass("highlight")
-
-#     "mouseleave div.page": (d) ->
-#         srcE = (if d.srcElement then d.srcElement else d.target)
-#         $(srcE).find("a.word").removeClass("highlight")
-
-#     "click li a": (d) ->
-#         srcE = (if d.srcElement then d.srcElement else d.target)  
-#         vizType = $(srcE).parent().data "viz-type"  # Need parent() since img is target
-#         vizMode = $(srcE).parent().data "viz-mode"
-
-#         # Parameters depend on vizMode (e.g countries -> languages for exports)
-#         [paramOne, paramTwo] = IOMapping[vizMode]["in"]
-    
-#         # Reset parameters for a viz type change
-#         Router.go "observatory",
-#         vizType: vizType
-#         vizMode: vizMode
-#         paramOne: defaults[paramOne]
-#         paramTwo: defaults[paramTwo]
-#         from: defaults.from
-#         to: defaults.to
-#         langs: defaults.langs
-#         dataset: defaults.dataset
