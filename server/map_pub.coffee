@@ -17,7 +17,6 @@ Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
 
   matchArgs[categoryLevel] = category  if category.toLowerCase() isnt "all"
   if L[0] is "H" then matchArgs.HPI = {$gt:parseInt(L.slice(1,L.length))} else matchArgs.numlangs = {$gt: parseInt(L)}
-  console.log(matchArgs)
   
   pipeline = []
   pipeline = [
@@ -31,9 +30,6 @@ Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
       count:
         $sum: 1
   ]
-
-  console.log("MAP PIPELINE:")
-  console.log(pipeline)
 
   driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
     _.each result, (e) ->

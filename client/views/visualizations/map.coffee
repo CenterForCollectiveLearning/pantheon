@@ -216,15 +216,16 @@ Template.map_svg.rendered = ->
       d.id
     ).attr("stroke", "#eee").attr("stroke-width", 0.5).attr "d", d3.geo.path().projection(map_projection)
 
-    colorScale = d3.select(@find("svg.color-scale")).attr("width", $(".page-middle").width()).attr("height", "30px").append("g") 
+    scalewidth = $(".page-middle").width()
+    colorScale = d3.select(@find("svg.color-scale")).attr("width", scalewidth).attr("height", "30px").append("g") 
     key_enter = colorScale.append("g").attr("class", "key").append("rect").call(key_gradient)
-
     d3.select(".key").selectAll("rect.ticks").data(value_range_big).enter().append("rect").attr("class", "ticks").attr("x", (d, i) ->
-      Math.round (50 * Math.pow((590 / 50), i / 10))
+      Math.round (50 * Math.pow(((scalewidth-15) / 50), i / 10))
     ).attr("y", 0).attr("width", 2).attr("height", 10).style "fill", "#fff"
     d3.select(".key").selectAll("text").data(value_range_big).enter().append("text").attr("x", (d, i) ->
-      Math.round (50 * Math.pow((590 / 50), i / 10))
+      Math.round (50 * Math.pow(((scalewidth-15) / 50), i / 10))
     ).attr("y", 12).attr("dy", 12).attr("text-anchor", "middle").style "fill", "#222"
+
     svg.selectAll("path").attr("fill", (d) ->
       doc = WorldMap.findOne(countryCode: d.id)
       if doc

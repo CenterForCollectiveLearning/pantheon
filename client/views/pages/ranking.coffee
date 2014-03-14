@@ -114,7 +114,6 @@ Template.ranking_table.rendered = ->
           L = Session.get("langs")
           if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
           collection = ClientPeople.find(args).fetch()
-          console.log("CLIENT PEOPLE: ", ClientPeople.find().count())
 
       data = _.map collection, (d) ->
         p = ClientPeople.findOne d._id

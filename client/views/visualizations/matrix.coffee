@@ -163,7 +163,7 @@ Template.matrix_svg.rendered = ->
 
       orderOfMagnitude = maxVal.toString().length
       increment = Math.pow(10, orderOfMagnitude - 1)
-      console.log orderOfMagnitude, increment
+      # console.log orderOfMagnitude, increment
       currentIncrement = 0
       while (currentIncrement + increment) < maxVal
         currentIncrement += increment
@@ -177,7 +177,7 @@ Template.matrix_svg.rendered = ->
     colorScale.append("rect").attr("width", legendWidth).attr("height", legendHeight) # .attr("x", 20)
 
     ticks =  getTicks(domainArray)
-    console.log "TICKS:", ticks
+    # console.log "TICKS:", ticks
     for tick in ticks
       offset = tick / maxValue
 

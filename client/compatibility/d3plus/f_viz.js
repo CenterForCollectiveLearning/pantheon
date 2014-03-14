@@ -2026,7 +2026,6 @@ d3plus.viz = function() {
     vars.graph.height -= vars.graph.yoffset
     
     // Update Graph
-    console.log(vars.graph.margin.left, vars.graph.margin.top);
     d3.select(".chart").transition().duration(vars.graph.timing)
       .attr("transform", "translate(" + vars.graph.margin.left + "," + vars.graph.margin.top + ")")
       .attr("opacity",function(){
