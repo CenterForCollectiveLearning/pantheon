@@ -57,6 +57,14 @@ div.tutorial {
 		div.modal-footer {
 			border-top: 1px solid @color_pantheon_black;
 			background-color: @color_beige;
+
+			span.muted.pull-left {
+				text-transform: capitalize;
+			}
+			i.fa-arrows {
+				padding-right: 5px;
+			}
+
 			.muted{
 				color: @color_pantheon_black;
 				margin-top: 5px;

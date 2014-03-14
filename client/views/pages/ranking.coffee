@@ -174,9 +174,9 @@ Template.ranking_table.rendered = ->
           sTitle: "Name"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
-          sTitle: "Country"
-        ,
           sTitle: "Birth Year"
+        ,
+          sTitle: "Country"
         ,
           sTitle: "Domain"
         , 
@@ -219,14 +219,11 @@ Template.ranking_table.rendered = ->
     when "domains"
       if mobile
         data = _.map DomainsRanking.find().fetch(), (d) ->
-          [0, d.domain.capitalize(), d.occupation.capitalize(), d.ubiquity, d.numppl]
+          [0, d.occupation.capitalize(), d.ubiquity, d.numppl]
         aoColumns = [
           sTitle: "Rank"
         ,
           sTitle: "Occupation"
-          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/domain_exports_to/" + obj.aData[obj.iDataColumn].toUpperCase() + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
-        ,
-          sTitle: "Domain"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/domain_exports_to/" + obj.aData[obj.iDataColumn].toUpperCase() + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
           sTitle: "Total Exporters"

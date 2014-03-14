@@ -24,7 +24,7 @@ div.description {
 	padding: 10px 8px;
 	font-size: 16px;
 	a {
-		font-weight: bold;
+		font-weight: normal;
 		text-decoration: none;
 		color: @color_pantheon_black;
 		&:hover {
@@ -51,6 +51,11 @@ div.landing-section-button {
 	text-align: center;
 	cursor: pointer;
 	position: relative;
+}
+
+div.vid-wrapper {
+	height: 0;
+	padding-bottom: 56.25%;
 }
 
 div.video-sections {
@@ -118,12 +123,14 @@ div.videos {
 		&:hover {
 			span {
 				font-weight: bold;
+				// text-decoration: underline;
 			}
 		}
 	}
 
 	span {
-		margin-top: 12px;
+		font-weight: normal;
+		margin-top: 13px;
 		width: 145px;
 		float: right;
 		color: @color_beige;

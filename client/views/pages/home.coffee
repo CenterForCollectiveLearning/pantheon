@@ -31,6 +31,18 @@ Template.home.rendered = ->
         easing: "swing"
         prevText: "Previous"
         nextText: "Next"
+        after: ->
+            renaissance_current = false
+            $(".flexslider li.tutorial-li").each( ->
+                zindex = $(this).zIndex() 
+                id = $(this)[0].id
+                if zindex is 2 and id is "renaissance" 
+                    renaissance_current = true
+            )
+            if renaissance_current
+                $("span.video-label").animate({color: "#222222"}, "slow")
+            else
+                $("span.video-label").animate({color: "#f9f6e1"}, "slow")
         )
 
 Template.home.events = 

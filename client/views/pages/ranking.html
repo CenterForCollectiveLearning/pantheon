@@ -77,10 +77,13 @@
 <template name="people_columns">
     <div class="term">Ranking</div><div class="definition">Rank Index</div>
     <div class="term">Name</div><div class="definition">Name of Individual</div>
+    {{#unless mobile}}
     <div class="term">Country</div><div class="definition">Country of Birth</div>
     <div class="term">Birth Year</div><div class="definition">Birth year of individual</div>
-    {{#unless mobile}}
     <div class="term">Gender</div><div class="definition">Gender</div>
+    {{else}}
+    <div class="term">Birth Year</div><div class="definition">Birth year of individual</div>
+    <div class="term">Country</div><div class="definition">Country of Birth</div>
     {{/unless}}
     <div class="term">Domain</div><div class="definition">Highest level of domain classification</div>
     {{#unless mobile}}
@@ -100,8 +103,8 @@
     <div class="term">Occupation</div><div class="definition">Lowest level of domain classification</div>
     {{#unless mobile}}
     <div class="term">Industry</div><div class="definition">Second level of domain classification</div>
-    {{/unless}}
     <div class="term">Domain</div><div class="definition">Highest level of domain classification</div>
+    {{/unless}}
     <div class="term">Total Exporters</div><div class="definition">The number of countries that export the specified domain</div>
     {{#unless mobile}}
     <div class="term">% Women</div><div class="definition">Percent women</div>
