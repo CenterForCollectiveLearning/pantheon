@@ -1,6 +1,5 @@
 <template name="matrix">
     <div class="page-middle {{#unless mobile}}span8{{else}}span12 mobile{{/unless}}">
-        {{> message_update}}
         <div id="viz" class="matrix">
             {{#if dataReady}}
                 {{> matrix_svg}}

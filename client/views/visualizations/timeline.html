@@ -1,0 +1,34 @@
+<template name="timeline">
+    <div class="page-top">   
+    </div>
+    <div class="page-middle">
+        <div id="viz" class="timeline">
+            {{ resize }}
+            {{#if dataReady}}
+                {{> timeline_svg}}
+            {{else}}
+                {{> spinner}}
+            {{/if}}     
+            {{> person_tooltip}}
+        </div>
+    </div>
+</template>
+
+<template name="timeline_svg">
+	<svg class="timeline" width="{{properties.fullWidth}}" height="{{properties.fullHeight}}"></svg>
+</template>
+
+<template name="person_tooltip">
+    {{#if personTooltipShown}}
+        {{#with personID}} 
+        <div id="tooltip" style="top:{{position.top}}px; left:{{position.left}}px">
+            <div id="tooltip-inner">
+                <span class="category">{{name}}</span>
+                    {{> tt_person person_lookup}} 
+                </div>
+                <!-- {{#if more}}<span class="extras">({{extras}} more)</span>{{/if}} -->
+            </div>
+        </div>
+        {{/with}}
+    {{/if}}
+</template>
