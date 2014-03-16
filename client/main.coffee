@@ -229,9 +229,9 @@ Template.google_analytics.destroyed = ->
 # Section Navigation
 # TODO Is this repetitiveness necessary for correct formatting?
 leftSections = [
-  section: "Explore"
+  section: "Visualizations"
   template: "explore"
-  url: "/explore"
+  url: "/viz"
 ,
   section: "Rankings"
   template: "rankings"

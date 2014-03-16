@@ -47,7 +47,7 @@ Template.home.rendered = ->
 
 Template.home.events = 
     "click #divein": (d) ->
-        Router.go "/explore"
+        Router.go "/viz"
 
 Template.narratives.narratives = ->
     if Session.equals("mobile", true)
@@ -62,4 +62,4 @@ Template.narratives.events =
             dataTutorialType = $(srcE).data "tutorial-type"
             Session.set("tutorialType", dataTutorialType)
         else
-            Router.go "/explore"
+            Router.go "/viz"

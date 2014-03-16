@@ -8,14 +8,16 @@ Router.map ->
     data: -> 
       Session.set "page", @template
 
-  @route "explore",
-    path: "/explore"
+  @route "viz",
+    path: "/viz"
+    template: "explore"
     before: [ ->
       @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/pantheon"
     ]
 
-  @route "explore",
+  @route "viz",
     path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
+    template: "explore"
     data: ->
       vizMode = @params.vizMode
       Session.set "page", @template
