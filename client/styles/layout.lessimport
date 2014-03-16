@@ -277,7 +277,7 @@ header {
 	    }
 
 	    .pull-left {
-	    	padding-left: 100px;
+	    	padding-left: 80px;
 	    	li {
 	    		padding-right: 1.5em;
 	    		a:hover {
@@ -287,7 +287,7 @@ header {
 	    }
 
 	    .pull-right {
-	    	padding-right: 140px;
+	    	padding-right: 80px;
 	    	li {
 	    		padding-left: 1.5em;
 	    		a:hover {
