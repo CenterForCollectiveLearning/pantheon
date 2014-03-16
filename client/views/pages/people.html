@@ -1,6 +1,7 @@
 <template name="people">
 	<div class="page-top">
 		<div id="people-page" class="{{#if mobile}} mobile{{/if}}">
+			{{> message_update}}
 			{{#if dataReady}}
     		{{#with person}}
     		    {{#unless mobile}}

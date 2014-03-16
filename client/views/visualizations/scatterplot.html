@@ -1,5 +1,6 @@
 <template name="scatterplot">
 	 <div class="page-middle {{#unless mobile}}span8{{else}}span12 mobile{{/unless}}">
+	 	{{> message_update}}
 	    <div id="viz" class="scatterplot">
 	    	{{#if dataReady}}
 	    	    <div class="scatterplot-container">

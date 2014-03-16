@@ -10,6 +10,10 @@ toDecimal = (x, d) ->
   else
     x?.toFixed d
 
+Template.message_update.events
+  "click button.close": ->
+    Session.set "alert", false
+
 Template.rankings.rendered = ->
   # keep showing menu unless user collapses the search parameters
   if Session.equals("showMobileRankingMenu", true)
