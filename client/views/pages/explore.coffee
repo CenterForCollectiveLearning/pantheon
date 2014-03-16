@@ -196,6 +196,11 @@ Template.question.events =
       $("#explore-parameters").hide("fast")
       Session.set("showMobileRankingMenu", false)
 
+# Template.feedback.mailto = ->
+#   url = "mailto:?subject=[Feedback]&amp;to=pantheon@media.mit.edu&amp;body=%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A ################################%0D%0A Debug Log – Do not remove%0D%0A ################################%0D%0A%0D%0A URL:" + encodeURIComponent(location.href) + "%0D%0A Browser: " + navigator.userAgent + "%0D%0A Mobile: " + Session.get("mobile") + "%0D%0A%0D%0A################################"
+#   url
+
+
 Template.feedback.events = 
     "click a.contactus": ->
       question = $("#question").text()
