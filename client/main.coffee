@@ -111,7 +111,7 @@ Meteor.startup ->
   # Bypass the need for the mergebox to loaded people for each client
   Session.set("peopleReady", false)
   
-  d3.json("/people_3-16-2014.json", (people) -> 
+  d3.json("/people_3-17-2014.json", (people) -> 
     for person in people
       person._id = new Meteor.Collection.ObjectID(person._id.$oid)
       ClientPeople.insert(person)
@@ -140,7 +140,7 @@ Meteor.startup ->
     scatterplotMirror: true
     rankingProperty: "occupation"
 
-  Session.setDefault "page", "explore"
+  Session.setDefault "page", "visualizations"
   Session.setDefault "vizType", defaults.vizType
   Session.setDefault "vizMode", defaults.vizMode
   Session.setDefault "country", defaults.country
@@ -229,9 +229,9 @@ Template.google_analytics.destroyed = ->
 # Section Navigation
 # TODO Is this repetitiveness necessary for correct formatting?
 leftSections = [
-  section: "Explore"
-  template: "explore"
-  url: "/explore"
+  section: "Visualizations"
+  template: "visualizations"
+  url: "/visualizations"
 ,
   section: "Rankings"
   template: "rankings"

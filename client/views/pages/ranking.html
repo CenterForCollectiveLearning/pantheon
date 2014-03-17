@@ -54,9 +54,13 @@
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <strong>Message to our visitors:</strong>
  
-        <p>Much of the press coverage received by Pantheon in recent days has overemphasized small level variations in individual rankings. These variations emerge from statistically insignificant differences in our measures of the global notoriety of individuals. While we understand the angle that the media prefers to use when covering Pantheon, <b>we remind our visitors that small differences in ranking (i.e. who is first, second or tenth globally) are not statistically meaningful</b>. The patterns that power through the noise, and that are significant and meaningful from a statistical perspective are more aggregate.</p>
+        <p>Due to implications that have been drawn by some Pantheon visitors we would like to remind our visitors that:</p>
 
-        <p>Examples of these are the differences in the diversification of cultural production between countries, or the ubiquity of cultural domains. Other examples include the emergence of cultural domains as a function of time (<a href="/treemap/country_exports/all/all/-4000/1400/H15/pantheon">compare before 1400</a>, with <a href="/treemap/country_exports/all/all/1400/1900/H15/pantheon">1400-1900</a>, <a href="/treemap/country_exports/all/all/1900/1950/H15/pantheon">1900-1950</a> and <a href="/treemap/country_exports/all/all/1950/2000/H15/pantheon">1950-2000</a>) and the relationship between the diversification of a country and the ubiquity of the cultural domains it has been associated with (<a href="/matrix/matrix_exports/all/both/-4000/2010/H15/pantheon">see matrix visualization</a>). We hope you enjoy Pantheon's visualizations. Please do not hesitate to contact us by e-mailing <a href="mailto:pantheon@media.mit.edu">pantheon@media.mit.edu</a> or messaging our Twitter account <a href="https://twitter.com/MacroMIT" target="_blank">@MacroMIT</a> if you have any questions or recommendations.</p>
+        <p>1. <b>Small differences in ranking (i.e. who is first, second or tenth globally) are not statistically meaningful</b>, and hence, should not be used to draw conclusions about the relative popularity or impact of similarly ranked individuals.</p>
+
+        <p>2. Individuals are mapped to their places of birth according to present day national boundaries, not national identities. We were required to adopt present day national boundaries as a criteria because of our need to map more than 11,000 biographies to locations. We note that our <b>visualizations and rankings are not claims about the cultural production of nations, but of the aggregates associated with the places of birth enclosed by present day national boundaries.</b> More details about the methodology can be found in the <a href="/methods">methods</a> section.</p>
+
+        <p>We hope you enjoy Pantheon. Please do not hesitate to contact us at <a href="mailto:pantheon@media.mit.edu">pantheon@media.mit.edu</a> or on Twitter (<a href="http://twitter.com/MacroMIT" target="_blank">@MacroMIT</a>) if you have any questions.</p>
 
         <p>Yours Sincerely,</p>
 
@@ -79,13 +83,14 @@
     {{> select_mode}}
     <div class="spacer"></div>
     <div class="parameter-selection">
+    {{> place_of_birth}}
     {{> feedback}}
     </div>
 </template>
 
 <template name="countries_columns">
     <div class="term">Ranking</div><div class="definition">Rank Index</div>
-    <div class="term">Country</div><div class="definition">Country of Birth</div>
+    <div class="term">Place of Birth*</div><div class="definition">Place of Birth</div>
     <div class="term">Number of people</div><div class="definition">Total number of globally known people</div>
     {{#unless mobile}}
     <div class="term">% Women</div><div class="definition">Percent women</div>
@@ -100,12 +105,12 @@
     <div class="term">Ranking</div><div class="definition">Rank Index</div>
     <div class="term">Name</div><div class="definition">Name of Individual</div>
     {{#unless mobile}}
-    <div class="term">Country</div><div class="definition">Country of Birth</div>
+    <div class="term">Place of Birth*</div><div class="definition">Place of Birth</div>
     <div class="term">Birth Year</div><div class="definition">Birth year of individual</div>
     <div class="term">Gender</div><div class="definition">Gender</div>
     {{else}}
     <div class="term">Birth Year</div><div class="definition">Birth year of individual</div>
-    <div class="term">Country</div><div class="definition">Country of Birth</div>
+    <div class="term">Place of Birth*</div><div class="definition">Place of Birth</div>
     {{/unless}}
     <div class="term">Domain</div><div class="definition">Highest level of domain classification</div>
     {{#unless mobile}}

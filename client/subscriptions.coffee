@@ -80,7 +80,7 @@ Deps.autorun ->
   #        Do something more robust.
   #      
   # if country and begin and end and langs   
-  if page in ["explore", "rankings", "people"]
+  if page in ["visualizations", "rankings", "people"]
     dataSub?.stop()
     Session.set "dataReady", false
     
@@ -91,7 +91,7 @@ Deps.autorun ->
 
     # Give a handle to this subscription so we can check if it's ready
     # TODO Move these into an underscore partial to avoid passing so many arguments
-    if page is "explore"
+    if page is "visualizations"
       switch vizType
         # Treemap modes
         when "treemap"

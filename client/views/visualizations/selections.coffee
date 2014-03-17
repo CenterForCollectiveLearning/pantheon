@@ -8,7 +8,7 @@ getCategoryLevel = (s) ->
 
 Template.select_mode.render_template = ->
   page = Session.get("page")
-  if page is "explore"
+  if page is "visualizations"
     type = Session.get("vizType")
     mode = Session.get("vizMode")
     switch mode

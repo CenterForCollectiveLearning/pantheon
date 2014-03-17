@@ -25,7 +25,7 @@ Template.rankings.entity = ->
   entity = Session.get "entity"
   switch entity
     when "countries"
-      "Country"
+      "Place of Birth*"
     when "people"
       "People"
     when "domains"
@@ -74,7 +74,7 @@ Template.ranking_table.rendered = ->
         aoColumns = [
           sTitle: "Rank"
         ,
-          sTitle: "Country"
+          sTitle: "Place of Birth*"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + Countries.findOne({countryName : obj.aData[obj.iDataColumn]}, {})?["countryCode"] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
           sTitle: "Number of People"
@@ -87,7 +87,7 @@ Template.ranking_table.rendered = ->
         aoColumns = [
           sTitle: "Rank"
         ,
-          sTitle: "Country"
+          sTitle: "Place of Birth*"
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + Countries.findOne({countryName : obj.aData[obj.iDataColumn]}, {})?["countryCode"] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
         ,
           sTitle: "Number of People"
@@ -136,7 +136,7 @@ Template.ranking_table.rendered = ->
         ,
           sTitle: "Name"
         ,
-          sTitle: "Country of Birth"
+          sTitle: "Place of Birth*"
         ,
           sTitle: "Birth Year"
         ,
@@ -180,7 +180,7 @@ Template.ranking_table.rendered = ->
         ,
           sTitle: "Birth Year"
         ,
-          sTitle: "Country"
+          sTitle: "Place of Birth*"
         ,
           sTitle: "Domain"
         , 
@@ -194,7 +194,7 @@ Template.ranking_table.rendered = ->
           fnRender: (obj) -> "<a class='closeclicktooltip' href='/people/" + obj.aData[obj.iDataColumn] + "'>" + obj.aData[obj.iDataColumn] + "</a>"  # Insert route here
           sWidth: "12%"
         ,
-          sTitle: "Country of Birth"
+          sTitle: "Place of Birth*"
           sWidth: "9%"
         ,
           sTitle: "Birth Year"

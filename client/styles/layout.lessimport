@@ -301,17 +301,13 @@ header {
 	    			}
 	    		}
 	    	}
-	    	@media (max-width: 1200px) {
-	    		li {
-	    			text-align: right;
-	    		}
-	    	}
 	    }
 
 	    @media (max-width: 1200px) {
 	    	.pull-left {
 	    		padding-left: 20px;
 	    		li {
+	    			padding-right: 1.3em;
 	    			a {
 	    				padding: 10px 10px;	    		
 	    				&:hover {
