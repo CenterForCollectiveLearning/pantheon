@@ -1,0 +1,515 @@
+//
+// Universal elements on Observatory page (not visualization-specific)
+//
+.page-top {
+	padding-top: 150px;
+
+	color: @color_pantheon_black;
+    .bold {
+    	font-weight: 500;
+    }
+
+    &.methods {
+    	padding-top: 80px;
+    }
+
+    .primary-text {
+    	font-size: 2em; // 32px / 1px
+    	line-height: 1em;
+    	padding-bottom: 1em;
+    	text-align: center;
+
+    	b {
+    		font-weight: 500;
+    	}
+    }
+
+    .secondary-text {
+    	font-size: 1em; // 32px / 1px
+    	line-height: 1em;
+    	padding-bottom: 1em;
+    	text-align: center;
+    	margin-top: -1.5em;
+    }
+
+    .name {
+    	text-transform: capitalize;
+    }
+
+    .sharing-options {
+    	padding-top: 5px;
+    }
+    &.mobile {
+		padding-top: 80px;
+
+		.primary-text {
+			font-size: 1.25em;
+			padding-bottom: 1.5em;
+		}
+	}
+}
+
+#page {
+	// TODO Proper vertical centering and sizing
+
+	.page-left {
+		.no-select;
+		.fade;
+		position: relative;
+		float: left;
+		.spacer { height: 1.0em; }
+	}
+	.page-middle {
+		margin-bottom: 2em;
+		&.mobile {
+			margin: 0;
+			margin-bottom: 2em;
+		}
+		
+		// Visualization
+		svg {
+			.opacity(1.0);  // 0.85
+		}
+
+		video {
+			max-width: 100%;
+		}
+
+		// Legends
+		.legend {
+			position: absolute;
+			bottom: 0;
+			// width: 750px;
+
+			.pill {
+				float:left;
+				padding-left:11.7px;
+				padding-right:11.7px;
+				padding-top:6px;
+				padding-bottom:6px;
+				font-size:13px;
+				color:#000000;
+				cursor:pointer;
+			}
+		}
+
+	}
+
+	.page-right {
+		.fade;
+		.no-select;
+		float: right;
+	}
+
+    .justified{
+    	text-align: justify;
+    }
+}
+
+.page-bottom {
+	position: absolute;
+	width: 100%;
+	bottom: -0.5em;
+	margin-left: -20px;
+}
+
+.ranked_list {
+	color: #cccccc;
+	overflow:hidden;
+	line-height: 18px;
+	max-height: 100%;
+
+	&.mobile-tooltip-ranking {
+		margin-bottom: 20px;
+	}
+
+	div.full-ranking-list {
+		width: 100%;
+		text-align: center;
+
+		&:hover {
+			font-weight: bold;
+		}
+	}
+
+	a {
+		color: @color_pantheon_black;
+		text-decoration: none;
+		&.mobile {
+			li {
+				padding-bottom: 0.5em;
+				span {
+					float: right;
+				}
+			}
+
+		}
+
+		&.hover-bold {
+			&:hover { 
+				font-weight: bold;
+			}
+		}
+
+	    li {
+	    	padding-bottom: 0.75em;
+	    	span {
+	    		overflow: hidden;
+	    		white-space: nowrap;
+	    		text-overflow: ellipsis;
+	    		padding-left: 1.5em;
+	    		font-size: 70%;
+	    	}
+	    }
+	}
+
+	ol {
+		margin: 0;
+		padding-left: 0;
+		list-style-position: inside;
+	}
+}
+
+.section-header {
+	text-align: center;
+	text-transform: uppercase;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	color: @color_pantheon_black;
+	letter-spacing: 1px;
+	font-weight: bold;
+	border-bottom: 1px solid @color_pantheon_black;
+
+	&.mobile {
+		padding-top: 10px;
+	}
+}
+
+div.ui-slider {
+	background: transparent;
+	div.ui-slider-range {
+		background: @color_pantheon_black;
+	}
+
+	span.ui-slider-tic {
+		height: 0.7em;
+	}
+	
+	span.ui-slider-label {
+		font-family: 'Lato';
+		font-weight: 300;
+		font-size: 13px;
+		color: @color_pantheon_black;
+	}
+
+	.ui-slider-handle {
+		cursor: pointer; 
+		margin-left: -4px;
+		width: 8px;
+		background-color: @color_pantheon_black;
+		border: none;
+		border-radius: 0;
+	}
+}
+
+.accordion {
+	font-family: 'Lato' !important;
+	a.active{
+		font-weight:bold;
+	}
+    h3.app {
+    	border-radius: 2px;
+    	padding: 5px;
+    	font-weight: 300;
+    	text-align: left;
+    	color: @color_pantheon_black;
+    	font-size: 1em;
+    	letter-spacing: 1px;
+
+    	span {
+    		background-image: none;
+    	}
+    }
+
+    div.ui-accordion-content {
+    	padding: 0;
+    	ul {
+    		margin: 3px 0;
+    		margin-left: 20%;
+    		li {
+    			text-align: left !important;
+    		}
+    	}
+    }
+
+    // Tidy up this CSS!
+    div {
+    	@media (max-width: 979px) {
+    		ul {
+    			list-style-type: none;
+    			margin: 0;
+    			li {
+    				list-style-type: none;
+    				margin-left: 0 !important;
+    			}
+    		}
+    	}
+    	ul {
+    		margin-left: 0;
+    		padding-left: 0;
+    		margin-top: 2px;
+    		list-style-type: none;
+    		li {
+    			padding-left: 0;
+    			color: @color_pantheon_black;
+    			list-style-type: none;
+    			a {
+    				text-decoration: none;
+    				color: @color_pantheon_black;
+    				&:hover { font-weight: bold }
+
+    			}  
+    		}
+    	}
+    }
+}
+
+
+div.viz-options {
+	width: 100%;
+}
+
+div.parameters.mobile {
+	margin-bottom: 2em;
+}
+
+.parameter-selection {
+	height: 50px;
+	width: 100%;
+	color: @color_pantheon_black;
+	display: inline-block;
+	margin-top: 10px;
+	label {
+    	font-weight: 300;
+    	text-align: left;
+    	color: @color_pantheon_black;
+    	font-size: 1em;
+    	letter-spacing: 1px;
+    	text-transform: uppercase;
+    	margin-bottom: 5px;
+	}
+
+	@media (min-width: 980px) {
+	    &.inline {
+	    	display: inline;
+	    	width: 45%;
+	    	float: right;
+    
+	    	&.first {
+	    		float: left;
+	    		margin-right: 0.5%;
+	    	}
+
+	    	&.last {
+	    		margin-left: 0.5%;
+	    	}
+    
+	    	div.chosen-container {
+	    		width: 345 !important;
+	    	}
+	    }
+	}
+
+	@media (max-width: 979px) {
+		&.inline {
+			display: block;		
+			width: 100%;
+		}
+
+		div.chosen-container {
+			width: inherit !important;
+		}
+	}
+}
+
+div.buttons {
+	div.button:first-child {
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+	}
+
+	div.button {
+		width: 50%;
+		text-align: center;
+		float: left;
+		cursor: pointer;
+		height: 25px;
+		line-height: 22px;
+		background-color: transparent;
+		border: 1px solid rgba(0, 0, 0, 0.75);			
+
+		&.active {
+			background-color: @color_pantheon_black;
+			color: @color_beige;			
+		}
+
+		&:first-child {
+			border-top-left-radius: 2px;
+			border-bottom-left-radius: 2px;		
+		}
+
+		&:last-child {
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;		
+		}
+
+		&.quarter-button {
+			width: 25%;
+		}
+	}
+}
+
+// Left-align category selections
+div#category-selection {
+	ul.chosen-results {
+		li {
+			text-align: left;
+			padding-left: 15px;
+		}
+		li.occupation{
+			padding-left: 60px;
+		}
+		li.industry{
+			padding-left: 30px;
+		}
+	}
+}
+
+// Select Styling
+div.chosen-container {
+	width: inherit !important;
+	background-color: transparent; // rgba(0, 0, 0, 0.75);
+	border-radius: 2px;
+	border: 1px solid @color_pantheon_black;
+	a.chosen-single {
+		box-shadow: none;
+		background: none;
+		text-align: center;
+		color: @color_pantheon_black;
+		font-size: 14px;
+		border: 0 !important;
+		span {
+			margin-right: 0;
+		}
+	}
+	div.chosen-drop {
+		background-color: @color_beige; // rgba(0, 0, 0, 0.75);
+		border: 1px solid @color_pantheon_black;
+		box-shadow: none;
+		color: @color_pantheon_black;
+		font-size: 14px;
+		div.chosen-search {
+			input:focus {
+				border-color: @color_pantheon_black;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				box-shadow: none;
+			}
+		}
+		div.chosen-results {
+			color: @color_pantheon_black;
+			font-size: 14px;
+		}
+	}
+}
+
+div.chosen-with-drop a.chosen-single{
+	background: none !important;
+	box-shadow: none !important;
+}
+
+div.selector {
+	width: 80% !important;
+	margin-left: 10%;
+	margin-top: -5px;
+
+	span { 
+		width: 100% !important;
+		text-align: center;
+	}
+	select {
+		width: 100% !important;
+
+		option {
+			color: @color_pantheon_black;
+		}
+	}
+}
+
+rect.bar, rect.cell {
+	cursor: pointer;
+}
+
+g#countries > path {
+	cursor: pointer;
+}
+
+.one{
+	width: 45%;
+    float: left;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.two{
+	margin-left: 10%;
+    float: right;
+    width: 45%;
+    margin-bottom: 5px;
+}
+
+.spinner{
+	font-size: 4em;
+}
+
+// Custom treemap styling
+.treemap rect#svgbg{
+	fill:@color_pantheon_black;
+}
+
+.treemap g text{
+	fill:white;
+}
+
+g.d3plus-error text{
+	fill: @color_pantheon_black !important;
+}
+
+.error{
+	fill:@color_beige !important;
+}
+
+.dataTables_info {
+	width: 46% !important;
+}
+
+.tooltip_to_rankings_link{
+	display: inline-block;
+	a{
+		color: @color_pantheon_black;
+		&:hover { text-decoration: underline; }
+	}
+}
+
+a.methods-link, a.contactus{
+	color: @color_pantheon_black;
+	text-decoration: underline;
+	&:hover { font-weight:bold; }
+}
+
+.place_of_birth, .feedback{
+	text-align:center;
+	margin-left:0px; 
+	padding-top:20px;
+	padding-bottom: 20px;
+}
