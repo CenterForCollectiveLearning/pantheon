@@ -231,7 +231,7 @@ Template.google_analytics.destroyed = ->
 leftSections = [
   section: "Visualizations"
   template: "visualizations"
-  url: "/visualizations"
+  url: "/viz"
 ,
   section: "Rankings"
   template: "rankings"
