@@ -267,13 +267,13 @@ Template.question.question = ->
 
   # Actually construct the question
   switch mode
-    when "country_exports" then return new Handlebars.SafeString("Who are the globally known people born in " + boldify(vars.country) + "?")
+    when "country_exports" then return new Handlebars.SafeString("Who are the globally known people born within present day " + boldify(vars.country) + "*?")
     when "domain_exports_to", "map" 
       return new Handlebars.SafeString("Where were globally known " + category_prefix + boldify(vars.category) + " born?")
     when "matrix_exports"
       if vars.gender_var is "ratio" then return new Handlebars.SafeString("What's the " + boldify("female to male") + " ratio for each place of birth and cultural domain?")
       else return new Handlebars.SafeString("How many globally known " + boldify(vars.gender_var) + " are associated with each place of birth and cultural domain?")
-    when "country_vs_country" then return new Handlebars.SafeString("How do " + boldify(vars.countryX) + " and " + boldify(vars.countryY) + " compare in terms of number of globally known people?")
+    when "country_vs_country" then return new Handlebars.SafeString("How do " + boldify(vars.countryX) + "* and " + boldify(vars.countryY) + "* compare in terms of number of globally known people?")
     when "domain_vs_domain" then return new Handlebars.SafeString("What places of birth have produced globally known people in " + boldify(vars.categoryX) + " and " + boldify(vars.categoryY) + "?")
 
 #
