@@ -501,7 +501,7 @@ g.d3plus-error text{
 	}
 }
 
-a.methods-link, a.contactus{
+a.methods-link, a.let-us-know {
 	color: @color_pantheon_black;
 	text-decoration: underline;
 	&:hover { font-weight:bold; }
