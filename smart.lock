@@ -32,8 +32,8 @@
       },
       "scss": {
         "git": "https://github.com/fourseven/meteor-scss.git",
-        "tag": "v0.7.0",
-        "commit": "39f60d58c2b890bdd897ef52188644f3093fc2ac"
+        "tag": "v0.8.3",
+        "commit": "84fa8b09766e85a9e85b5606903f4222b7dd7605"
       },
       "autocomplete": {
         "git": "https://github.com/kevinzenghu/meteor-autocomplete.git",
@@ -52,8 +52,8 @@
       },
       "ms-seo": {
         "git": "https://github.com/DerMambo/ms-seo",
-        "tag": "v0.1.4",
-        "commit": "6cd2cad761b03fc0ae0bde23f4d418d2313d84d9"
+        "tag": "v0.2.3",
+        "commit": "4725204ed3fa739bba3c9df8b04f6be6ef5a0e3e"
       },
       "bootboxjs": {
         "git": "https://github.com/TimHeckel/meteor-bootboxjs.git",

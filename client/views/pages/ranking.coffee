@@ -277,7 +277,8 @@ Template.ranking_table.rendered = ->
     aaData: data
     aaSorting: sorting
     aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
-    bDeferRender: false
+    bDeferRender: true
+    bProcessing: true
     bSortClasses: false
     bSorted: false
     sDom: "Rlfrtip"
