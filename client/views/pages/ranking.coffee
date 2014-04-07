@@ -117,18 +117,18 @@ Template.ranking_table.rendered = ->
           args[Session.get("categoryLevel")] = category if category.toLowerCase() isnt "all"
           L = Session.get("langs")
           if L[0] is "H" then args.HPI = {$gt:parseInt(L.slice(1,L.length))} else args.numlangs = {$gt: parseInt(L)}
-          collection = ClientPeople.find(args).fetch()
+          collection = ClientPeople.find(args, {sort:{'HPI':-1}}).fetch()
 
-      data = _.map collection, (d) ->
+      data = _.map collection, (d, i) -> #add i for the index, set it intially because we use deferred rendering (sort collection by HPI - see above)
         p = ClientPeople.findOne d._id
         if dataset is "OGC" and clickTooltip
-          [0, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,0), toMillions(p.TotalPageViews), toDecimal(p.HPI,2)]  
+          [i+1, p.name, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,0), toMillions(p.TotalPageViews), toDecimal(p.HPI,2)]  
         else if Session.equals("page", "rankings") and mobile
-          [0, p.name, p.birthyear, p.countryCode, p.occupation.capitalize(), toDecimal(p.HPI,2)]  
+          [i+1, p.name, p.birthyear, p.countryCode, p.occupation.capitalize(), toDecimal(p.HPI,2)]  
         else if dataset is "OGC" and not mobile
-          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), toDecimal(p.HPI,3)]
+          [i+1, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), toDecimal(p.HPI,3)]
         else
-          [0, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
+          [i+1, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
 
       if dataset is "murray"
         aoColumns = [
