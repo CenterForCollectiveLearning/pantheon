@@ -2,11 +2,18 @@
 # I.e. session is used to record state
 
 Router.map ->
+  # @route "home",
+  #   path: "/"
+  #   template: "home"
+  #   data: -> 
+  #     Session.set "page", @template
+
   @route "home",
     path: "/"
-    template: "home"
-    data: -> 
-      Session.set "page", @template
+    template: "visualizations"
+    before: [ ->
+      @redirect "/viz"
+    ]
 
   @route "viz",
     path: "/viz"
