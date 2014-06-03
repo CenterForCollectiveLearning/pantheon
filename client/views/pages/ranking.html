@@ -20,7 +20,6 @@
                 <!-- Visualization and Ranked List Container -->
                 <div class="page-middle {{#unless mobile}}span8{{else}}span12{{/unless}}" style="{{#if mobile}}margin:0{{/if}}">
                     <div id = "tooltip" class ="invisible"></div>
-                    {{> message_update}}
                     {{#if rankingdataReady}}                      
                         {{> ranking_table}}
                     {{else}}
