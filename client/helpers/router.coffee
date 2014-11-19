@@ -88,6 +88,7 @@ Router.map ->
       Session.set "langs", @params.langs  
       Session.set "clicktooltip", false  
       Session.set "dataset", "OGC"
+      # Session.set "vizMode", "domain_exports_to"
       if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L" 
 
   @route "methods",

@@ -115,6 +115,7 @@ Deps.autorun ->
       switch entity
         when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, L, onReady)
+          # vizSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, category, "industry", dataset, onReady)
         when "people"
           # usig ClientPeople instead of peopleTopN
           # defer onReady to make sure all people are loaded before rendering the datatable
