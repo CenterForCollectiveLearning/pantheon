@@ -1,23 +1,14 @@
 <template name="scatterplot">
-	 <div class="page-middle {{#unless mobile}}span8{{else}}span12 mobile{{/unless}}">
-	    <div id="viz" class="scatterplot">
-	    	{{#if dataReady}}
-	    	    <div class="scatterplot-container">
-	    	    	{{> scatterplot_svg}}
-	    	    </div>
-	    	    {{#unless mobile}}{{> time_slider}}{{/unless}}
-	    	{{else}}
-	    	    {{> spinner}}
-	    	{{/if}}
-	    </div>
-	</div>
-	{{#unless mobile}}
-	<div class="page-right span2">
-        {{#if initialDataReady}}
-        {{> ranked_list }}
-        {{/if}}
+    <div id="viz" class="scatterplot">
+    	{{#if dataReady}}
+    	    <div class="scatterplot-container">
+    	    	{{> scatterplot_svg}}
+    	    </div>
+    	    {{#unless mobile}}{{> time_slider}}{{/unless}}
+    	{{else}}
+    	    {{> spinner}}
+    	{{/if}}
     </div>
-    {{/unless}}
 </template>
 
 <template name="scatterplot_svg">

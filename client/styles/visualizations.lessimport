@@ -39,6 +39,9 @@
     .sharing-options {
     	padding-top: 5px;
     }
+    &.embed {
+		padding-top: 0px;
+	}
     &.mobile {
 		padding-top: 80px;
 

@@ -29,7 +29,16 @@
                     {{/if}}
                 </div>
                  <!-- Visualization and Ranked List Container -->
-                {{> visualization}}
+                 <div class="page-middle {{#unless mobile}}span8{{else}}span12 mobile{{/unless}}">
+                    {{> visualization}}
+                </div>
+                {{#unless mobile}}
+                <div class="page-right span2">
+                    {{#if initialDataReady}}
+                    {{> ranked_list }}
+                    {{/if}}
+                </div>
+                {{/unless}}
                 {{#if initialDataReady}}
                 <div class = "span12 feedback">
                     {{> place_of_birth}}
@@ -49,6 +58,35 @@
                 {{/if}}
             </div>
             {{/if}}
+        </div>
+    </div>
+</template>
+
+<template name="embed">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div style="display:none">
+                {{#if initialDataReady}}
+                    {{> explore_options}} 
+                {{/if}}
+            </div>
+            <div class="page-top embed span12">
+                {{#if dataReady}}   
+                    {{> question}} 
+                    {{> date_header}}
+                {{/if}}
+            </div>
+         </div>
+    </div>
+    <div id="page">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                 <!-- Visualization and Ranked List Container -->
+                 <div class="page-middle span12">
+                    {{> visualization}}
+                </div>
+                {{> tooltip}}
+            </div>
         </div>
     </div>
 </template>

@@ -25,6 +25,13 @@
 <template name="google_analytics">
 </template>
 
+<template name="embeddable">
+    <div id="background-wrapper" class="wrapper">
+    <!-- Body -->
+    {{ yield }}
+    </div>
+</template>
+
 <!-- Base Layout -->
 <template name="defaultLayout">
     <!--[if IE]>

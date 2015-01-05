@@ -15,6 +15,24 @@ Router.map ->
       @redirect "/viz"
     ]
 
+  @route "embed",
+    path: "/embed/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
+    layoutTemplate: "embeddable"
+    yieldTemplates: {}
+    data: ->
+      vizMode = @params.vizMode
+      Session.set "page", "visualizations"
+      Session.set "vizType", @params.vizType
+      Session.set "vizMode", @params.vizMode
+      Session.set IOMapping[vizMode]["in"][0], @params.paramOne
+      Session.set IOMapping[vizMode]["in"][1], @params.paramTwo
+      Session.set "from", @params.from
+      Session.set "to", @params.to
+      Session.set "langs", @params.langs
+      if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L"
+      if @params.dataset is "murray" then Session.set "dataset", @params.dataset else if @params.dataset is "pantheon" then Session.set "dataset", "OGC"
+
+
   @route "viz",
     path: "/viz"
     template: "visualizations"
