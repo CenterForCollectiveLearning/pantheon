@@ -16,11 +16,12 @@ Router.map ->
     ]
 
   @route "embed",
-    path: "/embed/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
+    path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset/embed"
     layoutTemplate: "embeddable"
     yieldTemplates: {}
     data: ->
       vizMode = @params.vizMode
+      Session.set "embed", true
       Session.set "page", "visualizations"
       Session.set "vizType", @params.vizType
       Session.set "vizMode", @params.vizMode
@@ -31,6 +32,30 @@ Router.map ->
       Session.set "langs", @params.langs
       if @params.langs[0] is "H" then Session.set "indexType", "HPI" else Session.set "indexType", "L"
       if @params.dataset is "murray" then Session.set "dataset", @params.dataset else if @params.dataset is "pantheon" then Session.set "dataset", "OGC"
+      # Reset defaults based on vizmode
+      if vizMode is "country_exports"
+        Session.set "category", "all"
+      else if vizMode is "domain_exports_to"
+        Session.set "country", "all"
+      else if vizMode is "country_vs_country"
+        Session.set "country", defaults.country
+        Session.set "category", "all"
+        Session.set "categoryLevel", defaults.categoryLevel
+      else if vizMode is "domain_vs_domain"
+        Session.set "category", "all"
+      else if vizMode is "matrix_exports"
+        Session.set "country", "all"
+        Session.set "category", "all"
+        Session.set "categoryLevel", defaults.categoryLevel
+      else if vizMode is "map"
+        Session.set "country", "all"
+      # Set category level based on category parameters
+      if IOMapping[vizMode]["in"][0] is "category" or IOMapping[vizMode]["in"][0] is "categoryX" or IOMapping[vizMode]["in"][0] is "categoryY"
+        Session.set "categoryLevel", getCategoryLevel(@params.paramOne)  
+        Session.set "categoryLevelX", getCategoryLevel(@params.paramOne)  
+      if IOMapping[vizMode]["in"][1] is "category" or IOMapping[vizMode]["in"][1] is "categoryX" or IOMapping[vizMode]["in"][1] is "categoryY"
+        Session.set "categoryLevel", getCategoryLevel(@params.paramTwo)  
+        Session.set "categoryLevelY", getCategoryLevel(@params.paramTwo) 
 
 
   @route "viz",
@@ -45,6 +70,7 @@ Router.map ->
     template: "visualizations"
     data: ->
       vizMode = @params.vizMode
+      Session.set "embed", false
       Session.set "page", @template
       Session.set "vizType", @params.vizType
       Session.set "vizMode", @params.vizMode

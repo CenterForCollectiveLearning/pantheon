@@ -56,7 +56,7 @@ Template.matrix_svg.rendered = ->
 
     # TODO: Don't re-render tooltip for already selected cell
     clickevent = (p) ->
-      unless Session.get("mobile")
+      unless Session.get("mobile") or Session.get("embed")
         if Session.equals("tutorialType", null) or Session.equals("tutorialType", undefined)
           Session.set "hover", false
           Session.set "showTooltip", false

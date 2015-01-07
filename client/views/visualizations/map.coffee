@@ -126,6 +126,7 @@ color_gradient = ["#f2ecb4", "#f2e671", "#f6d626", "#f9b344", "#eb8c30", "#e84d2
 
 Template.map_svg.rendered = ->
   data = WorldMap.find().fetch()
+
   vars =
       svg_height : 485
       svg_width : $(".page-middle").width()
@@ -212,7 +213,7 @@ Template.map_svg.rendered = ->
     ).on("mouseover", mouseover)
     .on("mouseout", mouseout)
     .on("click", (d) ->
-      if Session.get("mobile") then mouseover(d)
+      if Session.get("mobile") or Session.get("embed") then mouseover(d)
       else clickevent(d)
       )
     .on("touchstart", "mouseover")

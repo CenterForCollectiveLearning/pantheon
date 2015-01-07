@@ -248,7 +248,7 @@ d3plus.tree_map = function(vars) {
     .on(d3plus.evt.move, function(d) { if(!Session.get("mobile")) onMouseMove(d) })
     .on(d3plus.evt.out, function(d) { if(!Session.get("mobile")) onMouseOut(d) })
     .on(d3plus.evt.down, function(d) {
-      if(Session.get("mobile")) onMouseMove(d)
+      if(Session.get("mobile") || Session.get("embed")) onMouseMove(d)
       else onClick(d)
     });
   

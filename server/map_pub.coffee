@@ -1,5 +1,4 @@
 Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
-  
   #
   #The query will look something like this:
   # db.people.aggregate([{"$match": {"numlangs": {"$gt": 25}, "birthyear": {"$gte": 0, "$lte":1950}, "domain": 'EXPLORATION'}},
@@ -34,13 +33,14 @@ Meteor.publish "map_pub", (begin, end, L, category, categoryLevel, dataset) ->
   driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
     _.each result, (e) ->
       
-      # Generate a random disposable id for each aggregate
-      sub.added "worldmap", Random.id(),
+      fields = 
         countryCode: e._id.countryCode
         countryName: e._id.countryName
         count: e.count
 
-
+      # Generate a random disposable id for each aggregate
+      sub.added "worldmap", Random.id(), fields
+        
     sub.ready()
   , (error) ->
     Meteor._debug "Error doing aggregation: " + error

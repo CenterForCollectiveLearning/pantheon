@@ -340,7 +340,7 @@ d3plus.pie_scatter = function(vars) {
     .on(d3plus.evt.over, function(d) { if(!Session.get("mobile")) onMouseOver(d) })
     .on(d3plus.evt.out, function(d) { if(!Session.get("mobile")) onMouseOut(d) })
     .on(d3plus.evt.click, function(d) {
-      if(Session.get("mobile")) onMouseOver(d)
+      if(Session.get("mobile") || Session.get("embed")) onMouseOver(d)
       else onClick(d)
     });
     
