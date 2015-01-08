@@ -81,9 +81,12 @@
     <div id="page">
         <div class="container-fluid">
             <div class="row-fluid">
-                 <!-- Visualization and Ranked List Container -->
-                 <div class="page-middle span12">
+                 <!-- Visualization Container -->
+                 <div class="page-middle span12 embed">
                     {{> visualization}}
+                </div>
+                <div class = "span12 extra-text">
+                    <span>Brought to you by <a href='http://pantheon.media.mit.edu'>Pantheon</a>
                 </div>
                 {{> tooltip}}
             </div>
@@ -159,7 +162,7 @@
 
 <!-- Visualization and Viz-Mode specific Question -->
 <template name="question">
-    <div id="question" class="primary-text">{{question}}</div>
+    <div id="question" class="primary-text {{#if embed}} embed{{/if}}">{{question}}</div>
 </template>
 
 <template name="date_header">

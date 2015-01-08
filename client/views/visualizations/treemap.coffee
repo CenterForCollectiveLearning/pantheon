@@ -18,6 +18,11 @@ Template.treemap_svg.rendered = ->
   height = $(".page-middle").height() - 80
   if mobile
     height = 200
+  if embed 
+    height = $(".page-middle").height()/2 - 40
+
+  console.log "height: "+height
+  console.log "width: "+width
   
   Deps.autorun ->
     # For this to work, need to make sure that this is only called once

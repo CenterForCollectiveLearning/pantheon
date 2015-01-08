@@ -41,6 +41,10 @@
     }
     &.embed {
 		padding-top: 0px;
+		.primary-text{
+			font-size: 3vw;
+			margin-bottom: 10px;
+		}
 	}
     &.mobile {
 		padding-top: 80px;
@@ -67,6 +71,9 @@
 		&.mobile {
 			margin: 0;
 			margin-bottom: 2em;
+		}
+		&.embed {
+			margin-bottom: 1em;
 		}
 		
 		// Visualization
@@ -515,4 +522,12 @@ a.methods-link, a.let-us-know {
 	margin-left:0px; 
 	padding-top:20px;
 	padding-bottom: 20px;
+}
+
+.extra-text{
+	text-align:center;
+	margin-left:0px; 
+	padding-top:0px;
+	padding-bottom: 20px;
+	font-size: 10px; font-size: 2vw;
 }
