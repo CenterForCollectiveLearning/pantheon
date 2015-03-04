@@ -1,12 +1,12 @@
 # Global variables for treemap and scatterplot colors
-@boilingOrange = "#F29A2E"
-@chiliRed = "#C14925"
-@sapGreen = "#587507"
-@brickBrown = "#72291D"
-@seaGreen = "#46AF69"
-@salmon = "#EB7151"
-@manganeseBlue = "#129B97"
-@magenta = "#822B4C"
+@boilingOrange = "#F29A2E" #ARTS
+@chiliRed = "#C14925" #EXPLORATION
+@sapGreen = "#587507" #BUSINESS & LAW
+@brickBrown = "#72291D" #HUMANITIES
+@seaGreen = "#46AF69" #PUBLIC FIGURE
+@salmon = "#EB7151" #INSTITUTIONS
+@manganeseBlue = "#129B97" #SCIENCE & TECHNOLOGY
+@magenta = "#822B4C" #SPORTS
 
 @color_domains = d3.scale.ordinal()
   .domain(["INSTITUTIONS", "ARTS", "HUMANITIES", "BUSINESS & LAW", "EXPLORATION", "PUBLIC FIGURE", "SCIENCE & TECHNOLOGY", "SPORTS", "Art", "Lit", "Music", "Phil", "Science"])
@@ -228,7 +228,11 @@ Template.feedback.events =
 Template.question.question = -> 
   dataset = Session.get("dataset")
   try
-    country = if Session.get("country") is "all" then "the world" else Countries.findOne({countryCode: Session.get("country"), dataset: dataset}).countryName
+    country = Session.get("country")
+    country = country.split("+")
+    if country.length > 1 then city = country[0] + ", " else city = ""
+    countryCode = country[country.length-1]
+    country = if countryCode is "all" then "the world" else city + Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName
   try # separate out the countryX and countryY try becaused if country is not in the same dataset it kicks out the rest of the assignments
     countryX = if Session.get("countryX") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryX"), dataset: dataset}).countryName
     countryY = if Session.get("countryY") is "all" then "the world" else Countries.findOne({countryCode: Session.get("countryY"), dataset: dataset}).countryName

@@ -51,10 +51,27 @@ Template.select_mode.render_template = ->
         return new Handlebars.SafeString(Template.domains_ranking_mode(this))
 
 Template.select_country.rendered = ->
-  $(@find("select")).val(Session.get("country")).chosen().change( ->
+  country = Session.get("country").split("+")
+  countryCode = country[country.length-1]
+  $(@find("select")).val(countryCode).chosen().change( ->
     path = window.location.pathname.split("/")
     countryCode = $(this).val()
     if IOMapping[Session.get("vizMode")]["in"].indexOf("country") is 0 then path[3] = countryCode
+    else path[4] = countryCode
+    Router.go path.join("/"))
+
+Template.select_city.rendered = ->
+  country = Session.get("country").split("+")
+  if country.length > 1 then city = country[0] else city = "all"
+  countryCode = country[country.length-1]
+  $(@find("select")).val(city).chosen().change( ->
+    path = window.location.pathname.split("/")
+    location = $(this).val() 
+    if location == "all"
+      location = countryCode
+    else
+      location = location + "+" + countryCode
+    if IOMapping[Session.get("vizMode")]["in"].indexOf("country") is 0 then path[3] = location
     else path[4] = countryCode
     Router.go path.join("/"))
 
@@ -340,7 +357,17 @@ Template.country_dropdown.countries = ->
   else
     return data
 
-
+Template.city_dropdown.cities_given_country = ->
+  uniqueCities = []
+  res = []
+  country = Session.get("country").split("+")
+  countryCode = country[country.length-1]
+  _.each ClientPeople.find(countryCode: countryCode, dataset: Session.get("dataset")).fetch(), (country_obj) ->
+    birthcity = country_obj.birthcity
+    if uniqueCities.indexOf(birthcity) is -1
+      uniqueCities.push birthcity
+      res.push birthcity: $.trim(birthcity)
+  _.sortBy(res, 'birthcity')
 
 Template.language_dropdown.languages = ->
   Languages.find {},

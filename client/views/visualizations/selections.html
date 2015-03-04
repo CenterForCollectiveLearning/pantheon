@@ -19,6 +19,7 @@
 <!-- Dropdown Menus -->
 <template name="country_exporters_mode">
     {{> select_country}}
+    {{> select_city}}
     {{> select_time }}
     {{> select_dataset}}
     {{> select_l}}
@@ -140,6 +141,10 @@
     {{> country_dropdown}}
 </template>
 
+<template name="select_city">
+    {{> city_dropdown}}
+</template>
+
 <template name="select_countryX">
     {{> country_dropdown}}
 </template>
@@ -158,6 +163,26 @@
             {{/each}}
         </select>
     </div>
+</template>
+
+<template name="country_item">
+    <option class="domain" value="{{countryCode}}">{{countryName}}</option>
+</template>
+
+<template name="city_dropdown">
+    <div class="parameter-selection">
+        <label>City</label>
+        <select>
+            <option value="all">All</option>
+            {{#each cities_given_country}}
+            {{> city_item}}
+            {{/each}}
+        </select>
+    </div>
+</template>
+
+<template name="city_item">
+    <option class="industry" value="{{birthcity}}">{{capitalize birthcity}}</option>
 </template>
 
 <template name="select_language">
@@ -186,10 +211,6 @@
             {{/each}}
         </select>
     </div>
-</template>
-
-<template name="country_item">
-    <option value="{{countryCode}}">{{countryName}}</option>
 </template>
 
 <template name="language_item">

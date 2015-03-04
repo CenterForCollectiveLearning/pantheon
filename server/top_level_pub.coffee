@@ -15,9 +15,15 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
     birthyear:
       $gte: begin
       $lte: end
+  
+  country = country.split("+")
+  if country.length > 1 then city = country[0] else city = "all"
+  countryCode = country[country.length-1]
 
   args.dataset = dataset
-  args.countryCode = country if country isnt "all" and vizMode is "country_exports"
+  args.countryCode = countryCode if countryCode isnt "all" and vizMode is "country_exports"
+  args.birthcity = city if city isnt "all"
+
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
   if L[0] is "H" then args.HPI = {$gte:parseInt(L.slice(1,L.length))} else args.numlangs = {$gte: parseInt(L)}
   
@@ -91,6 +97,10 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       $lte: end
     dataset: dataset
 
+  country = country.split("+")
+  if country.length > 1 then city = country[0] else city = "all"
+  countryCode = country[country.length-1]
+
   if L[0] is "H" then args.HPI = {$gte:parseInt(L.slice(1,L.length))} else args.numlangs = {$gte: parseInt(L)}
   # TODO - this is hardcoded fix for matrix to update tooltip with gender - may want to generalize this
   if gender is "male" or gender is "female"
@@ -99,8 +109,10 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       args.gender = genderField
 
   if vizMode is "country_exports" or vizMode is "matrix_exports" or vizMode is "domain_exports_to"
-    args.countryCode = country  if country isnt "all"
+    args.countryCode = countryCode  if countryCode isnt "all"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
+    args.birthcity = city if city isnt "all"
+
   else if vizMode is "map"
     if dataset is "murray"
       args.countryCode3 = country if country isnt "all"

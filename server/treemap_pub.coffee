@@ -13,7 +13,11 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
   matchArgs[categoryLevel] = category if category.toLowerCase() isnt "all"
   matchArgs.dataset = dataset
   if L[0] is "H" then matchArgs.HPI = {$gt:parseInt(L.slice(1,L.length))} else matchArgs.numlangs = {$gt: parseInt(L)}
-
+  
+  country = country.split("+")
+  if country.length > 1 then city = country[0] else city = "all"
+  countryCode = country[country.length-1]
+  
   pipeline = []
   if vizMode is "country_exports"
     project =
@@ -22,7 +26,8 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
       industry: 1
       occupation: 1
 
-    matchArgs.countryCode = country if country isnt "all"
+    matchArgs.countryCode = countryCode if countryCode isnt "all"
+    matchArgs.birthcity = city if city isnt "all"
 
     pipeline = [
       $match: matchArgs

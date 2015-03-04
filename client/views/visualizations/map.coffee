@@ -222,6 +222,24 @@ Template.map_svg.rendered = ->
     d3.select(".key").selectAll("text").text (d, i) ->
       value_range_big[i].toFixed 0
 
+    # # load and display the cities, need to redraw the city after mouseover
+    # g = svg.append("g")
+    # d3.csv "/cities.csv", (error, data) ->
+    #   g.selectAll("circle").data(data).enter().append("a").attr("xlink:href", (d) ->
+    #     "https://www.google.com/search?q=" + d.city
+    #   ).append("circle").attr("cx", (d) ->
+    #     map_projection([
+    #       d.lon
+    #       d.lat
+    #     ])[0]
+    #   ).attr("cy", (d) ->
+    #     map_projection([
+    #       d.lon
+    #       d.lat
+    #     ])[1]
+    #   ).attr("r", 2).style "fill", "black"
+    #   return
+
     # make the treemap zoomable using d3.behavior.zoom()
     zoom = d3.behavior.zoom()
     .scaleExtent([1, 5])

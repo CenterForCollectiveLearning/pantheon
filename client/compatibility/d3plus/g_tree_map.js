@@ -171,10 +171,12 @@ d3plus.tree_map = function(vars) {
         var vizMode = Session.get("vizMode");
         var dataset = Session.get("dataset");
         if (vizMode === "country_exports") {
-          var countryCode = Session.get("country");
+          var country = Session.get("country").split("+");
+          var countryCode = country[country.length-1];
           var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
           var category = id.replace("_", " ").toUpperCase();
           var categoryLevel = "occupation";
+          countryCode = Session.get("country"); // reset countryCode to the full city+countryCode
         } else if (vizMode === "domain_exports_to") {
           var countryCode = id.replace("_", " ");
           var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
@@ -222,10 +224,13 @@ d3plus.tree_map = function(vars) {
         var dataset = Session.get("dataset");
         var vizMode = Session.get("vizMode");
         if (vizMode === "country_exports") {
-            var countryCode = Session.get("country");
+            var country = Session.get("country").split("+");
+            var countryCode = country[country.length-1];
             var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
             var category = id.replace("_", " ").toUpperCase();
             var categoryLevel = "occupation";
+            countryCode = Session.get("country"); // reset countryCode to the full city+countryCode
+
         } else if (vizMode === "domain_exports_to") {
             var countryCode = id.replace("_", " ");
             var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
