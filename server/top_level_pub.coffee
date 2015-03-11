@@ -117,7 +117,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     if dataset is "murray"
       args.countryCode3 = country if country isnt "all"
     else
-      args.countryCode = country  if country isnt "all"
+      args.countryCode = countryCode  if countryCode isnt "all"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
   else if vizMode is "country_vs_country"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
@@ -127,7 +127,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       countryCode: countryY
     ]
   else if vizMode is "domain_vs_domain"
-    args.countryCode = country
+    args.countryCode = countryCode
     args.$or = [{}, {}]
     args.$or[0][categoryLevelX] = categoryX if categoryX isnt "all"
     args.$or[1][categoryLevelY] = categoryY if categoryY isnt "all"
@@ -163,7 +163,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
         numlangs: -1
 
   projection.limit = 5 if not click
-
+  console.log args 
   # Get people
   People.find(args, projection).forEach (person) ->
     sub.added "tooltipCollection", person._id, {}
