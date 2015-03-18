@@ -85,6 +85,7 @@ teamMembers = [
     personal: "http://tweilu.scripts.mit.edu/"
   dates: "Summer 2012"
 ]
+
 Template.team.helpers
   first_row_teamMembers: ->
     teamMembers.slice 0, 3
@@ -110,3 +111,18 @@ Template.team.events =
     $(srcE).find("div.info").animate
       opacity: 0.0
     , 250
+
+Template.team.rendered = ->
+  b = $(document.body)
+
+  offset = $(".logo").outerHeight() # 0 # $('.page-middle').offset().top + w.height()/4
+
+  b.scrollspy(
+    target: '#table-of-contents'
+    offset: offset + 60
+    )
+
+  Deps.autorun( ->
+    scrollPosition = $(Session.get("pageScrollID")).position()?.top
+    if scrollPosition then window.scrollTo(0, scrollPosition - offset - 40)
+  )

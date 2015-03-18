@@ -10,7 +10,7 @@ matrixProps =
     left: 30
 
 Template.matrix_svg.properties = 
-    headerHeight: matrixProps.headerHeight
+    headerHeight: if Session.get("embed") then $(".page-middle").height()/6 else matrixProps.headerHeight
     fullWidth: matrixProps.width + matrixProps.margin.left + matrixProps.margin.right
     fullHeight: matrixProps.height + matrixProps.margin.top + matrixProps.margin.bottom
 
@@ -19,7 +19,9 @@ Template.matrix_svg.rendered = ->
   
   # TODO: resize the scroll container of the viz is embedded 
   if Session.get("embed")
-    $(".scroll-container").height($("#viz").height()/2)
+    $(".scroll-container").height($(".page-middle").height()/6)
+    $("svg.header").height($(".page-middle").height()/6-5)
+    matrixProps.headerHeight = if Session.get("embed") then $(".page-middle").height()/5
 
   # Visualization width (NOT SVG width)
   matrixProps.fullWidth = $(".page-middle").width()
@@ -91,9 +93,7 @@ Template.matrix_svg.rendered = ->
         d3.selectAll(".row text").classed "active", (d, i) -> i is p.y
         d3.selectAll(".column-title text").classed "active", (d, i) -> i is p.x
         # Positioning
-        position =
-          left: (d3.event.pageX + 40)
-          top: (d3.event.pageY - 45)
+        position = getTooltipPosition(d3.event.clientX, d3.event.clientY)
         Session.set "tooltipPosition", position
         countryCode = countries[p.y]
         countryName = Countries.findOne(countryCode: countryCode).countryName
@@ -305,6 +305,9 @@ Template.matrix_svg.rendered = ->
           fill d.z
         # EXIT
         cell.exit().attr("class", "exit").transition().duration(750).attr("y", 60).remove()
+      labelsize = "1.2em"
+      if Session.get("embed")
+        labelsize = "0.6em"
       columns = svg.selectAll(".column").data(invMatrix)
       columnTitles = header_svg.selectAll(".column-title").data(invMatrix)
       g = columns.enter().append("g").attr("class", "column")
@@ -316,7 +319,7 @@ Template.matrix_svg.rendered = ->
         .attr("dy", ".32em")
         .attr("text-anchor", "start")
         .attr("font-family", "Lato")
-        .attr("font-size", "1.2em")
+        .attr("font-size", labelsize)
         .attr("fill", "#222222")
         .attr("x", 6)
         .attr("y", matrixScales.y.rangeBand() / 2)

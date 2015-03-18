@@ -163,7 +163,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
         numlangs: -1
 
   projection.limit = 5 if not click
-  console.log args 
+
   # Get people
   People.find(args, projection).forEach (person) ->
     sub.added "tooltipCollection", person._id, {}

@@ -11,10 +11,13 @@ Template.scatterplot_svg.destroyed = ->
 Template.scatterplot_svg.rendered = ->
   context = this
   mobile = Session.get("mobile")
+  embed = Session.get("embed")
   width = $(".page-middle").width()
   height = $(".page-middle").height() - 80
   if mobile
     height = 200
+  if embed 
+    height = $(".page-middle").height()/2 - 60
   
   viz = d3plus.viz()
   vizMode = Session.get("vizMode")

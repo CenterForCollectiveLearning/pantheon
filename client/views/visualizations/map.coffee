@@ -42,9 +42,7 @@ mouseover = (d) ->
       countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
     category = Session.get("category")
     categoryAggregation = Session.get("categoryLevel")
-    position =
-      left: (d3.event.pageX + 40)
-      top: (d3.event.pageY - 45)
+    position = getTooltipPosition(d3.event.pageX, d3.event.pageY)
 
     Session.set "tooltipPosition", position
     
@@ -135,6 +133,12 @@ Template.map_svg.rendered = ->
   if mobile
     vars =
       svg_height : 200
+      svg_width : $(".page-middle").width()
+
+  embed = Session.get("embed")
+  if embed
+    vars =
+      svg_height : $(".page-middle").height()/2 - 160
       svg_width : $(".page-middle").width()
 
   if data.length is 0 #No data screen

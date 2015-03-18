@@ -149,10 +149,7 @@ d3plus.tree_map = function(vars) {
         // If the tooltip is already shown for the same cell, just update the positon
 
         if (!Session.get("mobile") && Session.get("showTooltip")) {
-          var position = {
-            "left": (d3.event.clientX + 40),
-            "top": (d3.event.clientY - 45)
-          }
+          var position = getTooltipPosition(d3.event.clientX, d3.event.clientY);
           Session.set("tooltipPosition", position);
           return;
         }
@@ -183,11 +180,8 @@ d3plus.tree_map = function(vars) {
           var category = Session.get("category").toUpperCase();
           var categoryLevel = Session.get("categoryLevel");
         }
+        var position = getTooltipPosition(d3.event.clientX, d3.event.clientY);
 
-        var position = {
-          "left": (d3.event.clientX + 40),
-          "top": (d3.event.clientY - 45)
-        }
         Session.set("tooltipPosition", position);
         Session.set("tooltipTime", eventTime);
 

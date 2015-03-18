@@ -86,7 +86,9 @@
                     {{> visualization}}
                 </div>
                 <div class = "span12 extra-text">
-                    <span>Brought to you by <a href='http://pantheon.media.mit.edu'>Pantheon</a>
+                    {{#if dataReady}}   
+                    <span>Brought to you by: <a href='http://pantheon.media.mit.edu'><img class="logo-img" src="/pantheon_logo_mobile.png" style="width:20%" /></a>
+                    {{/if}}
                 </div>
                 {{> tooltip}}
             </div>

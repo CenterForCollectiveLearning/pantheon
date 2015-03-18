@@ -1,3 +1,28 @@
+function getTooltipPosition(clientX,clientY){ 
+// A function to calculate the tooltip position (and flip the tooltip if necessary)
+  var d = {
+    x:clientX + 40, 
+    y:clientY - 45
+  };
+
+  // Limit X to the bounds of the screen
+  if (d.x + 300 > window.innerWidth) {
+    d.x = window.innerWidth - 300;
+  }
+
+  // Limit Y to the bounds of the screen
+  if (d.y + 200 > window.innerHeight) {
+    d.y = window.innerHeight - 200;
+  }
+
+  var position = {
+    "left": d.x,
+    "top": d.y 
+  }
+
+  return position;
+}
+
 d3plus.tooltip = {};
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

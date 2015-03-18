@@ -155,10 +155,7 @@ d3plus.pie_scatter = function(vars) {
       var vizMode = Session.get("vizMode");
 
       // Positioning
-      var position = {
-        "left": (d3.event.clientX + 40),
-        "top": (d3.event.clientY - 45)
-      }
+      var position = getTooltipPosition(d3.event.pageX, d3.event.pageY);
       Session.set("tooltipPosition", position);
    
       // Subscription Parameters
@@ -303,10 +300,7 @@ d3plus.pie_scatter = function(vars) {
         var vizMode = Session.get("vizMode");
 
         // Positioning
-        var position = {
-            "left": (d3.event.clientX + 40),
-            "top": (d3.event.clientY - 45)
-        }
+        var position = getTooltipPosition(d3.event.pageX, d3.event.pageY);
         Session.set("tooltipPosition", position);
 
         // Subscription Parameters

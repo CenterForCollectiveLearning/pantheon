@@ -13,6 +13,7 @@ Template.treemap_svg.rendered = ->
   context = this
   dataset = Session.get("dataset")
   mobile = Session.get("mobile")
+  embed = Session.get("embed")
   viz = d3plus.viz()
   width = $(".page-middle").width()
   height = $(".page-middle").height() - 80
@@ -21,8 +22,6 @@ Template.treemap_svg.rendered = ->
   if embed 
     height = $(".page-middle").height()/2 - 40
 
-  console.log "height: "+height
-  console.log "width: "+width
   
   Deps.autorun ->
     # For this to work, need to make sure that this is only called once

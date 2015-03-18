@@ -31,11 +31,21 @@
 <template name="team">
 	<div class="page-top">
 		<div class="primary-text">
-			About the Pantheon Team
 		</div>
 	</div>
 	<div id="page" class="{{#unless mobile}}min-width{{/unless}}">
+		{{#unless mobile}}
+		<div id="table-of-contents" class="text">			
+			<ul class="nav nav-list">
+				<li><a class="h1" href="#team">Team</a></li>
+				<li><a class="h1" href="#API">API</a></li>
+				<li><a class="h2" href="#embed">Embed</a></li>
+				<li><a class="h2" href="#faq">FAQ</a></li>
+			</ul>
+		</div>
+		{{/unless}}
 		<div class="text-page-middle page-middle text team-page{{#if mobile}} mobile{{/if}}">
+			<h1 id="team">About the Pantheon Team</h1>
 			<p>Pantheon is a project from the <a class="macro-link" href="http://macroconnections.media.mit.edu" target="_blank">Macro Connections</a> group at The MIT Media Lab. We are a team of designers, engineers, and scientists working collaboratively to quantify, analyze, measure and visualize global culture.</p>
 			{{!#unless mobile}}
 			<div class="team-row">
