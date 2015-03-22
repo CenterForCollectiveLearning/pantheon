@@ -1,6 +1,6 @@
 teamMembers = [
   name: "César A. Hidalgo"
-  photo: "cesar_hidalgo.png"
+  photo: "/cesar_hidalgo.png"
   description: "Principal Investigator"
   role: ["Concept", "Data", "Design"]
   media:
@@ -10,7 +10,7 @@ teamMembers = [
   dates: "Summer 2012 - present"
 ,
   name: "Amy Zhao Yu"
-  photo: "amy_yu.png"
+  photo: "/amy_yu.png"
   description: "Graduate Student"
   role: ["Data", "Development", "Content"]
   media:
@@ -20,7 +20,7 @@ teamMembers = [
   dates: "Fall 2012 - present"
 ,
   name: "Kevin Zeng Hu"
-  photo: "kevin_hu.png"
+  photo: "/kevin_hu.png"
   description: "Graduate Student"
   role: ["Development", "Design", "Data"]
   media:
@@ -30,7 +30,7 @@ teamMembers = [
   dates: "Summer 2013 - present"
 ,
   name: "Ali Almossawi"
-  photo: "ali_almossawi.jpg"
+  photo: "/ali_almossawi.jpg"
   description: "Mozilla Corporation"
   role: ["Design"]
   media:
@@ -40,7 +40,7 @@ teamMembers = [
   dates: "2013"
 ,
   name: "Shahar Ronen"
-  photo: "shahar_ronen.png"
+  photo: "/shahar_ronen.png"
   description: "Graduate Alumnus"
   role: ["Data"]
   media:
@@ -50,7 +50,7 @@ teamMembers = [
   dates: "Summer 2012 - Summer 2013"
 ,
   name: "Deepak Jagdish"
-  photo: "deepak_jagdish.png"
+  photo: "/deepak_jagdish.png"
   description: "Graduate Student"
   role: ["Design", "Video"]
   media:
@@ -60,7 +60,7 @@ teamMembers = [
   dates: "2013 - present"
 ,
   name: "Andrew Mao"
-  photo: "andrew_mao.png"
+  photo: "/andrew_mao.png"
   description: "Graduate Student at Harvard"
   role: ["Development"]
   media:
@@ -70,7 +70,7 @@ teamMembers = [
   dates: "Fall 2013"
 ,
   name: "Defne Gurel"
-  photo: "defne_gurel.png"
+  photo: "/defne_gurel.png"
   description: "Undergraduate"
   role: ["Data"]
   media:
@@ -78,7 +78,7 @@ teamMembers = [
   dates: "2013"
 ,
   name: "Tiffany Lu"
-  photo: "tiffany_lu.jpg"
+  photo: "/tiffany_lu.jpg"
   description: "Undergraduate"
   role: ["Data"]
   media:
@@ -112,17 +112,25 @@ Template.team.events =
       opacity: 0.0
     , 250
 
-Template.team.rendered = ->
+Template.about.rendered = ->
   b = $(document.body)
+  w = $(window)
 
   offset = $(".logo").outerHeight() # 0 # $('.page-middle').offset().top + w.height()/4
 
   b.scrollspy(
     target: '#table-of-contents'
-    offset: offset + 60
+    offset: offset
     )
 
   Deps.autorun( ->
     scrollPosition = $(Session.get("pageScrollID")).position()?.top
     if scrollPosition then window.scrollTo(0, scrollPosition - offset - 40)
   )
+  w.on('load', -> b.scrollspy('refresh'))
+
+Template.about.render_template = ->
+  section = Session.get "aboutsection"
+  switch section
+    when "team" then new Handlebars.SafeString(Template.team(this))
+    when "API" then new Handlebars.SafeString(Template.api(this))

@@ -22,6 +22,12 @@
 
 @embed = Session.get("embed")
 
+Template.embed.full_link = ->
+  dataset = Session.get("dataset")
+  if dataset is "OGC"
+    dataset = "pantheon"
+  "/" + Session.get("vizType") + "/" + Session.get("vizMode") + "/" + Session.get("country") + "/" + Session.get("category") + "/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/" + dataset
+
 Template.visualization.rendered = ->
   if Session.equals("showMobileRankingMenu", true)
     $(".fa-search-plus").hide()

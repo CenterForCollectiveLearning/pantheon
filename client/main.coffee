@@ -252,9 +252,9 @@ rightSections = [
   template: "vision"
   url: "/vision"
 ,
-  section: "Team"
-  template: "team"
-  url: "/team"
+  section: "About"
+  template: "about"
+  url: "/about"
 ]
 
 # TODO Don't repeat!

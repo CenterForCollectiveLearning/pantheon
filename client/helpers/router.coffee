@@ -159,9 +159,23 @@ Router.map ->
       Session.set "page", @template
       Session.set "name", @params.name
 
-  @route "team",
+  @route "about",
+    path: "/about"
+    before: [ ->
+      @redirect "/about/team"
+    ]
+
+  @route "about",
+    path: "/about/:section"
     data: ->
       Session.set "page", @template
+      Session.set "aboutsection", @params.section
+    action: ->
+      @render()
+    after: ->
+      hash = @params.hash
+      if hash then id = "#" + hash else id = "#" + @params.section
+      Session.set("pageScrollID", id)
   
   @route "notFound",
     path: "*"

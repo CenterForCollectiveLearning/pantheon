@@ -29,56 +29,102 @@
 </template>
 
 <template name="team">
-	<div class="page-top">
-		<div class="primary-text">
-		</div>
+	<h1 id="team">The Pantheon Team</h1>
+	<p>Pantheon is a project from the <a class="macro-link" href="http://macroconnections.media.mit.edu" target="_blank">Macro Connections</a> group at The MIT Media Lab. We are a team of designers, engineers, and scientists working collaboratively to quantify, analyze, measure and visualize global culture.</p>
+	{{!#unless mobile}}
+	<div class="team-row">
+		<ul>
+			{{#each first_row_teamMembers}}
+			{{> teamMember}}
+			{{/each}}
+		</ul>
 	</div>
+	<div class="team-row">
+		<ul>
+			{{#each second_row_teamMembers}}
+			{{> teamMember}}
+			{{/each}}
+		</ul>
+	</div>
+	<div class="team-row">
+		<ul>
+			{{#each third_row_teamMembers}}
+			{{> teamMember}}
+			{{/each}}
+		</ul>
+	</div>
+	{{!/unless}}
+	{{!#if mobile}}
+		{{!#each allteamMembers}}
+<!-- 				<div class="team-row">
+			<ul>
+			{{!> teamMember}}
+			</ul>
+		</div> -->
+		{{!/each}}	
+	{{!/if}}
+</template>
+
+<template name = "api">
+	<div id = "API" class = "text-leftaligned">
+		<h1 id="embed">Embedding the visualizations</h1>
+		<h2>Building the API Call</h2>
+		<p>You can generate the URL to embed any visualization from Pantheon by adding <code>/embed</code> the any link directly from the <a href="/">Visualizations</a> page of Pantheon.</p>
+	    <p>This is the general URL structure used: 
+	    	<code>/vizType/vizMode/paramOne/paramTwo/from/to/langs/dataset/embed</code></p>
+	    <p>Sample embed code:
+	    <pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/vizType/vizMode/paramOne/paramTwo/from/to/langs/dataset/embed"&gt;&lt;/iframe&gt;</pre></p>
+
+	    <h2>Visualization Parameters</h2>
+			<p>
+				Where <code>vizType</code> is <code>treemap</code>, <code>matrix</code>, <code>scatterplot</code>, or <code>map</code>.
+			</p>
+			<p>
+				Where <code>vizMode</code> is the mode of the selected visualization. 
+			</p>
+			<p>
+				Where <code>paramOne</code> the first parameter based on the selected visualization type and mode.
+			</p>
+			<p>
+				Where <code>paramTwo</code> the second parameter based on the selected visualization type and mode.
+			</p>
+	      	<p>
+	      		Where <code>from</code> is the starting year of the time period requested.
+	      	</p>
+	      	<p>
+	      		Where <code>to</code> is the ending year of the time period requested.
+	      	</p>
+	      	<p>
+	      		Where <code>langs</code> is the index value based on the number of languages, the Historical Popularity Index, or the Murray index.
+	      	</p>
+	      	<p>
+	      		Where <code>dataset</code> is either <code>pantheon</code> for the Pantheon 1.0 dataset, or <code>murray</code> for the Human Accomplishments dataset.
+	      	</p>
+
+	    <h2>Examples:</h2>
+	    <p><b>Who are the globally known people born in present day China?</b></p>
+		<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/treemap/country_exports/TN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
+		<p><iframe src="http://pantheon.media.mit.edu:5000/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+	</div>
+</template>
+
+<template name="about">
+	<div class="page-top methods"></div>
 	<div id="page" class="{{#unless mobile}}min-width{{/unless}}">
 		{{#unless mobile}}
-		<div id="table-of-contents" class="text">			
+		<div id="table-of-contents" class="text">	
+		<div class="section-header">
+				About Pantheon
+		</div>		
 			<ul class="nav nav-list">
-				<li><a class="h1" href="#team">Team</a></li>
-				<li><a class="h1" href="#API">API</a></li>
-				<li><a class="h2" href="#embed">Embed</a></li>
-				<li><a class="h2" href="#faq">FAQ</a></li>
+				<li><a class="h1" href="/about/team">Team</a></li>
+				<li><a class="h1" href="/about/API">API</a></li>
+				<li><a class="h2" href="/about/API#embed">Embed</a></li>
 			</ul>
 		</div>
 		{{/unless}}
 		<div class="text-page-middle page-middle text team-page{{#if mobile}} mobile{{/if}}">
-			<h1 id="team">About the Pantheon Team</h1>
-			<p>Pantheon is a project from the <a class="macro-link" href="http://macroconnections.media.mit.edu" target="_blank">Macro Connections</a> group at The MIT Media Lab. We are a team of designers, engineers, and scientists working collaboratively to quantify, analyze, measure and visualize global culture.</p>
-			{{!#unless mobile}}
-			<div class="team-row">
-				<ul>
-					{{#each first_row_teamMembers}}
-					{{> teamMember}}
-					{{/each}}
-				</ul>
-			</div>
-			<div class="team-row">
-				<ul>
-					{{#each second_row_teamMembers}}
-					{{> teamMember}}
-					{{/each}}
-				</ul>
-			</div>
-			<div class="team-row">
-				<ul>
-					{{#each third_row_teamMembers}}
-					{{> teamMember}}
-					{{/each}}
-				</ul>
-			</div>
-			{{!/unless}}
-			{{!#if mobile}}
-				{{!#each allteamMembers}}
-<!-- 				<div class="team-row">
-					<ul>
-					{{!> teamMember}}
-					</ul>
-				</div> -->
-				{{!/each}}	
-			{{!/if}}
+			{{ render_template }}
 		</div>
 	</div>
 </div>
