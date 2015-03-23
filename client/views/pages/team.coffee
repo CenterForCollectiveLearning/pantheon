@@ -112,6 +112,15 @@ Template.team.events =
       opacity: 0.0
     , 250
 
+Template.countrycodeSearch.settings = ->
+  position: "bottom"
+  limit: 10
+  rules: [
+    collection: Countries
+    field: "countryName"
+    template: Template.country_result
+  ]
+
 Template.about.rendered = ->
   b = $(document.body)
   w = $(window)

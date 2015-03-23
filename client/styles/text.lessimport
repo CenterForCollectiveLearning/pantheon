@@ -198,3 +198,7 @@ pre.prettyprint {
   margin: auto 30px;
   margin-bottom: 20px;
 }
+
+tbody{
+	background-color: @color_beige;
+}
