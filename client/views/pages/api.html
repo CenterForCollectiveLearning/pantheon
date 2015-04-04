@@ -1,0 +1,137 @@
+<template name = "api">
+	<div class="page-top methods"></div>
+	<div id="page" class="{{#unless mobile}}min-width{{/unless}}">
+		{{#unless mobile}}
+		<div id="table-of-contents" class="text">	
+		<div class="section-header">
+				Index
+		</div>		
+			<ul class="nav nav-list">
+				<li><a class="h1" href="/api">API</a></li>
+				<li><a class="h2" href="/api#embed">Embed</a></li>
+			</ul>
+		</div>
+		{{/unless}}
+		<div class="text-page-middle page-middle text {{#if mobile}} mobile{{/if}}">
+			<div id = "API" class = "text-leftaligned">
+				<h1 id="embed">Embedding the visualizations</h1>
+				<h2>Building the API Call</h2>
+				<p>You can generate the URL to embed any visualization from Pantheon by adding <code>/embed</code> to any link directly from the <a href="/">Visualizations</a> page of Pantheon.</p>
+			    <p>This is the general URL structure used: 
+			    	<code>/vizType/vizMode/paramOne/paramTwo/from/to/langs/dataset/embed</code></p>
+			    <p>
+					Where <code>vizType</code> is <code>treemap</code>, <code>matrix</code>, <code>scatterplot</code>, or <code>map</code>. <br/>
+
+					Where <code>vizMode</code> is the mode of the selected visualization. <br/>
+
+					Where <code>paramOne</code> the first parameter based on the selected visualization type and mode.<br/>
+
+					Where <code>paramTwo</code> the second parameter based on the selected visualization type and mode.<br/>
+
+		      		Where <code>from</code> is the starting year of the time period requested.<br/>
+
+		      		Where <code>to</code> is the ending year of the time period requested.<br/>
+
+		      		Where <code>langs</code> is the index value based on the number of languages (<code>L</code>), the Historical Popularity Index (<code>H</code>), or the Murray index.<br/>
+
+		      		Where <code>dataset</code> is either <code>pantheon</code> for the Pantheon 1.0 dataset, or <code>murray</code> for the Human Accomplishments dataset.<br/>
+		      	</p>
+			    <p>Sample embed code:
+			    <pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/vizType/vizMode/paramOne/paramTwo/from/to/langs/dataset/embed"&gt;&lt;/iframe&gt;</pre></p>
+
+			    <h2>Visualization Parameters</h2>
+			        <table class="table table-bordered table-hover">
+				      <thead>
+				        <tr>
+				          <th style="width: 150px;">vizType</th>
+				          <th>vizMode</th>
+				          <th>paramOne</th>
+				          <th>paramTwo</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				        <tr>
+				          <td rowspan="2"><code>treemap</code></td>
+				          <td><code>country_exports</code></td>
+				          <td>selected countrycode</td>
+				          <td><code>all</code></td>
+				        </tr>
+				        <tr>
+				          <td><code>domain_exports_to</code></td>
+				          <td>selected domain</td>
+				          <td><code>all</code></td>
+				        </tr>                  
+				        <tr>
+				          <td><code>matrix</code></td>
+				          <td><code>matrix_exports</code></td>
+				          <td><code>all</code></td>
+				          <td>selected gender</td>
+				        </tr>
+				        <tr>
+				          <td rowspan="2"><code>scatterplot</code></td>
+				          <td><code>country_vs_country</code></td>
+				          <td>selected countrycode</td>
+				          <td>selected countrycode</td>
+				        </tr>
+				        <tr>
+				          <td><code>domain_vs_domain</code></td>
+				          <td>selected domain</td>
+				          <td>selected domain</td>
+				        </tr>
+				        <tr>
+				          <td><code>map</code></td>
+				          <td><code>map</code></td>
+				          <td>selected domain</td>
+				          <td><code>all</code></td>
+				        </tr>
+				      </tbody>
+				    </table>
+
+				    <table class="table table-bordered table-hover">
+				      <thead>
+				        <tr>
+				          <th style="width: 150px;">Parameter</th>
+				          <th>Possible Values</th>
+
+				        </tr>
+				      </thead>
+				      <tbody>
+				        <tr>
+				          <td>countrycode</td>
+				          <td>
+				          	{{!Search: {{> countrycodeSearch}} 
+				          	<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> countrycode 
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>domain</td>
+				          <td>cultural domains (shown in Figure 2 within the <a href="http://pantheon.media.mit.edu/methods#bias_methods">Methods</a>)</td>
+				        </tr>
+				        <tr>
+				          <td>gender</td>
+				          <td><code>both</code>, <code>female</code>, <code>male</code>, or <code>ratio</code></td>
+				        </tr>
+				      </tbody>
+				    </table>
+
+			    <h2>Examples:</h2>
+			    <p><b>Who are the globally known people born in present day China?</b></p>
+				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
+				<p><iframe src="http://pantheon.media.mit.edu:5000/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+
+				<p><b>How many globally known men and women are associated with each place of birth and cultural domain?</b></p>
+				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/matrix/matrix_exports/all/both/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
+				<p><iframe src="http://pantheon.media.mit.edu:5000/matrix/matrix_exports/all/both/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+
+				<p><b>How do Germany and France compare in terms of number of globally known people?</b></p>
+				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/scatterplot/country_vs_country/DE/FR/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
+				<p><iframe src="http://pantheon.media.mit.edu:5000/scatterplot/country_vs_country/DE/FR/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+
+				<p><b>Where were globally known Philosophers born?</b></p>
+				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/map/map/PHILOSOPHER/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
+				<p><iframe src="http://pantheon.media.mit.edu:5000/map/map/PHILOSOPHER/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+			</div>
+		</div>
+	</div>
+</div>
+</template>

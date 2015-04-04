@@ -142,4 +142,6 @@ Template.about.render_template = ->
   section = Session.get "aboutsection"
   switch section
     when "team" then new Handlebars.SafeString(Template.team(this))
-    when "API" then new Handlebars.SafeString(Template.api(this))
+    when "vision" then new Handlebars.SafeString(Template.vision(this))
+    when "permissions" then new Handlebars.SafeString(Template.permissions(this))
+    when "faq" then new Handlebars.SafeString(Template.faq(this))

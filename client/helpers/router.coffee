@@ -109,7 +109,7 @@ Router.map ->
         Session.set "categoryLevel", getCategoryLevel(@params.paramTwo)  
         Session.set "categoryLevelY", getCategoryLevel(@params.paramTwo)  
 
-  @route "vision",
+  @route "api",
     data: ->
       Session.set "page", @template
 

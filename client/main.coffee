@@ -248,9 +248,9 @@ rightSections = [
   template: "methods"
   url: "/methods"
 ,
-  section: "Vision"
-  template: "vision"
-  url: "/vision"
+  section: "API"
+  template: "api"
+  url: "/api"
 ,
   section: "About"
   template: "about"
