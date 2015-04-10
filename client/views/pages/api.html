@@ -8,14 +8,16 @@
 		</div>		
 			<ul class="nav nav-list">
 				<li><a class="h1" href="/api">API</a></li>
-				<li><a class="h2" href="/api#embed">Embed</a></li>
+				<li><a class="h2" href="/api#embed">Building the API Call</a></li>
+				<li><a class="h2" href="/api#params">Visualization Parameters</a></li>
+				<li><a class="h2" href="/api#examples">Examples</a></li>
 			</ul>
 		</div>
 		{{/unless}}
 		<div class="text-page-middle page-middle text {{#if mobile}} mobile{{/if}}">
 			<div id = "API" class = "text-leftaligned">
-				<h1 id="embed">Embedding the visualizations</h1>
-				<h2>Building the API Call</h2>
+				<h1>Embedding the visualizations</h1>
+				<h2 id="embed">Building the API Call</h2>
 				<p>You can generate the URL to embed any visualization from Pantheon by adding <code>/embed</code> to any link directly from the <a href="/">Visualizations</a> page of Pantheon.</p>
 			    <p>This is the general URL structure used: 
 			    	<code>/vizType/vizMode/paramOne/paramTwo/from/to/langs/dataset/embed</code></p>
@@ -39,7 +41,7 @@
 			    <p>Sample embed code:
 			    <pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/vizType/vizMode/paramOne/paramTwo/from/to/langs/dataset/embed"&gt;&lt;/iframe&gt;</pre></p>
 
-			    <h2>Visualization Parameters</h2>
+			    <h2 id="params">Visualization Parameters</h2>
 			        <table class="table table-bordered table-hover">
 				      <thead>
 				        <tr>
@@ -114,7 +116,7 @@
 				      </tbody>
 				    </table>
 
-			    <h2>Examples:</h2>
+			    <h2 id="examples">Examples:</h2>
 			    <p><b>Who are the globally known people born in present day China?</b></p>
 				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu:5000/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
 				<p><iframe src="http://pantheon.media.mit.edu:5000/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>

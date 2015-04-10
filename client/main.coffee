@@ -65,6 +65,10 @@ Handlebars.registerHelper "alert", -> Session.get("alert")
     in: ["category", "language"]
     out: "country"
 
+  line:
+    in: ["category", "language"]
+    out: "country"
+
 # static lists of category mappings
 @mpdomains = #keys are pantheon, values are murray
   "FINE ARTS" : "VISUAL ARTS"

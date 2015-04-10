@@ -47,6 +47,7 @@ Template.visualization.render_template = ->
     when "map" then new Handlebars.SafeString(Template.map(this))
     when "histogram" then new Handlebars.SafeString(Template.histogram(this))
     when "stacked" then new Handlebars.SafeString(Template.stacked(this))
+    when "line" then new Handlebars.SafeString(Template.line(this))
 
 Template.time_slider.rendered = ->
   # Not sure why this works, but it overcomes the re-styling issue
@@ -76,6 +77,8 @@ Template.accordion.matrix_active = -> if Session.equals("vizMode", "matrix_expor
 Template.accordion.cvc_active = -> if Session.equals("vizMode", "country_vs_country") then "active" else ""
 Template.accordion.dvd_active = -> if Session.equals("vizMode", "domain_vs_domain") then "active" else ""
 Template.accordion.map_active = -> if Session.equals("vizMode", "map") then "active" else ""
+Template.accordion.country_active = -> if Session.equals("vizMode", "country") then "active" else ""
+Template.accordion.domain_active = -> if Session.equals("vizMode", "domain") then "active" else ""
 Template.accordion.from = -> Session.get("from")
 Template.accordion.to = -> Session.get("to")
 Template.accordion.index = -> Session.get("langs")
