@@ -8,15 +8,15 @@ preserve-inputs
 d3
 jquery
 meteor
-iron-router
 underscore
-autocomplete
 coffeescript
-tutorials
 # load jquery-ui after tutorials so the version loaded by tutorials gets overwritten; bad hack
-jquery-ui
+mizzao:jquery-ui@1.11.2
 less
-font-awesome
-scss
+natestrauser:font-awesome@4.0.3
+fourseven:scss@2.1.1
 spiderable
-ms-seo
+manuelschoebel:ms-seo@0.4.1
+iron:router@1.0.7
+mizzao:autocomplete@0.5.1
+mizzao:tutorials@0.6.6

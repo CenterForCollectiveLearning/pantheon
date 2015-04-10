@@ -31,7 +31,6 @@
 <template name="team">
 	<h1 id="team">The Pantheon Team</h1>
 	<p>Pantheon is a project from the <a class="macro-link" href="http://macroconnections.media.mit.edu" target="_blank">Macro Connections</a> group at The MIT Media Lab. We are a team of designers, engineers, and scientists working collaboratively to quantify, analyze, measure and visualize global culture.</p>
-	{{!#unless mobile}}
 	<div class="team-row">
 		<ul>
 			{{#each first_row_teamMembers}}
@@ -53,16 +52,6 @@
 			{{/each}}
 		</ul>
 	</div>
-	{{!/unless}}
-	{{!#if mobile}}
-		{{!#each allteamMembers}}
-<!-- 				<div class="team-row">
-			<ul>
-			{{!> teamMember}}
-			</ul>
-		</div> -->
-		{{!/each}}	
-	{{!/if}}
 </template>
 
 <template name="permissions">
@@ -144,7 +133,7 @@
 			{{ render_template }}
 		</div>
 	</div>
-</div>
+
 </template>
 
 <template name= "countrycodeSearch">

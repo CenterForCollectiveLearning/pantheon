@@ -87,7 +87,7 @@
                 </div>
                 <div class = "span12 extra-text">
                     {{#if dataReady}}   
-                    <span>Brought to you by: <a href="{{full_link}}" target="_blank"><img class="logo-img" src="/pantheon_logo_mobile.png" style="width:20%" /></a>
+                    <span>Brought to you by: <a href="{{full_link}}" target="_blank"><img class="logo-img" src="/pantheon_logo_mobile.png" style="width:20%" /></a></span>
                     {{/if}}
                 </div>
                 {{> tooltip}}
@@ -201,7 +201,7 @@
 
 <!-- Person in Ranked List -->
 <template name="ranked_person">
-    <a {{#if showPeopleLink}}href="{{pathFor 'people'}}" class="hover-bold{{#if mobile}} mobile{{/if}}"{{/if}}>
+    <a href="{{#if showPeopleLink}}{{pathFor 'people'}}{{/if}}" class="hover-bold{{#if mobile}} mobile{{/if}}">
         <li>
             {{! insert thumbnail here}}
             {{name}}
@@ -233,7 +233,6 @@
             {{#if pantheon}}
             <div class="full-ranking-list"><a href="{{full_ranking_link}}">Go to Full Ranking List</a></div>
             {{/if}}
-            </div>
         </div>
         {{/if}}
     {{/if}}

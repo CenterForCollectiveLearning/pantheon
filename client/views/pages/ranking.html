@@ -26,21 +26,15 @@
                         {{> spinner}}
                     {{/if}}
                 </div>
-
+            </div>
             {{#if rankingdataReady}}     
-                {{#if mobile}}
-                </div>
                 <div class="row-fluid">
-                {{/if}}
-                    <div class="column-descriptions {{#unless mobile}}page-right     span2{{else}} page-middle span12{{/unless}}">
+                    <div class="column-descriptions {{#unless mobile}}page-right span2{{else}} page-middle span12{{/unless}}">
                         <div class="section-header{{#if mobile}} mobile{{/if}}">
                             Definitions
                         </div>
                         {{columnDescriptions}}
                     </div>
-                {{#if mobile}}
-                </div>
-                {{/if}}
                 </div>
             {{/if}}
         </div>
