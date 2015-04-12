@@ -1,5 +1,6 @@
 # These are static data that never change
-Meteor.subscribe "countries_pub"
+Session.set("countriesReady", false)
+Meteor.subscribe "countries_pub", -> Session.set("countriesReady", true)
 Meteor.subscribe "domains_pub"
 
 # These subscriptions are explicitly global variables

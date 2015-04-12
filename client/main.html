@@ -28,7 +28,7 @@
 <template name="embeddable">
     <div id="background-wrapper" class="wrapper">
     <!-- Body -->
-    {{ yield }}
+    {{> yield }}
     </div>
 </template>
 
@@ -66,7 +66,7 @@
         <!-- Header -->
         <header class="navbar navbar-fixed-top{{#unless mobile}} min-width{{/unless}}">
             <nav class="navbar-inner{{#if mobile}} mobile{{/if}}">
-                {{yield 'nav'}}
+                {{> yield 'nav'}}
             </nav>
             <div class="logo center">
                 <a href='/'>
@@ -76,14 +76,13 @@
         </header>
 
         <!-- Body -->
-        {{ yield }}
+        {{> yield }}
     </div>
 
     <footer class="{{#unless mobile}}min-width{{else}}mobile{{/unless}}">
-        {{yield 'footer'}}
+        {{> yield 'footer'}}
     </footer>
 
-    {{> tutorial }}
     {{/unless}}
 </template>
 

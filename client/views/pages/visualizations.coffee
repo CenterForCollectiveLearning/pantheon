@@ -34,20 +34,20 @@ Template.visualization.rendered = ->
     $(".fa-search-minus").show()
     $(".parameters").show()
 
-# Re-render visualization template on window resize
+# Re-render visualization template on window resize - TODO: fix this
 Template.visualization.resize = -> if Session.get "resize" then return
 
 # Render SVGs and ranked list based on current vizMode
 Template.visualization.render_template = ->
   type = Session.get "vizType"
   switch type
-    when "treemap" then new Handlebars.SafeString(Template.treemap(this))
-    when "matrix" then new Handlebars.SafeString(Template.matrix(this))
-    when "scatterplot" then new Handlebars.SafeString(Template.scatterplot(this))
-    when "map" then new Handlebars.SafeString(Template.map(this))
-    when "histogram" then new Handlebars.SafeString(Template.histogram(this))
-    when "stacked" then new Handlebars.SafeString(Template.stacked(this))
-    when "line" then new Handlebars.SafeString(Template.line(this))
+    when "treemap" then Template.treemap
+    when "matrix" then Template.matrix
+    when "scatterplot" then Template.scatterplot
+    when "map" then Template.map
+    when "histogram" then Template.histogram
+    when "stacked" then Template.stacked
+    when "line" then Template.line
 
 Template.time_slider.rendered = ->
   # Not sure why this works, but it overcomes the re-styling issue
@@ -145,13 +145,16 @@ Template.accordion.randomDomainY = -> if Session.equals("dataset", "murray") the
 
 # Global helper for data ready
 Handlebars.registerHelper "dataReady", ->
-  Session.get "dataReady"
+  Session.equals "dataReady", true
 
 Handlebars.registerHelper "initialDataReady", ->
-  Session.get "initialDataReady"
+  Session.equals "initialDataReady", true
 
 Handlebars.registerHelper "tooltipDataReady", ->
-  Session.get "tooltipDataReady"
+  Session.equals "tooltipDataReady", true
+
+Handlebars.registerHelper "countriesReady", ->
+  Session.equals "countriesReady", true
 
 # Create a global helper
 # Use this from multiple templates
@@ -373,16 +376,16 @@ Template.clicktooltip.render_links = ->
   switch vizType
     when "treemap", "scatterplot"
       if vizMode in ["country_exports", "country_vs_country"]
-        return new Handlebars.SafeString(Template.tt_treemap_country_exports(this))
+        return Template.tt_treemap_country_exports
       else if vizMode in ["domain_exports_to", "domain_vs_domain"]
-        return new Handlebars.SafeString(Template.tt_treemap_domain_exports_to(this))
+        return Template.tt_treemap_domain_exports_to
     when "matrix","map"
-      return new Handlebars.SafeString(Template.tt_global_exports(this))
+      return Template.tt_global_exports
     when "histogram"
       if vizMode is "country_exports"
-        return new Handlebars.SafeString(Template.tt_histogram_country_exports(this))
+        return Template.tt_histogram_country_exports
       else if vizMode is "domain_exports_to"
-        return new Handlebars.SafeString(Template.tt_histogram_domain_exports_to(this))
+        return Template.tt_histogram_domain_exports_to
 
 Template.domain_exporter_question.question = -> 
   category = Session.get("bigtooltipCategory")

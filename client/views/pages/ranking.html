@@ -33,7 +33,7 @@
                         <div class="section-header{{#if mobile}} mobile{{/if}}">
                             Definitions
                         </div>
-                        {{columnDescriptions}}
+                        {{> columnDescriptions}}
                     </div>
                 </div>
             {{/if}}
@@ -132,8 +132,6 @@
 </template>
 
 <template name="ranking_table">
-    {{#constant}}
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="ranking">
     </table>
-    {{/constant}}
 </template>

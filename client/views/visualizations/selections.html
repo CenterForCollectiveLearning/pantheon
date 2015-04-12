@@ -1,6 +1,6 @@
 <!-- Dropdown Menu Container-->
 <template name="select_mode">
-    {{ render_template }}
+    {{> render_template }}
 </template>
 
 <template name="select_time">
@@ -138,7 +138,9 @@
 </template>
 
 <template name="select_country">
-    {{> country_dropdown}}
+    {{#if countriesReady}}
+        {{> country_dropdown}}
+    {{/if}}
 </template>
 
 <template name="select_city">
@@ -146,11 +148,15 @@
 </template>
 
 <template name="select_countryX">
-    {{> country_dropdown}}
+    {{#if countriesReady}}
+        {{> country_dropdown}}
+    {{/if}}
 </template>
 
 <template name="select_countryY">
-    {{> country_dropdown}}
+    {{#if countriesReady}}
+        {{> country_dropdown}}
+    {{/if}}
 </template>
 
 <template name="country_dropdown">

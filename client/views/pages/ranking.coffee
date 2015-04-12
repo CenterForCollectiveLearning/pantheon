@@ -35,11 +35,11 @@ Template.rankings.columnDescriptions = ->
   entity = Session.get "entity"
   switch entity
     when "countries"
-      new Handlebars.SafeString(Template.countries_columns(this))
+      Template.countries_columns
     when "people"
-      new Handlebars.SafeString(Template.people_columns(this))
+      Template.people_columns
     when "domains"
-      new Handlebars.SafeString(Template.domains_columns(this))
+      Template.domains_columns
 
 Template.rankings.rankingdataReady = ->
   entity = Session.get "entity"

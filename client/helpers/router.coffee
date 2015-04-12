@@ -11,9 +11,8 @@ Router.map ->
   @route "home",
     path: "/"
     template: "visualizations"
-    before: [ ->
+    onBeforeAction:  ->
       @redirect "/viz"
-    ]
 
   @route "embed",
     path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset/embed"
@@ -58,17 +57,16 @@ Router.map ->
         Session.set "categoryLevelY", getCategoryLevel(@params.paramTwo) 
 
 
-  @route "viz",
+  @route "vizdefault",
     path: "/viz"
     template: "visualizations"
-    before: [ ->
+    onBeforeAction: ->
       @redirect "/" + defaults.vizType + "/" + defaults.vizMode + "/" + defaults.country + "/" + defaults.language + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs + "/pantheon"
-    ]
 
   @route "viz",
     path: "/:vizType/:vizMode/:paramOne/:paramTwo/:from/:to/:langs/:dataset"
     template: "visualizations"
-    data: ->
+    onRerun: ->
       vizMode = @params.vizMode
       Session.set "embed", false
       Session.set "page", @template
@@ -113,11 +111,10 @@ Router.map ->
     data: ->
       Session.set "page", @template
 
-  @route "rankings",
+  @route "rankingsdefault",
     path: "/rankings"
-    before: [->
+    onBeforeAction: ->
       @redirect "/rankings/" + defaults.entity + "/all/" + defaults.category + "/" + defaults.from + "/" + defaults.to + "/" + defaults.langs
-    ]
 
   @route "rankings",
     path: "/rankings/:entity/:country/:category/:from/:to/:langs"
@@ -146,11 +143,10 @@ Router.map ->
       id = "#" + hash
       Session.set("pageScrollID", id)
 
-  @route "people",
+  @route "peopledefault",
     path: "/people"
-    before: [->
+    onBeforeAction: ->
       @redirect "/people/" + defaults.person
-    ]
 
   @route "people",
     path: "/people/:name"
@@ -159,11 +155,10 @@ Router.map ->
       Session.set "page", @template
       Session.set "name", @params.name
 
-  @route "about",
+  @route "aboutdefault",
     path: "/about"
-    before: [ ->
+    onBeforeAction:  ->
       @redirect "/about/team"
-    ]
 
   @route "about",
     path: "/about/:section"

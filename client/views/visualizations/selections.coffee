@@ -14,41 +14,41 @@ Template.select_mode.render_template = ->
     switch mode
       when "country_exports"
         if type is "treemap"
-          return new Handlebars.SafeString(Template.country_exporters_mode(this))
+          return Template.country_exporters_mode
         else if type is "histogram"
-          return new Handlebars.SafeString(Template.histogram_country_exporters_mode(this))
+          return Template.histogram_country_exporters_mode
       when "country_imports"
-        return new Handlebars.SafeString(Template.country_importers_mode(this))
+        return Template.country_importers_mode
       when "domain_exports_to"
         if type is "treemap"
-          return new Handlebars.SafeString(Template.domain_mode(this))
+          return Template.domain_mode
         else if type is "histogram"
-          return new Handlebars.SafeString(Template.histogram_domain_mode(this))
+          return Template.histogram_domain_mode
       when "domain_imports_from"
-        return new Handlebars.SafeString(Template.domain_mode(this))
+        return Template.domain_mode
       when "bilateral_exporters_of"
-        return new Handlebars.SafeString(Template.bilateral_exporters_mode(this))
+        return Template.bilateral_exporters_mode
       when "bilateral_importers_of"
-        return new Handlebars.SafeString(Template.bilateral_importers_mode(this))
+        return Template.bilateral_importers_mode
       when "matrix_exports"
-        return new Handlebars.SafeString(Template.matrix_exports_mode(this))
+        return Template.matrix_exports_mode
       when "country_vs_country"
-        return new Handlebars.SafeString(Template.country_vs_country_mode(this))
+        return Template.country_vs_country_mode
       when "lang_vs_lang"
-        return new Handlebars.SafeString(Template.language_vs_language_mode(this))
+        return Template.language_vs_language_mode
       when "domain_vs_domain"
-        return new Handlebars.SafeString(Template.domain_vs_domain_mode(this))
+        return Template.domain_vs_domain_mode
       when "map"
-        return new Handlebars.SafeString(Template.map_mode(this))
+        return Template.map_mode
   else if page is "rankings"
     entity = Session.get("entity")
     switch entity
       when "countries"
-        return new Handlebars.SafeString(Template.countries_ranking_mode(this))
+        return Template.countries_ranking_mode
       when "people"
-        return new Handlebars.SafeString(Template.people_ranking_mode(this))      
+        return Template.people_ranking_mode      
       when "domains"
-        return new Handlebars.SafeString(Template.domains_ranking_mode(this))
+        return Template.domains_ranking_mode
 
 Template.select_country.rendered = ->
   country = Session.get("country").split("+")
@@ -64,7 +64,8 @@ Template.select_city.rendered = ->
   country = Session.get("country").split("+")
   if country.length > 1 then city = country[0] else city = "all"
   countryCode = country[country.length-1]
-  $(@find("select")).val(city).chosen().change( ->
+
+  $(@find("select")).val("").chosen().change( ->
     path = window.location.pathname.split("/")
     location = $(this).val() 
     if location == "all"
@@ -367,6 +368,11 @@ Template.city_dropdown.cities_given_country = ->
     if uniqueCities.indexOf(birthcity) is -1
       uniqueCities.push birthcity
       res.push birthcity: $.trim(birthcity)
+
+  instance = Template.instance()
+  Meteor.defer ->
+    $(instance.find("select")).trigger("chosen:updated")
+
   _.sortBy(res, 'birthcity')
 
 Template.language_dropdown.languages = ->

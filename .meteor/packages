@@ -18,4 +18,5 @@ spiderable
 manuelschoebel:ms-seo@0.4.1
 iron:router@1.0.7
 mizzao:autocomplete@0.5.1
-mizzao:tutorials@0.6.6
+msavin:jetsetter #delete before deploying to production
+msavin:mongol #delete before deploying to production
