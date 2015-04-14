@@ -169,6 +169,11 @@ Deps.autorun ->
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
 
+  if Session.equals("vizMode", "map") and Session.equals("category", "all")
+    city = Session.get("tooltipCity")
+  else
+    city = "all"
+
   debouncedSubscribe = _.debounce(Meteor.subscribe, 500)
   # tooltipSub = debouncedSubscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)
-  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, onDataReady)
+  tooltipSub = Meteor.subscribe("tooltipPeople", vizMode, begin, end, L, countryCode, countryCodeX, countryCodeY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, showclicktooltip, city, onDataReady)

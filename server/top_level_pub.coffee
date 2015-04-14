@@ -89,7 +89,7 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
 #because the whole set of people already exists client side
 #
 
-Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, click) ->
+Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, countryY, gender, category, categoryX, categoryY, categoryLevel, categoryLevelX, categoryLevelY, dataset, click, selectedcity) ->
   sub = this
   args =
     birthyear:
@@ -118,6 +118,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       args.countryCode3 = country if country isnt "all"
     else
       args.countryCode = countryCode  if countryCode isnt "all"
+      args.birthcity = selectedcity if selectedcity isnt "all"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
   else if vizMode is "country_vs_country"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"

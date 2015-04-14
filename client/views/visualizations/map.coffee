@@ -22,6 +22,70 @@ key_gradient = (rect) ->
     height: 10
   ).style "fill", "url(#gradient)"
 
+mouseoverCity = (d) ->
+  if not Session.get "clicktooltip"
+    Session.set "hover", true
+
+    category = Session.get("category")
+    categoryAggregation = Session.get("categoryLevel")
+    position = getTooltipPosition(d3.event.pageX, d3.event.pageY)
+
+    Session.set "tooltipPosition", position
+    
+  #   # Subscription Parameters
+    Session.set "tooltipCategory", category
+    Session.set "tooltipCategoryLevel", categoryAggregation
+    Session.set "tooltipCountryCode", d.birthcountryCode
+    Session.set "tooltipCity", d.birthplace
+    
+  #   # Retrieve and pass data to template
+    Template.tooltip.heading = d.birthplace + ", " + d.birthcountryName.capitalize()
+    Template.mobile_tooltip_ranking.heading = (if category isnt "all" then d.birthcountryName + ": " + category else d.birthcountryName)
+    Template.tooltip.categoryA = d.birthcountryName
+    Template.tooltip.categoryB = category
+    Template.tooltip.data = ClientPeople.find("birthcity":d.birthplace, "countryCode":d.birthcountryCode,
+            "birthyear": {"$gte": Session.get("from"), "$lte": Session.get("to")} , "dataset": "OGC").fetch()
+    Session.set "showTooltip", true  
+
+mouseoverCountry = (d) ->
+  if not Session.get "clicktooltip"
+    Session.set "hover", true
+    dataset = Session.get("dataset")
+    countryCode3 = d.id
+    # change this so only use dataset: OGC for the countryNames 
+    countryName = Countries.findOne({countryCode3: countryCode3, dataset:"OGC"}).countryName
+    if(dataset is "murray")
+      countryCode = countryCode3
+    else
+      countryCode = Countries.findOne({countryCode3: countryCode3, dataset:dataset}).countryCode
+    category = Session.get("category")
+    categoryAggregation = Session.get("categoryLevel")
+    position = getTooltipPosition(d3.event.pageX, d3.event.pageY)
+
+    Session.set "tooltipPosition", position
+    
+    # Subscription Parameters
+    Session.set "tooltipCategory", category
+    Session.set "tooltipCategoryLevel", categoryAggregation
+    Session.set "tooltipCountryCode", countryCode
+    Session.set "tooltipCity", "all"
+    
+    # Retrieve and pass data to template
+    Template.tooltip.heading = countryName + ": " + category
+    Template.mobile_tooltip_ranking.heading = (if category isnt "all" then countryName + ": " + category else countryName)
+    Template.tooltip.categoryA = countryName
+    Template.tooltip.categoryB = category
+    Session.set "showTooltip", true
+
+mouseoutCity = (d) ->
+  Session.set "hover", false
+  Session.set "showTooltip", false
+  mouseoverCell = null
+
+mouseoutCountry = (d) ->
+  Session.set "hover", false
+  Session.set "showTooltip", false
+  mouseoverCell = null
 
 mouseover = (d) ->
   if not Session.get "clicktooltip"
@@ -210,39 +274,52 @@ Template.map_svg.rendered = ->
       Math.round (50 * Math.pow(((scalewidth-15) / 50), i / 10))
     ).attr("y", 12).attr("dy", 12).attr("text-anchor", "middle").style "fill", "#222"
 
-    svg.selectAll("path").attr("fill", (d) ->
-      doc = WorldMap.findOne(countryCode: d.id)
-      if doc then value_color doc.count
-      else "#FFF"
-    ).on("mouseover", mouseover)
-    .on("mouseout", mouseout)
-    .on("click", (d) ->
-      if Session.get("mobile") or Session.get("embed") then mouseover(d)
-      else clickevent(d)
-      )
-    .on("touchstart", "mouseover")
-    .on("touchend", "mouseout")
+    # SPRING DEMO - SHOW THE TOP 100 CITIES IN THE MAPS VIEW
+    if Session.equals("category", "all")
+      svg.selectAll("path").attr("fill", (d) ->
+          doc = WorldMap.findOne(countryCode: d.id)
+          if doc then value_color doc.count
+          else "#FFF"
+        ).on("mouseover", mouseoverCountry)
+        .on("mouseout", mouseoutCountry).on("click", (d) ->
+          if Session.get("mobile") or Session.get("embed") then mouseover(d)
+          else clickevent(d)
+          )
+      g = svg.append("g")
+      d3.csv "/top100cities.csv", (error, data) ->
+        g.selectAll("circle").data(data).enter().append("a").attr("xlink:href", (d) ->
+          "/treemap/country_exports/" + d.birthplace + "+" + d.birthcountryCode + "/all/-4000/2010/H15/pantheon"
+        ).append("circle").attr("cx", (d) ->
+          map_projection([
+            d.birthLON
+            d.birthLAT
+          ])[0]
+        ).attr("cy", (d) ->
+          map_projection([
+            d.birthLON
+            d.birthLAT
+          ])[1]
+        ).attr("r", 3)
+        .style("stroke", "white",).style("fill", "grey")
+        .style("stroke-width", "2px").on("mouseover", (d) -> 
+          mouseoverCity(d)).on("mouseout", mouseoutCity)
+        return
+    else # the below is the default 
+      svg.selectAll("path").attr("fill", (d) ->
+        doc = WorldMap.findOne(countryCode: d.id)
+        if doc then value_color doc.count
+        else "#FFF"
+      ).on("mouseover", mouseover)
+      .on("mouseout", mouseout)
+      .on("click", (d) ->
+        if Session.get("mobile") or Session.get("embed") then mouseover(d)
+        else clickevent(d)
+        )
+      .on("touchstart", "mouseover")
+      .on("touchend", "mouseout")
 
     d3.select(".key").selectAll("text").text (d, i) ->
       value_range_big[i].toFixed 0
-
-    # # load and display the cities, need to redraw the city after mouseover
-    # g = svg.append("g")
-    # d3.csv "/cities.csv", (error, data) ->
-    #   g.selectAll("circle").data(data).enter().append("a").attr("xlink:href", (d) ->
-    #     "https://www.google.com/search?q=" + d.city
-    #   ).append("circle").attr("cx", (d) ->
-    #     map_projection([
-    #       d.lon
-    #       d.lat
-    #     ])[0]
-    #   ).attr("cy", (d) ->
-    #     map_projection([
-    #       d.lon
-    #       d.lat
-    #     ])[1]
-    #   ).attr("r", 2).style "fill", "black"
-    #   return
 
     # make the treemap zoomable using d3.behavior.zoom()
     zoom = d3.behavior.zoom()
