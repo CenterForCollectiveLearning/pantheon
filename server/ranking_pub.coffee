@@ -64,7 +64,7 @@ Meteor.publish "countries_ranking_pub", (begin, end, category, categoryLevel, L)
     country["percentwomen"] = (country["numwomen"] / country["numppl"] * 100.0).toFixed(2)
     country["i50"] = (if fifties then fifties else 0)
     country["Hindex"] = hdata[cc]
-    finaldata.push country
+    if country['countryName'] != null and country['countryName'] != "" then finaldata.push country
 
   finaldata.forEach (country) ->
     sub.added collectionName, Random.id(), country

@@ -4,6 +4,9 @@ Meteor.publish "countries_pub", ->
 Meteor.publish "domains_pub", ->
   Domains.find()
 
+Meteor.publish "people_pub", ->
+  People.find()
+
 #
 # Publish the top N people for the current query
 # Push the ids here as well since people will be in the client side
@@ -16,7 +19,10 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
       $gte: begin
       $lte: end
   
-  country = country.split("+")
+  if country
+    country = country.split("+")
+  else 
+    country = "UNK"
   if country.length > 1 then city = country[0] else city = "all"
   countryCode = country[country.length-1]
 
@@ -97,7 +103,10 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
       $lte: end
     dataset: dataset
 
-  country = country.split("+")
+  if country
+    country = country.split("+")
+  else 
+    country = "UNK"
   if country.length > 1 then city = country[0] else city = "all"
   countryCode = country[country.length-1]
 

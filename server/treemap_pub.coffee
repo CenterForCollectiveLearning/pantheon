@@ -98,6 +98,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
       continent: 1
       countryCode: 1
       countryName: 1
+      birthcity: 1
 
     pipeline = [
       $match: matchArgs
@@ -109,6 +110,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
           continent: "$continentName"
           countryCode: "$countryCode"
           countryName: "$countryName"
+          birthcity: "$birthcity"
 
         count:
           $sum: 1
@@ -122,6 +124,7 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
           continent: e._id.continent
           countryCode: e._id.countryCode
           countryName: e._id.countryName
+          birthcity: e._id.birthcity
           count: e.count
       sub.ready()
     , (error) ->

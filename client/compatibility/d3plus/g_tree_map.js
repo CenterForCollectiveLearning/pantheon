@@ -140,7 +140,6 @@ d3plus.tree_map = function(vars) {
   }
 
   onMouseMove = function(d){
-    // console.log(d3.event);
     eventTime = d3.event.timeStamp;
     // TODO Reduce the time of this computation -- it's laggy
     timeDiff = eventTime - Session.get("tooltipTime");
@@ -154,10 +153,11 @@ d3plus.tree_map = function(vars) {
           return;
         }
         Session.set("hover", true);
-        var id = find_variable(d,vars.id_var).replace(" ", "_"),
-            self = d3.select("#cell_"+id).node()
+        var id = find_variable(d,vars.id_var),
+            self = d3.select("#cell_"+id).node();
 
-        self.parentNode.appendChild(self)
+        console.log(id);
+        self.parentNode.appendChild(self);
 
         d3.select("#cell_"+id).select("rect")
           .style("cursor","pointer")
@@ -175,7 +175,7 @@ d3plus.tree_map = function(vars) {
           var categoryLevel = "occupation";
           countryCode = Session.get("country"); // reset countryCode to the full city+countryCode
         } else if (vizMode === "domain_exports_to") {
-          var countryCode = id.replace("_", " ");
+          var countryCode = id.split("-").pop();
           var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
           var category = Session.get("category").toUpperCase();
           var categoryLevel = Session.get("categoryLevel");

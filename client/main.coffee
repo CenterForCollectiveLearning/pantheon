@@ -115,7 +115,7 @@ Meteor.startup ->
   # Bypass the need for the mergebox to loaded people for each client
   Session.set("peopleReady", false)
   
-  d3.json("/people_1-6-2015.json", (people) -> 
+  d3.json("/people_5-2-2015.json", (people) -> #1-6-2015
     for person in people
       person._id = new Meteor.Collection.ObjectID(person._id.$oid)
       ClientPeople.insert(person)

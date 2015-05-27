@@ -94,11 +94,13 @@ Template.treemap_svg.rendered = ->
         .nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color")
       d3.select(context.find("svg")).datum(flat).call viz
     else if vizMode is "domain_exports_to"
-      attr = Countries.find({dataset:dataset}).fetch()
+      # attr = Countries.find({dataset:dataset}).fetch()
+      attr = People.find({},{"countryCode":1,"countryCode3":1, "countryName":1, "continentName":1, "dataset":1, "birthcity":1, "_id":0}).fetch()
       attr.forEach (a) ->
         continent = a.continentName
         countryCode = a.countryCode
         countryName = a.countryName?.capitalize()
+        birthcity = a.birthcity
         continent_color = color_countries(continent)
         continentDict =
           id: continent
@@ -107,6 +109,10 @@ Template.treemap_svg.rendered = ->
         countryDict =
           id: countryCode
           name: countryName
+
+        cityDict =
+          id: birthcity + "-" + countryCode
+          name: birthcity
   
         attrs[continent] =
           id: continent
@@ -120,13 +126,21 @@ Template.treemap_svg.rendered = ->
           color: continent_color
           nesting_1: continentDict
           nesting_3: countryDict
+
+        attrs[birthcity + "-" + countryCode] =
+          id: birthcity + "-" + countryCode
+          name: birthcity
+          color: continent_color
+          nesting_1: continentDict
+          nesting_3: countryDict
+          nesting_5: cityDict
   
       flat = []
   
       data.forEach (d) ->
         flat.push #use a dummy year here for now ...
-          id: d.countryCode
-          name: d.countryName?.capitalize()
+          id: d.birthcity + "-" + d.countryCode
+          name: d.birthcity?.capitalize()
           num_ppl: d.count
           year: 2000
 
@@ -141,8 +155,8 @@ Template.treemap_svg.rendered = ->
             prefix: "Total Exports: "
             suffix: " individuals"
             )
-          .nesting(["nesting_1", "nesting_3"])
-          .depth("nesting_3")
+          .nesting(["nesting_1", "nesting_3", "nesting_5"])
+          .depth("nesting_5")
           .font("Lato")
           .font_weight("300")
           .color_var("color")
