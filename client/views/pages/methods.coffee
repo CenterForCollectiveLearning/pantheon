@@ -44,7 +44,7 @@ renderTree = (url) ->
   d3.select("#tree").remove()
   allData = {}
   json = ""
-  $.get url, {}, (d) ->
+  $.get 'domains.csv', {}, (d) ->
     toggleAll = (d) ->
       if d.children
         d.children.forEach toggleAll

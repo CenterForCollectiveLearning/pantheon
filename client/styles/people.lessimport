@@ -175,6 +175,7 @@ div.person-body {
 
         img.person-image {
             width: 270px;
+            float: left;
         }
     }
     div.person-body-right {
