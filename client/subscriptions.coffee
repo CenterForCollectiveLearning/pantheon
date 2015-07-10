@@ -10,6 +10,7 @@ Meteor.subscribe "people_pub"
 @PeopleTopN = new Meteor.Collection "peopleTopN"
 @Treemap = new Meteor.Collection "treemap"
 @CountriesRanking = new Meteor.Collection "countries_ranking"
+@CitiesRanking = new Meteor.Collection "cities_ranking"
 @DomainsRanking = new Meteor.Collection "domains_ranking"
 @Matrix = new Meteor.Collection "matrix"
 @Scatterplot = new Meteor.Collection "scatterplot"
@@ -117,6 +118,8 @@ Deps.autorun ->
         when "countries"
           dataSub = Meteor.subscribe("countries_ranking_pub", begin, end, category, categoryLevel, L, onReady)
           # vizSub = Meteor.subscribe("treemap_pub", vizMode, begin, end, L, country, category, "industry", dataset, onReady)
+        when "cities"
+          dataSub = Meteor.subscribe("cities_ranking_pub", begin, end, country, category, categoryLevel, L, onReady)
         when "people"
           # usig ClientPeople instead of peopleTopN
           # defer onReady to make sure all people are loaded before rendering the datatable

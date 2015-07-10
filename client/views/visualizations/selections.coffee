@@ -49,6 +49,8 @@ Template.select_mode.render_template = ->
         return new Handlebars.SafeString(Template.people_ranking_mode(this))      
       when "domains"
         return new Handlebars.SafeString(Template.domains_ranking_mode(this))
+      when "cities"
+        return new Handlebars.SafeString(Template.cities_ranking_mode(this))
 
 Template.select_country.rendered = ->
   country = Session.get("country").split("+")

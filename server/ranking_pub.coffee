@@ -110,3 +110,78 @@ Meteor.publish "domains_ranking_pub", (begin, end, country, category, categoryLe
 
   sub.ready()
   return
+
+#
+# * Static query that pushes the cities ranking table
+# *
+# 
+Meteor.publish "cities_ranking_pub", (begin, end, country, category, categoryLevel, L) ->
+  sub = this
+  collectionName = "cities_ranking"
+  criteria = 
+    birthcity:
+      $nin: [null, ""]
+    birthyear:
+      $gte: begin
+      $lte: end
+    dataset: "OGC"
+  criteria[categoryLevel] = category if category.toLowerCase() isnt "all"
+  criteria.countryCode = country  if country isnt "all"
+  if L[0] is "H" then criteria.HPI = {$gt:parseInt(L.slice(1,L.length))} else criteria.numlangs = {$gt: parseInt(L)}
+
+  projection =
+    birthcity: 1
+    countryName: 1
+    continentName: 1
+    gender: 1
+    numlangs: 1
+    HPI:1
+    _id: 0
+  country = {}
+  data = People.find(criteria, projection).fetch()
+  cities = _.groupBy(data, "birthcity") # TODO: group by country then city
+  finaldata = []
+  hdata = {}
+
+  for cc of cities #build an object with all of the H-index data
+    citylangs = _.groupBy(cities[cc], "numlangs")
+    nums = _.sortBy(_.keys(citylangs), (num) -> parseInt(num)).reverse()
+    sumppl = 0
+    for n in nums
+      sumppl += parseInt(citylangs[n].length)
+      numlangs = parseInt(n)
+      if sumppl >= numlangs
+        hdata[cc] = numlangs
+        break
+      else
+        hdata[cc] = sumppl
+
+  for cc of cities
+    city = {}
+    city["birthcity"] = cc
+    city["countryCode"] = cities[cc][0].countryCode
+    city["countryName"] = cities[cc][0].countryName
+    city["continentName"] = cities[cc][0].continentName
+    city["HCPI"] = _.reduce(_.pluck(cities[cc], 'HPI'), 
+      (memo, num) -> 
+        memo + num
+      , 0)
+    city["numppl"] = cities[cc].length
+    females = _.countBy(cities[cc], (p) ->
+      (if p.gender is "Female" then "Female" else "Male")
+    ).Female
+    fifties = _.countBy(cities[cc], (p) ->
+      (if p.numlangs >= 50 then "fifty" else "not")
+    ).fifty
+    city["numwomen"] = (if females then females else 0)
+    city["diversity"] = Object.keys(_.groupBy(cities[cc], "occupation")).length
+    city["percentwomen"] = (city["numwomen"] / city["numppl"] * 100.0).toFixed(2)
+    city["i50"] = (if fifties then fifties else 0)
+    city["Hindex"] = hdata[cc]
+    if city['countryName'] != null and city['countryName'] != "" then finaldata.push city
+
+  finaldata.forEach (city) ->
+    sub.added collectionName, Random.id(), city
+
+  sub.ready()
+  return

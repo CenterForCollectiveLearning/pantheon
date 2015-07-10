@@ -94,6 +94,60 @@ Template.treemap_svg.rendered = ->
         .nesting(["nesting_1", "nesting_3", "nesting_5"]).depth("nesting_5").font("Lato").font_weight("300").color_var("color")
       d3.select(context.find("svg")).datum(flat).call viz
     else if vizMode is "domain_exports_to"
+      attr = Countries.find({dataset:dataset}).fetch()
+      attr.forEach (a) ->
+        continent = a.continentName
+        countryCode = a.countryCode
+        countryName = a.countryName?.capitalize()
+        continent_color = color_countries(continent)
+        continentDict =
+          id: continent
+          name: continent
+  
+        countryDict =
+          id: countryCode
+          name: countryName
+  
+        attrs[continent] =
+          id: continent
+          name: continent
+          color: continent_color
+          nesting_1: continentDict
+  
+        attrs[countryCode] =
+          id: countryCode
+          name: countryName
+          color: continent_color
+          nesting_1: continentDict
+          nesting_3: countryDict
+  
+      flat = []
+  
+      data.forEach (d) ->
+        flat.push #use a dummy year here for now ...
+          id: d.countryCode
+          name: d.countryName?.capitalize()
+          num_ppl: d.count
+          year: 2000
+
+      viz.type("tree_map")
+          .width(width)
+          .height(height)
+          .id_var("id")
+          .attrs(attrs)
+          .text_var("name")
+          .value_var("num_ppl")
+          .total_bar(
+            prefix: "Total Exports: "
+            suffix: " individuals"
+            )
+          .nesting(["nesting_1", "nesting_3"])
+          .depth("nesting_3")
+          .font("Lato")
+          .font_weight("300")
+          .color_var("color")
+      d3.select(context.find("svg")).datum(flat).call viz
+    else if vizMode is "domain_exports_to_city" #TODO: update this for domain treemap by city, still need country treemap by city
       # attr = Countries.find({dataset:dataset}).fetch()
       attr = People.find({},{"countryCode":1,"countryCode3":1, "countryName":1, "continentName":1, "dataset":1, "birthcity":1, "_id":0}).fetch()
       attr.forEach (a) ->

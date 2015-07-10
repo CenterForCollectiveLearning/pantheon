@@ -130,6 +130,13 @@
     {{> select_l}}
 </template>
 
+<template name="cities_ranking_mode">
+    {{> select_category}}
+    {{> select_country}}
+    {{> select_time }}
+    {{> select_l}}
+</template>
+
 <template name="map_mode">
     {{> select_category}}
     {{> select_time }}
@@ -155,7 +162,7 @@
 
 <template name="country_dropdown">
     <div class="parameter-selection">
-        <label>Place of Birth*</label>
+        <label>Birth Country*</label>
         <select>
             <option value="all">All</option>
             {{#each countries}}
@@ -300,7 +307,8 @@
     <div class="parameter-selection">
         <label>Entity</label>
         <select>
-            <option value="countries">Place of Birth*</option>
+            <option value="countries">Birth Country*</option>
+            <option value="cities">Birth City*</option>
             <option value="people">People</option>
             <option value="domains">Domains</option>
         </select

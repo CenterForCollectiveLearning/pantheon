@@ -25,7 +25,9 @@ Template.rankings.entity = ->
   entity = Session.get "entity"
   switch entity
     when "countries"
-      "Place of Birth*"
+      "Birth Country*"
+    when "cities"
+      "Birth City*"
     when "people"
       "People"
     when "domains"
@@ -36,6 +38,8 @@ Template.rankings.columnDescriptions = ->
   switch entity
     when "countries"
       new Handlebars.SafeString(Template.countries_columns(this))
+    when "cities"
+      new Handlebars.SafeString(Template.cities_columns(this))
     when "people"
       new Handlebars.SafeString(Template.people_columns(this))
     when "domains"
@@ -44,7 +48,7 @@ Template.rankings.columnDescriptions = ->
 Template.rankings.rankingdataReady = ->
   entity = Session.get "entity"
   switch entity
-    when "countries", "domains"
+    when "countries", "cities", "domains"
       Session.equals "dataReady", true
     when "people"
       Session.equals("peopleReady", true) and Session.equals("dataReady", true)
@@ -75,7 +79,7 @@ Template.ranking_table.rendered = ->
           sTitle: "Rank"
         ,
           sTitle: "Place of Birth*"
-          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + Countries.findOne({countryName : obj.aData[obj.iDataColumn]}, {})?["countryCode"] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  # Insert route here
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + Countries.findOne({countryName : obj.aData[obj.iDataColumn]}, {})?["countryCode"] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  
         ,
           sTitle: "Number of People"
         ,
@@ -88,7 +92,45 @@ Template.ranking_table.rendered = ->
           sTitle: "Rank"
         ,
           sTitle: "Place of Birth*"
-          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + Countries.findOne({countryName : obj.aData[obj.iDataColumn]}, {})?["countryCode"] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  # Insert route here
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + Countries.findOne({countryName : obj.aData[obj.iDataColumn]}, {})?["countryCode"] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  
+        ,
+          sTitle: "Number of People"
+        ,
+          sTitle: "% Women"
+        ,
+          sTitle: "Diversity"
+        ,
+          sTitle: "i50"
+        ,
+          sTitle: "H-index"
+        ,
+          sTitle: "HCPI"
+        ]
+    when "cities" #TODO: Bug tests and fixes
+      if mobile
+        data = _.map CitiesRanking.find().fetch(), (c) ->
+          [0, c.birthcity, c.numppl, toDecimal(c.HCPI, 0)]
+        aoColumns = [
+          sTitle: "Rank"
+        ,
+          sTitle: "City of Birth*"
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  # Insert route here
+        ,
+          sTitle: "Number of People"
+        ,
+          sTitle: "HCPI"
+        ]
+      else
+        data = _.map CitiesRanking.find().fetch(), (c) ->
+          [0, c.birthcity, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 2)]
+        aoColumns = [
+          sTitle: "Rank"
+        ,
+          sTitle: "City of Birth*"
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  # Insert route here
+        ,
+          sTitle: "Country*"
+          fnRender: (obj) -> obj.aData[obj.iDataColumn].capitalize()
         ,
           sTitle: "Number of People"
         ,
@@ -259,6 +301,11 @@ Template.ranking_table.rendered = ->
   #initializations
   sorting = switch
     when entity is "countries" 
+      if mobile
+        [[3, "desc"]]
+      else
+        [[7, "desc"]]
+    when entity is "cities" #TODO: UPDATE (just a C+P from countries)
       if mobile
         [[3, "desc"]]
       else
