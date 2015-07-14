@@ -184,7 +184,15 @@
 
 			<p>We present a validation of the Pantheon 1.0 dataset based on a comparison with the Human Accomplishments (HA) dataset, an independent compilation of 3,869 notable people in the arts and sciences from 800BC to AD 1950 [4]. Unlike Pantheon, HA is based on printed encyclopedias and not online sources, but like Pantheon, HA values the presence of a biography in resources in multiple languages. Since HA is restricted to the arts and sciences domains, it does not include politicians like Julius Caesar, religious figures like Jesus, racecar drivers like Ayrton Senna or chess grandmasters like Gary Kasparov. Nevertheless, we find that our data overlaps significantly with the Human Accomplishment data. The Pantheon dataset contains 1,570 (40%) of the entries available in the Human Accomplishment dataset. The HA dataset is more regionally focused than Pantheon, and we find that many of the individuals in the HA dataset are more locally impactful in their respective geographies, and hence, have a presence in fewer languages in Wikipedia. If we lower the threshold of the Pantheon dataset to include biographies existing in 10 or more languages (<em>L</em> ≥ 10) we would find an overlap of 2,878 biographies, or 74% of the HA dataset.</p>
 
-			<p>We find a positive and significant correlation between the measures of historical impact advanced in both of these datasets. HA gives individuals a relative score that measures their impact on their respective domain. Figure 4 shows the correlation between the measures of historical impact in both Pantheon and HA. The historical impact measures in Pantheon correlate with the number of language editions in Wikipedia (L) with an R<sup>2</sup>=18% (p-value &lt; 2x10 <sup>-70</sup>) and with the HPI index with an R<sup>2</sup>=12% (p-value=1.6x10<sup>-44</sup>). Note that unlike Pantheon, HA may classify an individual into multiple domains, with a different score for each one: e.g., Galileo Galilei is classified as an astronomer (with a score of 100 that puts him as the most influential astronomer of all time) as well a physicist (ranking fifth with a score of 83).</p>
+			<p>We find a positive and significant correlation between the measures of historical impact advanced in both of these datasets. HA gives individuals a relative score that measures their impact on their respective domain. Figures 4a and 4b show the correlation between the measures of historical impact in Pantheon (<em>L</em>, <em>HPI</em>) and HA. The historical impact measures in HA correlate with the number of language editions in Wikipedia (<em>L</em>) with an R<sup>2</sup>=18% (p-value &lt; 2x10 <sup>-70</sup>) and with <em>HPI</em> with an R<sup>2</sup>=12% (p-value=1.6x10<sup>-44</sup>). Note that unlike Pantheon, HA may classify an individual into multiple domains, with a different score for each one: e.g., Galileo Galilei is classified as an astronomer (with a score of 100 that puts him as the most influential astronomer of all time) as well a physicist (ranking fifth with a score of 83).</p>
+
+			<p><b>Figure 4a: Comparison Analysis of <em>HA</em> index and <em>L</em></b></p>
+			
+			<figure><img src="/HA-v-L.png"></figure>
+
+			<p><b>Figure 4b: Comparison Analysis of <em>HA</em> index and <em>HPI</em></b></p>
+			
+			<figure><img src="/HA-v-HPI.png"></figure>
 
 			<h3>Validation with External Measures of Accomplishment</h3>
 
@@ -208,7 +216,7 @@
 
 			<p><b>Figure 3b: Validation of <em>HPI</em> using Formula 1 drivers</b></p>
 			
-			<figure><img src="/formula1.png"></figure>
+			<figure><img src="/formula1b.png"></figure>
 			
 			<h3 id="validation_with_tennis">Validation with Tennis Players</h3>
 			<p>Next, we conduct a similar analysis for Tennis Players. The Tennis player subset focuses on the top 52 Tennis players according to the number of languages in the Wikipedia and augmented by additional data on each individual - the number of weeks he/she spent as number one in the ATP or WTA, the number of Grand Slam wins, the top rank ever obtained, and the player’s gender (Female = 1, Male = 0). </p>
@@ -221,7 +229,7 @@
 			<p>When we considered <em>HPI</em>, we find an improved model that explains 63% of the variation in <em>HPI</em> (Figure 4b). This further supports the use of <em>HPI</em> as an appropriate proxy for accomplishment, since <em>HPI</em> tracks the degree of achievement for tennis players better than <em>L</em>.</p>
 
 			<p><b>Figure 4b: Validation of <em>HPI</em> using Tennis Players </b></p>
-			<figure><img src="/tennis.png"></figure>
+			<figure><img src="/tennisb.png"></figure>
 
 			<h3 id="validation_with_swimmers">Validation with Swimmers</h3>
 			
@@ -233,18 +241,18 @@
 			<p>When we perform the analysis for Historical Popularity Index, we find that the model explains 50% of the variance observed in the <em>HPI</em> for swimmers. Figure 5b shows the second model, which shows that <em>HPI</em> is also an appropriate proxy for quantifying accomplishment for swimmers, although in this case, <em>HPI</em> is not superior to <em>L</em>.</p>
 
 			<p><b>Figure 5b: Validation of <em>HPI</em> using Swimmers</b></p>
-			<figure><img src="/swimmers.png"></figure>
+			<figure><img src="/swimmersb.png"></figure>
 
 			<h3 id="validation_with_chess">Validation with Chess Players</h3>
 			<p>Finally, we perform another analysis using all of the individuals classified as chess players in the Pantheon dataset. In this case, we use data on each individual’s highest ELO ranking attained, gender, total games played, and percentage of wins, losses, and draws. For the number of language presences in Wikipedia (L), we construct a model that explains 37% of the variance in the multilingual presence of each of these individuals in the Wikipedia (Figure 6a). This further supports using the number of languages in Wikipedia as a proxy for individual accomplishments. </p>
 
 			<p><b>Figure 6a: Validation of <em>L</em> using Chess Players</b></p>
-			<figure><img src="/swimmers.png"></figure>
+			<figure><img src="/chess.png"></figure>
 
 			<p>Using HPI (Figure 6b), we find a model that explains 53% of the variation in <em>HPI</em>—demonstrating that <em>HPI</em> is an appropriate proxy for accomplishment, with an improved fit for tracking an individual’s achievements.</p>
 
 			<p><b>Figure 6b: Validation of <em>HPI</em> using Chess Players</b></p>
-			<figure><img src="/swimmers.png"></figure>
+			<figure><img src="/chessb.png"></figure>
 			
 			<h3 id="discussion">Discussion</h3>
 			<p>We introduced a dataset on historical impact that can be used to study spatial and temporal variations in cultural production based on biographies that have a presence in more than 25 language editions of Wikipedia. This manually verified dataset allowed us to link cultural domains (based on a classification we also introduced), to places and time. To distinguish between biographies with different levels of visibility we introduce two measures of historical impact: the number of languages in which an individual has a presence in Wikipedia (<em>L</em>), and the Historical Popularity Index (<em>HPI</em>). We validated the Pantheon dataset by comparing it against the Human Accomplishments dataset and also validated our measures of global fame and visibility using external data on the accomplishments of Formula One racecar drivers, tennis players, swimmers, and chess players. In all these cases we find a good match between L, HPI, and the external measures of accomplishment, demonstrating the validity of the measures developed within Pantheon as measures of historical impact. While these case studies are not exhaustive across all cultural domains, they show that the measures introduced are effective metrics for characterizing cultural production across diverse sets of domains, time, and geography.</p>
