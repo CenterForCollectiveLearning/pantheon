@@ -92,7 +92,8 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
     , (error) ->
       Meteor._debug "Error doing aggregation: " + error
     )
-  else if vizMode is "domain_exports_to"
+  else if vizMode is "domain_exports_to" or "domain_exports_to_city"
+    matchArgs.countryCode = countryCode if countryCode isnt "all"
     project =
       _id: 0
       continent: 1

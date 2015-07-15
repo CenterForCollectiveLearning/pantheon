@@ -24,6 +24,8 @@ Template.select_mode.render_template = ->
           return new Handlebars.SafeString(Template.domain_mode(this))
         else if type is "histogram"
           return new Handlebars.SafeString(Template.histogram_domain_mode(this))
+      when "domain_exports_to_city"
+        return new Handlebars.SafeString(Template.city_mode(this))
       when "domain_imports_from"
         return new Handlebars.SafeString(Template.domain_mode(this))
       when "bilateral_exporters_of"

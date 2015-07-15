@@ -27,7 +27,7 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   countryCode = country[country.length-1]
 
   args.dataset = dataset
-  args.countryCode = countryCode if countryCode isnt "all" and vizMode is "country_exports"
+  args.countryCode = countryCode if countryCode isnt "all" and vizMode is "country_exports" or vizMode is "domain_exports_to_city"
   args.birthcity = city if city isnt "all"
 
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
@@ -65,7 +65,6 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
       sort: 
         numlangs: -1
   projection.limit = N if N isnt "all"
-
   People.find(args, projection).forEach (person) ->
     sub.added collectionName, person._id, person
   sub.ready()
@@ -121,6 +120,11 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     args.countryCode = countryCode  if countryCode isnt "all"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
     args.birthcity = city if city isnt "all"
+
+  if vizMode is "domain_exports_to_city" #TODO - debug click tooltip
+    args.countryCode = countryCode  if countryCode isnt "all"
+    args[categoryLevel] = category  if category.toLowerCase() isnt "all"
+    args.birthcity = selectedcity if selectedcity isnt "all"
 
   else if vizMode is "map"
     if dataset is "murray"

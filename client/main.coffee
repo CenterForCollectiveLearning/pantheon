@@ -37,6 +37,10 @@ Handlebars.registerHelper "alert", -> Session.get("alert")
     in: ["category", "country"]
     out: "language"
 
+  domain_exports_to_city:
+    in: ["category", "country"]
+    out: "country" #Question - Where is this used??
+
   bilateral_exporters_of:
     in: ["country", "language"]
     out: "category"
@@ -115,7 +119,7 @@ Meteor.startup ->
   # Bypass the need for the mergebox to loaded people for each client
   Session.set("peopleReady", false)
   
-  d3.json("/people_1-6-2015.json", (people) -> #1-6-2015 on aloha2 #5-2-2015 on local
+  d3.json("/people_5-2-2015.json", (people) -> #1-6-2015 on aloha2 #5-2-2015 on local
     for person in people
       person._id = new Meteor.Collection.ObjectID(person._id.$oid)
       ClientPeople.insert(person)

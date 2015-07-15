@@ -173,7 +173,7 @@ Deps.autorun ->
   vizMode = Session.get("vizMode")
   dataset = Session.get("dataset")
 
-  if Session.equals("vizMode", "map") and Session.equals("category", "all")
+  if (Session.equals("vizMode", "map") and Session.equals("category", "all")) or Session.equals("vizMode", "domain_exports_to_city")
     city = Session.get("tooltipCity")
   else
     city = "all"

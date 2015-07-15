@@ -73,6 +73,7 @@ Template.accordion.rendered = ->
 
 Template.accordion.country_treemap_active = -> if Session.equals("vizMode", "country_exports") then "active" else ""
 Template.accordion.domain_treemap_active = -> if Session.equals("vizMode", "domain_exports_to") then "active" else ""
+Template.accordion.domain_city_treemap_active = -> if Session.equals("vizMode", "domain_exports_to_city") then "active" else ""
 Template.accordion.matrix_active = -> if Session.equals("vizMode", "matrix_exports") then "active" else ""
 Template.accordion.cvc_active = -> if Session.equals("vizMode", "country_vs_country") then "active" else ""
 Template.accordion.dvd_active = -> if Session.equals("vizMode", "domain_vs_domain") then "active" else ""
@@ -261,7 +262,7 @@ Template.question.question = ->
 @getQuestion = (mode, vars) ->
   dataset = Session.get("dataset")
   # If mode requires a category, switch based on categoryLevel because occupations are singular
-  if mode in ["domain_exports_to", "map", "domain_vs_domain"]
+  if mode in ["domain_exports_to", "map", "domain_vs_domain", "domain_exports_to_city"]
     # Default to empty
     category_prefix = ""
     unless vars.category is "all domains"
@@ -283,8 +284,10 @@ Template.question.question = ->
   # Actually construct the question
   switch mode
     when "country_exports" then return new Handlebars.SafeString("Who are the globally known people born within present day " + boldify(vars.country) + "*?")
-    when "domain_exports_to", "map" 
+    when "domain_exports_to", "map"
       return new Handlebars.SafeString("Where were globally known " + category_prefix + boldify(vars.category) + " born?")
+    when "domain_exports_to_city"
+      return new Handlebars.SafeString("Where were globally known " + category_prefix + boldify(vars.category) + " from "+  boldify(vars.country) + " born?")
     when "matrix_exports"
       if vars.gender_var is "ratio" then return new Handlebars.SafeString("What's the " + boldify("female to male") + " ratio for each place of birth and cultural domain?")
       else return new Handlebars.SafeString("How many globally known " + boldify(vars.gender_var) + " are associated with each place of birth and cultural domain?")

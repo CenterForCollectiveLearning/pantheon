@@ -85,7 +85,7 @@ Router.map ->
       # Reset defaults based on vizmode
       if vizMode is "country_exports"
         Session.set "category", "all"
-      else if vizMode is "domain_exports_to"
+      else if vizMode is "domain_exports_to" # or "domain_exports_to_city"
         Session.set "country", "all"
       else if vizMode is "country_vs_country"
         Session.set "country", defaults.country

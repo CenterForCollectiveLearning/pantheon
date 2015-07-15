@@ -156,7 +156,6 @@ d3plus.tree_map = function(vars) {
         var id = find_variable(d,vars.id_var),
             self = d3.select("#cell_"+id).node();
 
-        console.log(id);
         self.parentNode.appendChild(self);
 
         d3.select("#cell_"+id).select("rect")
@@ -169,16 +168,26 @@ d3plus.tree_map = function(vars) {
         var dataset = Session.get("dataset");
         if (vizMode === "country_exports") {
           var country = Session.get("country").split("+");
+          var city = "all";
+          if (country.length > 1){
+            city = country[0];
+          }
           var countryCode = country[country.length-1];
           var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
           var category = id.replace("_", " ").toUpperCase();
           var categoryLevel = "occupation";
           countryCode = Session.get("country"); // reset countryCode to the full city+countryCode
-        } else if (vizMode === "domain_exports_to") {
-          var countryCode = id.split("-").pop();
+        } else if (vizMode === "domain_exports_to" || vizMode === "domain_exports_to_city") {
+          var country = id.split("-");
+          var city = "all";
+          if (country.length > 1){
+            city = country[0];
+          }
+          var countryCode = country[country.length-1];
           var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
           var category = Session.get("category").toUpperCase();
           var categoryLevel = Session.get("categoryLevel");
+          Session.set("tooltipCity", city);
         }
         var position = getTooltipPosition(d3.event.clientX, d3.event.clientY);
 
@@ -189,7 +198,12 @@ d3plus.tree_map = function(vars) {
         Session.set("tooltipCategory", category);
         Session.set("tooltipCategoryLevel", categoryLevel);
         Session.set("tooltipCountryCode", countryCode);
-        Template.tooltip.heading = countryCode !== "all" ? countryName + ": " + category : category;
+        var h = "";
+        if(city !== "all"){
+          h = city + ", ";
+        }
+        var head = countryCode !== "all" ? countryName + ": " + category : category;
+        Template.tooltip.heading = h + head;
         Template.mobile_tooltip_ranking.heading = countryCode !== "all" ? countryName + ": " + category : category;
         
         Session.set("showTooltip", true);
