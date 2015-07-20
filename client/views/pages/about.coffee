@@ -144,4 +144,5 @@ Template.about.render_template = ->
     when "team" then new Handlebars.SafeString(Template.team(this))
     when "vision" then new Handlebars.SafeString(Template.vision(this))
     when "permissions" then new Handlebars.SafeString(Template.permissions(this))
+    when "publications" then new Handlebars.SafeString(Template.publications(this))
     when "faq" then new Handlebars.SafeString(Template.faq(this))

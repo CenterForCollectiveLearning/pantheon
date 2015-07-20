@@ -140,7 +140,7 @@ Meteor.startup ->
     from: "-4000"
     to: "2010"
     langs: "H15"
-    entity: "countries"
+    entity: "cities"
     gender: "both"
     dataset: "OGC"
     person: getRandomFromArray(topHundredPeople)
