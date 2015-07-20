@@ -27,7 +27,8 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   countryCode = country[country.length-1]
 
   args.dataset = dataset
-  args.countryCode = countryCode if countryCode isnt "all" and vizMode is "country_exports" or vizMode is "domain_exports_to_city"
+  if vizMode is "country_exports" or vizMode is "domain_exports_to_city" 
+    args.countryCode = countryCode if countryCode isnt "all"
   args.birthcity = city if city isnt "all"
 
   args[categoryLevel] = category if category.toLowerCase() isnt "all"
