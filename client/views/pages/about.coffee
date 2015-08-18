@@ -1,7 +1,7 @@
 teamMembers = [
   name: "César A. Hidalgo"
   photo: "/cesar_hidalgo.png"
-  description: "Principal Investigator"
+  description: "Principal Investigator, Associate Professor, Head of Macro Connections"
   role: ["Concept", "Data", "Design"]
   media:
     personal: "http://chidalgo.com/"
@@ -11,7 +11,7 @@ teamMembers = [
 ,
   name: "Amy Zhao Yu"
   photo: "/amy_yu.png"
-  description: "Graduate Student"
+  description: "Lead Researcher, Macro Connections PhD Candidate"
   role: ["Data", "Development", "Content"]
   media:
     personal: "http://www.amyyu.net/"
@@ -21,23 +21,13 @@ teamMembers = [
 ,
   name: "Kevin Zeng Hu"
   photo: "/kevin_hu.png"
-  description: "Graduate Student"
+  description: "PhD Candidate"
   role: ["Development", "Design", "Data"]
   media:
     personal: "http://www.kevinzenghu.com"
     twitter: "https://www.twitter.com/kevinzenghu"
     linkedin: "http://www.linkedin.com/pub/kevin-hu/58/9a7/404"
-  dates: "Summer 2013 - present"
-,
-  name: "Ali Almossawi"
-  photo: "/ali_almossawi.jpg"
-  description: "Mozilla Corporation"
-  role: ["Design"]
-  media:
-    personal: "http://almossawi.com/"
-    twitter: "https://twitter.com/alialmossawi"
-    linkedin: "http://www.linkedin.com/in/almossawi/"
-  dates: "2013"
+  dates: "Summer 2013 - Summer 2014"
 ,
   name: "Shahar Ronen"
   photo: "/shahar_ronen.png"
@@ -51,23 +41,13 @@ teamMembers = [
 ,
   name: "Deepak Jagdish"
   photo: "/deepak_jagdish.png"
-  description: "Graduate Student"
+  description: "Graduate Alumnus"
   role: ["Design", "Video"]
   media:
     personal: "http://deepakjagdish.com/"
     twitter: "https://twitter.com/dj247"
     linkedin: "http://www.linkedin.com/pub/deepak-jagdish/5/7a/a20"
-  dates: "2013 - present"
-,
-  name: "Andrew Mao"
-  photo: "/andrew_mao.png"
-  description: "Graduate Student at Harvard"
-  role: ["Development"]
-  media:
-    personal: "http://www.andrewmao.net/"
-    twitter: "https://twitter.com/mizzao"
-    linkedin: "www.linkedin.com/pub/andrew-mao/6/6a6/533"
-  dates: "Fall 2013"
+  dates: "2013 - 2014"
 ,
   name: "Defne Gurel"
   photo: "/defne_gurel.png"
@@ -84,17 +64,40 @@ teamMembers = [
   media:
     personal: "http://tweilu.scripts.mit.edu/"
   dates: "Summer 2012"
+,
+  name: "Ali Almossawi"
+  photo: "/ali_almossawi.jpg"
+  description: "Mozilla Corporation"
+  role: ["Design"]
+  media:
+    personal: "http://almossawi.com/"
+    twitter: "https://twitter.com/alialmossawi"
+    linkedin: "http://www.linkedin.com/in/almossawi/"
+  dates: "2013"
+,
+  name: "Andrew Mao"
+  photo: "/andrew_mao.png"
+  description: "Graduate Student at Harvard"
+  role: ["Development"]
+  media:
+    personal: "http://www.andrewmao.net/"
+    twitter: "https://twitter.com/mizzao"
+    linkedin: "www.linkedin.com/pub/andrew-mao/6/6a6/533"
+  dates: "Fall 2013"
 ]
 
 Template.team.helpers
   first_row_teamMembers: ->
-    teamMembers.slice 0, 3
+    teamMembers.slice 0, 2
 
   second_row_teamMembers: ->
-    teamMembers.slice 3, 6
+    teamMembers.slice 2, 5
 
   third_row_teamMembers: ->
-    teamMembers.slice 6, 9
+    teamMembers.slice 5, 7
+
+  fourth_row_teamMembers: ->
+    teamMembers.slice 7, 9
 
   allteamMembers: ->
     teamMembers

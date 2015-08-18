@@ -16,6 +16,10 @@ div.team-page {
 	a.macro-link { 
 		font-weight: bold;
 	}
+	.team-type {
+		clear: left;
+		padding-top: 20px;
+	}
 	div.team-row {
 		margin-top: 20px;
 		ul {
@@ -28,6 +32,39 @@ div.team-page {
 				width: 33.33333333%;
 				float: left;
 				text-align: center !important;
+
+				&.mobile{
+					width:100%;
+					float:none;
+				}
+
+				div.photo_container {
+					position: relative;
+				}
+			}
+			li.team-member-urop {
+				margin-top: 15px;
+				width: 50%;
+				float: left;
+				text-align: center !important;
+
+				&.mobile{
+					width:100%;
+					float:none;
+				}
+
+				div.photo_container {
+					position: relative;
+				}
+			}
+			li.team-member-lead {
+				margin-top: 15px;
+				width: 50%;
+				float: left;
+				text-align: center !important;
+				img.photo {
+					width: 200px !important;
+				}
 
 				&.mobile{
 					width:100%;

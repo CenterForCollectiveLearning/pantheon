@@ -4,6 +4,18 @@
 	</li>
 </template>
 
+<template name="teamLead">
+	<li class="team-member-lead {{#if mobile}} mobile{{/if}}">
+		{{>teamMemberInfo}}
+	</li>
+</template>
+
+<template name="teamUROP">
+	<li class="team-member-urop {{#if mobile}} mobile{{/if}}">
+		{{>teamMemberInfo}}
+	</li>
+</template>
+
 <template name="teamMemberInfo">
 	<span class="name">{{name}}</span>
 	<div class="desc">{{description}}</div>
@@ -35,10 +47,11 @@
 	<div class="team-row">
 		<ul>
 			{{#each first_row_teamMembers}}
-			{{> teamMember}}
+			{{> teamLead}}
 			{{/each}}
 		</ul>
 	</div>
+	<h2 class="team-type">Graduate Researchers</h2>
 	<div class="team-row">
 		<ul>
 			{{#each second_row_teamMembers}}
@@ -46,10 +59,19 @@
 			{{/each}}
 		</ul>
 	</div>
+	<h2 class="team-type">Undergraduate Researchers</h2>
 	<div class="team-row">
 		<ul>
 			{{#each third_row_teamMembers}}
-			{{> teamMember}}
+			{{> teamUROP}}
+			{{/each}}
+		</ul>
+	</div>
+	<h2 class="team-type">External Collaborators</h2>
+	<div class="team-row">
+		<ul>
+			{{#each fourth_row_teamMembers}}
+			{{> teamUROP}}
 			{{/each}}
 		</ul>
 	</div>
