@@ -122,12 +122,12 @@ Template.ranking_table.rendered = ->
         ]
       else
         data = _.map CitiesRanking.find().fetch(), (c) ->
-          [0, c.birthcity, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 2)]
+          [0, c.birthcity + "+" + c.countryCode, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 2)]
         aoColumns = [
           sTitle: "Rank"
         ,
           sTitle: "City of Birth*"
-          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  # Insert route here
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].split("+")[0].capitalize() + "</a>"  # Insert route here
         ,
           sTitle: "Country*"
           fnRender: (obj) -> obj.aData[obj.iDataColumn].capitalize()
