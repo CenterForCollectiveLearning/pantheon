@@ -25,6 +25,13 @@
 <template name="google_analytics">
 </template>
 
+<template name="embeddable">
+    <div id="background-wrapper" class="wrapper">
+    <!-- Body -->
+    {{ yield }}
+    </div>
+</template>
+
 <!-- Base Layout -->
 <template name="defaultLayout">
     <!--[if IE]>
@@ -169,7 +176,7 @@
     </div>
     {{/unless}}
 
-    <div class="copyright">&copy; 2014 <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>{{#unless mobile}} • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="https://twitter.com/MacroMIT"><i class="fa fa-twitter"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>{{/unless}}
+    <div class="copyright"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a> <a href="http://macroconnections.media.mit.edu/" target="_blank">Macro Connections</a> • <a href="http://media.mit.edu/" target="_blank">MIT Media Lab</a>{{#unless mobile}} • Connect: <a href="https://www.facebook.com/macroconnections"><i class="fa fa-facebook"></i></a>&nbsp;<a href="https://twitter.com/MacroMIT"><i class="fa fa-twitter"></i></a>&nbsp;<a href="mailto:pantheon@media.mit.edu"><i class="fa fa-envelope"></i></a></div>{{/unless}}
 
 </template>
 
