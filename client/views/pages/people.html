@@ -1,5 +1,12 @@
 <template name="people">
 	<div class="page-top">
+		<div class="row-fluid">
+			<div class="span3"></div>
+	    	<div class = "span6">
+			{{> message_update}}
+			</div>
+			<div class="span3"></div>
+		</div>
 		<div id="people-page" class="{{#if mobile}} mobile{{/if}}">
 			{{#if dataReady}}
     		{{#with person}}

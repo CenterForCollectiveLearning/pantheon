@@ -21,9 +21,6 @@
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="{{#unless mobile}}page-left span2{{else}} span12 mobile{{/unless}} parameters" style="{{#if mobile}}display:none{{/if}}">
-                    {{#unless mobile}}
-                        <canvas id="canvas" width="0" height="0" style="display: none"></canvas>
-                    {{/unless}}
                     {{#if initialDataReady}}
                         {{> explore_options}} 
                     {{/if}}
@@ -32,30 +29,31 @@
                  <div class="page-middle {{#unless mobile}}span8{{else}}span12 mobile{{/unless}}">
                     {{> visualization}}
                 </div>
-                {{#unless mobile}}
+
                 <div class="page-right span2">
                     {{#if initialDataReady}}
                     {{> ranked_list }}
                     {{/if}}
                 </div>
-                {{/unless}}
+                
+                
+                {{> tooltip}}
+                {{> clicktooltip}}
+            </div>
+            <div class="row-fluid">
                 {{#if initialDataReady}}
+                <div class = "span8 offset2">
+                {{> message_update}}
+                </div>
                 <div class = "span12 feedback">
                     {{> place_of_birth}}
                     {{> feedback}}
                 </div>
                 {{/if}}
-                {{> tooltip}}
-                {{> clicktooltip}}
             </div>
             {{#if mobile}}
             <div class="row-fluid">
                 {{> mobile_tooltip_ranking}}
-            </div>
-            <div class="row-fluid">
-                {{#if initialDataReady}}
-                    {{> ranked_list }}
-                {{/if}}
             </div>
             {{/if}}
         </div>

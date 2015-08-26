@@ -20,6 +20,7 @@
                 <!-- Visualization and Ranked List Container -->
                 <div class="page-middle {{#unless mobile}}span8{{else}}span12{{/unless}}" style="{{#if mobile}}margin:0{{/if}}">
                     <div id = "tooltip" class ="invisible"></div>
+                    {{> message_update}}
                     {{#if rankingdataReady}}                      
                         {{> ranking_table}}
                     {{else}}
@@ -51,18 +52,9 @@
     {{#if alert}}
     <div class="alert alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <strong>Message to our visitors:</strong>
-        <p>We remind our visitors that:</p>
+        <p>If you would like to cite our work, please reference:</p>
 
-        <p>1. <b>Pantheon is a live resource, meaning that we are constantly revising and updating our data and methods.</b> We have recently updating our ranking formula to control more strongly for the recency bias.</p>
-
-        <p>2. <b>Small differences in ranking (i.e. who is first, second or tenth) are not statistically meaningful</b> and should not be used to draw strong conclusions about the popularity of similarly ranked individuals--or for press headlines.</p>
-
-        <p>3. <b>Individuals are mapped to their places of birth according to present day national boundaries</b>, not national identities. This is a technical limitation emerging from the size and availability of data.</p>
-
-        <p>More details about the limitations of Pantheon are described in the methods section. Please do not hesitate to contact us at <a href="mailto:pantheon@media.mit.edu">pantheon@media.mit.edu</a> or on Twitter (<a href="http://twitter.com/MacroMIT" target="_blank">@MacroMIT</a>) if you have any questions.</p>
-
-        <p>The Pantheon Team</p>
+        <p>Yu, A. Z., Ronen, S., Hu, K., Lu, T., and Hidalgo, C. A. (2015). Pantheon: A Dataset for the Study of Global Cultural Production. <em>arXiv:1502.07310v1 [physics.soc-ph].</em></p>
     </div>
     {{/if}}
 </template>
