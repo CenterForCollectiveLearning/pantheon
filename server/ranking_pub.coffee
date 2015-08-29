@@ -131,6 +131,7 @@ Meteor.publish "cities_ranking_pub", (begin, end, country, category, categoryLev
 
   projection =
     birthcity: 1
+    birthstate: 1
     countryName: 1
     continentName: 1
     gender: 1
@@ -159,6 +160,7 @@ Meteor.publish "cities_ranking_pub", (begin, end, country, category, categoryLev
   for cc of cities
     city = {}
     city["birthcity"] = cc
+    city["birthstate"] = cities[cc][0].birthstate
     city["countryCode"] = cities[cc][0].countryCode
     city["countryName"] = cities[cc][0].countryName
     city["continentName"] = cities[cc][0].continentName

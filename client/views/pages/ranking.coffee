@@ -114,7 +114,7 @@ Template.ranking_table.rendered = ->
           sTitle: "Rank"
         ,
           sTitle: "City of Birth*"
-          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].capitalize() + "</a>"  # Insert route here
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].split("+")[0].capitalize()+ "</a>"  # Insert route here
         ,
           sTitle: "Number of People"
         ,
@@ -122,12 +122,12 @@ Template.ranking_table.rendered = ->
         ]
       else
         data = _.map CitiesRanking.find().fetch(), (c) ->
-          [0, c.birthcity + "+" + c.countryCode, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 2)]
+          [0, c.birthcity.capitalize() + ", " + c.birthstate.capitalize() + "+" + c.countryCode, c.countryName, c.numppl, c.percentwomen, c.diversity, c.i50, c.Hindex, toDecimal(c.HCPI, 2)]
         aoColumns = [
           sTitle: "Rank"
         ,
           sTitle: "City of Birth*"
-          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].split("+")[0].capitalize() + "</a>"  # Insert route here
+          fnRender: (obj) -> "<a class='closeclicktooltip' href='/treemap/country_exports/" + obj.aData[obj.iDataColumn].split(", ")[0] + "+" + obj.aData[obj.iDataColumn].split("+")[1] + "/all/" + Session.get("from") + "/" + Session.get("to") + "/" + Session.get("langs") + "/OGC" + "'>" + obj.aData[obj.iDataColumn].split("+")[0].replace(/(^, )|(, $)/g, '') + "</a>"  # Insert route here
         ,
           sTitle: "Country*"
           fnRender: (obj) -> obj.aData[obj.iDataColumn].capitalize()
@@ -168,9 +168,9 @@ Template.ranking_table.rendered = ->
         else if Session.equals("page", "rankings") and mobile
           [i+1, p.name, p.birthyear, p.countryCode, p.occupation.capitalize(), toDecimal(p.HPI,2)]  
         else if dataset is "OGC" and not mobile
-          [i+1, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), toDecimal(p.HPI,3)]
+          [i+1, p.name, p.countryName.capitalize(), p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs, toDecimal(p.L_star,1), toMillions(p.TotalPageViews), toMillions(p.PageViewsEnglish), toMillions(p.PageViewsNonEnglish), toThousands(p.StdDevPageViews), toDecimal(p.HPI,3)]
         else
-          [i+1, p.name, p.countryName, p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
+          [i+1, p.name, p.countryName.capitalize(), p.birthyear, p.gender, p.occupation.capitalize(), p.numlangs]
 
       if dataset is "murray"
         aoColumns = [

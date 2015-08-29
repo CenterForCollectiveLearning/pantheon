@@ -9,10 +9,11 @@
 
 # Country exports
 # TRUE: db.people.runCommand("aggregate", {pipeline: [{"$match":{"birthyear":{"$gte":-3000,"$lte":2000},"dataset":"OGC","HPI":{"$gt":0},"countryCode":"NZ"}},{"$project":{"_id":0,"domain":1,"industry":1,"occupation":1}},{"$group":{"_id":{"domain":"$domain","industry":"$industry","occupation":"$occupation"},"count":{"$sum":1}}}], explain: true}).serverPipeline[0].cursor.indexOnly
-@countryExportsIndex_hpi = {dataset: 1, birthyear: 1, countryCode: 1, domain: 1, industry: 1, occupation: 1, HPI: 1, _id: 1}
-@countryExportsIndex_numlangs = {dataset: 1, birthyear: 1, countryCode: 1, domain: 1, industry: 1, occupation: 1, numlangs: 1, _id: 1}
+@countryExportsIndex_hpi = {dataset: 1, birthyear: 1, birthcity: 1, countryCode: 1, domain: 1, industry: 1, occupation: 1, HPI: 1, _id: 1}
+@countryExportsIndex_numlangs = {dataset: 1, birthyear: 1, birthcity: 1, countryCode: 1, domain: 1, industry: 1, occupation: 1, numlangs: 1, _id: 1}
 People._ensureIndex(countryExportsIndex_hpi)
 People._ensureIndex(countryExportsIndex_numlangs)
+# Geographic Index
 People._ensureIndex({ birthplace : "2dsphere" }, {sparse: true})
 
 # Domain exporters
