@@ -38,6 +38,8 @@ Template.person_page.helpers
   hpi: -> if @HPI then @HPI.toFixed(2) else "N/A"
   stdDevPageViews: -> (@StdDevPageViews / @TotalPageViews).toFixed(5)
   occupation: -> @occupation.capitalize()
+  countryName: -> @countryName.capitalize()
+  birthcity: -> if (@countryCode is "US") then @birthcity + ", " + @birthstate else @birthcity
   pageviews: -> if @TotalPageViews then numberWithCommas(@TotalPageViews)
   pageviews_e: -> if @PageViewsEnglish then numberWithCommas(@PageViewsEnglish)
   pageviews_ne: -> if @PageViewsNonEnglish then numberWithCommas(@PageViewsNonEnglish)
