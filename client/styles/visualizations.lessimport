@@ -56,6 +56,10 @@
 	}
 }
 
+.padded{
+	padding-top:150px;
+}
+
 #page {
 	// TODO Proper vertical centering and sizing
 

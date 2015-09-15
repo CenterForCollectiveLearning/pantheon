@@ -1,12 +1,5 @@
 <template name="people">
-	<div class="page-top">
-		<div class="row-fluid">
-			<div class="span3"></div>
-	    	<div class = "span6">
-			{{> message_update}}
-			</div>
-			<div class="span3"></div>
-		</div>
+	<div class="page-top padded">
 		<div id="people-page" class="{{#if mobile}} mobile{{/if}}">
 			{{#if dataReady}}
     		{{#with person}}
@@ -29,6 +22,8 @@
 	<div class="row-fluid">
 	    <div class = "span12 feedback">
 	        {{> feedback}}
+
+            <p>If you use the Pantheon dataset, please cite: Yu, A. Z., et al. (2015). Pantheon: A Dataset for the Study of Global Cultural Production. <em>arXiv:1502.07310v1 [physics.soc-ph].</em></p>
 	    </div>
 	</div>
     {{/if}}

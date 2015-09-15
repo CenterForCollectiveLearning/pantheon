@@ -1,5 +1,8 @@
 <template name="rankings">
     <div class="container-fluid">
+        <div class="citation_msg">
+            If you use the Pantheon dataset, please cite: Yu, A. Z., et al. (2015). Pantheon: A Dataset for the Study of Global Cultural Production. <em>arXiv:1502.07310v1 [physics.soc-ph].</em>
+        </div>
         <div class="row-fluid">
             <div class="page-top {{#unless mobile}}span8 offset2{{else}}span12 mobile{{/unless}}">
                 <div class="primary-text">
@@ -20,7 +23,6 @@
                 <!-- Visualization and Ranked List Container -->
                 <div class="page-middle {{#unless mobile}}span8{{else}}span12{{/unless}}" style="{{#if mobile}}margin:0{{/if}}">
                     <div id = "tooltip" class ="invisible"></div>
-                    {{> message_update}}
                     {{#if rankingdataReady}}                      
                         {{> ranking_table}}
                     {{else}}
