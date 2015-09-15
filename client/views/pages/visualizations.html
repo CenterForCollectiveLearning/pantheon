@@ -1,6 +1,9 @@
 <!-- Non-visualization specific explore page elements (e.g. accordion, menu) -->
 <template name="visualizations">
     <div class="container-fluid">
+        <div class="citation_msg">
+            If you use the Pantheon dataset, please cite: Yu, A. Z., et al. (2015). Pantheon: A Dataset for the Study of Global Cultural Production. <em>arXiv:1502.07310v1 [physics.soc-ph].</em>
+        </div>
         <div class="row-fluid">
             <div class="page-top {{#unless mobile}}span8 offset2{{else}}span12 mobile{{/unless}}">
                 {{#if dataReady}}   
@@ -42,9 +45,6 @@
             </div>
             <div class="row-fluid">
                 {{#if initialDataReady}}
-                <div class = "span8 offset2">
-                {{> message_update}}
-                </div>
                 <div class = "span12 feedback">
                     {{> place_of_birth}}
                     {{> feedback}}
@@ -134,9 +134,16 @@
         <h3 class="app">TREEMAPS</h3>
         <div>
             <ul>
-                <li><span><a href="/treemap/country_exports/{{randomCountry}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="country_exports" class="{{country_treemap_active}}">of Cultural Domains</a></span></li>
-                <li><span><a href="/treemap/domain_exports_to/{{randomDomain}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="domain_exports_to" class="{{domain_treemap_active}}">of Countries</a></span></li> 
-                <li><span><a href="/treemap/domain_exports_to_city/{{randomDomain}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="domain_exports_to_city" class="{{domain_city_treemap_active}}">of Cities</a></span></li>
+                <li>Of a Country</li>
+                <ul>
+                    <li><span><a href="/treemap/country_exports/{{randomCountry}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="country_exports" class="{{country_treemap_active}}">by cultural domain</a></span></li>
+                    <li><span><a href="/treemap/country_by_city/all/{{randomCountry}}/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="country_by_city" class="{{country_city_treemap_active}}">by city</a></span></li>
+                </ul>
+                <li>Of a Cultural Domain</li>
+                <ul>
+                    <li><span><a href="/treemap/domain_exports_to/{{randomDomain}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="domain_exports_to" class="{{domain_treemap_active}}">by country</a></span></li> 
+                    <li><span><a href="/treemap/domain_exports_to_city/{{randomDomain}}/all/{{from}}/{{to}}/{{index}}/{{dataset}}" data-viz-type="treemap" data-viz-mode="domain_exports_to_city" class="{{domain_city_treemap_active}}">by city</a></span></li>
+                </ul>
             </ul>
         </div>
         <h3 class="app">MATRICES</h3>

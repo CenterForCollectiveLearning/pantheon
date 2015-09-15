@@ -30,7 +30,7 @@ Handlebars.registerHelper "alert", -> Session.get("alert")
     out: "category"
 
   domain_exports_to:
-    in: ["category", "language"]
+    in: ["category", "country"]
     out: "country"
 
   domain_imports_from:
@@ -40,6 +40,10 @@ Handlebars.registerHelper "alert", -> Session.get("alert")
   domain_exports_to_city:
     in: ["category", "country"]
     out: "country" #Question - Where is this used??
+
+  country_by_city:
+    in: ["category", "country"]
+    out: "country" 
 
   bilateral_exporters_of:
     in: ["country", "language"]

@@ -57,12 +57,17 @@
 
 <template name="city_mode">
     {{> select_category}}
-    {{> select_country}}
     {{> select_time }}
     {{> select_dataset}}
     {{> select_l}}
 </template>
 
+<template name="country_city_mode">
+    {{> select_country}}
+    {{> select_time }}
+    {{> select_dataset}}
+    {{> select_l}}
+</template>
 
 <template name="bilateral_exporters_mode">
     {{> select_country}}

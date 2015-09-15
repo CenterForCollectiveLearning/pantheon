@@ -120,7 +120,7 @@ Meteor.publish "cities_ranking_pub", (begin, end, country, category, categoryLev
   collectionName = "cities_ranking"
   criteria = 
     birthcity:
-      $nin: [null, ""]
+      $nin: [null, "", "Other", "Unknown"]
     birthyear:
       $gte: begin
       $lte: end

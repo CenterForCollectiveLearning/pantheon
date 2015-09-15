@@ -153,7 +153,7 @@ d3plus.tree_map = function(vars) {
           return;
         }
         Session.set("hover", true);
-        var id = find_variable(d,vars.id_var),
+        var id = find_variable(d,vars.id_var).replace(" ", "_"),
             self = d3.select("#cell_"+id).node();
 
         self.parentNode.appendChild(self);
@@ -177,7 +177,7 @@ d3plus.tree_map = function(vars) {
           var category = id.replace("_", " ").toUpperCase();
           var categoryLevel = "occupation";
           countryCode = Session.get("country"); // reset countryCode to the full city+countryCode
-        } else if (vizMode === "domain_exports_to" || vizMode === "domain_exports_to_city") {
+        } else if (vizMode === "domain_exports_to" || vizMode === "domain_exports_to_city" || vizMode === "country_by_city") {
           var country = id.split("-");
           var city = "all";
           if (country.length > 1){

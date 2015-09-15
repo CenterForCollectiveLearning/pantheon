@@ -580,3 +580,8 @@ aside {
 	background-color: @color_black_1;
 	color: @color_gold;
 }
+
+div.citation_msg{
+	text-align: center;
+	margin-top: 100px;
+}

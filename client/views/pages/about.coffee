@@ -149,3 +149,4 @@ Template.about.render_template = ->
     when "permissions" then new Handlebars.SafeString(Template.permissions(this))
     when "publications" then new Handlebars.SafeString(Template.publications(this))
     when "faq" then new Handlebars.SafeString(Template.faq(this))
+    when "contact" then new Handlebars.SafeString(Template.contact(this))

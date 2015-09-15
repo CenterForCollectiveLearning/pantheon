@@ -147,7 +147,7 @@ Template.treemap_svg.rendered = ->
           .font_weight("300")
           .color_var("color")
       d3.select(context.find("svg")).datum(flat).call viz
-    else if vizMode is "domain_exports_to_city" #TODO: update this for domain treemap by city, still need country treemap by city
+    else if vizMode is "domain_exports_to_city" or "country_by_city" #TODO: update this for domain treemap by city, still need country treemap by city
       # attr = Countries.find({dataset:dataset}).fetch()
       attr = People.find({},{"countryCode":1,"countryCode3":1, "countryName":1, "continentName":1, "dataset":1, "birthcity":1, "_id":0}).fetch()
       attr.forEach (a) ->

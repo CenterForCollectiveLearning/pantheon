@@ -27,7 +27,7 @@ Meteor.publish "peopleTopN", (vizType, vizMode, begin, end, L, country, countryX
   countryCode = country[country.length-1]
 
   args.dataset = dataset
-  if vizMode is "country_exports" or vizMode is "domain_exports_to_city" 
+  if vizMode is "country_exports" or vizMode is "domain_exports_to_city" or vizMode is "country_by_city"
     args.countryCode = countryCode if countryCode isnt "all"
   args.birthcity = city if city isnt "all"
 
@@ -122,7 +122,7 @@ Meteor.publish "tooltipPeople", (vizMode, begin, end, L, country, countryX, coun
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
     args.birthcity = city if city isnt "all"
 
-  if vizMode is "domain_exports_to_city" #TODO - debug click tooltip
+  if vizMode is "domain_exports_to_city" or "country_by_city" #TODO - debug click tooltip 
     args.countryCode = countryCode  if countryCode isnt "all"
     args[categoryLevel] = category  if category.toLowerCase() isnt "all"
     args.birthcity = selectedcity if selectedcity isnt "all"
