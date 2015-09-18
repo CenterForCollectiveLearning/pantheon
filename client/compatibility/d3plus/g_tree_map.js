@@ -183,6 +183,7 @@ d3plus.tree_map = function(vars) {
           if (country.length > 1){
             city = country[0];
           }
+          city = city.replace("_", " ");
           var countryCode = country[country.length-1];
           var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
           var category = Session.get("category").toUpperCase();
@@ -239,8 +240,14 @@ d3plus.tree_map = function(vars) {
             var categoryLevel = "occupation";
             countryCode = Session.get("country"); // reset countryCode to the full city+countryCode
 
-        } else if (vizMode === "domain_exports_to") {
-            var countryCode = id.replace("_", " ");
+        } else if (vizMode === "domain_exports_to" || vizMode === "domain_exports_to_city" || vizMode === "country_by_city") {
+            var country = id.split("-");
+            var city = "all";
+            if (country.length > 1){
+              city = country[0];
+            }
+            city = city.replace("_", " ");
+            var countryCode = country[country.length-1];
             var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
             var category = Session.get("category").toUpperCase();
             var categoryLevel = Session.get("categoryLevel");
