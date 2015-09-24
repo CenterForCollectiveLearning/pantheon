@@ -240,6 +240,9 @@ Template.select_industry_order.rendered = ->
   $(@find("select")).val(Session.get("industryOrder")).chosen().change( ->
     Session.set "industryOrder", $(this).val())
 
+Template.select_dataset.cityMode = ->
+  Session.equals("vizMode", "country_by_city") or Session.equals("vizMode", "domain_exports_to_city")
+  
 Template.select_dataset.rendered = ->
   $(@find("select")).val(Session.get("dataset")).chosen().change( ->
     dataset = $(this).val()
