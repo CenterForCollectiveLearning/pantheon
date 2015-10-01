@@ -373,7 +373,7 @@ Template.city_dropdown.cities_given_country = ->
   countryCode = country[country.length-1]
   _.each ClientPeople.find(countryCode: countryCode, dataset: Session.get("dataset")).fetch(), (country_obj) ->
     birthcity = country_obj.birthcity
-    if uniqueCities.indexOf(birthcity) is -1
+    if uniqueCities.indexOf(birthcity) is -1 and birthcity not in ["Other", "", null]
       uniqueCities.push birthcity
       res.push birthcity: $.trim(birthcity)
   _.sortBy(res, 'birthcity')

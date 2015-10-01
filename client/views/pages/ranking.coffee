@@ -153,7 +153,11 @@ Template.ranking_table.rendered = ->
               $gte: parseInt(Session.get("from"))
               $lte: parseInt(Session.get("to"))
           country = Session.get("country")
-          args.countryCode = country if country isnt "all"
+          country = country.split("+")
+          if country.length > 1 then city = country[0] else city = "all"
+          countryCode = country[country.length-1]
+          args.countryCode = countryCode if countryCode isnt "all"
+          args.birthcity = city if city isnt "all"
           args.dataset = "OGC"
           category = Session.get("category")
           args[Session.get("categoryLevel")] = category if category.toLowerCase() isnt "all"
