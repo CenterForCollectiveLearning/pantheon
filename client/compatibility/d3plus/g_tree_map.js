@@ -249,7 +249,7 @@ d3plus.tree_map = function(vars) {
             city = city.replace("_", " ");
             var countryCode = country[country.length-1];
             var countryName = countryCode === "all" ? "All" : Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName;
-            countryName = city + ", " + countryName;
+            countryName = city === "all" ? countryName : city + ", " + countryName;
             var category = Session.get("category").toUpperCase();
             var categoryLevel = Session.get("categoryLevel");
         }
