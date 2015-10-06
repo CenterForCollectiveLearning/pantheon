@@ -19,9 +19,9 @@ Template.matrix_svg.rendered = ->
   
   # TODO: resize the scroll container of the viz is embedded 
   if Session.get("embed")
-    $(".scroll-container").height($(".page-middle").height()/6)
-    $("svg.header").height($(".page-middle").height()/6-5)
-    matrixProps.headerHeight = if Session.get("embed") then $(".page-middle").height()/5
+    $(".scroll-container").height(0.35*window.innerHeight)
+    $("svg.header").height(0.15*window.innerHeight)
+    matrixProps.headerHeight = if Session.get("embed") then 0.15*window.innerHeight
 
   # Visualization width (NOT SVG width)
   matrixProps.fullWidth = $(".page-middle").width()

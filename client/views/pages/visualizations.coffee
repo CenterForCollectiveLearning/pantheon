@@ -325,8 +325,10 @@ Template.clicktooltip.render_links = ->
     when "treemap", "scatterplot"
       if vizMode in ["country_exports", "country_vs_country"]
         return new Handlebars.SafeString(Template.tt_treemap_country_exports(this))
-      else if vizMode in ["domain_exports_to", "domain_vs_domain", "domain_exports_to_city", "country_by_city"] #TODO: make template more specific by city
+      else if vizMode in ["domain_exports_to", "domain_vs_domain", "country_by_city"]
         return new Handlebars.SafeString(Template.tt_treemap_domain_exports_to(this))
+      else if vizMode is "domain_exports_to_city"
+        return new Handlebars.SafeString(Template.tt_treemap_domain_exports_to_city(this))
     when "matrix","map"
       return new Handlebars.SafeString(Template.tt_global_exports(this))
     when "histogram"
@@ -351,6 +353,12 @@ Template.country_exports_question.question = ->
     country = (Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName).capitalize() 
   getQuestion("country_exports", {country: country})
 
+Template.city_exports_question.question = -> 
+  countryCode = Session.get("tooltipCountryCode")
+  city = Session.get("tooltipCity")
+  dataset = Session.get("dataset")
+  getQuestion("country_exports", {country: city + ", " + Countries.findOne({countryCode: countryCode, dataset: dataset}).countryName})
+
 Template.country_advantage_question.countryName = ->
   countryCode = Session.get("tooltipCountryCode")
   return (Countries.findOne({$or: [{countryCode: countryCode}, {countryCode3: countryCode}]}).countryName).capitalize()
@@ -374,6 +382,16 @@ Template.treemap_country_exports.helpers
       return Countries.findOne({countryCode3: countryCode}).countryCode
     else
       return countryCode
+  from : -> Session.get("from")
+  to : -> Session.get("to")
+  L : -> Session.get("langs")
+  dataset : -> Session.get("dataset")
+
+Template.treemap_city_exports.helpers
+  country : -> 
+    dataset = Session.get("dataset")
+    vizMode = Session.get("vizMode")
+    countryCode = Session.get("tooltipCity") + '+' + Session.get("bigtooltipCountryCode")
   from : -> Session.get("from")
   to : -> Session.get("to")
   L : -> Session.get("langs")

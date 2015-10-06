@@ -20,7 +20,7 @@ Template.treemap_svg.rendered = ->
   if mobile
     height = 200
   if embed 
-    height = $(".page-middle").height()/2 - 40
+    height = 0.65 * window.innerHeight
 
   
   Deps.autorun ->

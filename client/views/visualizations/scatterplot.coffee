@@ -17,7 +17,7 @@ Template.scatterplot_svg.rendered = ->
   if mobile
     height = 200
   if embed 
-    height = $(".page-middle").height()/2 - 60
+    height = 0.55 * window.innerHeight
   
   viz = d3plus.viz()
   vizMode = Session.get("vizMode")

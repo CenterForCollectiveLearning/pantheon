@@ -202,7 +202,7 @@ Template.map_svg.rendered = ->
   embed = Session.get("embed")
   if embed
     vars =
-      svg_height : $(".page-middle").height()/2 - 160
+      svg_height : 0.55 * window.innerHeight
       svg_width : $(".page-middle").width()
 
   if data.length is 0 #No data screen

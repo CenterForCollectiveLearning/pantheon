@@ -53,16 +53,26 @@
 				      </thead>
 				      <tbody>
 				        <tr>
-				          <td rowspan="2"><code>treemap</code></td>
+				          <td rowspan="4"><code>treemap</code></td>
 				          <td><code>country_exports</code></td>
-				          <td>selected countrycode</td>
+				          <td>selected city+countrycode</td>
 				          <td><code>all</code></td>
+				        </tr>
+				        <tr>
+				          <td><code>country_by_city</code></td>
+				          <td><code>all</code></td>
+				          <td>selected countrycode</td>
 				        </tr>
 				        <tr>
 				          <td><code>domain_exports_to</code></td>
 				          <td>selected domain</td>
 				          <td><code>all</code></td>
-				        </tr>                  
+				        </tr>
+				        <tr>
+				          <td><code>domain_exports_to_city</code></td>
+				          <td>selected domain</td>
+				          <td><code>all</code></td>
+				        </tr>               
 				        <tr>
 				          <td><code>matrix</code></td>
 				          <td><code>matrix_exports</code></td>
@@ -119,19 +129,19 @@
 			    <h2 id="examples">Examples:</h2>
 			    <p><b>Who are the globally known people born in present day China?</b></p>
 				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
-				<p><iframe src="http://pantheon.media.mit.edu:5000/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+				<p><iframe src="/treemap/country_exports/CN/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
 
 				<p><b>How many globally known men and women are associated with each place of birth and cultural domain?</b></p>
 				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu/matrix/matrix_exports/all/both/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
-				<p><iframe src="http://pantheon.media.mit.edu:5000/matrix/matrix_exports/all/both/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+				<p><iframe src="/matrix/matrix_exports/all/both/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
 
 				<p><b>How do Germany and France compare in terms of number of globally known people?</b></p>
 				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu/scatterplot/country_vs_country/DE/FR/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
-				<p><iframe src="http://pantheon.media.mit.edu:5000/scatterplot/country_vs_country/DE/FR/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+				<p><iframe src="/scatterplot/country_vs_country/DE/FR/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
 
 				<p><b>Where were globally known Philosophers born?</b></p>
 				<pre class="prettyprint">&lt;iframe src="http://pantheon.media.mit.edu/map/map/PHILOSOPHER/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400"&gt;&lt;/iframe&gt;</pre>
-				<p><iframe src="http://pantheon.media.mit.edu:5000/map/map/PHILOSOPHER/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
+				<p><iframe src="/map/map/PHILOSOPHER/all/-4000/2010/H15/pantheon/embed" frameborder="1" width="600" height="400" ></iframe></p>
 			</div>
 		</div>
 	</div>
