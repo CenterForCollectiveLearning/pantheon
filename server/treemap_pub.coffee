@@ -94,40 +94,68 @@ Meteor.publish "treemap_pub", (vizMode, begin, end, L, country, category, catego
     )
   else if vizMode is "domain_exports_to" or vizMode is "domain_exports_to_city" or vizMode is "country_by_city"
     matchArgs.countryCode = countryCode if countryCode isnt "all"
-    matchArgs.birthcity = {$nin: [null, "", "Other", "Unknown"]}
-    project =
-      _id: 0
-      continent: 1
-      countryCode: 1
-      countryName: 1
-      birthcity: 1
+    if dataset is "OGC"
+      matchArgs.birthcity = {$nin: [null, "", "Other", "Unknown"]}
+      project =
+        _id: 0
+        continent: 1
+        countryCode: 1
+        countryName: 1
+        birthcity: 1
+      pipeline = [
+        $match: matchArgs
+      ,
+        $project: project
+      ,
+        $group:
+          _id:
+            continent: "$continentName"
+            countryCode: "$countryCode"
+            countryName: "$countryName"
+            birthcity: "$birthcity"
 
-    pipeline = [
-      $match: matchArgs
-    ,
-      $project: project
-    ,
-      $group:
-        _id:
-          continent: "$continentName"
-          countryCode: "$countryCode"
-          countryName: "$countryName"
-          birthcity: "$birthcity"
+          count:
+            $sum: 1
+      ]
+    else #murray
+      project =
+        _id: 0
+        continent: 1
+        countryCode: 1
+        countryName: 1
 
-        count:
-          $sum: 1
-    ]
+      pipeline = [
+        $match: matchArgs
+      ,
+        $project: project
+      ,
+        $group:
+          _id:
+            continent: "$continentName"
+            countryCode: "$countryCode"
+            countryName: "$countryName"
+
+          count:
+            $sum: 1
+      ]
     # console.log JSON.stringify(pipeline)
     driver.mongo.db.collection("people").aggregate pipeline, Meteor.bindEnvironment((err, result) ->
       _.each result, (e) ->
         
         # Generate a random disposable id for each aggregate
-        sub.added "treemap", Random.id(),
-          continent: e._id.continent
-          countryCode: e._id.countryCode
-          countryName: e._id.countryName
-          birthcity: e._id.birthcity
-          count: e.count
+        if dataset is "OGC"
+          sub.added "treemap", Random.id(),
+            continent: e._id.continent
+            countryCode: e._id.countryCode
+            countryName: e._id.countryName
+            birthcity: e._id.birthcity
+            count: e.count
+        else
+          sub.added "treemap", Random.id(),
+            continent: e._id.continent
+            countryCode: e._id.countryCode
+            countryName: e._id.countryName
+            count: e.count
       sub.ready()
     , (error) ->
       Meteor._debug "Error doing aggregation: " + error
