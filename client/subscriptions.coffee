@@ -1,7 +1,6 @@
 # These are static data that never change
 Meteor.subscribe "countries_pub"
 Meteor.subscribe "domains_pub"
-Meteor.subscribe "people_pub"
 
 # These subscriptions are explicitly global variables
 # allpeopleSub = Meteor.subscribe("allpeople")

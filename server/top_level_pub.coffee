@@ -4,8 +4,7 @@ Meteor.publish "countries_pub", ->
 Meteor.publish "domains_pub", ->
   Domains.find()
 
-Meteor.publish "people_pub", ->
-  People.find()
+# Not publishing People because it's sent in a static JSON for performance reasons. 
 
 #
 # Publish the top N people for the current query
